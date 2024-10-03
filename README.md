@@ -8,7 +8,7 @@
 
 ----
 
-## Projects
+## Project
 
 ### [TP1 - ThreeJS Basics](tp1)
 
