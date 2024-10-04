@@ -1,11 +1,10 @@
 # SGI 2024/2025 - TP1
 
-## Group: T0xG0y
-
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+## Group T04G07
+| Name                                      | Number    | E-Mail             |
+| ----------------------------------------- | --------- | ------------------ |
+| João Brandão Alves                        | 202108670 | up202108670@up.pt  |
+| José Francisco Reis Pedreiras Neves Veiga | 202108753 | up202108753@up.pt  |
 
 ----
 ## Project information
