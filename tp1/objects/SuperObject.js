@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 
 class SuperObject {
-     constructor(app, name, x, y, z, angle = 0) {
-          this.app = app;
+     constructor(name, x, y, z, angle = 0) {
           this.super = new THREE.Group();
           this.name = name;
           this.enable = true;
           this.updatePos(x, y, z);
           this.updateAngle(angle);
+          this.subObjects = [];
      }
 
      toggleEnable() {
@@ -34,6 +34,19 @@ class SuperObject {
 
      updateScale(x, y, z) {
           this.super.scale.set(x,y,z);
+     }
+     
+     pushToSubObjects(object) {
+          this.subObjects.push(object)
+     }
+
+     popFromSubObjects(object) {
+          const index = this.subObjects.indexOf(object);
+          if (index > -1) {
+              this.subObjects.splice(index, 1);
+              return object;
+          }
+          return null;
      }
 }
 

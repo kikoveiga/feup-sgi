@@ -5,7 +5,7 @@ import { SuperObject } from '/tp1/objects/SuperObject.js';
 class Plane extends SuperObject {
      constructor(name, x, y, z, angle) {
           super(name, x, y, z, angle);
-
+          this.planeMesh = null;
           this.diffusePlaneColor = "#00ffff"
           this.specularPlaneColor = "#777777"
           this.planeShininess = 30
@@ -18,7 +18,7 @@ class Plane extends SuperObject {
                side: THREE.DoubleSide 
           });
 
-          this.planeMesh = null;
+          
      }
 
      build() {
@@ -27,6 +27,13 @@ class Plane extends SuperObject {
           this.planeMesh.rotation.x = -Math.PI / 2;
           this.planeMesh.position.y = -0.1; 
           this.super.add(this.planeMesh);
+     }
+
+     selectMat(nMat) {
+          this.planeMaterial = nMat;
+          if (this.planeMesh) {
+               this.planeMesh.material = nMat;
+          }
      }
 }
 

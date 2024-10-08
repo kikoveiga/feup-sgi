@@ -22,7 +22,7 @@ class MyApp  {
         this.lastCameraName = null
         this.cameras = []
         this.frustumSize = 20
-
+        
         // other attributes
         this.renderer = null
         this.controls = null
@@ -72,7 +72,7 @@ class MyApp  {
         perspective1.position.set(10 ,10, 3)
         this.cameras['Perspective'] = perspective1
 
-        const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.2, 500 )
         perspective2.position.set(-5, 5, 2)
         this.cameras['Perspective 2'] = perspective2
 
