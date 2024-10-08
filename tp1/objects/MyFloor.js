@@ -8,7 +8,7 @@ class MyFloor extends THREE.Object3D {
           const texture = new THREE.TextureLoader().load('./textures/mossybricks.jpg');
           texture.wrapS = THREE.RepeatWrapping;
           texture.wrapT = THREE.RepeatWrapping;
-          texture.repeat.set(5, 5);
+          texture.repeat.set(6, 6);
 
           this.floorMaterial = new THREE.MeshPhongMaterial({
                map: texture,
