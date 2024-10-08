@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 class MyPlate extends THREE.Object3D {
-     constructor(app, radius = 0.65, height = 0.1, rim = 0.1) {
+     constructor(app, radius = 0.65, height = 0.1, rim = 0.07) {
           super();
           this.app = app;
 
@@ -22,7 +22,7 @@ class MyPlate extends THREE.Object3D {
           const rimGeometry = new THREE.TorusGeometry(radius + rim, rim, 6, 50);
           const rimMesh = new THREE.Mesh(rimGeometry, this.plateMaterial);
           rimMesh.rotation.x = Math.PI / 2; 
-          rimMesh.position.y = height; 
+          rimMesh.position.y = height - 0.01; 
 
           this.add(plateBaseMesh);
           this.add(rimMesh);

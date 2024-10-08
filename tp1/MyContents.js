@@ -4,6 +4,8 @@ import { MyTable } from './objects/MyTable.js';
 import { MyFloor } from './objects/MyFloor.js';
 import { MyWall } from './objects/MyWall.js';
 import { MyPlate } from './objects/MyPlate.js';
+import { MyCake } from './objects/MyCake.js';
+import { MyCandle } from './objects/MyCandle.js';
 
 
 class MyContents  {
@@ -20,10 +22,12 @@ class MyContents  {
         this.wall3 = null;
         this.wall4 = null;
         this.plate = null;
+        this.cake = null;
+
 
         // aux vars
-        this.floorWidth = 20;
-        this.floorLength = 14;
+        this.floorWidth = 24;
+        this.floorLength = 18;
 
     }
 
@@ -34,13 +38,13 @@ class MyContents  {
     }
 
     buildTable() {
-        this.table = new MyTable(this.app, 4, 0.3, 0.2);
-        this.table.scale.set(1.3, 1.3, 1.3);
+        this.table = new MyTable(this.app);
+        this.table.scale.set(1.4, 1.4, 1.4);
         this.app.scene.add(this.table);
     }
 
     buildWalls() {
-        const wallHeight = 7;
+        const wallHeight = 10;
 
         this.wall1 = new MyWall(this.app, this.floorWidth, wallHeight);
         this.wall1.position.set(0, wallHeight / 2, -this.floorLength / 2);
@@ -64,8 +68,22 @@ class MyContents  {
 
     buildPlate() {
         this.plate = new MyPlate(this.app);
-        this.plate.position.set(0, 2.8, 0);
-        this.app.scene.add(this.plate); // Add the plate to the scene
+        this.plate.position.set(0, 3.0, 0);
+        this.plate.scale.set(1.2,1.2,1.2);
+        this.app.scene.add(this.plate);
+    }
+
+    buildCake() {
+        this.cake = new MyCake(this.app);
+        this.cake.position.set(0, 3.3, 0);
+        this.app.scene.add(this.cake);
+    }
+
+    buildCandle() {
+        this.candle = new MyCandle(this.app);
+        this.candle.position.set(0.2, 3.62, 0.1);
+        this.candle.scale.set(0.3, 0.3, 0.3);
+        this.app.scene.add(this.candle);
     }
 
     init() {
@@ -90,7 +108,8 @@ class MyContents  {
         this.buildTable();
         this.buildWalls();
         this.buildPlate();
-        
+        this.buildCake();
+        this.buildCandle();
     }
     
     // useless

@@ -5,10 +5,10 @@ class MyWall extends THREE.Object3D {
         super();
         this.app = app;
 
-        const texture = new THREE.TextureLoader().load('./textures/mossybricks.jpg');
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(6, 3);
+        const texture = new THREE.TextureLoader().load('./textures/concrete2.jpg');
+        // texture.wrapS = THREE.RepeatWrapping;
+        // texture.wrapT = THREE.RepeatWrapping;
+        // texture.repeat.set(6, 3);
 
         this.wallMaterial = new THREE.MeshPhongMaterial({
             map: texture,
