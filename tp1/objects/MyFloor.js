@@ -5,14 +5,14 @@ class MyFloor extends THREE.Object3D {
           super();
           this.app = app;
 
-          const texture = new THREE.TextureLoader().load('./textures/rubber2.jpg');
-          // texture.wrapS = THREE.RepeatWrapping;
-          // texture.wrapT = THREE.RepeatWrapping;
-          // texture.repeat.set(6, 6);
+          const texture = new THREE.TextureLoader().load('./textures/wood.jpg');
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+          texture.repeat.set(6, 6);
 
           this.floorMaterial = new THREE.MeshPhongMaterial({
                map: texture,
-               color: "#a0a0a0", 
+               color: "#ffffff", 
                specular: "#777777", 
                emissive: "#000000", 
                shininess: 0

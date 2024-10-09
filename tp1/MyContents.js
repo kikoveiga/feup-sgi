@@ -6,6 +6,8 @@ import { MyWall } from './objects/MyWall.js';
 import { MyPlate } from './objects/MyPlate.js';
 import { MyCake } from './objects/MyCake.js';
 import { MyCandle } from './objects/MyCandle.js';
+import { MyChair } from './objects/MyChair.js';
+import { MyCup } from './objects/MyCup.js';
 
 
 class MyContents  {
@@ -23,7 +25,9 @@ class MyContents  {
         this.wall4 = null;
         this.plate = null;
         this.cake = null;
-
+        this.chair1 = null;
+        this.chair2 = null;
+        this.cup = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -68,22 +72,50 @@ class MyContents  {
 
     buildPlate() {
         this.plate = new MyPlate(this.app);
-        this.plate.position.set(0, 3.0, 0);
+        this.plate.position.set(0.7, 3, 0.7);
         this.plate.scale.set(1.2,1.2,1.2);
+
+        this.plate2 = new MyPlate(this.app);
+        this.plate2.position.set(0, 3, -1.3);
+        this.plate2.scale.set(0.8, 0.8, 0.8);
+
         this.app.scene.add(this.plate);
+        this.app.scene.add(this.plate2);
     }
 
     buildCake() {
         this.cake = new MyCake(this.app);
-        this.cake.position.set(0, 3.3, 0);
+        this.cake.position.set(0.7, 3.3, 0.7);
         this.app.scene.add(this.cake);
     }
 
     buildCandle() {
         this.candle = new MyCandle(this.app);
-        this.candle.position.set(0.2, 3.62, 0.1);
+        this.candle.position.set(0.9, 3.62, 0.8);
         this.candle.scale.set(0.3, 0.3, 0.3);
         this.app.scene.add(this.candle);
+    }
+
+    buildChairs() {
+        this.chair1 = new MyChair(this.app);
+        this.chair2 = new MyChair(this.app);
+
+        this.chair1.position.set(0, 0, -3);
+        this.chair1.scale.set(1.2, 1.2, 1.2);
+        this.app.scene.add(this.chair1);
+
+        this.chair2.position.set(-1.5, 1.1, 3.5);
+        this.chair2.scale.set(1.2, 1.2, 1.2);
+        this.chair2.rotation.x = - Math.PI / 2;
+        this.chair2.rotation.z = 130 * Math.PI / 180;
+        this.app.scene.add(this.chair2);
+    }   
+
+    buildCup() {
+        this.cup = new MyCup(this.app);
+        this.cup.scale.set(0.3, 0.3, 0.3);
+        this.cup.position.set(1, 3.1, -1.3);
+        this.app.scene.add(this.cup);
     }
 
     init() {
@@ -94,7 +126,7 @@ class MyContents  {
         }
 
         const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
-        pointLight.position.set( 0, 20, 0 );
+        pointLight.position.set( 5, 20, 5 );
         this.app.scene.add( pointLight );
 
         const sphereSize = 0.5;
@@ -110,6 +142,8 @@ class MyContents  {
         this.buildPlate();
         this.buildCake();
         this.buildCandle();
+        this.buildChairs();
+        this.buildCup();
     }
     
     // useless
