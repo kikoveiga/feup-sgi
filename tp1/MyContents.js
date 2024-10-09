@@ -11,6 +11,7 @@ import { MyCup } from './objects/MyCup.js';
 import { MyDoor } from './objects/MyDoor.js';
 import { MyRug } from './objects/MyRug.js';
 import { MyPainting } from './objects/MyPainting.js';
+import { MySofa } from './objects/MySofa.js';
 
 
 class MyContents  {
@@ -35,6 +36,7 @@ class MyContents  {
         this.door = null;
         this.rug = null;
         this.painting = null;
+        this.sofa = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -152,6 +154,15 @@ class MyContents  {
         this.app.scene.add(this.painting);
     }
 
+    buildSofa() {
+        this.sofa = new MySofa(this.app);
+        this.sofa.scale.set(1.3, 1.3, 1.3);
+        this.sofa.rotation.y = Math.PI / 2;
+        this.sofa.position.set(- this.floorLength / 2 - 1, 0.3, 0);
+        this.app.scene.add(this.sofa);
+    }
+
+
     init() {
        
         if (this.axis === null) {
@@ -181,6 +192,7 @@ class MyContents  {
         this.buildDoor();
         this.buildRug();
         this.buildPainting();
+        this.buildSofa();
     }
     
     // useless
