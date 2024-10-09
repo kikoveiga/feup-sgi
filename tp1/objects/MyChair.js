@@ -5,7 +5,6 @@ class MyChair extends THREE.Object3D {
           super();
           this.app = app;
 
-          const woodTexture = new THREE.TextureLoader().load('./textures/wood.jpg');
           const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
 
           const seatMaterial = new THREE.MeshPhongMaterial({

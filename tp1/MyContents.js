@@ -8,6 +8,9 @@ import { MyCake } from './objects/MyCake.js';
 import { MyCandle } from './objects/MyCandle.js';
 import { MyChair } from './objects/MyChair.js';
 import { MyCup } from './objects/MyCup.js';
+import { MyDoor } from './objects/MyDoor.js';
+import { MyRug } from './objects/MyRug.js';
+import { MyPainting } from './objects/MyPainting.js';
 
 
 class MyContents  {
@@ -23,11 +26,15 @@ class MyContents  {
         this.wall2 = null;
         this.wall3 = null;
         this.wall4 = null;
+        this.ceiling = null;
         this.plate = null;
         this.cake = null;
         this.chair1 = null;
         this.chair2 = null;
         this.cup = null;
+        this.door = null;
+        this.rug = null;
+        this.painting = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -37,7 +44,7 @@ class MyContents  {
 
 
     buildFloor() {    
-        this.floor = new MyFloor(this.app, this.floorWidth, this.floorLength);
+        this.floor = new MyFloor(this.app, this.floorWidth, this.floorLength, true);
         this.app.scene.add(this.floor);
     }
 
@@ -68,15 +75,20 @@ class MyContents  {
         this.wall4.rotation.y = -Math.PI / 2;
         this.wall4.position.set(this.floorWidth / 2, wallHeight / 2, 0);
         this.app.scene.add(this.wall4);
+
+        this.ceiling = new MyFloor(this.app, this.floorWidth, this.floorLength, false);
+        this.ceiling.rotation.z = 180 * Math.PI / 180;
+        this.ceiling.position.set(0, wallHeight, 0);
+        this.app.scene.add(this.ceiling);
     }
 
     buildPlate() {
         this.plate = new MyPlate(this.app);
-        this.plate.position.set(0.7, 3, 0.7);
-        this.plate.scale.set(1.2,1.2,1.2);
+        this.plate.position.set(0.9, 3, 0.9);
+        this.plate.scale.set(1.2, 1.2, 1.2);
 
         this.plate2 = new MyPlate(this.app);
-        this.plate2.position.set(0, 3, -1.3);
+        this.plate2.position.set(0, 3, -1.7);
         this.plate2.scale.set(0.8, 0.8, 0.8);
 
         this.app.scene.add(this.plate);
@@ -85,13 +97,13 @@ class MyContents  {
 
     buildCake() {
         this.cake = new MyCake(this.app);
-        this.cake.position.set(0.7, 3.3, 0.7);
+        this.cake.position.set(0.9, 3.3, 0.9);
         this.app.scene.add(this.cake);
     }
 
     buildCandle() {
         this.candle = new MyCandle(this.app);
-        this.candle.position.set(0.9, 3.62, 0.8);
+        this.candle.position.set(1.1, 3.62, 1);
         this.candle.scale.set(0.3, 0.3, 0.3);
         this.app.scene.add(this.candle);
     }
@@ -115,7 +127,29 @@ class MyContents  {
         this.cup = new MyCup(this.app);
         this.cup.scale.set(0.3, 0.3, 0.3);
         this.cup.position.set(1, 3.1, -1.3);
+        this.cup.rotation.y = 120 *Math.PI / 180;
         this.app.scene.add(this.cup);
+    }
+
+    buildDoor() {
+        this.door = new MyDoor(this.app);
+        this.door.position.set(this.floorLength / 3, 0, this.floorLength / 2);
+        this.app.scene.add(this.door);
+    }
+
+    buildRug() {
+        this.rug = new MyRug(this.app);
+        this.rug.position.set(0, 0, 0);
+        this.rug.scale.set(2, 2, 2);
+        this.rug.rotation.y = Math.PI /2;
+        this.app.scene.add(this.rug);
+    }
+
+    buildPainting() {
+        this.painting = new MyPainting(this.app);
+        this.painting.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
+        this.painting.scale.set(0.4, 0.4, 0.4);
+        this.app.scene.add(this.painting);
     }
 
     init() {
@@ -144,6 +178,9 @@ class MyContents  {
         this.buildCandle();
         this.buildChairs();
         this.buildCup();
+        this.buildDoor();
+        this.buildRug();
+        this.buildPainting();
     }
     
     // useless

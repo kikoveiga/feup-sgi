@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 class MyTable extends THREE.Object3D {
-    constructor(app, width = 5, depth = 0.2, radiusLegs = 0.2) {
+    constructor(app, width = 6, depth = 0.2, radiusLegs = 0.2, height = 4) {
         super();
         this.app = app;
 
@@ -26,7 +26,7 @@ class MyTable extends THREE.Object3D {
         });
 
         // TABLE
-        const tableTop = new THREE.BoxGeometry(width, 3, depth);
+        const tableTop = new THREE.BoxGeometry(width, height, depth);
         const tableTopMesh = new THREE.Mesh(tableTop, tableMaterial);
         tableTopMesh.rotation.x = - Math.PI / 2;
         tableTopMesh.position.y = 2.05;
@@ -40,8 +40,8 @@ class MyTable extends THREE.Object3D {
             this.add(legMesh);
         };
 
-        const legOffsetX = width / 2 - (radiusLegs * 3);
-        const legOffsetZ = depth / 2 + (radiusLegs * 4);
+        const legOffsetX = width / 2 - (radiusLegs * 4);
+        const legOffsetZ = depth / 2 + (radiusLegs * 6);
         createLeg(legOffsetX, legOffsetZ);  
         createLeg(-legOffsetX, legOffsetZ); 
         createLeg(legOffsetX, -legOffsetZ); 
