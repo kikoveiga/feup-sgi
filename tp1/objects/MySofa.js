@@ -26,7 +26,6 @@ class MySofa extends THREE.Object3D {
                specular: "#000000",
                shininess: 70,
                bumpScale: 0.1,
-               metalness: 0.1
           });
 
           // BASE

@@ -14,14 +14,12 @@ class MyDoor extends THREE.Object3D {
                specular: "#808080",
                shininess: 70, 
                bumpScale: 0.1,  
-               metalness: 0.1
           });
 
           const doorMaterial = new THREE.MeshPhongMaterial({ 
                map: doorTexture,
                color: 0xE5D3B3, 
                specular: "ffffff",
-               difuse: 0xE5D3B3, 
                shininess: 10,
                side: THREE.FrontSide
           });

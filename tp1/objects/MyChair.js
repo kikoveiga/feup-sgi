@@ -4,6 +4,7 @@ class MyChair extends THREE.Object3D {
      constructor(app, seatWidth = 2, seatDepth = 1.7, seatHeight = 0.2, legRadius = 0.08, legHeight = 1.5, backrestHeight = 2) {
           super();
           this.app = app;
+          this.type = 'Group';
 
           const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
 
@@ -13,7 +14,6 @@ class MyChair extends THREE.Object3D {
                specular: "#808080",
                shininess: 70, 
                bumpScale: 0.1,  
-               metalness: 0.1
           });
 
           const legMaterial = new THREE.MeshPhongMaterial({
@@ -22,7 +22,7 @@ class MyChair extends THREE.Object3D {
                specular: "#808080",
                shininess: 70,
                bumpScale: 0.1,
-               metalness: 0.1
+
           });
 
           const seatGeometry = new THREE.BoxGeometry(seatWidth, seatHeight, seatDepth);
@@ -66,5 +66,7 @@ class MyChair extends THREE.Object3D {
           this.add(backrestMesh3);
      }
 }
+
+MyChair.prototype.isGroup = true;
 
 export { MyChair };

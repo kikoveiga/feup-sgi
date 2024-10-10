@@ -12,6 +12,7 @@ import { MyDoor } from './objects/MyDoor.js';
 import { MyRug } from './objects/MyRug.js';
 import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
+import { MyLamp } from './objects/MyLamp.js';
 
 
 class MyContents  {
@@ -53,7 +54,10 @@ class MyContents  {
     buildTable() {
         this.table = new MyTable(this.app);
         this.table.scale.set(1.4, 1.4, 1.4);
+        this.table.receiveShadow = true;
         this.app.scene.add(this.table);
+        
+        
     }
 
     buildWalls() {
@@ -162,6 +166,12 @@ class MyContents  {
         this.app.scene.add(this.sofa);
     }
 
+    buildLamp() {
+        this.lamp = new MyLamp(this.app);
+        this.lamp.position.set(0, 5, 0);
+        this.app.scene.add(this.lamp);
+    }
+
 
     init() {
        
@@ -170,15 +180,15 @@ class MyContents  {
             // this.app.scene.add(this.axis)
         }
 
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
+        const pointLight = new THREE.PointLight( 0xffffff, 2, 0, 0);
         pointLight.position.set( 5, 20, 5 );
         this.app.scene.add( pointLight );
 
-        const sphereSize = 0.5;
+        const sphereSize = 0.5
         const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
         this.app.scene.add( pointLightHelper );
 
-        const ambientLight = new THREE.AmbientLight( 0x555555 );
+        const ambientLight = new THREE.AmbientLight( 0x555555, 4 );
         this.app.scene.add( ambientLight );
 
         this.buildFloor();
@@ -193,6 +203,7 @@ class MyContents  {
         this.buildRug();
         this.buildPainting();
         this.buildSofa();
+        this.buildLamp();
     }
     
     // useless

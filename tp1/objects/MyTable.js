@@ -4,6 +4,7 @@ class MyTable extends THREE.Object3D {
     constructor(app, width = 6, depth = 0.2, radiusLegs = 0.2, height = 4) {
         super();
         this.app = app;
+        this.type = 'Group';
 
         const glassTexture = new THREE.TextureLoader().load('./textures/glass.jpg');
         const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
@@ -22,7 +23,6 @@ class MyTable extends THREE.Object3D {
             specular: "#808080",  
             shininess: 70, 
             bumpScale: 0.1,  
-            metalness: 0.1
         });
 
         // TABLE
@@ -48,5 +48,7 @@ class MyTable extends THREE.Object3D {
         createLeg(-legOffsetX, -legOffsetZ); 
     }
 }
+
+MyTable.prototype.isGroup = true;
 
 export { MyTable };
