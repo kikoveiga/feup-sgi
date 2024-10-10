@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyCake extends THREE.Object3D {
-    constructor(app, radius = 0.7, height = 0.4, width = 0.7, p1rotation = 0, p2rotation = 330 * Math.PI / 180) {
-        super();
-        this.app = app;
+class MyCake extends MyObject {
+    constructor(app, radius = 0.7, height = 0.4, width = 0.7, p1rotation = 0, p2rotation = 330 * Math.PI / 180, name = 'cake') {
+        super(app, name);
 
         const texture1 = new THREE.TextureLoader().load('./textures/cake2.jpg');
         const texture2 = new THREE.TextureLoader().load('./textures/cake1.jpg');

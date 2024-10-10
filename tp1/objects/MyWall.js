@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyWall extends THREE.Object3D {
-    constructor(app, width, height) {
-        super();
-        this.app = app;
+class MyWall extends MyObject {
+    constructor(app, width, height, name = 'wall') {
+        super(app, name);
 
         const texture = new THREE.TextureLoader().load('./textures/concrete2.jpg');
 

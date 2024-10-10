@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyChair extends THREE.Object3D {
-     constructor(app, seatWidth = 2, seatDepth = 1.7, seatHeight = 0.2, legRadius = 0.08, legHeight = 1.5, backrestHeight = 2) {
-          super();
-          this.app = app;
+class MyChair extends MyObject {
+     constructor(app, name = 'chair', seatWidth = 2, seatDepth = 1.7, seatHeight = 0.2, legRadius = 0.08, legHeight = 1.5, backrestHeight = 2) {
+          super(app, name);
           this.type = 'Group';
 
           const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
