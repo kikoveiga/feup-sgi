@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyTable extends THREE.Object3D {
-    constructor(app, width = 6, depth = 0.2, radiusLegs = 0.2, height = 4) {
-        super();
-        this.app = app;
+class MyTable extends MyObject {
+    constructor(app, width = 6, depth = 0.2, radiusLegs = 0.2, height = 4, name = 'table') {
+        super(app, name);
         this.type = 'Group';
 
         const glassTexture = new THREE.TextureLoader().load('./textures/glass.jpg');

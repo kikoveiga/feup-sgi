@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyFloor extends THREE.Object3D {
-     constructor(app, width, length, isFloor) {
-          super();
-          this.app = app;
+class MyFloor extends MyObject {
+     constructor(app, width, length, isFloor, name = 'floor') {
+          super(app, name);
           let texture;
 
           if(isFloor){

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyLamp extends THREE.Object3D {
-     constructor(app, baseRadius = 0.5, baseHeight = 0.2, standRadius = 0.1, standHeight = 1, shadeRadius = 0.6, shadeHeight = 0.8) {
-          super();
-          this.app = app;
+class MyLamp extends MyObject {
+     constructor(app, baseRadius = 0.5, baseHeight = 0.2, standRadius = 0.1, standHeight = 1, shadeRadius = 0.6, shadeHeight = 0.8, name = 'lamp') {
+          super(app, name);
 
           const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
           const lampTexture = new THREE.TextureLoader().load('./textures/lamp.jpg');

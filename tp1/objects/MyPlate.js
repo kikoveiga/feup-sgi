@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MyPlate extends THREE.Object3D {
-     constructor(app, radius = 0.65, height = 0.1, rim = 0.07) {
-          super();
-          this.app = app;
+class MyPlate extends MyObject {
+     constructor(app, name = 'plate', radius = 0.65, height = 0.1, rim = 0.07) {
+          super(app, name);
 
           const texture = new THREE.TextureLoader().load('./textures/quartz.jpg');
 
