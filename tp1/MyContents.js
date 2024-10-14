@@ -13,6 +13,7 @@ import { MyRug } from './objects/MyRug.js';
 import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
+import { MySideTable } from './objects/MySideTable.js';
 
 
 class MyContents  {
@@ -38,6 +39,7 @@ class MyContents  {
         this.rug = null;
         this.painting = null;
         this.sofa = null;
+        this.sidetable = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -168,8 +170,14 @@ class MyContents  {
 
     buildLamp() {
         this.lamp = new MyLamp(this.app);
-        this.lamp.position.set(0, 5, 0);
+        this.lamp.position.set(- this.floorLength / 2 - 1, 1.5, this.floorLength / 3);
         this.app.scene.add(this.lamp);
+    }
+
+    buildSideTable() {
+        this.sidetable = new MySideTable(this.app);
+        this.sidetable.position.set(- this.floorLength / 2 - 1, 0, this.floorLength / 3);
+        this.app.scene.add(this.sidetable);
     }
 
 
@@ -180,7 +188,7 @@ class MyContents  {
             // this.app.scene.add(this.axis)
         }
 
-        const pointLight = new THREE.PointLight( 0xffffff, 2, 0, 0);
+        const pointLight = new THREE.PointLight( 0xffffff, 3, 0, 2);
         pointLight.position.set( 5, 20, 5 );
         this.app.scene.add( pointLight );
 
@@ -204,6 +212,7 @@ class MyContents  {
         this.buildPainting();
         this.buildSofa();
         this.buildLamp();
+        this.buildSideTable();
     }
     
     // useless

@@ -57,6 +57,11 @@ class MyCandle extends THREE.Object3D {
         this.add(flameMesh);
         this.add(halfSphereMesh);
         this.add(stringMesh);
+
+        const pointLight = new THREE.PointLight(0xffaa00, 1, 1); 
+        pointLight.position.set(0, height - 0.1, 0); 
+        pointLight.castShadow = true;
+        this.add(pointLight);
     }
 }
 

@@ -20,7 +20,7 @@ class MyTable extends THREE.Object3D {
         const legMaterial = new THREE.MeshPhongMaterial({
             map: ironTexture,  
             color: "#808080",  
-            specular: "#808080",  
+            specular: "#ffffff",  
             shininess: 70, 
             bumpScale: 0.1,  
         });

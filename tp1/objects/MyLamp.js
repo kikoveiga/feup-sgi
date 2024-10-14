@@ -22,6 +22,8 @@ class MyLamp extends THREE.Object3D {
                specular: "#888888",
                emissive: "#222222",
                side: THREE.DoubleSide,
+               transparent: true, 
+               opacity: 0.9,
           });
 
           // BASE
@@ -42,7 +44,16 @@ class MyLamp extends THREE.Object3D {
           shadeMesh.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0);
           this.add(shadeMesh);
 
+          // LIGHT
+          const pointLight = new THREE.PointLight(0xffffff, 5, 20); // White light, intensity 1, distance 10
+          pointLight.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0); // Place light inside the shade
+          this.add(pointLight);
 
+          const bulbGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+          const bulbMaterial = new THREE.MeshBasicMaterial({ color: 0xffde21 });
+          const bulbMesh = new THREE.Mesh(bulbGeometry, bulbMaterial);
+          bulbMesh.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0);
+          this.add(bulbMesh);
      }
 }
 export { MyLamp };

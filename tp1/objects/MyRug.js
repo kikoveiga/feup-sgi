@@ -6,24 +6,19 @@ class MyRug extends THREE.Object3D {
         this.app = app;
 
         const rugTexture = new THREE.TextureLoader().load('./textures/rug.jpg');
-        const rugNormalMap = new THREE.TextureLoader().load('./textures/rugf.jpg');
         const rugBumpMap = new THREE.TextureLoader().load('./textures/rugbump.jpg'); 
 
         rugTexture.wrapS = THREE.RepeatWrapping;
         rugTexture.wrapT = THREE.RepeatWrapping;
-        rugNormalMap.wrapS = THREE.RepeatWrapping;
-        rugNormalMap.wrapT = THREE.RepeatWrapping;
         rugBumpMap.wrapS = THREE.RepeatWrapping;
         rugBumpMap.wrapT = THREE.RepeatWrapping;
 
 
         rugTexture.repeat.set(1, 2);  
-        rugNormalMap.repeat.set(1, 2);
         rugBumpMap.repeat.set(1, 2);
 
         const rugMaterial = new THREE.MeshPhongMaterial({
-            map: rugTexture,  
-            normalMap: rugNormalMap,        
+            map: rugTexture,      
             bumpMap: rugBumpMap,       
             bumpScale: 0.2,           
             shininess: 10,             
