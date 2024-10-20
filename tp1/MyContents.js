@@ -14,6 +14,8 @@ import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
 import { MySideTable } from './objects/MySideTable.js';
+import { MyStudioLamp } from './objects/MyStudioLamp.js';
+import { MyTableLamp } from './objects/MyTableLamp.js';
 
 
 class MyContents  {
@@ -40,6 +42,8 @@ class MyContents  {
         this.painting = null;
         this.sofa = null;
         this.sidetable = null;
+        this.studioLamp = null;
+        this.tableLamp = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -58,28 +62,26 @@ class MyContents  {
         this.table.scale.set(1.4, 1.4, 1.4);
         this.table.receiveShadow = true;
         this.app.scene.add(this.table);
-        
-        
     }
 
     buildWalls() {
         const wallHeight = 10;
 
-        this.wall1 = new MyWall(this.app, this.floorWidth, wallHeight);
+        this.wall1 = new MyWall(this.app, this.floorWidth, wallHeight, false);
         this.wall1.position.set(0, wallHeight / 2, -this.floorLength / 2);
         this.app.scene.add(this.wall1);
 
-        this.wall2 = new MyWall(this.app, this.floorWidth, wallHeight);
+        this.wall2 = new MyWall(this.app, this.floorWidth, wallHeight, false);
         this.wall2.rotation.y = 180 * Math.PI / 180;
         this.wall2.position.set(0, wallHeight / 2, this.floorLength / 2); 
         this.app.scene.add(this.wall2);
 
-        this.wall3 = new MyWall(this.app, this.floorLength, wallHeight);
+        this.wall3 = new MyWall(this.app, this.floorLength, wallHeight, true);
         this.wall3.rotation.y = Math.PI / 2;
         this.wall3.position.set(-this.floorWidth / 2, wallHeight / 2, 0);
         this.app.scene.add(this.wall3);
 
-        this.wall4 = new MyWall(this.app, this.floorLength, wallHeight);
+        this.wall4 = new MyWall(this.app, this.floorLength, wallHeight, false);
         this.wall4.rotation.y = -Math.PI / 2;
         this.wall4.position.set(this.floorWidth / 2, wallHeight / 2, 0);
         this.app.scene.add(this.wall4);
@@ -154,9 +156,12 @@ class MyContents  {
     }
 
     buildPainting() {
-        this.painting = new MyPainting(this.app);
+        this.painting = new MyPainting(this.app, "painting");
         this.painting.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
-        this.painting.scale.set(0.4, 0.4, 0.4);
+        this.app.scene.add(this.painting);
+
+        this.painting = new MyPainting(this.app, "painting2");
+        this.painting.position.set(5, 6, -(this.floorLength / 2) + 0.1);
         this.app.scene.add(this.painting);
     }
 
@@ -168,10 +173,19 @@ class MyContents  {
         this.app.scene.add(this.sofa);
     }
 
-    buildLamp() {
+    buildLamps() {
         this.lamp = new MyLamp(this.app);
         this.lamp.position.set(- this.floorLength / 2 - 1, 1.5, this.floorLength / 3);
         this.app.scene.add(this.lamp);
+
+        this.studioLamp = new MyStudioLamp(this.app);
+        this.studioLamp.position.set(0, 9, 0);
+        this.app.scene.add(this.studioLamp);
+        
+        this.tableLamp = new MyTableLamp(this.app);
+        this.tableLamp.position.set(2.5, 3, 1.5);
+        this.tableLamp.rotation.y = Math.PI / 2.5;
+        this.app.scene.add(this.tableLamp);
     }
 
     buildSideTable() {
@@ -184,19 +198,11 @@ class MyContents  {
     init() {
        
         if (this.axis === null) {
-            this.axis = new MyAxis(this)
+            // this.axis = new MyAxis(this)
             // this.app.scene.add(this.axis)
         }
 
-        const pointLight = new THREE.PointLight( 0xffffff, 3, 0, 2);
-        pointLight.position.set( 5, 20, 5 );
-        this.app.scene.add( pointLight );
-
-        const sphereSize = 0.5
-        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-        this.app.scene.add( pointLightHelper );
-
-        const ambientLight = new THREE.AmbientLight( 0x555555, 4 );
+        const ambientLight = new THREE.AmbientLight( 0x555555, 2 );
         this.app.scene.add( ambientLight );
 
         this.buildFloor();
@@ -211,7 +217,7 @@ class MyContents  {
         this.buildRug();
         this.buildPainting();
         this.buildSofa();
-        this.buildLamp();
+        this.buildLamps();
         this.buildSideTable();
     }
     

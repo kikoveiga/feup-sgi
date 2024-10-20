@@ -9,12 +9,26 @@ class MyTable extends THREE.Object3D {
         const glassTexture = new THREE.TextureLoader().load('./textures/glass.jpg');
         const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
 
-        const tableMaterial = new THREE.MeshPhongMaterial({
-            map: glassTexture,
-            color: "#eeeeff",
-            specular: "#eeeeff",
-            transparent: true,
-            opacity: 0.5
+        // const tableMaterial = new THREE.MeshPhongMaterial({
+        //     map: glassTexture,
+        //     color: "#eeeeff",
+        //     specular: "#eeeeff",
+        //     transparent: true,
+        //     opacity: 0.5
+        // });
+
+        const tableMaterial = new THREE.MeshPhysicalMaterial({
+            map: glassTexture,         
+            color: "#eeeeff",          
+            transparent: true,         
+            opacity: 0.5,              
+            roughness: 0.05,           
+            metalness: 0.0,           
+            reflectivity: 0.9,         
+            transmission: 0.9,       
+            ior: 1.45,                 
+            clearcoat: 0.0,            
+            clearcoatRoughness: 0.0,  
         });
 
         const legMaterial = new THREE.MeshPhongMaterial({
