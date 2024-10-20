@@ -17,6 +17,7 @@ import { MyPolyline } from './objects/MyPolyline.js';
 import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
 import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
 import { MyCatmullRomCurve } from './objects/MyCatmullRomCurve.js';
+import { MyNurbsBuilder } from './objects/MyNurbsBuilder.js';
 
 
 class MyContents  {
@@ -48,10 +49,15 @@ class MyContents  {
         this.quadraticBezierCurve = null;
         this.cubicBezierCurve = null;
         this.catmullRomCurve = null;
+        this.nurbsBuilder = null;
+
+        this.meshes = [];
 
         // aux vars
         this.floorWidth = 24;
         this.floorLength = 18;
+
+        this.buildNurbsBuilder();
     }
 
 
@@ -313,6 +319,66 @@ class MyContents  {
         this.buildCatmullRomCurve();
     }
 
+    buildNurbsBuilder() {
+
+        const map = new THREE.TextureLoader().load('textures/uv_grid_opengl.jpg');
+        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+        map.anisotropy = 16;
+        map.colorSpace = THREE.SRGBColorSpace;
+
+        this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide, transparent: true, opacity: 0.90 });
+        this.nurbsBuilder = new MyNurbsBuilder(this.app);
+        this.meshes = [];
+
+        this.samplesU = 8;
+        this.samplesV = 8;
+
+    }
+
+    buildNurbsSurface(controlPoints, orderU, orderV) {
+
+        let surfaceData = this.nurbsBuilder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV);
+        let mesh = new THREE.Mesh(surfaceData, this.material);
+
+        mesh.rotation.set(0, 0, 0);
+        mesh.scale.set(1, 1, 1);
+        mesh.position.set(0, 0, 0);
+        
+        return mesh;
+    }
+
+    recomputeNurbsSurfaces() {
+
+        if (this.meshes !== null) {
+            this.meshes.forEach(mesh => {
+                this.app.scene.remove(mesh);
+            });
+            this.meshes = [];
+        }
+
+        // build nurb #1
+        let controlPoints = [ // U = 0
+            [ // V = 0..1
+                [-2.0, -2.0, 0.0, 1.0],
+                [-2.0,  2.0, 0.0, 1.0],
+            ],
+
+            // U = 1
+            [ // V = 0..1
+                [2.0, -2.0, 0.0, 1.0],
+                [2.0,  2.0, 0.0, 1.0],
+            ]
+        ]
+
+        let orderU = 1;
+        let orderV = 1;
+
+        let mesh = this.buildNurbsSurface(controlPoints, orderU, orderV);
+
+        this.app.scene.add(mesh);
+        this.meshes.push(mesh);
+    }
+
     init() {
        
         if (this.axis === null) {
@@ -348,6 +414,7 @@ class MyContents  {
         this.recomputeQuadraticBezierCurve();
         this.recomputeCubicBezierCurve();
         this.recomputeCatmullRomCurve();
+        this.recomputeNurbsSurfaces();
     }
     
     // useless
