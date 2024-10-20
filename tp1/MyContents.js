@@ -230,7 +230,7 @@ class MyContents  {
             new THREE.Vector3( -0.6,  0.6, 5.0 )
         ];
 
-        this.drawHull(position, points);
+        // this.drawHull(position, points);
 
         this.polyline = new MyPolyline(this.app, color, position, points);
         this.objects.push(this.polyline);
@@ -238,7 +238,10 @@ class MyContents  {
     }
 
     recomputePolyline() { 
-        if (this.polyline !== null) this.app.scene.remove(this.polyline);
+        if (this.polyline !== null) {
+            this.app.scene.remove(this.polyline);
+            this.objects.remove(this.polyline);
+        } 
         this.buildPolyline();
     }
 
@@ -254,7 +257,7 @@ class MyContents  {
             new THREE.Vector3(  0.6, -0.6, 0.0 )  // ending point
         ];
 
-        this.drawHull(position, points);
+        // this.drawHull(position, points);
 
         this.quadraticBezierCurve = new MyQuadraticBezierCurve(this.app, numberOfSamples, position, points);
         this.objects.push(this.quadraticBezierCurve);
@@ -262,7 +265,10 @@ class MyContents  {
     }
 
     recomputeQuadraticBezierCurve() {
-        if (this.quadraticBezierCurve !== null) this.app.scene.remove(this.quadraticBezierCurve);
+        if (this.quadraticBezierCurve !== null) {
+            this.app.scene.remove(this.quadraticBezierCurve);
+            this.objects.remove(this.quadraticBezierCurve);
+        }
         this.buildQuadraticBezierCurve();
     }
 
@@ -279,7 +285,7 @@ class MyContents  {
             new THREE.Vector3(  0.6,  0.6, 0.0 )  // ending point
         ];
 
-        this.drawHull(position, points);
+        // this.drawHull(position, points);
 
         this.cubicBezierCurve = new MyCubicBezierCurve(this.app, numberOfSamples, position, points);
         this.objects.push(this.cubicBezierCurve);
@@ -287,7 +293,10 @@ class MyContents  {
     }
 
     recomputeCubicBezierCurve() {
-        if (this.cubicBezierCurve !== null) this.app.scene.remove(this.cubicBezierCurve);
+        if (this.cubicBezierCurve !== null) {
+            this.app.scene.remove(this.cubicBezierCurve);
+            this.objects.remove(this.cubicBezierCurve);
+        }
         this.buildCubicBezierCurve();
     }
 
@@ -306,7 +315,7 @@ class MyContents  {
             new THREE.Vector3(  0.9,  0.6, 0.3 ),
             new THREE.Vector3(  1.2,  0.0, 0.0 ),
         ];
-
+        
         this.drawHull(position, points);
 
         this.catmullRomCurve = new MyCatmullRomCurve(this.app, numberOfSamples, position, points);
@@ -315,7 +324,10 @@ class MyContents  {
     }
 
     recomputeCatmullRomCurve() {
-        if (this.catmullRomCurve !== null) this.app.scene.remove(this.catmullRomCurve);
+        if (this.catmullRomCurve !== null) {
+            this.app.scene.remove(this.catmullRomCurve);
+            this.objects.remove(this.catmullRomCurve);
+        }
         this.buildCatmullRomCurve();
     }
 
@@ -410,11 +422,14 @@ class MyContents  {
         this.buildPainting();
         this.buildSofa();
         this.buildLamp();
+        
+        /*
         this.recomputePolyline();
         this.recomputeQuadraticBezierCurve();
         this.recomputeCubicBezierCurve();
         this.recomputeCatmullRomCurve();
         this.recomputeNurbsSurfaces();
+        */
     }
     
     // useless
