@@ -18,6 +18,9 @@ import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
 import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
 import { MyCatmullRomCurve } from './objects/MyCatmullRomCurve.js';
 import { MyNurbsBuilder } from './objects/MyNurbsBuilder.js';
+import { MySideTable } from './objects/MySideTable.js';
+import { MyStudioLamp } from './objects/MyStudioLamp.js';
+import { MyTableLamp } from './objects/MyTableLamp.js';
 
 
 class MyContents  {
@@ -52,6 +55,9 @@ class MyContents  {
         this.nurbsBuilder = null;
 
         this.meshes = [];
+        this.sidetable = null;
+        this.studioLamp = null;
+        this.tableLamp = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -77,25 +83,25 @@ class MyContents  {
 
     buildWalls() {
         const wallHeight = 10;
-
-        this.wall1 = new MyWall(this.app, this.floorWidth, wallHeight, 'wall1');
+        this.wall1 = new MyWall(this.app, this.floorWidth, wallHeight, false,  'wall1');
         this.wall1.position.set(0, wallHeight / 2, -this.floorLength / 2);
         this.app.scene.add(this.wall1);
         this.objects.push(this.wall1);
 
-        this.wall2 = new MyWall(this.app, this.floorWidth, wallHeight, 'wall2');
+        this.wall2 = new MyWall(this.app, this.floorWidth, wallHeight, false, 'wall2');
         this.wall2.rotation.y = 180 * Math.PI / 180;
         this.wall2.position.set(0, wallHeight / 2, this.floorLength / 2); 
         this.app.scene.add(this.wall2);
         this.objects.push(this.wall2);
 
-        this.wall3 = new MyWall(this.app, this.floorLength, wallHeight, 'wall3');
+        this.wall3 = new MyWall(this.app, this.floorLength, wallHeight, true, 'wall3');
         this.wall3.rotation.y = Math.PI / 2;
         this.wall3.position.set(-this.floorWidth / 2, wallHeight / 2, 0);
         this.app.scene.add(this.wall3);
         this.objects.push(this.wall3);
 
-        this.wall4 = new MyWall(this.app, this.floorLength, wallHeight, 'wall4');
+
+        this.wall4 = new MyWall(this.app, this.floorLength, wallHeight, false, 'wall4');
         this.wall4.rotation.y = -Math.PI / 2;
         this.wall4.position.set(this.floorWidth / 2, wallHeight / 2, 0);
         this.app.scene.add(this.wall4);
@@ -182,11 +188,15 @@ class MyContents  {
     }
 
     buildPainting() {
-        this.painting = new MyPainting(this.app);
-        this.painting.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
-        this.painting.scale.set(0.4, 0.4, 0.4);
-        this.objects.push(this.painting);
-        this.app.scene.add(this.painting);
+        this.painting1 = new MyPainting(this.app, "painting");
+        this.painting1.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
+        this.objects.push(this.painting1);
+        this.app.scene.add(this.painting1);
+
+        this.painting2 = new MyPainting(this.app, "painting2");
+        this.painting2.position.set(5, 6, -(this.floorLength / 2) + 0.1);
+        this.objects.push(this.painting2);
+        this.app.scene.add(this.painting2);
     }
 
     buildSofa() {
@@ -198,11 +208,29 @@ class MyContents  {
         this.app.scene.add(this.sofa);
     }
 
-    buildLamp() {
+    buildLamps() {
         this.lamp = new MyLamp(this.app);
-        this.lamp.position.set(0, 5, 0);
+        this.lamp.position.set(- this.floorLength / 2 - 1, 1.5, this.floorLength / 3);
         this.objects.push(this.lamp);
         this.app.scene.add(this.lamp);
+
+        this.studioLamp = new MyStudioLamp(this.app);
+        this.studioLamp.position.set(0, 9, 0);
+        this.objects.push(this.studioLamp);
+        this.app.scene.add(this.studioLamp);
+        
+        this.tableLamp = new MyTableLamp(this.app);
+        this.tableLamp.position.set(2.5, 3, 1.5);
+        this.tableLamp.rotation.y = Math.PI / 2.5;
+        this.objects.push(this.tableLamp);
+        this.app.scene.add(this.tableLamp);
+    }
+
+    buildSideTable() {
+        this.sidetable = new MySideTable(this.app);
+        this.sidetable.position.set(- this.floorLength / 2 - 1, 0, this.floorLength / 3);
+        this.objects.push(this.sidetable);
+        this.app.scene.add(this.sidetable);
     }
 
     drawHull(position, points) {
@@ -394,19 +422,11 @@ class MyContents  {
     init() {
        
         if (this.axis === null) {
-            this.axis = new MyAxis(this)
-            //this.app.scene.add(this.axis)
+            // this.axis = new MyAxis(this)
+            // this.app.scene.add(this.axis)
         }
 
-        const pointLight = new THREE.PointLight( 0xffffff, 2, 0, 0);
-        pointLight.position.set( 5, 20, 5 );
-        this.app.scene.add( pointLight );
-
-        const sphereSize = 0.5
-        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-        this.app.scene.add( pointLightHelper );
-
-        const ambientLight = new THREE.AmbientLight( 0x555555, 4 );
+        const ambientLight = new THREE.AmbientLight( 0x555555, 2 );
         this.app.scene.add( ambientLight );
 
         this.buildFloor();
@@ -421,7 +441,8 @@ class MyContents  {
         this.buildRug();
         this.buildPainting();
         this.buildSofa();
-        this.buildLamp();
+        this.buildLamps();
+        this.buildSideTable();
         
         /*
         this.recomputePolyline();
@@ -430,6 +451,7 @@ class MyContents  {
         this.recomputeCatmullRomCurve();
         this.recomputeNurbsSurfaces();
         */
+
     }
     
     // useless

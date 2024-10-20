@@ -19,10 +19,9 @@ class MyChair extends MyObject {
           const legMaterial = new THREE.MeshPhongMaterial({
                map: ironTexture,
                color: "#808080",
-               specular: "#808080",
+               specular: "#ffffff",
                shininess: 70,
                bumpScale: 0.1,
-
           });
 
           const seatGeometry = new THREE.BoxGeometry(seatWidth, seatHeight, seatDepth);
