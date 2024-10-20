@@ -14,6 +14,10 @@ import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
 import { MyPolyline } from './objects/MyPolyline.js';
+import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
+import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
+import { MyCatmullRomCurve } from './objects/MyCatmullRomCurve.js';
+import { MyNurbsBuilder } from './objects/MyNurbsBuilder.js';
 
 
 class MyContents  {
@@ -42,11 +46,18 @@ class MyContents  {
         this.painting = null;
         this.sofa = null;
         this.polyline = null;
+        this.quadraticBezierCurve = null;
+        this.cubicBezierCurve = null;
+        this.catmullRomCurve = null;
+        this.nurbsBuilder = null;
+
+        this.meshes = [];
 
         // aux vars
         this.floorWidth = 24;
         this.floorLength = 18;
-        this.numberOfSamples = 6;
+
+        this.buildNurbsBuilder();
     }
 
 
@@ -194,29 +205,179 @@ class MyContents  {
         this.app.scene.add(this.lamp);
     }
 
+    drawHull(position, points) {
+
+        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        
+        this.hullMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, opacity: 0.8, transparent: true} );
+        let line = new THREE.Line( geometry, this.hullMaterial );
+        line.position.set(position.x, position.y, position.z);
+        this.app.scene.add(line);
+    }
+
     buildPolyline() {
+
+        if (this.polyline !== null) this.app.scene.remove(this.polyline);
         
         let color = 0xff0000;
+        let position = new THREE.Vector3(-4,4,0);
+
         let points = [
 
-            new THREE.Vector3( -0.6, -0.6, 0.0 ),
+            new THREE.Vector3( -0.6, -0.6, 1.0 ),
             new THREE.Vector3(  0.6, -0.6, 0.0 ),
             new THREE.Vector3(  0.6,  0.6, 0.0 ),
-            new THREE.Vector3( -0.6,  0.6, 0.0 )
+            new THREE.Vector3( -0.6,  0.6, 5.0 )
         ];
 
-        let position = new THREE.Vector3(0,0,0);
+        this.drawHull(position, points);
 
-        this.polyline = new MyPolyline(this.app, color, points, position);
+        this.polyline = new MyPolyline(this.app, color, position, points);
         this.objects.push(this.polyline);
         this.app.scene.add(this.polyline);
     }
 
-    recompute() {
+    recomputePolyline() { 
         if (this.polyline !== null) this.app.scene.remove(this.polyline);
         this.buildPolyline();
     }
 
+    buildQuadraticBezierCurve() {
+
+        let numberOfSamples = 16;
+        let position = new THREE.Vector3(-2, 4, 0);
+
+        let points = [
+
+            new THREE.Vector3( -0.6, -0.6, 0.0 ), // starting point
+            new THREE.Vector3(    0,  0.6, 0.0 ), // control point
+            new THREE.Vector3(  0.6, -0.6, 0.0 )  // ending point
+        ];
+
+        this.drawHull(position, points);
+
+        this.quadraticBezierCurve = new MyQuadraticBezierCurve(this.app, numberOfSamples, position, points);
+        this.objects.push(this.quadraticBezierCurve);
+        this.app.scene.add(this.quadraticBezierCurve);
+    }
+
+    recomputeQuadraticBezierCurve() {
+        if (this.quadraticBezierCurve !== null) this.app.scene.remove(this.quadraticBezierCurve);
+        this.buildQuadraticBezierCurve();
+    }
+
+    buildCubicBezierCurve() {
+
+        let numberOfSamples = 500;
+        let position = new THREE.Vector3(-4, 0, 0);
+
+        let points = [
+
+            new THREE.Vector3( -0.6, -0.6, 0.0 ), // starting point
+            new THREE.Vector3( -0.6,  0.6, 0.0 ), // control point
+            new THREE.Vector3(  0.6, -0.6, 0.0 ), // control point
+            new THREE.Vector3(  0.6,  0.6, 0.0 )  // ending point
+        ];
+
+        this.drawHull(position, points);
+
+        this.cubicBezierCurve = new MyCubicBezierCurve(this.app, numberOfSamples, position, points);
+        this.objects.push(this.cubicBezierCurve);
+        this.app.scene.add(this.cubicBezierCurve);
+    }
+
+    recomputeCubicBezierCurve() {
+        if (this.cubicBezierCurve !== null) this.app.scene.remove(this.cubicBezierCurve);
+        this.buildCubicBezierCurve();
+    }
+
+    buildCatmullRomCurve() {
+
+        let numberOfSamples = 500;
+        let position = new THREE.Vector3(-4, 0, 0);
+
+        let points = [
+
+            new THREE.Vector3( -0.6,  0.0, 0.0 ), 
+            new THREE.Vector3( -0.3,  0.6, 0.3 ), 
+            new THREE.Vector3(  0.0,  0.0, 0.0 ), 
+            new THREE.Vector3(  0.3, -0.6, 0.3 ),
+            new THREE.Vector3(  0.6,  0.0, 0.0 ),
+            new THREE.Vector3(  0.9,  0.6, 0.3 ),
+            new THREE.Vector3(  1.2,  0.0, 0.0 ),
+        ];
+
+        this.drawHull(position, points);
+
+        this.catmullRomCurve = new MyCatmullRomCurve(this.app, numberOfSamples, position, points);
+        this.objects.push(this.catmullRomCurve);
+        this.app.scene.add(this.catmullRomCurve);
+    }
+
+    recomputeCatmullRomCurve() {
+        if (this.catmullRomCurve !== null) this.app.scene.remove(this.catmullRomCurve);
+        this.buildCatmullRomCurve();
+    }
+
+    buildNurbsBuilder() {
+
+        const map = new THREE.TextureLoader().load('textures/uv_grid_opengl.jpg');
+        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+        map.anisotropy = 16;
+        map.colorSpace = THREE.SRGBColorSpace;
+
+        this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide, transparent: true, opacity: 0.90 });
+        this.nurbsBuilder = new MyNurbsBuilder(this.app);
+        this.meshes = [];
+
+        this.samplesU = 8;
+        this.samplesV = 8;
+
+    }
+
+    buildNurbsSurface(controlPoints, orderU, orderV) {
+
+        let surfaceData = this.nurbsBuilder.build(controlPoints, orderU, orderV, this.samplesU, this.samplesV);
+        let mesh = new THREE.Mesh(surfaceData, this.material);
+
+        mesh.rotation.set(0, 0, 0);
+        mesh.scale.set(1, 1, 1);
+        mesh.position.set(0, 0, 0);
+        
+        return mesh;
+    }
+
+    recomputeNurbsSurfaces() {
+
+        if (this.meshes !== null) {
+            this.meshes.forEach(mesh => {
+                this.app.scene.remove(mesh);
+            });
+            this.meshes = [];
+        }
+
+        // build nurb #1
+        let controlPoints = [ // U = 0
+            [ // V = 0..1
+                [-2.0, -2.0, 0.0, 1.0],
+                [-2.0,  2.0, 0.0, 1.0],
+            ],
+
+            // U = 1
+            [ // V = 0..1
+                [2.0, -2.0, 0.0, 1.0],
+                [2.0,  2.0, 0.0, 1.0],
+            ]
+        ]
+
+        let orderU = 1;
+        let orderV = 1;
+
+        let mesh = this.buildNurbsSurface(controlPoints, orderU, orderV);
+
+        this.app.scene.add(mesh);
+        this.meshes.push(mesh);
+    }
 
     init() {
        
@@ -249,7 +410,11 @@ class MyContents  {
         this.buildPainting();
         this.buildSofa();
         this.buildLamp();
-        this.buildPolyline();
+        this.recomputePolyline();
+        this.recomputeQuadraticBezierCurve();
+        this.recomputeCubicBezierCurve();
+        this.recomputeCatmullRomCurve();
+        this.recomputeNurbsSurfaces();
     }
     
     // useless
