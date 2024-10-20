@@ -4,8 +4,9 @@ import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.j
 
 class MyNurbsBuilder {
 
-    constructor(app) {
+    constructor(app, name = 'nurbs') {
         this.app = app;
+        this.name = name;
     }
 
     build(controlPoints, degree1, degree2, samples1, samples2) {
