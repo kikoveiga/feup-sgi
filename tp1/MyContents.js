@@ -426,6 +426,7 @@ class MyContents  {
             // this.app.scene.add(this.axis)
         }
 
+  
         const ambientLight = new THREE.AmbientLight( 0x555555, 2 );
         this.app.scene.add( ambientLight );
 

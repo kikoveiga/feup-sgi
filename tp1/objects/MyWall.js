@@ -18,6 +18,7 @@ class MyWall extends MyObject {
         const wallGeometry = new THREE.PlaneGeometry(width, height);
         this.wallMesh = new THREE.Mesh(wallGeometry, this.wallMaterial);
         this.wallMesh.receiveShadow = true;
+        this.wallMesh.castShadow = true;
         this.add(this.wallMesh);
 
         this.addBaseboard(width, height);
@@ -44,6 +45,7 @@ class MyWall extends MyObject {
         const baseboardMesh = new THREE.Mesh(baseboardGeometry, baseboardMaterial);
         baseboardMesh.position.set(0, -height / 2 + baseboardHeight / 2, baseboardThickness / 2);
         baseboardMesh.receiveShadow = true;
+        baseboardMesh.castShadow = true;    
         this.add(baseboardMesh);
     }
 
@@ -69,11 +71,15 @@ class MyWall extends MyObject {
         const frameGeometry = new THREE.BoxGeometry(windowWidth + frameThickness, windowHeight + frameThickness, windowDepth);
         const frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         frameMesh.position.set(0, windowYPosition, windowDepth / 2);
+        frameMesh.castShadow = true;  
+        frameMesh.receiveShadow = true;
         this.add(frameMesh);
 
         const landscapeGeometry = new THREE.PlaneGeometry(windowWidth, windowHeight);
         const landscapeMesh = new THREE.Mesh(landscapeGeometry, landscapeMaterial);
         landscapeMesh.position.set(0, windowYPosition, windowDepth / 2 + 0.06); 
+        landscapeMesh.castShadow = true;  
+        landscapeMesh.receiveShadow = true;
         this.add(landscapeMesh);
 
         const auxGeometry1 = new THREE.PlaneGeometry(windowWidth, 0.1);
@@ -102,7 +108,6 @@ class MyWall extends MyObject {
         target.position.set(-10, 0, 8); 
         this.add(target);
         dirLight.target = target;
-    
         dirLight.castShadow = true;
         this.add(dirLight);
     

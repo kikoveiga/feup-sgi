@@ -20,6 +20,8 @@ class MyPainting extends THREE.Object3D {
         this.paintingMesh = new THREE.Mesh(paintingGeometry, paintingMaterial);
         this.paintingMesh.position.set(0, 0, 0.01);  
         this.paintingMesh.scale.set(0.4, 0.4, 0.4);
+        this.paintingMesh.castShadow = true;
+        this.paintingMesh.receiveShadow = true;
 
         const frameMaterial = new THREE.MeshPhongMaterial({
             map: woodTexture,
@@ -44,18 +46,24 @@ class MyPainting extends THREE.Object3D {
         this.frameMesh = new THREE.Mesh(frameGeometry, frameMaterial);
         this.frameMesh.position.set(0, 0, -frameThickness / 2);
         this.frameMesh.scale.set(0.4, 0.4, 0.4);
+        this.frameMesh.castShadow = true;
+        this.frameMesh.receiveShadow = true;
 
         const chandelierGeometry = new THREE.ConeGeometry(0.25, 0.5, 16, 1, true);
         this.chandelierMesh = new THREE.Mesh(chandelierGeometry, chandelierMaterial);
         this.chandelierMesh.position.set(0, frameHeight / 2 - 2.5, 0.6); 
         this.chandelierMesh.rotation.y = Math.PI; 
         this.chandelierMesh.rotation.x = 10 * Math.PI / 180;
+        this.chandelierMesh.castShadow = true;
+        this.chandelierMesh.receiveShadow = true;
 
         const auxGeometry = new THREE.CylinderGeometry(0.2, 0.2, 1.5, 32);
         this.auxMesh = new THREE.Mesh(auxGeometry, chandelierMaterial);
         this.auxMesh.position.set(0, frameHeight / 2 - 2.5, 0.3);
         this.auxMesh.rotation.x = -Math.PI / 2; 
         this.auxMesh.scale.set(0.4, 0.4, 0.4);
+        this.auxMesh.castShadow = true;
+        this.auxMesh.receiveShadow = true;
 
         this.add(this.frameMesh);
         this.add(this.paintingMesh);
@@ -64,15 +72,12 @@ class MyPainting extends THREE.Object3D {
 
         const spotLight = new THREE.SpotLight(0xffee8c, 30, 10, Math.PI / 3.5, 0.3, 2);
         spotLight.position.set(0, frameHeight / 2 - 2.5, 0.65); 
-        spotLight.castShadow = true;
 
         const target = new THREE.Object3D();
         target.position.set(0, 0, 0.01);
         this.add(target);
         spotLight.target = target;
-
-        // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-        // this.add(spotLightHelper);
+        spotLight.castShadow = true;
         this.add(spotLight);
     }
 }

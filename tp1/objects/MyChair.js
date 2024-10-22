@@ -27,12 +27,16 @@ class MyChair extends MyObject {
           const seatGeometry = new THREE.BoxGeometry(seatWidth, seatHeight, seatDepth);
           const seatMesh = new THREE.Mesh(seatGeometry, seatMaterial);
           seatMesh.position.y = legHeight; 
+          seatMesh.castShadow = true;
+          seatMesh.receiveShadow = true;
           this.add(seatMesh);
 
           const createLeg1 = (x, z) => {
                const legGeometry = new THREE.CylinderGeometry(legRadius, legRadius, legHeight, 32);
                const legMesh = new THREE.Mesh(legGeometry, legMaterial);
                legMesh.position.set(x, legHeight / 2, z);
+               legMesh.castShadow = true;
+               legMesh.receiveShadow = true;
                this.add(legMesh);
           };
 
@@ -40,6 +44,8 @@ class MyChair extends MyObject {
                const legGeometry = new THREE.CylinderGeometry(legRadius, legRadius, legHeight + 2, 32);
                const legMesh = new THREE.Mesh(legGeometry, legMaterial);
                legMesh.position.set(x, legHeight + 0.3, z);
+               legMesh.castShadow = true;
+               legMesh.receiveShadow = true;
                this.add(legMesh);
           };
 
@@ -60,6 +66,12 @@ class MyChair extends MyObject {
           backrestMesh1.position.set(0, legHeight + backrestHeight / 2 - 0.5, -seatDepth / 2 + seatHeight / 2);  
           backrestMesh2.position.set(0, legHeight + backrestHeight / 2 + 0.1, -seatDepth / 2 + seatHeight / 2);  
           backrestMesh3.position.set(0, legHeight + backrestHeight / 2 + 0.7, -seatDepth / 2 + seatHeight / 2);  
+          backrestMesh1.castShadow = true;
+          backrestMesh1.receiveShadow = true;
+          backrestMesh2.castShadow = true;
+          backrestMesh2.receiveShadow = true;
+          backrestMesh3.castShadow = true;
+          backrestMesh3.receiveShadow = true;
           this.add(backrestMesh1);
           this.add(backrestMesh2);
           this.add(backrestMesh3);

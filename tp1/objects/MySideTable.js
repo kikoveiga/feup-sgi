@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 class MySideTable extends THREE.Object3D {
-     constructor(app, tableRadius = 1, tableHeight = 1.5, legRadius = 0.1, legHeight = 1.4, name = 'side table') {
+     constructor(app, tableRadius = 1, tableHeight = 1.5, legRadius = 0.1, legHeight = 1.4, name= 'side table') {
           super(app, name);
 
           const woodTexture = new THREE.TextureLoader().load('./textures/wood2.jpg');
@@ -23,6 +23,8 @@ class MySideTable extends THREE.Object3D {
           const tabletopGeometry = new THREE.CylinderGeometry(tableRadius, tableRadius, 0.1, 32);
           const tabletopMesh = new THREE.Mesh(tabletopGeometry, tableTopMaterial);
           tabletopMesh.position.set(0, tableHeight, 0);
+          tabletopMesh.castShadow = true;
+          tabletopMesh.receiveShadow = true;
           this.add(tabletopMesh);
 
           // Legs
@@ -37,6 +39,8 @@ class MySideTable extends THREE.Object3D {
      addLeg(x, y, z, legGeometry, legMaterial) {
           const leg = new THREE.Mesh(legGeometry, legMaterial);
           leg.position.set(x, y, z);
+          leg.castShadow = true;
+          leg.receiveShadow = true;
           this.add(leg);
      }
 }

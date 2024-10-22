@@ -32,7 +32,8 @@ class MyRug extends MyObject {
         this.rugMesh = new THREE.Mesh(rugGeometry, rugMaterial);
         this.rugMesh.rotation.x = -Math.PI / 2;
         this.rugMesh.position.y = 0.01; 
-
+        this.rugMesh.receiveShadow = true;
+        this.rugMesh.castShadow = true;
         this.add(this.rugMesh);
     }
 }

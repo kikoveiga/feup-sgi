@@ -33,6 +33,17 @@ class MyStudioLamp extends MyObject {
           lampBody.position.set(0, -cableLength / 2, 0);
           rectLight.position.set(0, -cableLength / 2 - height / 2, 0);
           
+          lampBody.receiveShadow = true;
+          lampBody.castShadow = true;
+
+          rightCable.receiveShadow = true;
+          rightCable.castShadow = true;
+
+          leftCable.receiveShadow = true;
+          leftCable.castShadow = true;
+
+          rectLight.castShadow = true;
+
           this.add(lampBody);
           this.add(rectLight);
           this.add(rightCable);

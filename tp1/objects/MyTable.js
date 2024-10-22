@@ -44,6 +44,8 @@ class MyTable extends MyObject {
         const tableTopMesh = new THREE.Mesh(tableTop, tableMaterial);
         tableTopMesh.rotation.x = - Math.PI / 2;
         tableTopMesh.position.y = 2.05;
+        tableTopMesh.receiveShadow = true;
+        tableTopMesh.castShadow = true;
         this.add(tableTopMesh);
 
         // TABLE LEGS
@@ -51,6 +53,8 @@ class MyTable extends MyObject {
             const legGeometry = new THREE.CylinderGeometry(radiusLegs, radiusLegs, 2, 32);
             const legMesh = new THREE.Mesh(legGeometry, legMaterial);
             legMesh.position.set(x, 1, z);
+            legMesh.receiveShadow = true;
+            legMesh.castShadow = true;
             this.add(legMesh);
         };
 
