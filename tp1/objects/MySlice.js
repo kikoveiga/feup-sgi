@@ -29,6 +29,8 @@ class MySlice extends MyObject {
         const cakeGeometry = new THREE.CylinderGeometry(radius, radius, height, 50, 1, false, p1rotation, p2rotation);
         const cakeMesh = new THREE.Mesh(cakeGeometry, this.cakeMaterial1);
 
+        cakeMesh.receiveShadow = true;
+        cakeMesh.castShadow = true;
 
         let planeGeometry = new THREE.PlaneGeometry(width, height);
 
@@ -45,9 +47,6 @@ class MySlice extends MyObject {
 
         plane2Mesh.receiveShadow = true;
         plane2Mesh.castShadow = true;
-
-     //    this.cakeMesh.receiveShadow = true;
-     //    this.cakeMesh.castShadow = true;
 
         cakeMesh.add(plane1Mesh);
         cakeMesh.add(plane2Mesh);

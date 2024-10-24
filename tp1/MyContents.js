@@ -163,7 +163,7 @@ class MyContents  {
         this.app.scene.add(this.chair1);
         this.objects.push(this.chair1);
 
-        this.chair2.position.set(-1.5, 1.1, 3.5);
+        this.chair2.position.set(-2, 1.1, 4);
         this.chair2.scale.set(1.2, 1.2, 1.2);
         this.chair2.rotation.x = - Math.PI / 2;
         this.chair2.rotation.z = 130 * Math.PI / 180;
@@ -212,7 +212,7 @@ class MyContents  {
         this.sofa = new MySofa(this.app);
         this.sofa.scale.set(1.3, 1.3, 1.3);
         this.sofa.rotation.y = Math.PI / 2;
-        this.sofa.position.set(- this.floorLength / 2 - 1, 0.3, 0);
+        this.sofa.position.set(- this.floorLength / 2 - 1, 0.3, 0); 
         this.objects.push(this.sofa);
         this.app.scene.add(this.sofa);
     }

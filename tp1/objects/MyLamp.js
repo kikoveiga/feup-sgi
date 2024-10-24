@@ -51,13 +51,16 @@ class MyLamp extends MyObject {
           this.add(shadeMesh);
 
           // LIGHT
-          const pointLight = new THREE.PointLight(0xffffff, 5, 20); 
+          const pointLight = new THREE.PointLight(0xffffff, 4, 10); 
           pointLight.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0); 
           pointLight.castShadow = true;
-          this.add(pointLight);
+          pointLight.shadow.mapSize.width = 1024;
+          pointLight.shadow.mapSize.height = 1024;
+          pointLight.shadow.camera.near = 0.1;  
+          pointLight.shadow.camera.far = 5;  
+          pointLight.shadow.bias = -0.001; 
 
-          const pointLightHelper = new THREE.PointLightHelper( pointLight, 1 );
-          this.add( pointLightHelper );
+          this.add(pointLight);
 
           const bulbGeometry = new THREE.SphereGeometry(0.1, 16, 16);
           const bulbMaterial = new THREE.MeshBasicMaterial({ color: 0xffde21 });

@@ -8,21 +8,26 @@ class MyChair extends MyObject {
 
           const ironTexture = new THREE.TextureLoader().load('./textures/iron.jpg');
 
-          const seatMaterial = new THREE.MeshPhongMaterial({
-               map: ironTexture,
-               color: "#dddddd",
-               specular: "#808080",
-               shininess: 70, 
-               bumpScale: 0.1,  
+          const seatMaterial = new THREE.MeshPhysicalMaterial({
+               map: ironTexture,           
+               color: "#dddddd",           
+               roughness: 0.5,              
+               metalness: 0.2,            
+               bumpMap: ironTexture,        
+               bumpScale: 0.02,             
+               reflectivity: 0.5,           
           });
-
-          const legMaterial = new THREE.MeshPhongMaterial({
-               map: ironTexture,
-               color: "#808080",
-               specular: "#ffffff",
-               shininess: 70,
-               bumpScale: 0.1,
+          
+          const legMaterial = new THREE.MeshPhysicalMaterial({
+               map: ironTexture,            
+               color: "#808080",           
+               roughness: 0.3,              
+               metalness: 0.6,              
+               bumpMap: ironTexture,        
+               bumpScale: 0.02,             
+               reflectivity: 0.7,          
           });
+ 
 
           const seatGeometry = new THREE.BoxGeometry(seatWidth, seatHeight, seatDepth);
           const seatMesh = new THREE.Mesh(seatGeometry, seatMaterial);

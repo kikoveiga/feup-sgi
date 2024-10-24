@@ -28,6 +28,8 @@ class MyCake extends MyObject {
         const cakeGeometry = new THREE.CylinderGeometry(radius, radius, height, 50, 1, false, p1rotation, p2rotation);
         const cakeMesh = new THREE.Mesh(cakeGeometry, this.cakeMaterial1);
 
+        cakeMesh.receiveShadow = true;
+        cakeMesh.castShadow = true;
 
         let planeGeometry = new THREE.PlaneGeometry(width, height);
 

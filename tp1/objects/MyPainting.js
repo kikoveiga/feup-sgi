@@ -57,7 +57,7 @@ class MyPainting extends THREE.Object3D {
         this.chandelierMesh.castShadow = true;
         this.chandelierMesh.receiveShadow = true;
 
-        const auxGeometry = new THREE.CylinderGeometry(0.2, 0.2, 1.5, 32);
+        const auxGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 32);
         this.auxMesh = new THREE.Mesh(auxGeometry, chandelierMaterial);
         this.auxMesh.position.set(0, frameHeight / 2 - 2.5, 0.3);
         this.auxMesh.rotation.x = -Math.PI / 2; 
@@ -72,6 +72,10 @@ class MyPainting extends THREE.Object3D {
 
         const spotLight = new THREE.SpotLight(0xffee8c, 30, 10, Math.PI / 3.5, 0.3, 2);
         spotLight.position.set(0, frameHeight / 2 - 2.5, 0.65); 
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 10;
+        spotLight.shadow.camera.fov = 30;  
+
 
         const target = new THREE.Object3D();
         target.position.set(0, 0, 0.01);

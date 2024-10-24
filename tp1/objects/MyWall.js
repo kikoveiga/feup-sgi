@@ -44,8 +44,7 @@ class MyWall extends MyObject {
         const baseboardGeometry = new THREE.BoxGeometry(width, baseboardHeight, baseboardThickness);
         const baseboardMesh = new THREE.Mesh(baseboardGeometry, baseboardMaterial);
         baseboardMesh.position.set(0, -height / 2 + baseboardHeight / 2, baseboardThickness / 2);
-        baseboardMesh.receiveShadow = true;
-        baseboardMesh.castShadow = true;    
+        baseboardMesh.receiveShadow = true;    
         this.add(baseboardMesh);
     }
 
@@ -79,21 +78,18 @@ class MyWall extends MyObject {
         const landscapeMesh = new THREE.Mesh(landscapeGeometry, landscapeMaterial);
         landscapeMesh.position.set(0, windowYPosition, windowDepth / 2 + 0.06); 
         landscapeMesh.castShadow = true;  
-        landscapeMesh.receiveShadow = true;
         this.add(landscapeMesh);
 
         const auxGeometry1 = new THREE.PlaneGeometry(windowWidth, 0.1);
         const auxMesh1 = new THREE.Mesh(auxGeometry1, frameMaterial);
         auxMesh1.position.set(0, windowYPosition, windowDepth / 2 + 0.07); 
         auxMesh1.castShadow = true;  
-        auxMesh1.receiveShadow = true;
         this.add(auxMesh1);
 
         const auxGeometry2 = new THREE.PlaneGeometry(0.1, windowHeight);
         const auxMesh2 = new THREE.Mesh(auxGeometry2, frameMaterial);
         auxMesh2.position.set(0, windowYPosition, windowDepth / 2 + 0.07); 
         auxMesh2.castShadow = true;  
-        auxMesh2.receiveShadow = true; 
         this.add(auxMesh2);
 
         this.addDirectionalLight();
@@ -101,18 +97,24 @@ class MyWall extends MyObject {
 
     addDirectionalLight() {
         const dirLight = new THREE.DirectionalLight(0x2a9df4, 0.8);
+        dirLight.shadow.camera.left = -10;
+        dirLight.shadow.camera.right = 10;
+        dirLight.shadow.camera.top = 10;
+        dirLight.shadow.camera.bottom = -10;
+        dirLight.shadow.camera.near = -0.1;
+        dirLight.shadow.camera.far = 50;
+        dirLight.shadow.mapSize.width = 1024;  
+        dirLight.shadow.mapSize.height = 1024;
 
         dirLight.position.set(0, 0, 1);   
     
         const target = new THREE.Object3D();
-        target.position.set(0.3, 0, 3); 
+        target.position.set(0.02, -0.1, 4); 
         this.add(target);
         dirLight.target = target;
         dirLight.castShadow = true;
         this.add(dirLight);
     
-        const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 3);
-        this.add(dirLightHelper);
     }
     
 }

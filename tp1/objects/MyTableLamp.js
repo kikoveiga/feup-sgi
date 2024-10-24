@@ -64,10 +64,13 @@ class MyTableLamp extends MyObject {
         this.add(sphereMesh);
 
         // SPOTLIGHT
-        const spotLight = new THREE.SpotLight(0xffffff, 4, 7, Math.PI / 6, 0.2, 1);
+        const spotLight = new THREE.SpotLight(0xffffff, 8, 7, Math.PI / 5, 0.2, 1);
         spotLight.position.set(0, poleHeight + 0.6, -0.45); 
         spotLight.target.position.set(0, poleHeight - 1, -1.5); 
         spotLight.castShadow = true;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 5;
+        spotLight.shadow.camera.fov = 30; 
         this.add(spotLight);
         this.add(spotLight.target);
     }

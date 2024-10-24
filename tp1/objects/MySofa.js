@@ -40,8 +40,8 @@ class MySofa extends MyObject {
           const backrestGeometry = new THREE.BoxGeometry(width, height, 0.5);
           this.backrestMesh = new THREE.Mesh(backrestGeometry, sofaMaterial);
           this.backrestMesh.position.set(0, height / 2 + 0.25, -depth / 2 + 0.25);
-          // this.backrestMesh.receiveShadow = true;
-          // this.backrestMesh.castShadow = true;
+          this.backrestMesh.receiveShadow = true;
+          this.backrestMesh.castShadow = true;
           this.add(this.backrestMesh);
 
           // SIDES

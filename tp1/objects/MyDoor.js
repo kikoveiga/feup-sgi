@@ -38,15 +38,6 @@ class MyDoor extends MyObject {
           this.auxMesh.position.set(-1.3, height / 2 - 0.2, -0.1);
           this.auxMesh.rotation.x = Math.PI / 2;
 
-          this.doorMesh.receiveShadow = true;
-          this.doorMesh.castShadow = true;
-
-          this.handleMesh.receiveShadow = true;
-          this.handleMesh.castShadow = true;
-
-          this.auxMesh.receiveShadow = true;
-          this.auxMesh.castShadow = true;
-
           this.add(this.doorMesh);
           this.add(this.handleMesh);
           this.add(this.auxMesh);
