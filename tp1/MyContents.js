@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { MyAxis } from './MyAxis.js';
 import { MyTable } from './objects/MyTable.js';
 import { MyFloor } from './objects/MyFloor.js';
 import { MyWall } from './objects/MyWall.js';
@@ -21,6 +20,7 @@ import { MyNurbsBuilder } from './objects/MyNurbsBuilder.js';
 import { MySideTable } from './objects/MySideTable.js';
 import { MyStudioLamp } from './objects/MyStudioLamp.js';
 import { MyTableLamp } from './objects/MyTableLamp.js';
+import { MyBeetle } from './objects/MyBeetle.js';
 
 
 class MyContents  {
@@ -46,13 +46,15 @@ class MyContents  {
         this.cup = null;
         this.door = null;
         this.rug = null;
-        this.painting = null;
+        this.painting1 = null;
+        this.painting2 = null;
         this.sofa = null;
         this.polyline = null;
         this.quadraticBezierCurve = null;
         this.cubicBezierCurve = null;
         this.catmullRomCurve = null;
         this.nurbsBuilder = null;
+        this.beetle = null;
 
         this.meshes = [];
         this.sidetable = null;
@@ -187,13 +189,13 @@ class MyContents  {
         this.app.scene.add(this.rug);
     }
 
-    buildPainting() {
-        this.painting1 = new MyPainting(this.app, "painting");
+    buildPaintings() {
+        this.painting1 = new MyPainting(this.app, 'painting1');
         this.painting1.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
         this.objects.push(this.painting1);
         this.app.scene.add(this.painting1);
 
-        this.painting2 = new MyPainting(this.app, "painting2");
+        this.painting2 = new MyPainting(this.app, 'painting2');
         this.painting2.position.set(5, 6, -(this.floorLength / 2) + 0.1);
         this.objects.push(this.painting2);
         this.app.scene.add(this.painting2);
@@ -241,6 +243,15 @@ class MyContents  {
         let line = new THREE.Line( geometry, this.hullMaterial );
         line.position.set(position.x, position.y, position.z);
         this.app.scene.add(line);
+    }
+
+    buildBeetle() {
+        this.beetle = new MyBeetle(this.app);
+        this.beetle.position.set(0, 5, this.floorLength / 2 - 0.1);
+        this.beetle.rotation.y = Math.PI;
+        this.beetle.scale.set(0.3, 0.3, 0.3);
+        this.app.scene.add(this.beetle);
+        this.objects.push(this.beetle);
     }
 
     buildPolyline() {
@@ -439,10 +450,11 @@ class MyContents  {
         this.buildCup();
         this.buildDoor();
         this.buildRug();
-        this.buildPainting();
+        this.buildPaintings();
         this.buildSofa();
         this.buildLamps();
         this.buildSideTable();
+        this.buildBeetle();
         
         /*
         this.recomputePolyline();
