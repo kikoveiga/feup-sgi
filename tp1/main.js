@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { MyApp } from './MyApp.js';
 import { MyGuiInterface } from './MyGuiInterface.js';
 import { MyContents } from './MyContents.js';

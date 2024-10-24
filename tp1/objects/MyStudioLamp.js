@@ -19,7 +19,7 @@ class MyStudioLamp extends MyObject {
           const lampBodyGeometry = new THREE.BoxGeometry(width, height, depth);
           const lampBody = new THREE.Mesh(lampBodyGeometry, lampBodyMaterial);
           
-          const rectLight = new THREE.RectAreaLight(0xffffff, 15, width, depth);
+          const rectLight = new THREE.RectAreaLight(0xffffff, 13, width, depth);
           rectLight.position.set(0, -height / 2, 0); 
           rectLight.rotation.y = Math.PI / 2;
           rectLight.lookAt(0, -1, 0); 

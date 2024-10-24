@@ -1,6 +1,4 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import { MyApp } from './MyApp.js';
-import { MyContents } from './MyContents.js';
 
 /**
     This class customizes the gui interface for the app
@@ -51,6 +49,8 @@ class MyGuiInterface  {
                 });
             }
         });
+
+        console.log(this.contents);
 
         if (this.contents && this.contents.objects) {
             this.contents.objects.forEach((object) => {

@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
-class MyPainting extends THREE.Object3D {
-    constructor(app, paintName, paintingWidth = 16, paintingHeight = 9, frameThickness = 0.2, name = 'painting') {
+class MyPainting extends MyObject {
+    constructor(app, name = 'painting', paintingWidth = 7.5, paintingHeight = 9, frameThickness = 0.2) {
         super(app, name);
+
         this.type = 'Group';
 
-        const paintingTexturePath = `./textures/${paintName}.jpg`;
+        const paintingTexturePath = `./textures/${name}.jpg`;
         const paintingTexture = new THREE.TextureLoader().load(paintingTexturePath);
         const woodTexture = new THREE.TextureLoader().load('./textures/wood.jpg');
         const woodTexture2 = new THREE.TextureLoader().load('./textures/wood2.jpg');
@@ -18,7 +19,7 @@ class MyPainting extends THREE.Object3D {
 
         const paintingGeometry = new THREE.PlaneGeometry(paintingWidth, paintingHeight);
         this.paintingMesh = new THREE.Mesh(paintingGeometry, paintingMaterial);
-        this.paintingMesh.position.set(0, 0, 0.01);  
+        this.paintingMesh.position.set(0, 0, 0.001);  
         this.paintingMesh.scale.set(0.4, 0.4, 0.4);
         this.paintingMesh.castShadow = true;
         this.paintingMesh.receiveShadow = true;
@@ -51,7 +52,7 @@ class MyPainting extends THREE.Object3D {
 
         const chandelierGeometry = new THREE.ConeGeometry(0.25, 0.5, 16, 1, true);
         this.chandelierMesh = new THREE.Mesh(chandelierGeometry, chandelierMaterial);
-        this.chandelierMesh.position.set(0, frameHeight / 2 - 2.5, 0.6); 
+        this.chandelierMesh.position.set(0, frameHeight / 2 - 2.7, 0.6); 
         this.chandelierMesh.rotation.y = Math.PI; 
         this.chandelierMesh.rotation.x = 10 * Math.PI / 180;
         this.chandelierMesh.castShadow = true;
@@ -59,7 +60,7 @@ class MyPainting extends THREE.Object3D {
 
         const auxGeometry = new THREE.CylinderGeometry(0.2, 0.2, 2, 32);
         this.auxMesh = new THREE.Mesh(auxGeometry, chandelierMaterial);
-        this.auxMesh.position.set(0, frameHeight / 2 - 2.5, 0.3);
+        this.auxMesh.position.set(0, frameHeight / 2 - 2.7, 0.3);
         this.auxMesh.rotation.x = -Math.PI / 2; 
         this.auxMesh.scale.set(0.4, 0.4, 0.4);
         this.auxMesh.castShadow = true;
@@ -70,11 +71,11 @@ class MyPainting extends THREE.Object3D {
         this.add(this.chandelierMesh);
         this.add(this.auxMesh);
 
-        const spotLight = new THREE.SpotLight(0xffee8c, 30, 10, Math.PI / 3.5, 0.3, 2);
-        spotLight.position.set(0, frameHeight / 2 - 2.5, 0.65); 
+        const spotLight = new THREE.SpotLight(0xffeecc, 15, 10, Math.PI / 3.5, 0.3, 2);
+        spotLight.position.set(0, frameHeight / 2 - 2.75, 0.65); 
         spotLight.shadow.camera.near = 0.1;
         spotLight.shadow.camera.far = 10;
-        spotLight.shadow.camera.fov = 30;  
+        spotLight.shadow.camera.fov = 25;  
 
 
         const target = new THREE.Object3D();

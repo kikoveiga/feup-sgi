@@ -21,7 +21,7 @@ class MyTable extends MyObject {
             map: glassTexture,         
             color: "#eeeeff",          
             transparent: true,         
-            opacity: 0.5,              
+            opacity: 0.7,              
             roughness: 0.05,           
             metalness: 0.0,           
             reflectivity: 0.9,         

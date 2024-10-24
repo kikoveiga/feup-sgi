@@ -1,7 +1,8 @@
 import * as THREE from 'three';
+import { MyObject } from './MyObject.js';
 
-class MySideTable extends THREE.Object3D {
-     constructor(app, tableRadius = 1, tableHeight = 1.5, legRadius = 0.1, legHeight = 1.4, name= 'side table') {
+class MySideTable extends MyObject {
+     constructor(app, tableRadius = 1, tableHeight = 1.5, legRadius = 0.1, legHeight = 1.4, name = 'side table') {
           super(app, name);
 
           const woodTexture = new THREE.TextureLoader().load('./textures/wood2.jpg');
