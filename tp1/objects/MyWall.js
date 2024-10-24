@@ -101,18 +101,18 @@ class MyWall extends MyObject {
 
     addDirectionalLight() {
         const dirLight = new THREE.DirectionalLight(0x2a9df4, 0.8);
-        
-        dirLight.position.set(-12, 6, 0); 
+
+        dirLight.position.set(0, 0, 1);   
     
         const target = new THREE.Object3D();
-        target.position.set(-10, 0, 8); 
+        target.position.set(0.3, 0, 3); 
         this.add(target);
         dirLight.target = target;
         dirLight.castShadow = true;
         this.add(dirLight);
     
-        // const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 3);
-        // this.add(dirLightHelper);
+        const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 3);
+        this.add(dirLightHelper);
     }
     
 }

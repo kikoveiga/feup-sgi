@@ -53,6 +53,16 @@ class MyCandle extends MyObject {
         stringMesh.position.y = height - 0.45;
         stringMesh.position.z = 0;
         
+
+        candleMesh.receiveShadow = true;
+        candleMesh.castShadow = true;
+        flameMesh.receiveShadow = true;
+        flameMesh.castShadow = true;
+        halfSphereMesh.receiveShadow = true;
+        halfSphereMesh.castShadow = true;
+        stringMesh.receiveShadow = true;
+        stringMesh.castShadow = true;
+        
         this.add(candleMesh);
         this.add(flameMesh);
         this.add(halfSphereMesh);

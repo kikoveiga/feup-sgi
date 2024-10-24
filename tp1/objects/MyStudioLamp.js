@@ -42,7 +42,6 @@ class MyStudioLamp extends MyObject {
           leftCable.receiveShadow = true;
           leftCable.castShadow = true;
 
-          rectLight.castShadow = true;
 
           this.add(lampBody);
           this.add(rectLight);

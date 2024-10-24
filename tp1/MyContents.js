@@ -13,6 +13,7 @@ import { MyRug } from './objects/MyRug.js';
 import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
+import { MySlice } from './objects/MySlice.js';
 import { MyPolyline } from './objects/MyPolyline.js';
 import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
 import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
@@ -53,6 +54,7 @@ class MyContents  {
         this.cubicBezierCurve = null;
         this.catmullRomCurve = null;
         this.nurbsBuilder = null;
+        this.slice = null;
 
         this.meshes = [];
         this.sidetable = null;
@@ -135,6 +137,13 @@ class MyContents  {
         this.cake.position.set(0.9, 3.3, 0.9);
         this.app.scene.add(this.cake);
         this.objects.push(this.cake);
+
+        this.slice = new MySlice(this.app);
+        this.slice.position.set(-0.25, 3.1, -2);
+        this.slice.rotation.z = Math.PI / 2;
+        this.slice.rotation.y = 30 * Math.PI / 180;
+        this.app.scene.add(this.slice);
+        this.objects.push(this.slice);
     }
 
     buildCandle() {

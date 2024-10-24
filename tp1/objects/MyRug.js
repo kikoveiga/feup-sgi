@@ -23,8 +23,7 @@ class MyRug extends MyObject {
             roughness: 0.8,        
             metalness: 0.0,        
             reflectivity: 0.1,     
-            clearcoat: 0.0,        
-            shininess: 10,         
+            clearcoat: 0.0,                
         });
 
         const rugGeometry = new THREE.PlaneGeometry(width, length);

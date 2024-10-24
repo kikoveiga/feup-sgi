@@ -11,13 +11,13 @@ class MySofa extends MyObject {
 
           const sofaMaterial = new THREE.MeshPhongMaterial({
                map: texture1,
-               color: "000000",
+               color: "#ffffff",
                shininess: 10,
           });
 
           const cushionMaterial = new THREE.MeshPhongMaterial({
                map: texture2,
-               color: "000000",
+               color: "#ffffff",
                shininess: 30,
           });
 
@@ -26,7 +26,6 @@ class MySofa extends MyObject {
                color: "#000000",
                specular: "#000000",
                shininess: 70,
-               bumpScale: 0.1,
           });
 
           // BASE
@@ -41,8 +40,8 @@ class MySofa extends MyObject {
           const backrestGeometry = new THREE.BoxGeometry(width, height, 0.5);
           this.backrestMesh = new THREE.Mesh(backrestGeometry, sofaMaterial);
           this.backrestMesh.position.set(0, height / 2 + 0.25, -depth / 2 + 0.25);
-          this.backrestMesh.receiveShadow = true;
-          this.backrestMesh.castShadow = true;
+          // this.backrestMesh.receiveShadow = true;
+          // this.backrestMesh.castShadow = true;
           this.add(this.backrestMesh);
 
           // SIDES
