@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
-class MyPainting extends THREE.Object3D {
-    constructor(app, paintName, paintingWidth = 16, paintingHeight = 9, frameThickness = 0.2, name = 'painting') {
+class MyPainting extends MyObject {
+    constructor(app, name = 'painting', paintingWidth = 16, paintingHeight = 9, frameThickness = 0.2) {
         super(app, name);
+
         this.type = 'Group';
 
-        const paintingTexturePath = `./textures/${paintName}.jpg`;
+        const paintingTexturePath = `./textures/${name}.jpg`;
         const paintingTexture = new THREE.TextureLoader().load(paintingTexturePath);
         const woodTexture = new THREE.TextureLoader().load('./textures/wood.jpg');
         const woodTexture2 = new THREE.TextureLoader().load('./textures/wood2.jpg');
