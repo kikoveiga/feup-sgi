@@ -8,7 +8,7 @@ class MyBeetle extends MyObject {
         this.type = 'Group';
 
 
-        this.painting = new MyPainting(app, 'ceu');
+        this.painting = new MyPainting(app, 'ceu', 12, 6, 0.2, true);
         this.painting.position.set(5, 2.5, -0.1);  
         this.painting.scale.set(5.75, 5.75, 5.75);       
         this.add(this.painting);
