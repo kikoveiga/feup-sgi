@@ -23,8 +23,7 @@ class MyRug extends MyObject {
             roughness: 0.8,        
             metalness: 0.0,        
             reflectivity: 0.1,     
-            clearcoat: 0.0,        
-            shininess: 10,         
+            clearcoat: 0.0,                
         });
 
         const rugGeometry = new THREE.PlaneGeometry(width, length);
@@ -32,7 +31,8 @@ class MyRug extends MyObject {
         this.rugMesh = new THREE.Mesh(rugGeometry, rugMaterial);
         this.rugMesh.rotation.x = -Math.PI / 2;
         this.rugMesh.position.y = 0.01; 
-
+        this.rugMesh.receiveShadow = true;
+        this.rugMesh.castShadow = true;
         this.add(this.rugMesh);
     }
 }

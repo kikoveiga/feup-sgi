@@ -43,6 +43,7 @@ class MyFloor extends MyObject {
           this.planeMesh = new THREE.Mesh(plane, this.floorMaterial);
           this.planeMesh.rotation.x = -Math.PI / 2; 
           this.planeMesh.position.y = 0;
+          this.planeMesh.receiveShadow = true;
           this.add(this.planeMesh);
      }
 }

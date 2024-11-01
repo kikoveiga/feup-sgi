@@ -19,7 +19,7 @@ class MyDoor extends MyObject {
           const doorMaterial = new THREE.MeshPhongMaterial({ 
                map: doorTexture,
                color: 0xE5D3B3, 
-               specular: "ffffff",
+               specular: "#5C4033",
                shininess: 10,
                side: THREE.FrontSide
           });

@@ -13,7 +13,7 @@ class MyTableLamp extends MyObject {
             specular: "#ffffff",  
             shininess: 70, 
             side: THREE.DoubleSide
-       });
+        });
 
         const lampBodyMaterial2 = new THREE.MeshPhongMaterial({
             map: ironTexture,  
@@ -26,12 +26,16 @@ class MyTableLamp extends MyObject {
         const baseGeometry = new THREE.CylinderGeometry(baseRadius, baseRadius, 0.1, 32);
         const baseMesh = new THREE.Mesh(baseGeometry, lampBodyMaterial1);
         baseMesh.position.set(0, 0.05, 0);
+        baseMesh.castShadow = true;   
+        baseMesh.receiveShadow = true;
         this.add(baseMesh);
 
         // LAMP POLE
         const poleGeometry = new THREE.CylinderGeometry(0.05, 0.05, poleHeight, 16);
         const poleMesh = new THREE.Mesh(poleGeometry, lampBodyMaterial2);
         poleMesh.position.set(0, poleHeight / 2 + 0.05, 0);
+        poleMesh.castShadow = true; 
+        poleMesh.receiveShadow = true;  
         this.add(poleMesh);
 
         // FLEX ARM
@@ -39,6 +43,8 @@ class MyTableLamp extends MyObject {
         const armMesh = new THREE.Mesh(armGeometry, lampBodyMaterial2);
         armMesh.position.set(0, poleHeight + 0.25, -0.15);
         armMesh.rotation.x = - Math.PI / 4;
+        armMesh.castShadow = true; 
+        armMesh.receiveShadow = true;
         this.add(armMesh);
 
         // LAMP HEAD
@@ -46,23 +52,27 @@ class MyTableLamp extends MyObject {
         const lampHeadMesh = new THREE.Mesh(lampHeadGeometry, lampBodyMaterial1);
         lampHeadMesh.position.set(0, poleHeight + 0.6, -0.42);
         lampHeadMesh.rotation.x = Math.PI / 6; 
+        lampHeadMesh.castShadow = true;   
+        lampHeadMesh.receiveShadow = true;
         this.add(lampHeadMesh);
 
         const sphereGeometry = new THREE.SphereGeometry(0.08, 16, 16);
         const sphereMesh = new THREE.Mesh(sphereGeometry, lampBodyMaterial1);
         sphereMesh.position.set(0, poleHeight + 0.1, 0); 
+        sphereMesh.castShadow = true;  
+        sphereMesh.receiveShadow = true; 
         this.add(sphereMesh);
 
         // SPOTLIGHT
-        const spotLight = new THREE.SpotLight(0xffffff, 4, 7, Math.PI / 6, 0.2, 1);
+        const spotLight = new THREE.SpotLight(0xffffff, 8, 7, Math.PI / 5, 0.2, 1);
         spotLight.position.set(0, poleHeight + 0.6, -0.45); 
         spotLight.target.position.set(0, poleHeight - 1, -1.5); 
         spotLight.castShadow = true;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 5;
+        spotLight.shadow.camera.fov = 30; 
         this.add(spotLight);
         this.add(spotLight.target);
-
-        // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-        // this.add(spotLightHelper);
     }
 }
 

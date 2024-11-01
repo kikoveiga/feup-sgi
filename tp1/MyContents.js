@@ -12,6 +12,7 @@ import { MyRug } from './objects/MyRug.js';
 import { MyPainting } from './objects/MyPainting.js';
 import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
+import { MySlice } from './objects/MySlice.js';
 import { MyPolyline } from './objects/MyPolyline.js';
 import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
 import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
@@ -56,6 +57,7 @@ class MyContents  {
         this.cubicBezierCurve = null;
         this.catmullRomCurve = null;
         this.nurbsBuilder = null;
+        this.slice = null;
         this.beetle = null;
         this.spring = null;
         this.newspaper = null;
@@ -140,6 +142,13 @@ class MyContents  {
         this.cake.position.set(0.9, 3.3, 0.9);
         this.app.scene.add(this.cake);
         this.objects.push(this.cake);
+
+        this.slice = new MySlice(this.app);
+        this.slice.position.set(-0.25, 3.1, -2);
+        this.slice.rotation.z = Math.PI / 2;
+        this.slice.rotation.y = 30 * Math.PI / 180;
+        this.app.scene.add(this.slice);
+        this.objects.push(this.slice);
     }
 
     buildCandle() {
@@ -159,7 +168,7 @@ class MyContents  {
         this.app.scene.add(this.chair1);
         this.objects.push(this.chair1);
 
-        this.chair2.position.set(-1.5, 1.1, 3.5);
+        this.chair2.position.set(-2, 1.1, 4);
         this.chair2.scale.set(1.2, 1.2, 1.2);
         this.chair2.rotation.x = - Math.PI / 2;
         this.chair2.rotation.z = 130 * Math.PI / 180;
@@ -193,12 +202,12 @@ class MyContents  {
     }
 
     buildPaintings() {
-        this.painting1 = new MyPainting(this.app, 'painting1');
+        this.painting1 = new MyPainting(this.app, 'kikoveiga');
         this.painting1.position.set(-5, 6, -(this.floorLength / 2) + 0.1);
         this.objects.push(this.painting1);
         this.app.scene.add(this.painting1);
 
-        this.painting2 = new MyPainting(this.app, 'painting2');
+        this.painting2 = new MyPainting(this.app, 'jonyalves');
         this.painting2.position.set(5, 6, -(this.floorLength / 2) + 0.1);
         this.objects.push(this.painting2);
         this.app.scene.add(this.painting2);
@@ -208,7 +217,7 @@ class MyContents  {
         this.sofa = new MySofa(this.app);
         this.sofa.scale.set(1.3, 1.3, 1.3);
         this.sofa.rotation.y = Math.PI / 2;
-        this.sofa.position.set(- this.floorLength / 2 - 1, 0.3, 0);
+        this.sofa.position.set(- this.floorLength / 2 - 1, 0.3, 0); 
         this.objects.push(this.sofa);
         this.app.scene.add(this.sofa);
     }
@@ -250,9 +259,9 @@ class MyContents  {
 
     buildBeetle() {
         this.beetle = new MyBeetle(this.app);
-        this.beetle.position.set(-2, 5, this.floorLength / 2 - 0.2);
+        this.beetle.position.set(-2, 5, this.floorLength / 2 - 0.15);
         this.beetle.rotation.y = Math.PI;
-        this.beetle.scale.set(0.3, 0.3, 0.3);
+        this.beetle.scale.set(0.25, 0.25, 0.25);
         this.app.scene.add(this.beetle);
         this.objects.push(this.beetle);
     }
@@ -457,6 +466,7 @@ class MyContents  {
             // this.app.scene.add(this.axis)
         }
 
+  
         const ambientLight = new THREE.AmbientLight( 0x555555, 2 );
         this.app.scene.add( ambientLight );
 

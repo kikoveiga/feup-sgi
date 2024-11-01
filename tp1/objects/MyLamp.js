@@ -30,23 +30,36 @@ class MyLamp extends MyObject {
           const baseGeometry = new THREE.CylinderGeometry(baseRadius, baseRadius, baseHeight, 32);
           const baseMesh = new THREE.Mesh(baseGeometry, standMaterial);
           baseMesh.position.set(0, baseHeight / 2, 0);
+          baseMesh.castShadow = true;
+          baseMesh.receiveShadow = true;
           this.add(baseMesh);
 
           // STAND
           const standGeometry = new THREE.CylinderGeometry(standRadius, standRadius, standHeight, 32);
           const standMesh = new THREE.Mesh(standGeometry, standMaterial);
           standMesh.position.set(0, baseHeight + standHeight / 2, 0);
+          standMesh.castShadow = true;
+          standMesh.receiveShadow = true;
           this.add(standMesh);
 
           // SHADE
           const shadeGeometry = new THREE.CylinderGeometry(shadeRadius, shadeRadius + 0.2, shadeHeight, 32, 1, true);
           const shadeMesh = new THREE.Mesh(shadeGeometry, shadeMaterial);
           shadeMesh.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0);
+          shadeMesh.castShadow = true;
+          shadeMesh.receiveShadow = true;
           this.add(shadeMesh);
 
           // LIGHT
-          const pointLight = new THREE.PointLight(0xffffff, 5, 20); // White light, intensity 1, distance 10
-          pointLight.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0); // Place light inside the shade
+          const pointLight = new THREE.PointLight(0xffffff, 4, 10); 
+          pointLight.position.set(0, baseHeight + standHeight + shadeHeight / 2, 0); 
+          pointLight.castShadow = true;
+          pointLight.shadow.mapSize.width = 4096;
+          pointLight.shadow.mapSize.height = 4096;
+          pointLight.shadow.camera.near = 0.1;  
+          pointLight.shadow.camera.far = 5;  
+          pointLight.shadow.bias = -0.001; 
+
           this.add(pointLight);
 
           const bulbGeometry = new THREE.SphereGeometry(0.1, 16, 16);

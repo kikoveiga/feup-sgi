@@ -35,6 +35,8 @@ class MyCup extends MyObject {
           const cupGeometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, 32, 1, true);
           const cupMesh = new THREE.Mesh(cupGeometry, cupMaterial1);
           cupMesh.position.y = height / 2;
+          cupMesh.receiveShadow = true;
+          cupMesh.castShadow = true;
           this.add(cupMesh);
           
           // BOTTOM CIRCLE
@@ -42,6 +44,8 @@ class MyCup extends MyObject {
           const bottomCircleMesh = new THREE.Mesh(bottomCircleGeometry, cupMaterial1);
           bottomCircleMesh.position.y = 0;
           bottomCircleMesh.rotation.x = -Math.PI / 2;
+          bottomCircleMesh.receiveShadow = true;
+          bottomCircleMesh.castShadow = true;
           this.add(bottomCircleMesh);
 
           // HANDLE
@@ -49,13 +53,18 @@ class MyCup extends MyObject {
           const handleMesh = new THREE.Mesh(handleGeometry, cupMaterial2);
           handleMesh.position.set(radiusTop + handleThickness - 0.04, height / 2 - 0.1, 0);
           handleMesh.rotation.z = 230 * Math.PI / 180;
+          handleMesh.receiveShadow = true;
+          handleMesh.castShadow = true;
           this.add(handleMesh);
 
           // COFFEE
           const coffeeGeometry = new THREE.CylinderGeometry(radiusTop - 0.05, radiusBottom - 0.05, coffeeHeight, 32, 1, false);
           const coffeeMesh = new THREE.Mesh(coffeeGeometry, coffeeMaterial);
           coffeeMesh.position.y = (coffeeHeight / 2) + 0.1; 
+          coffeeMesh.receiveShadow = true;
+          coffeeMesh.castShadow = true;
           this.add(coffeeMesh);
+
      }
 }
 
