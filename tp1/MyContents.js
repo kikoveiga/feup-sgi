@@ -22,6 +22,8 @@ import { MySideTable } from './objects/MySideTable.js';
 import { MyStudioLamp } from './objects/MyStudioLamp.js';
 import { MyTableLamp } from './objects/MyTableLamp.js';
 import { MyBeetle } from './objects/MyBeetle.js';
+import { MySpring } from './objects/MySpring.js';
+import { MyNewspaper } from './objects/MyNewspaper.js';
 
 
 class MyContents  {
@@ -57,6 +59,8 @@ class MyContents  {
         this.nurbsBuilder = null;
         this.slice = null;
         this.beetle = null;
+        this.spring = null;
+        this.newspaper = null;
 
         this.meshes = [];
         this.sidetable = null;
@@ -67,7 +71,6 @@ class MyContents  {
         this.floorWidth = 24;
         this.floorLength = 18;
 
-        this.buildNurbsBuilder();
     }
 
 
@@ -261,6 +264,23 @@ class MyContents  {
         this.beetle.scale.set(0.25, 0.25, 0.25);
         this.app.scene.add(this.beetle);
         this.objects.push(this.beetle);
+    }
+
+    buildSpring() {
+        this.spring = new MySpring(this.app);
+        this.spring.position.set(-2, 3.25, 1);
+        this.spring.rotation.y = Math.PI / 4;
+        this.spring.rotation.z = Math.PI / 2;
+        this.spring.scale.set(0.5, 0.5, 0.5);
+        this.app.scene.add(this.spring);
+        this.objects.push(this.spring);
+    }
+
+    buildNewspaper() {
+        this.newspaper = new MyNewspaper(this.app);
+        this.newspaper.buildMaterial();
+        this.newspaper.buildNewspaper();
+        this.objects.push(this.newspaper);
     }
 
     buildPolyline() {
@@ -465,15 +485,9 @@ class MyContents  {
         this.buildLamps();
         this.buildSideTable();
         this.buildBeetle();
+        this.buildSpring();
+        this.buildNewspaper();
         
-        /*
-        this.recomputePolyline();
-        this.recomputeQuadraticBezierCurve();
-        this.recomputeCubicBezierCurve();
-        this.recomputeCatmullRomCurve();
-        this.recomputeNurbsSurfaces();
-        */
-
     }
     
     // useless
