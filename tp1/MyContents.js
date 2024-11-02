@@ -14,6 +14,8 @@ import { MySofa } from './objects/MySofa.js';
 import { MyLamp } from './objects/MyLamp.js';
 import { MySlice } from './objects/MySlice.js';
 import { MyPolyline } from './objects/MyPolyline.js';
+import { MyJar } from './objects/MyJar.js';
+import { MyFlower } from './objects/MyFlower.js';
 import { MyQuadraticBezierCurve } from './objects/MyQuadraticBezierCurve.js';
 import { MyCubicBezierCurve } from './objects/MyCubicBezierCurve.js';
 import { MyCatmullRomCurve } from './objects/MyCatmullRomCurve.js';
@@ -57,6 +59,8 @@ class MyContents  {
         this.nurbsBuilder = null;
         this.slice = null;
         this.beetle = null;
+        this.jar = null;
+        this.sunflower = null;
 
         this.meshes = [];
         this.sidetable = null;
@@ -263,6 +267,20 @@ class MyContents  {
         this.objects.push(this.beetle);
     }
 
+    buildJar() {
+        this.jar = new MyJar(this.app);
+        this.jar.position.set(this.floorWidth / 2 - 2, 0, - this.floorLength / 2 + 2);
+        this.jar.scale.set(1.3, 1.3, 1.3);
+        this.app.scene.add(this.jar);
+        this.objects.push(this.jar);
+
+        this.sunflower = new MyFlower(this.app);
+        this.sunflower.position.set(this.floorWidth / 2 - 2, 3.5, - this.floorLength / 2 + 2); 
+        this.sunflower.rotation.y = - 30 * Math.PI / 180;
+        this.app.scene.add(this.sunflower);
+        this.objects.push(this.sunflower);
+    }
+
     buildPolyline() {
 
         if (this.polyline !== null) this.app.scene.remove(this.polyline);
@@ -465,6 +483,7 @@ class MyContents  {
         this.buildLamps();
         this.buildSideTable();
         this.buildBeetle();
+        this.buildJar();
         
         /*
         this.recomputePolyline();
