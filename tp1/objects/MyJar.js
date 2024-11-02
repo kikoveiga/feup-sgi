@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
 class MyJar extends MyObject {
-     constructor(app, name = 'sophisticatedJar') {
+     constructor(app, name = 'jar') {
           super(app, name);
 
           const textureBody = new THREE.TextureLoader().load('./textures/ceramic4.jpg');

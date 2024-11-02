@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
 class MyFlower extends MyObject {
-    constructor(app, name = 'curvedStemFlower') {
+    constructor(app, name = 'sunflower') {
         super(app, name);
 
         const centerTexture = new THREE.TextureLoader().load('./textures/center.jpg');

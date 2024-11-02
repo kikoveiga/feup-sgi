@@ -14,62 +14,60 @@ class MyNewspaper extends MyObject {
 
     buildMaterial() {
         const map = new THREE.TextureLoader().load('textures/newspaper.jpeg');
-        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
         map.anisotropy = 16;
         map.colorSpace = THREE.SRGBColorSpace;
 
-        this.material = new THREE.MeshLambertMaterial({ map: map, side: THREE.DoubleSide, transparent: true, opacity: 0.90 });
+
+        this.material = new THREE.MeshLambertMaterial({ 
+            map: map, 
+            side: THREE.DoubleSide,
+            color: 0xffffff
+        });
     }
 
     buildNewspaper() {
-
         let controlPoints = [
-            [ // U = 0
-                [-1.5, -1.5, 0.0, 1],  // Bottom left
-                [-1.5,  0.0, 1.5, 1],  // Bottom center (interpolated)
-                [-1.5,  1.5, 0.0, 1]   // Bottom right
+            [ 
+                [-1.2, -1.2, 0.0, 1],   
+                [-1.2,  0.0, 0.5, 1],   
+                [-1.2,  1.2, 0.0, 1]   
             ],
-            [ // U = 1
-                [0.0, -1.5, 3.0, 1],   // Center left
-                [0.0,  0.0, 3.0, 1],   // Center (original)
-                [0.0,  1.5, 3.0, 1]    // Center right
+            [ 
+                [0.0, -1.2, 0.0, 1],    
+                [0.0,  0.0, 0.5, 1],   
+                [0.0,  1.2, 0.0, 1]     
             ],
-            [ // U = 2
-                [1.5, -1.5, 0.0, 1],   // Top left
-                [1.5,  0.0, 1.5, 1],   // Top center (interpolated)
-                [1.5,  1.5, 0.0, 10]   // Top right
+            [ 
+                [1.2, -1.2, 0.0, 1],   
+                [1.2,  0.0, 0.5, 1],    
+                [1.2,  1.2, 0.0, 1]     
             ]
         ];
         
         const orderU = 2;
         const orderV = 2;
-
         const samplesU = 20;
         const samplesV = 20;
-
-        // Use MyNurbsBuilder to create the geometry
+    
         const geometry = this.builder.build(controlPoints, orderU, orderV, samplesU, samplesV);
+        this.mesh1 = new THREE.Mesh(geometry, this.material);
+        this.mesh2 = new THREE.Mesh(geometry, this.material);
 
-        // Create a mesh with the generated NURBS geometry and the material
-        this.mesh = new THREE.Mesh(geometry, this.material);
+        this.mesh2.position.set(3, 3.2, 0);
+        this.mesh1.position.set(3, 3.2, -1.4);
+        this.mesh1.rotation.y = Math.PI;
+        this.mesh1.rotation.x = 70 * Math.PI / 180;
+        this.mesh2.rotation.x = - 70 * Math.PI / 180;
+        this.mesh2.scale.set(0.5, 0.5, 0.4);
+        this.mesh1.scale.set(0.5, 0.5, 0.4);
+    
 
-        // Set position and rotation (if needed)
-        this.mesh.position.set(0, 0, 0);
-        this.mesh.rotation.set(0, 0, 0);
-
-        // Add the mesh to the scene
-        this.app.scene.add(this.mesh);
+        this.app.scene.add(this.mesh1);
+        this.app.scene.add(this.mesh2);
     }
-
-    removeNewspaper() {
-        if (this.mesh) {
-            this.app.scene.remove(this.mesh);
-            this.mesh.geometry.dispose();
-            this.mesh.material.dispose();
-            this.mesh = null;
-        }
-    }
-
+    
 }
 
 export { MyNewspaper };
