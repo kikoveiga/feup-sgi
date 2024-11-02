@@ -54,37 +54,10 @@ class MyFlower extends MyObject {
         const centerMesh = new THREE.Mesh(centerGeometry, centerMaterial);
         centerMesh.position.set(0, 3, 0.9);
         centerMesh.scale.set(1, 0.5, 1);
-        centerMesh.rotation.x = 70 * Math.PI / 180;
+        centerMesh.rotation.x = 90 * Math.PI / 180;
         centerMesh.castShadow = true;
         centerMesh.receiveShadow = true;
 
-        // Petal Shape
-        const petalShape = new THREE.Shape();
-        petalShape.bezierCurveTo(0.1, 0.2, 0.15, 0.5, 0, 0.7);
-        petalShape.bezierCurveTo(-0.15, 0.5, -0.1, 0.2, 0, 0);
-
-        const petalGeometry = new THREE.ShapeGeometry(petalShape);
-
-        // Group for Petals
-        const petalGroup = new THREE.Group();
-        const petalCount = 16; 
-        const petalRadius = 0.4; 
-
-        for (let i = 0; i < petalCount; i++) {
-            const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-
-            const angle = (i / petalCount) * Math.PI * 2;
-            const x = petalRadius * Math.cos(angle);
-            const z = petalRadius * Math.sin(angle);
-
-            petal.position.set(x, 3, z + 0.9);
-            petal.rotation.x = 90 * Math.PI / 180;
-            petal.rotation.y = -angle; 
-
-            petal.castShadow = true;
-            petal.receiveShadow = true;
-            petalGroup.add(petal);
-        }
 
         const leafShape = new THREE.Shape();
         leafShape.moveTo(0, 0);  
@@ -110,10 +83,106 @@ class MyFlower extends MyObject {
         leaf2.castShadow = true;
         leaf2.receiveShadow = true;
 
-        petalGroup.rotation.x = 70 * Math.PI / 180;
-        petalGroup.position.set(0, 3.2, -2.3);
+
+        // Petals
+        const petalShape = new THREE.Shape();
+        petalShape.bezierCurveTo(0.1, 0.2, 0.15, 0.5, 0, 0.7);
+        petalShape.bezierCurveTo(-0.15, 0.5, -0.1, 0.2, 0, 0);
+        const petalGeometry = new THREE.ShapeGeometry(petalShape);
+
+        const petalGroup = new THREE.Group();
+        const petalRadius = 0.4; 
+
+        const petal1 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal2 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal3 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal4 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal5 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal6 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal7 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal8 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal9 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal10 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal11 = new THREE.Mesh(petalGeometry, petalMaterial);
+        const petal12 = new THREE.Mesh(petalGeometry, petalMaterial);
+
+        petal1.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.4, 3.1, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+
+        petal2.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.4, 2.15, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+
+        petal3.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.5, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal3.rotation.z = 90 * Math.PI / 180;
+
+        petal4.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.3, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal4.rotation.z = - 90 * Math.PI / 180;
+
+        petal5.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.5, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal5.rotation.z = 55 * Math.PI / 180;
+
+        petal6.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.3, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal6.rotation.z = - 55 * Math.PI / 180;
+
+        petal7.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.5, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal7.rotation.z = 20 * Math.PI / 180;
+
+        petal8.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.3, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal8.rotation.z = - 20 * Math.PI / 180;
+
+        petal9.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.5, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal9.rotation.z = 125 * Math.PI / 180;
+
+        petal10.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.3, 3.05, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal10.rotation.z = - 125 * Math.PI / 180;
+
+        petal11.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.5, 3, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal11.rotation.z = 160 * Math.PI / 180;
+
+        petal12.position.set(petalRadius * Math.cos(Math.PI * 2) - 0.3, 3, petalRadius * Math.sin(Math.PI * 2) + 0.9);
+        petal12.rotation.z = - 160 * Math.PI / 180;
+
+        petal1.castShadow = true;
+        petal1.receiveShadow = true;
+        petal2.castShadow = true;
+        petal2.receiveShadow = true;
+        petal3.castShadow = true;
+        petal3.receiveShadow = true;
+        petal4.castShadow = true;
+        petal4.receiveShadow = true;
+        petal5.castShadow = true;
+        petal5.receiveShadow = true;
+        petal6.castShadow = true;
+        petal6.receiveShadow = true;
+        petal7.castShadow = true;
+        petal7.receiveShadow = true;
+        petal8.castShadow = true;
+        petal8.receiveShadow = true;
+        petal9.castShadow = true;
+        petal9.receiveShadow = true;
+        petal10.castShadow = true;
+        petal10.receiveShadow = true;
+        petal11.castShadow = true;
+        petal11.receiveShadow = true;
+        petal12.castShadow = true;
+        petal12.receiveShadow = true;
+
+        petalGroup.add(petal1);
+        petalGroup.add(petal2);
+        petalGroup.add(petal3);
+        petalGroup.add(petal4);
+        petalGroup.add(petal5);
+        petalGroup.add(petal6);
+        petalGroup.add(petal7);
+        petalGroup.add(petal8);
+        petalGroup.add(petal9);
+        petalGroup.add(petal10);
+        petalGroup.add(petal11);
+        petalGroup.add(petal12);
+        petalGroup.add(centerMesh);
+
+        petalGroup.rotation.x = - 10 * Math.PI / 180;
+        petalGroup.position.set(0, -0.2, 0.5);
+
         this.add(stemMesh);
-        this.add(centerMesh);
         this.add(petalGroup);
         this.add(leaf1);
         this.add(leaf2);

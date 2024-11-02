@@ -275,8 +275,9 @@ class MyContents  {
         this.objects.push(this.jar);
 
         this.sunflower = new MyFlower(this.app);
+        this.sunflower.position.set(0, 3, 0);
         this.sunflower.position.set(this.floorWidth / 2 - 2, 3.5, - this.floorLength / 2 + 2); 
-        this.sunflower.rotation.y = - 30 * Math.PI / 180;
+        this.sunflower.rotation.y = - 50 * Math.PI / 180;
         this.app.scene.add(this.sunflower);
         this.objects.push(this.sunflower);
     }
