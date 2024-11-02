@@ -38,7 +38,6 @@ class MyNurbsBuilder {
             } else if (i >= knotCount - degree) {
                 knotVector.push(1);
             } else {
-                // Evenly distribute intermediate values
                 knotVector.push((i - degree) / (knotCount - 2 * degree));
             }
         }
