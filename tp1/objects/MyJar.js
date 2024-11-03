@@ -6,6 +6,7 @@ class MyJar extends MyObject {
      constructor(app, name = 'jar') {
           super(app, name);
           
+          this.app = app;
           this.builder = new MyNurbsBuilder(app);
           this.buildMaterial();
           this.buildHalfJar();
