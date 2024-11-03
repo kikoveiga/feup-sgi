@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyAxis } from './MyAxis.js';
 import { MyTable } from './objects/MyTable.js';
 import { MyFloor } from './objects/MyFloor.js';
 import { MyWall } from './objects/MyWall.js';
@@ -270,7 +271,7 @@ class MyContents  {
 
         this.sunflower = new MyFlower(this.app);
         this.sunflower.position.set(0, 3, 0);
-        this.sunflower.position.set(this.floorWidth / 2 - 2, 3.5, - this.floorLength / 2 + 2); 
+        this.sunflower.position.set(this.floorWidth / 2 - 2, 3.3, - this.floorLength / 2 + 2); 
         this.sunflower.rotation.y = - 50 * Math.PI / 180;
         this.app.scene.add(this.sunflower);
         this.objects.push(this.sunflower);
