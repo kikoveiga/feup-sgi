@@ -303,8 +303,8 @@ class MyContents  {
     init() {
        
         if (this.axis === null) {
-            this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            // this.axis = new MyAxis(this)
+            // this.app.scene.add(this.axis)
         }
 
   
