@@ -2,49 +2,55 @@ import * as THREE from 'three';
 import { NURBSSurface } from 'three/addons/curves/NURBSSurface.js';
 import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
 
-class MyNurbsBuilder {
 
+class MyNurbsBuilder  {
     constructor(app, name = 'nurbs') {
         this.app = app;
         this.name = name;
     }
 
-    build(controlPoints, degree1, degree2, samples1, samples2) {
+    build(controlPoints, degree1, degree2, samples1, samples2, material) {
+        const knots1 = []
+        const knots2 = []
 
-        const knots1 = this.getKnotVector(degree1, controlPoints.length);
-        const knots2 = this.getKnotVector(degree2, controlPoints[0].length);
 
-        let stackedPoints = controlPoints.map(row =>
-            row.map(p => new THREE.Vector4(p[0], p[1], p[2], p[3]))
-        )
+        for (var i = 0; i <= degree1; i++) {
+            knots1.push(0)
+        }
 
-        const nurbsSurface = new NURBSSurface(degree1, degree2, knots1, knots2, stackedPoints);
-        const geometry = new ParametricGeometry(getSurfacePoint, samples1, samples2);
+        for (var i = 0; i <= degree1; i++) {
+            knots1.push(1)
+        }
 
+        for (var i = 0; i <= degree2; i++) {
+            knots2.push(0)
+        }
+
+        for (var i = 0; i <= degree2; i++) {
+            knots2.push(1)
+        }
+
+        let stackedPoints = []
+
+        for (var i = 0; i < controlPoints.length; i++) {
+            let row = controlPoints[i]
+            let newRow = []
+
+            for (var j = 0; j < row.length; j++) {
+                let item = row[j]
+                newRow.push(new THREE.Vector4(item[0],
+                item[1], item[2], item[3]));
+            }
+            stackedPoints[i] = newRow;
+        }
+
+        const nurbsSurface = new NURBSSurface( degree1, degree2, knots1, knots2, stackedPoints );
+        const geometry = new ParametricGeometry( getSurfacePoint, samples1, samples2 );
         return geometry;
 
-        function getSurfacePoint(u, v, target) {
-            return nurbsSurface.getPoint(u, v, target);
+        function getSurfacePoint( u, v, target ) {
+            return nurbsSurface.getPoint( u, v, target );
         }
     }
-
-    getKnotVector(degree, numControlPoints) {
-        const knotVector = [];
-        const knotCount = degree + numControlPoints + 1;
-
-        for (let i = 0; i < knotCount; i++) {
-            if (i < degree) {
-                knotVector.push(0);
-            } else if (i >= knotCount - degree) {
-                knotVector.push(1);
-            } else {
-                knotVector.push((i - degree) / (knotCount - 2 * degree));
-            }
-        }
-
-        return knotVector;
-    }
-
 }
-
 export { MyNurbsBuilder };

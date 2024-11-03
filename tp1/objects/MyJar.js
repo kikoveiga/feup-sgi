@@ -1,64 +1,81 @@
 import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyJar extends MyObject {
      constructor(app, name = 'jar') {
           super(app, name);
+          
+          this.builder = new MyNurbsBuilder(app);
+          this.buildMaterial();
+          this.buildHalfJar();
+     }
 
+     buildMaterial() {
           const textureBody = new THREE.TextureLoader().load('./textures/ceramic4.jpg');
-          const textureDirt = new THREE.TextureLoader().load('./textures/dirt.jpg');
           textureBody.wrapS = THREE.RepeatWrapping;
           textureBody.wrapT = THREE.RepeatWrapping;
           textureBody.repeat.set(1, 1.8); 
 
-          const bodyMaterial = new THREE.MeshPhongMaterial({
+          this.bodyMaterial = new THREE.MeshPhongMaterial({
                map: textureBody,
                color: "#ffffff",
                shininess: 60,
                side: THREE.DoubleSide,
           });
-
-          const dirtMaterial = new THREE.MeshPhongMaterial({
-               map: textureDirt,
-               color: "#aaaaaa",
-               shininess: 0,
-          });
-
-          const bodyProfile = [
-               new THREE.Vector2(0.3, 0),     
-               new THREE.Vector2(0.3, 0.2),   
-               new THREE.Vector2(0.5, 1.0),   
-               new THREE.Vector2(0.6, 1.5),   
-               new THREE.Vector2(0.55, 2.0),  
-               new THREE.Vector2(0.45, 2.3),   
-               new THREE.Vector2(0.4, 2.6),    
-               new THREE.Vector2(0.35, 2.8),   
-               new THREE.Vector2(0.4, 3.0),   
-          ];
-
-          const bodyGeometry = new THREE.LatheGeometry(bodyProfile, 80);
-          const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
-          bodyMesh.castShadow = true;
-          bodyMesh.receiveShadow = true;
-
-          const baseGeometry = new THREE.CircleGeometry(bodyProfile[0].x, 80);
-          const baseMesh = new THREE.Mesh(baseGeometry, bodyMaterial);
-          baseMesh.rotation.x = -Math.PI / 2; 
-          baseMesh.position.y = 0;           
-          baseMesh.castShadow = true;
-          baseMesh.receiveShadow = true;
-
-          const topGeometry = new THREE.CircleGeometry(bodyProfile[bodyProfile.length - 1].x - 0.04, 80);
-          const topMesh = new THREE.Mesh(topGeometry, dirtMaterial);
-          topMesh.rotation.x = -Math.PI / 2; 
-          topMesh.position.y = 2.75;        
-          topMesh.castShadow = true;
-          topMesh.receiveShadow = true;
-
-          this.add(bodyMesh);
-          this.add(baseMesh);
-          this.add(topMesh);
      }
+
+     buildHalfJar() {
+
+     const halfJarControlPoints = [
+          [
+              [-0.75, 0, 0, 1],      
+              [-1.5, 1, 0, 1],      
+              [-0.25, 2.75, 0, 1],  
+              [-1.25, 3.75, 0, 1]    
+          ],
+          [
+              [0, 0, 1.5, 1],        
+              [0, 1, 3, 1],          
+              [0, 2.75, 0.5, 1],    
+              [0, 3.75, 2.75, 1]    
+          ],
+          [
+              [0.75, 0, 0, 1],      
+              [1.5, 1, 0, 1],        
+              [0.25, 2.75, 0, 1],   
+              [1.25, 3.75, 0, 1]    
+          ]
+     ];
+      
+      
+     const degreeU = 2;
+     const degreeV = 2;
+     const samplesU = 20;
+     const samplesV = 20;
+ 
+     const halfJarGeometry = this.builder.build(halfJarControlPoints, degreeU, degreeV, samplesU, samplesV);
+     const halfJarMesh = new THREE.Mesh(halfJarGeometry, this.bodyMaterial);
+     halfJarMesh.castShadow = true;
+     halfJarMesh.receiveShadow = true;
+
+     const halfJarMesh2 = new THREE.Mesh(halfJarGeometry, this.bodyMaterial)
+     halfJarMesh2.rotation.y = Math.PI;
+     halfJarMesh2.castShadow = true;
+     halfJarMesh2.receiveShadow = true;
+ 
+     const baseGeometry = new THREE.CircleGeometry(0.7, 80);  
+     const baseMesh = new THREE.Mesh(baseGeometry, this.bodyMaterial);
+     baseMesh.rotation.x = -Math.PI / 2;
+     baseMesh.castShadow = true;
+     baseMesh.receiveShadow = true;
+ 
+     this.add(halfJarMesh);
+     this.add(halfJarMesh2);
+     this.add(baseMesh);
+ }
+ 
+ 
 }
 
 export { MyJar };
