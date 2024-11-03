@@ -20,8 +20,6 @@ class MySpring extends MyObject {
             points.push(new THREE.Vector3(x, y, z));
         }
 
-
-
         const springCurve = new THREE.CatmullRomCurve3(points);
         const tubeGeometry = new THREE.TubeGeometry(springCurve, 200, 0.1, 8, false); 
         const material = new THREE.MeshStandardMaterial({

@@ -5,7 +5,7 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 class MyJar extends MyObject {
      constructor(app, name = 'jar') {
           super(app, name);
-          
+
           this.app = app;
           this.builder = new MyNurbsBuilder(app);
           this.buildMaterial();
@@ -22,6 +22,15 @@ class MyJar extends MyObject {
                map: textureBody,
                color: "#ffffff",
                shininess: 60,
+               side: THREE.DoubleSide,
+          });
+
+          const textureDirt = new THREE.TextureLoader().load('./textures/dirt.jpg');
+
+          this.dirtMaterial = new THREE.MeshPhongMaterial({
+               map: textureDirt,
+               color: "#aaaaaa",
+               shininess: 5,
                side: THREE.DoubleSide,
           });
      }
@@ -70,6 +79,13 @@ class MyJar extends MyObject {
      baseMesh.rotation.x = -Math.PI / 2;
      baseMesh.castShadow = true;
      baseMesh.receiveShadow = true;
+
+     const dirtGeometry = new THREE.CircleGeometry(0.25, 50);  
+     const dirtMesh = new THREE.Mesh(dirtGeometry, this.dirtMaterial);
+     dirtMesh.rotation.x = -Math.PI / 2;
+     dirtMesh.position.y = 2.7
+
+     this.add(dirtMesh);
  
      this.add(halfJarMesh);
      this.add(halfJarMesh2);
