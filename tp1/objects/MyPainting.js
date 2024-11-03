@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
 class MyPainting extends MyObject {
-    constructor(app, name = 'painting', paintingWidth = 7.5, paintingHeight = 9, frameThickness = 0.2, horizontal=false) {
+    constructor(app, name = 'painting', paintingWidth = 7.5, paintingHeight = 9, frameThickness = 0.2, horizontal = false) {
         super(app, name);
 
         this.type = 'Group';

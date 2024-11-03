@@ -62,7 +62,6 @@ class MyNewspaper extends MyObject {
         this.mesh2.rotation.x = - 70 * Math.PI / 180;
         this.mesh2.scale.set(0.5, 0.5, 0.4);
         this.mesh1.scale.set(0.5, 0.5, 0.4);
-    
 
         this.app.scene.add(this.mesh1);
         this.app.scene.add(this.mesh2);

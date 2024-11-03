@@ -29,18 +29,21 @@ class MyContents  {
         this.app = app
         this.axis = null
 
-        // object creating
         this.objects = [];
 
-        this.table = null;
         this.floor = null;
+        this.table = null;
+
         this.wall1 = null;
         this.wall2 = null;
         this.wall3 = null;
         this.wall4 = null;
         this.ceiling = null;
-        this.plate = null;
+        this.plate1 = null;
+        this.plate2 = null;
         this.cake = null;
+        this.slice = null;
+        this.candle = null;
         this.chair1 = null;
         this.chair2 = null;
         this.cup = null;
@@ -49,22 +52,15 @@ class MyContents  {
         this.painting1 = null;
         this.painting2 = null;
         this.sofa = null;
-        this.polyline = null;
-        this.quadraticBezierCurve = null;
-        this.cubicBezierCurve = null;
-        this.catmullRomCurve = null;
-        this.nurbsBuilder = null;
-        this.slice = null;
+        this.lamp = null;
+        this.studioLamp = null;
+        this.tableLamp = null;
+        this.sidetable = null;
         this.beetle = null;
         this.jar = null;
         this.sunflower = null;
         this.spring = null;
         this.newspaper = null;
-
-        this.meshes = [];
-        this.sidetable = null;
-        this.studioLamp = null;
-        this.tableLamp = null;
 
         // aux vars
         this.floorWidth = 24;
@@ -113,7 +109,7 @@ class MyContents  {
         this.app.scene.add(this.wall4);
         this.objects.push(this.wall4);
 
-        this.ceiling = new MyFloor(this.app, this.floorWidth, this.floorLength, false);
+        this.ceiling = new MyFloor(this.app, this.floorWidth, this.floorLength, false, 'ceiling');
         this.ceiling.rotation.z = 180 * Math.PI / 180;
         this.ceiling.position.set(0, wallHeight, 0);
         this.app.scene.add(this.ceiling);
