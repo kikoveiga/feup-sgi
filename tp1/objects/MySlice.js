@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
 class MySlice extends MyObject {
-    constructor(app, radius = 0.7, height = 0.4, width = 0.7, p1rotation = 0, p2rotation = 30 * Math.PI / 180, name = 'cake') {
+    constructor(app, radius = 0.7, height = 0.4, width = 0.7, p1rotation = 0, p2rotation = 30 * Math.PI / 180, name = 'slice') {
         super(app, name);
 
         const texture1 = new THREE.TextureLoader().load('./textures/cake2.jpg');
