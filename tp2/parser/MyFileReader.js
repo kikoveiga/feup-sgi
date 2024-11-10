@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-
 /**
  *  1. in a given class file MyWhateverNameClass.js in the constructor call:
  * 
