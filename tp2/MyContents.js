@@ -44,6 +44,9 @@ class MyContents {
         this.parser.parse(data);
         this.addGlobals();
         this.addCameras();
+        this.addLights();
+
+        console.log(this.app.scene.lights);
 
         // this.onAfterSceneLoadedAndBeforeRender(data);
 
@@ -97,11 +100,22 @@ class MyContents {
     }
 
     addLights() {
-        // deal with lights here
+        
+        console.log(this.parser.lights);
+        if (this.parser.lights) {
+            this.app.scene.add(this.parser.lights);
+        }
     }
 
     addObjects() {
-        // deal with objects here
+        
+        if (this.parser.nodes) {
+            const rootNode = this.parser.nodes[this.parser.rootID];
+
+            if (rootNode) {
+                this.app.scene.add(rootNode);
+            }
+        }
     }   
     
     update() {
