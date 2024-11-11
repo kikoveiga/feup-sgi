@@ -24,6 +24,8 @@ class MyYASFParser {
         this.loadTextures(data.textures);    
         this.loadMaterials(data.materials);
         this.parseGraph(data.graph);
+
+        this.initialCameraName = this.initialCameraName;
     }
 
     setUpGlobals(globals) {
@@ -80,62 +82,59 @@ class MyYASFParser {
 
     setUpCameras(cameras) {
 
-        this.initialCamera = null;
-
+        this.initialCameraName = cameras.initial;
+        delete cameras.initial; // testar se funciona
+    
         Object.keys(cameras).forEach(cameraID => {
-
+    
             const camera = cameras[cameraID];
-
-            if (cameraID == 'initial') {
-                this.initialCamera = camera;
-                return;
-            }
-
+    
             let newCamera;
-
+    
             if (camera.type == 'orthogonal') {
                 newCamera = new THREE.OrthographicCamera(
-                    camera.left, 
+                    camera.left,
                     camera.right,
                     camera.top,
                     camera.bottom,
                     camera.near,
                     camera.far
                 );
-                
+    
                 if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
                 if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-
-            }
-            
-            else if (camera.type == 'perspective') {
+    
+            } else if (camera.type == 'perspective') {
                 newCamera = new THREE.PerspectiveCamera(
                     camera.angle,
                     window.innerWidth / window.innerHeight,
                     camera.near,
                     camera.far
                 );
-
+    
                 if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
                 if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-                
-            }
-            
-            else {
+    
+            } else {
                 console.error(`Unknown camera type: ${camera.type}`);
+                return; 
             }
-
+    
+            newCamera.updateProjectionMatrix();
+            newCamera.updateMatrixWorld();
+    
             this.cameras[cameraID] = newCamera;
         });
-
-        if (this.initialCamera) this.activeCamera = this.cameras[this.initialCamera];
-
+    
+        if (this.initialCameraName && this.cameras[this.initialCameraName]) {
+            this.activeCamera = this.cameras[this.initialCameraName];
+        } 
         else {
-            console.error("No initial camera defined.");
+            console.error("Initial camera not defined or not found.");
             this.activeCamera = Object.values(this.cameras)[0];
         }
-
     }
+    
 
     loadTextures(textures) {
 
@@ -265,45 +264,42 @@ class MyYASFParser {
 
         if (node.children) this.parseChildren(node.children, nodeGroup, graph, materialID, nodeGroup.castShadow, nodeGroup.receiveshadow);
 
+
         this.nodes[nodeID] = nodeGroup;
 
         return nodeGroup;
     }
 
     applyTransforms(nodeGroup, transforms) {
-
-        const translation = transforms.filter(t => t.type === 'translate');
-        const rotation = transforms.filter(t => t.type === 'rotate');
-        const scale = transforms.filter(t => t.type === 'scale');
-
-        if (translation.length > 1 || rotation.length > 1 || scale.length > 1) {
-            console.error("Multiple transformations of the same type are not supported.");
-            return;
-        }
-
-        if (translation[0]) {
-            const { x, y, z } = translation[0].amount;
-            nodeGroup.position.set(x, y, z);
-        }
-
-        if (rotation[0]) {
-            const { x, y, z } = rotation[0].amount;
-
-            nodeGroup.position.set(
-                THREE.MathUtils.degToRad(x),
-                THREE.MathUtils.degToRad(y),
-                THREE.MathUtils.degToRad(z)
-            );
-        }
-
-        if (scale[0]) {
-            const { x, y, z } = scale[0].amount;
-            nodeGroup.scale.set(x, y, z);
-        }
-    }
+        transforms.forEach(transform => {
+            const { type, amount } = transform;
+    
+            switch (type) {
+                case 'translate':
+                    nodeGroup.position.x += amount.x;
+                    nodeGroup.position.y += amount.y;
+                    nodeGroup.position.z += amount.z;
+                    break;
+    
+                case 'rotate':
+                    nodeGroup.rotation.x += THREE.MathUtils.degToRad(amount.x);
+                    nodeGroup.rotation.y += THREE.MathUtils.degToRad(amount.y);
+                    nodeGroup.rotation.z += THREE.MathUtils.degToRad(amount.z);
+                    break;
+    
+                case 'scale':
+                    nodeGroup.scale.x *= amount.x;
+                    nodeGroup.scale.y *= amount.y;
+                    nodeGroup.scale.z *= amount.z;
+                    break;
+    
+                default:
+                    console.error(`Unknown transform type: ${type}`);
+            }
+        });
+    }    
 
     parseChildren(children, parentGroup, graph, inheritedMaterial, inheritedcastShadow, inheritedReceiveshadow) {
-
         Object.keys(children).forEach(childID => {
             const child = children[childID];
 
@@ -313,7 +309,8 @@ class MyYASFParser {
             }
 
             else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon'].includes(child.type)) {
-                const primitive = this.createPrimitive(child);
+                const material = this.materials[inheritedMaterial];
+                const primitive = this.createPrimitive(child, material);
                 if (primitive) {
                     primitive.castShadow = inheritedcastShadow;
                     primitive.receiveshadow = inheritedReceiveshadow;
@@ -333,10 +330,9 @@ class MyYASFParser {
         });
     }
 
-    createPrimitive(primitiveData) {
+    createPrimitive(primitiveData, material) {
 
         let geometry;
-        const material = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
 
         switch (primitiveData.type) {
 

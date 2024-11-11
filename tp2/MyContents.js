@@ -88,19 +88,15 @@ class MyContents {
         if (this.parser.globals.skybox) {
             this.app.scene.skybox = this.parser.globals.skybox;
         }
-        
-
     }
 
     addCameras() {
-
-        this.app.cameras = this.parser.cameras;
-        this.app.setActiveCamera(this.parser.initialCamera);     
-        
+        this.app.cameras = { ...this.app.cameras, ...this.parser.cameras };
+        this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
+        this.app.gui.updateCameraOptions(); 
     }
 
     addLights() {
-        
         console.log(this.parser.lights);
         if (this.parser.lights) {
             this.app.scene.add(this.parser.lights);
@@ -108,10 +104,8 @@ class MyContents {
     }
 
     addObjects() {
-        
         if (this.parser.nodes) {
             const rootNode = this.parser.nodes[this.parser.rootID];
-
             if (rootNode) {
                 this.app.scene.add(rootNode);
             }

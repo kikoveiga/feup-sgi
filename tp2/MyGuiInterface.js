@@ -27,23 +27,26 @@ class MyGuiInterface {
      * Initialize the gui interface
      */
     init() {
-        this.cameraFolder = this.datgui.addFolder("Camera");
         this.objectFolder = this.datgui.addFolder('Objects');
         this.lightsFolder = this.datgui.addFolder('Lights');
+        this.cameraFolder = this.datgui.addFolder("Camera");
 
-        // Add dropdown to select active camera
-        this.addCameraOptions();
+        this.updateCameraOptions();
     }
 
     /**
      * Adds camera selection options to the GUI
      */
-    addCameraOptions() {
+    updateCameraOptions() {
+        if (this.cameraDropdown) {
+            this.cameraFolder.destroy(this.cameraDropdown);
+        }
         const cameraNames = Object.keys(this.app.cameras);
-        this.cameraFolder.add(this.app, 'activeCameraName', cameraNames).name('Active Camera').onChange((value) => {
+        this.cameraDropdown = this.cameraFolder.add(this.app, 'activeCameraName', cameraNames).name('Active Camera').onChange((value) => {
             this.app.setActiveCamera(value);
         });
     }
+    
 }
 
 export { MyGuiInterface };

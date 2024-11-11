@@ -118,10 +118,17 @@ class MyApp  {
      * sets the active camera by name
      * @param {String} cameraName 
      */
-    setActiveCamera(cameraName) {   
-        this.activeCameraName = cameraName
-        this.activeCamera = this.cameras[this.activeCameraName]
-    }
+    setActiveCamera(cameraName) {
+        if (this.cameras[cameraName]) {
+            this.activeCameraName = cameraName;
+            this.activeCamera = this.cameras[this.activeCameraName];
+        } else {
+            console.error(`Camera "${cameraName}" not found.`);
+            // Set to a default camera if needed
+            this.activeCameraName = Object.keys(this.cameras)[0];
+            this.activeCamera = this.cameras[this.activeCameraName];
+        }
+    }    
 
     /**
      * updates the active camera if required
@@ -130,29 +137,30 @@ class MyApp  {
      * it updates the active camera and the controls
      */
     updateCameraIfRequired() {
-
-        // camera changed?
         if (this.lastCameraName !== this.activeCameraName) {
             this.lastCameraName = this.activeCameraName;
-            this.activeCamera = this.cameras[this.activeCameraName]
-            document.getElementById("camera").innerHTML = this.activeCameraName
-           
-            // call on resize to update the camera aspect ratio
-            // among other things
-            this.onResize()
-
-            // are the controls yet?
+            this.activeCamera = this.cameras[this.activeCameraName];
+    
+            if (!this.activeCamera) {
+                console.error(`Camera "${this.activeCameraName}" not found.`);
+                return;
+            }
+    
+            document.getElementById("camera").innerHTML = this.activeCameraName;
+    
+            this.onResize();
+    
             if (this.controls === null) {
-                // Orbit controls allow the camera to orbit around a target.
-                this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
+                this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
                 this.controls.enableZoom = true;
                 this.controls.update();
-            }
-            else {
-                this.controls.object = this.activeCamera
+            } else {
+                this.controls.object = this.activeCamera;
+                this.controls.update();
             }
         }
     }
+    
 
     /**
      * the window resize handler
