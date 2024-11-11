@@ -91,10 +91,11 @@ class MyContents {
     }
 
     addCameras() {
-        this.app.cameras = { ...this.app.cameras, ...this.parser.cameras };
+        this.app.cameras = this.parser.cameras; 
         this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
         this.app.gui.updateCameraOptions(); 
     }
+    
 
     addLights() {
         console.log(this.parser.lights);
