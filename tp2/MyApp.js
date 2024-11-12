@@ -42,7 +42,7 @@ class MyApp  {
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
-        this.setActiveCamera('TemporaryCamera');
+        this.setActiveCamera('TemporaryCamera'); 
 
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -54,6 +54,10 @@ class MyApp  {
 
         // Append Renderer to DOM
         document.getElementById("canvas").appendChild( this.renderer.domElement );
+
+        this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
+        this.controls.enableZoom = true;
+        this.controls.update();
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false );
@@ -114,16 +118,16 @@ class MyApp  {
     
             this.onResize();
     
-            if (this.controls === null) {
-                this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
-                this.controls.enableZoom = true;
-                this.controls.update();
-            } else {
-                this.controls.object = this.activeCamera;
-                this.controls.update();
+            if (this.controls) {
+                this.controls.dispose();
             }
+    
+            this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
+            this.controls.enableZoom = true;
+            this.controls.update();
         }
     }
+    
     
 
     /**

@@ -45,8 +45,10 @@ class MyContents {
         this.addGlobals();
         this.addCameras();
         this.addLights();
+        this.addObjects();
 
         console.log(this.app.scene.lights);
+
 
         // this.onAfterSceneLoadedAndBeforeRender(data);
 
@@ -100,7 +102,9 @@ class MyContents {
     addLights() {
         console.log(this.parser.lights);
         if (this.parser.lights) {
-            this.app.scene.add(this.parser.lights);
+            this.parser.lights.forEach(light => {
+                this.app.scene.add(light);
+            });
         }
     }
 
