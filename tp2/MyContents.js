@@ -16,7 +16,7 @@ class MyContents {
         this.app = app
         this.axis = null
 
-        this.parser = new MyYASFParser(this.app.scene);
+        this.parser = new MyYASFParser();
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
@@ -47,11 +47,7 @@ class MyContents {
         this.addLights();
         this.addObjects();
 
-        console.log(this.app.scene.lights);
-
-
         // this.onAfterSceneLoadedAndBeforeRender(data);
-
     }
 
     printYASF(data, indent = '') {
@@ -100,7 +96,6 @@ class MyContents {
     
 
     addLights() {
-        console.log(this.parser.lights);
         if (this.parser.lights) {
             this.parser.lights.forEach(light => {
                 this.app.scene.add(light);
@@ -109,10 +104,11 @@ class MyContents {
     }
 
     addObjects() {
-        if (this.parser.nodes) {
-            const rootNode = this.parser.nodes[this.parser.rootID];
-            if (rootNode) {
-                this.app.scene.add(rootNode);
+        if (this.parser.objects) {
+            const root = this.parser.objects[this.parser.rootid];
+
+            if (root) {
+                this.app.scene.add(root);
             }
         }
     }   

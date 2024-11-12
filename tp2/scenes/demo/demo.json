@@ -32,7 +32,7 @@
                 "filepath": "scenes/demo/textures/test1.jpg"
             },
             "tableTex": {
-                "filepath": "scenes/demo/textures/table.png"
+                "filepath": "parser/table.png"
             },
             "crimeWeaponTex": {
                 "filepath": "scenes/demo/textures/bloodyPrints.jpg"
@@ -542,6 +542,7 @@
                 "children": {
                     "rectanglePrim": {
                         "type": "rectangle",
+                        "flag": "aqui",
                         "xy1": {
                             "x": -0.5,
                             "y": -0.5

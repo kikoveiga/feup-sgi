@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 class MyYASFParser {
 
-    constructor(scene) {
-        this.scene = scene;
+    constructor() {
 
         this.data = {};
 
@@ -11,26 +10,28 @@ class MyYASFParser {
         this.cameras = {};
         this.textures = {};
         this.materials = {};
-        this.nodes = {};
+        this.objects = {};
+        this.rootid = null;
         this.lights = [];
-
-        this.materials['defaultMaterial'] = new THREE.MeshPhongMaterial({ color: 0xffffff }); // depois temos que tirar isto
-
+        
+        this.defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     }
 
-parse(data) { // METER ASYNC AQUI ?
-    data = data.yasf;
+    async parse(data) {
 
-    this.setUpGlobals(data.globals);
-    this.setUpCameras(data.cameras);
+        data = data.yasf;
+        this.data = data;
 
-    this.loadTextures(data.textures); // COM WAIT AQUI ? 
+        this.setUpGlobals(data.globals);
+        this.setUpCameras(data.cameras);
 
-    this.loadMaterials(data.materials);
-    this.parseGraph(data.graph);
+        this.initialCameraName = this.cameras.initial;
 
-    this.initialCameraName = this.initialCameraName;
-}
+        await this.loadTextures(data.textures);
+
+        this.loadMaterials(data.materials);
+        this.parseGraph(data.graph);
+    }
 
 
     setUpGlobals(globals) {
@@ -141,41 +142,26 @@ parse(data) { // METER ASYNC AQUI ?
     }
     
 
-    loadTextures(textures) {
+    async loadTextures(textures) {
+
         const loader = new THREE.TextureLoader();
-    
-        const texturePromises = Object.keys(textures).map(textureID => {
+        const textureIDs = Object.keys(textures);
+        
+        const texturePromises = textureIDs.map(async (textureID) => {
             const textureInfo = textures[textureID];
-    
-            return new Promise((resolve, reject) => {
-                loader.load(
-                    textureInfo.filepath,
-                    texture => {
-                        texture.generateMipmaps = !textureInfo.mipmap0;
-    
-                        const mipmaps = [];
-                        let level = 0;
-    
-                        while (`mipmap${level}` in textureInfo && level <= 7) {
-                            mipmaps.push(loader.load(textureInfo[`mipmap${level}`]));
-                            level++;
-                        }
-    
-                        if (mipmaps.length > 0) {
-                            texture.mipmaps = mipmaps;
-                            texture.minFilter = THREE.LinearMipmapLinearFilter;
-                        }
-    
-                        this.textures[textureID] = texture;
-                        resolve();
-                    },
-                    undefined,
-                    err => reject(err)
-                );
-            });
+            try {
+                const texture = await loader.loadAsync(textureInfo.filepath);
+
+                texture.generateMipmaps = !('mipmap0' in textureInfo);
+                texture.minFilter = THREE.LinearMipmapLinearFilter;
+
+                this.textures[textureID] = texture;
+            } catch (error) {
+                console.error(`Error loading texture ${textureID}: ${error}`);
+            }
         });
-    
-        return Promise.all(texturePromises);
+
+        await Promise.all(texturePromises);
     }
     
 
@@ -201,6 +187,7 @@ parse(data) { // METER ASYNC AQUI ?
                 bumpscale = 1.0,
                 specularref = null
             } = materialInfo;
+
 
             const materialParams = {
                 color: new THREE.Color(color),
@@ -239,34 +226,28 @@ parse(data) { // METER ASYNC AQUI ?
                 materialParams.specularMap = specularMap; // ver esta propriedade
             }
 
-            console.log(`Loaded material: ${materialID}`, this.materials[materialID]);
             this.materials[materialID] = new THREE.MeshPhongMaterial(materialParams);
         });
     }
 
     parseGraph(graph) {
-        console.log(graph);
     
-        this.rootID = graph.rootid;
-        if (!this.rootID || !graph[this.rootID]) {
+        this.rootid = graph.rootid;
+        if (!this.rootid || !graph[this.rootid]) {
             console.error("Root node not defined or missing.");
             return;
         }
-    
-        this.nodes = {};
-    
-        this.parseNode(graph, this.rootID);
+        
+        this.parseNode(graph, this.rootid);
     }
     
-    parseNode(graph, nodeID, inheritedMaterial = 'defaultMaterial', inheritedCastShadow = false, inheritedReceiveShadow = false) {
+    parseNode(graph, nodeID, inheritedMaterial = null, inheritedCastShadow = false, inheritedReceiveShadow = false) {
         const node = graph[nodeID];
     
         if (!node) {
             console.error(`Node ${nodeID} not defined.`);
             return;
         }
-
-        // console.log(`Created node group for ${nodeID}`);
     
         const nodeGroup = new THREE.Group();
         nodeGroup.name = nodeID;
@@ -276,16 +257,13 @@ parse(data) { // METER ASYNC AQUI ?
     
         if (node.transforms) this.applyTransforms(nodeGroup, node.transforms);
     
-        const materialID = node.materialRef?.materialId || inheritedMaterial || 'defaultMaterial';
+        const materialID = node.materialref?.materialId || inheritedMaterial;
         
-        console.log(`Parsing node: ${nodeID}`);
-        console.log(`Material ID for node ${nodeID}:`, materialID); 
-
         if (node.children) {
             this.parseChildren(node.children, nodeGroup, graph, materialID, nodeGroup.castShadow, nodeGroup.receiveShadow);
         }
     
-        this.nodes[nodeID] = nodeGroup;
+        this.objects[nodeID] = nodeGroup;
     
         return nodeGroup;
     }
@@ -324,17 +302,14 @@ parse(data) { // METER ASYNC AQUI ?
         Object.keys(children).forEach(childID => {
             const child = children[childID];
 
-            console.log(`Processing child: ${childID}, type: ${child.type}`);
-            console.log(`Inherited Material: ${inheritedMaterial}`);
 
             if (child.type === 'noderef') {
                 const referencedNode = this.parseNode(graph, childID, inheritedMaterial, inheritedcastShadow, inheritedReceiveshadow);
                 if (referencedNode) parentGroup.add(referencedNode);
             }
-
+            
             else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon'].includes(child.type)) {
-                const material = this.materials[inheritedMaterial] || this.materials['defaultMaterial'];
-                console.log(`Material for primitive ${child.type}:`, material);
+                const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
                 if (primitive) {
                     primitive.castShadow = inheritedcastShadow;
@@ -406,7 +381,7 @@ parse(data) { // METER ASYNC AQUI ?
                 );
                 break;
 
-            case "sphere":
+            case 'sphere':
                 geometry = new THREE.SphereGeometry(
                     primitiveData.radius,
                     primitiveData.slices,
@@ -418,7 +393,7 @@ parse(data) { // METER ASYNC AQUI ?
                 );
                 break;
         
-            case "polygon":
+            case 'polygon':
                 geometry = new THREE.CylinderGeometry(
                     primitiveData.radius,
                     primitiveData.radius,
@@ -440,11 +415,11 @@ parse(data) { // METER ASYNC AQUI ?
         }
 
         if (!material) {
-            console.warn(`No material provided for primitive of type ${primitiveData.type}. Using default material.`);
-            material = this.materials['defaultMaterial']; 
+            console.error(`Material not found for primitive ${primitiveData.type}`);
+            material = this.defaultMaterial;
         }
-    
-        console.log(`Created primitive of type ${primitiveData.type}`);
+
+        if (primitiveData.flag === 'aqui') console.log(material.map.image);
         return new THREE.Mesh(geometry, material);
     }
 
