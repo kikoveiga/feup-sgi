@@ -14,17 +14,16 @@ class MyYASFParser {
         this.rootid = null;
         this.lights = [];
         
-        this.defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        this.defaultTexture = new THREE.TextureLoader().load('scenes/demo/textures/table.png');
+        this.defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff, map: this.defaultTexture });
     }
 
     async parse(data) {
 
         data = data.yasf;
-        this.data = data;
 
         this.setUpGlobals(data.globals);
         this.setUpCameras(data.cameras);
-
         this.initialCameraName = this.cameras.initial;
 
         await this.loadTextures(data.textures);
@@ -145,23 +144,37 @@ class MyYASFParser {
     async loadTextures(textures) {
 
         const loader = new THREE.TextureLoader();
-        const textureIDs = Object.keys(textures);
+        const allPromises = [];
         
-        const texturePromises = textureIDs.map(async (textureID) => {
+        Object.keys(textures).forEach(textureID => {
             const textureInfo = textures[textureID];
-            try {
-                const texture = await loader.loadAsync(textureInfo.filepath);
 
-                texture.generateMipmaps = !('mipmap0' in textureInfo);
-                texture.minFilter = THREE.LinearMipmapLinearFilter;
+            allPromises.push(
+                new Promise((resolve, reject) => {
+                    loader.load(
+                        textureInfo.filepath,
 
-                this.textures[textureID] = texture;
-            } catch (error) {
-                console.error(`Error loading texture ${textureID}: ${error}`);
-            }
+                        (texture) => {
+                            texture.wrapS = THREE.RepeatWrapping;
+                            texture.wrapT = THREE.RepeatWrapping;
+
+                            this.textures[textureID] = texture;
+                            resolve(texture);
+                        },
+                        undefined,
+                        (error) => reject(error)
+                    );
+                })
+            );
         });
 
-        await Promise.all(texturePromises);
+        return Promise.all(allPromises)
+            .then(() => {
+                console.log("All textures loaded!");
+            })
+            .catch((error) => {
+                console.error("Error loading textures:", error);
+            });
     }
     
 
@@ -188,12 +201,11 @@ class MyYASFParser {
                 specularref = null
             } = materialInfo;
 
-
             const materialParams = {
                 color: new THREE.Color(color),
                 specular: new THREE.Color(specular),
                 shininess: shininess,
-                emissive: new THREE.Color(emissive),
+                // emissive: new THREE.Color(emissive),
                 transparent: transparent,
                 opacity: opacity,
                 wireframe: wireframe,
@@ -205,25 +217,17 @@ class MyYASFParser {
 
             if (textureref && this.textures[textureref]) {
                 const texture = this.textures[textureref];
-                texture.wrapS = THREE.RepeatWrapping;
-                texture.wrapT = THREE.RepeatWrapping;
                 texture.repeat.set(texlength_s, texlength_t);
                 materialParams.map = texture;
             }
 
             if (bumpref && this.textures[bumpref]) {
-                const bumpMap = this.textures[bumpref];
-                bumpMap.wrapS = THREE.RepeatWrapping;
-                bumpMap.wrapT = THREE.RepeatWrapping;
-                materialParams.bumpMap = bumpMap;
+                materialParams.bumpMap = this.textures[textureref];
                 materialParams.bumpScale = bumpscale;
             }
 
             if (specularref && this.textures[specularref]) {
-                const specularMap = this.textures[specularref];
-                specularMap.wrapS = THREE.RepeatWrapping;
-                specularMap.wrapT = THREE.RepeatWrapping;
-                materialParams.specularMap = specularMap; // ver esta propriedade
+                materialParams.specular = this.textures[textureref];
             }
 
             this.materials[materialID] = new THREE.MeshPhongMaterial(materialParams);
@@ -419,8 +423,8 @@ class MyYASFParser {
             material = this.defaultMaterial;
         }
 
-        if (primitiveData.flag === 'aqui') console.log(material.map.image);
-        return new THREE.Mesh(geometry, material);
+        const a = new THREE.Mesh(geometry, material); // testing
+        return a;
     }
 
     createLight(lightData, inheritedcastShadow = false) {

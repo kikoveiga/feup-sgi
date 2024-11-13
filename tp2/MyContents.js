@@ -38,10 +38,10 @@ class MyContents {
      * Called when the scene JSON file load is completed
      * @param {Object} data with the entire scene object
      */
-    onSceneLoaded(data) {
+    async onSceneLoaded(data) {
         console.info("YASF loaded.")
 
-        this.parser.parse(data);
+        await this.parser.parse(data);
         this.addGlobals();
         this.addCameras();
         this.addLights();
@@ -107,9 +107,7 @@ class MyContents {
         if (this.parser.objects) {
             const root = this.parser.objects[this.parser.rootid];
 
-            if (root) {
-                this.app.scene.add(root);
-            }
+            if (root) this.app.scene.add(root);
         }
     }   
     

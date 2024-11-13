@@ -32,7 +32,7 @@
                 "filepath": "scenes/demo/textures/test1.jpg"
             },
             "tableTex": {
-                "filepath": "parser/table.png"
+                "filepath": "scenes/demo/textures/table.png"
             },
             "crimeWeaponTex": {
                 "filepath": "scenes/demo/textures/bloodyPrints.jpg"
@@ -53,9 +53,9 @@
         "materials": {
             "tableApp": {
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
                 "emissive": {
                     "r": 0.0,
@@ -63,11 +63,11 @@
                     "b": 0.0
                 },
                 "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
-                "shininess": 10,
+                "shininess": 30,
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tableTex",
