@@ -7,55 +7,55 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 0.0,
+                "r": 0.5,
                 "g": 0.0,
                 "b": 0.0
-            }
-        },
-        "fog": {
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
             },
-            "near": 1.0,
-            "far": 100.0
+            "fog": {
+                "color": {
+                    "r": 0.5,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "near": 1.0,
+                "far": 100.0
+            }
         },
         "textures": {
             "leftWallTex": {
-                "filepath": "scenes/textures/scratchedWall.jpg"
+                "filepath": "scenes/demo/textures/scratchedWall.jpg"
             },
             "rightWallTex": {
-                "filepath": "scenes/textures/bloodyWall.jpg"
+                "filepath": "scenes/demo/textures/bloodyWall.jpg"
             },
             "floorTex": {
-                "filepath": "scenes/textures/test1.jpg"
+                "filepath": "scenes/demo/textures/test1.jpg"
             },
             "tableTex": {
-                "filepath": "scenes/textures/table.png"
+                "filepath": "scenes/demo/textures/table.png"
             },
             "crimeWeaponTex": {
-                "filepath": "scenes/textures/bloodyPrints.jpg"
+                "filepath": "scenes/demo/textures/bloodyPrints.jpg"
             },
             "tapeTex": {
-                "filepath": "scenes/textures/pTape.jpg"
+                "filepath": "scenes/demo/textures/pTape.jpg"
             },
             "tapeSupportTex": {
-                "filepath": "scenes/textures/lamp.png"
+                "filepath": "scenes/demo/textures/lamp.png"
             },
             "pineTex": {
-                "filepath": "scenes/textures/pine.png"
+                "filepath": "scenes/demo/textures/pine.png"
             },
             "vaseTex": {
-                "filepath": "scenes/textures/vase.png"
+                "filepath": "scenes/demo/textures/vase.png"
             }
         },
         "materials": {
             "tableApp": {
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
                 "emissive": {
                     "r": 0.0,
@@ -63,11 +63,11 @@
                     "b": 0.0
                 },
                 "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
-                "shininess": 10,
+                "shininess": 30,
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tableTex",
@@ -335,22 +335,7 @@
             "table": {
                 "type": "node",
                 "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 7.5,
-                            "y": 0.0,
-                            "z": 10
-                        }
-                    },
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 1.5,
-                            "z": 10
-                        }
-                    },
+                    
                     {
                         "type": "rotate",
                         "amount": {
@@ -557,6 +542,7 @@
                 "children": {
                     "rectanglePrim": {
                         "type": "rectangle",
+                        "flag": "aqui",
                         "xy1": {
                             "x": -0.5,
                             "y": -0.5

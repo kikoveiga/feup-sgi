@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
+import { MyYASFParser } from './parser/MyYASFParser.js';
+
 /**
  *  This class contains the contents of out application
  */
@@ -13,6 +15,8 @@ class MyContents {
     constructor(app) {
         this.app = app
         this.axis = null
+
+        this.parser = new MyYASFParser();
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
@@ -34,9 +38,16 @@ class MyContents {
      * Called when the scene JSON file load is completed
      * @param {Object} data with the entire scene object
      */
-    onSceneLoaded(data) {
+    async onSceneLoaded(data) {
         console.info("YASF loaded.")
-        this.onAfterSceneLoadedAndBeforeRender(data);
+
+        await this.parser.parse(data);
+        this.addGlobals();
+        this.addCameras();
+        this.addLights();
+        this.addObjects();
+
+        // this.onAfterSceneLoadedAndBeforeRender(data);
     }
 
     printYASF(data, indent = '') {
@@ -59,19 +70,45 @@ class MyContents {
     }
 
     addGlobals() {
-        // deal with global variables here
+
+        if (this.parser.globals.background) {
+            this.app.scene.background = this.parser.globals.background;
+        }
+
+        if (this.parser.globals.ambient) {
+            this.app.scene.add(this.parser.globals.ambient);
+        }
+
+        if (this.parser.globals.fog) {
+            this.app.scene.fog = this.parser.globals.fog;
+        }
+
+        if (this.parser.globals.skybox) {
+            this.app.scene.skybox = this.parser.globals.skybox;
+        }
     }
 
     addCameras() {
-        // deal with cameras here
+        this.app.cameras = this.parser.cameras; 
+        this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
+        this.app.gui.updateCameraOptions(); 
     }
+    
 
     addLights() {
-        // deal with lights here
+        if (this.parser.lights) {
+            this.parser.lights.forEach(light => {
+                this.app.scene.add(light);
+            });
+        }
     }
 
     addObjects() {
-        // deal with objects here
+        if (this.parser.objects) {
+            const root = this.parser.objects[this.parser.rootid];
+
+            if (root) this.app.scene.add(root);
+        }
     }   
     
     update() {

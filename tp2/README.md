@@ -3,7 +3,7 @@ The starting point of the second assignment of SGI.
 
 # Getting started
 
-Considering a code block (for instance class A.js), to load an JSON file (in the defined structure) call:
+Considering a code block (for instance class A.js), to load a JSON file (in the defined structure) call:
 
     let reader = new MyFileReader(app, this, *this.onSceneLoaded*);
     reader.open("<path to JSON file>");	
