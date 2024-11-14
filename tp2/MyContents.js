@@ -47,7 +47,7 @@ class MyContents {
         this.addLights();
         this.addObjects();
 
-        // this.onAfterSceneLoadedAndBeforeRender(data);
+        // this.onAfterSceneLoadedAndBeforeRender(data)
     }
 
     printYASF(data, indent = '') {
@@ -84,7 +84,7 @@ class MyContents {
         }
 
         if (this.parser.globals.skybox) {
-            this.app.scene.skybox = this.parser.globals.skybox;
+            this.app.scene.add(this.parser.globals.skybox);
         }
     }
 
