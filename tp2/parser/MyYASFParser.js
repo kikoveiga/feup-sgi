@@ -12,6 +12,7 @@ class MyYASFParser {
         this.materials = {};
         this.objects = {};
         this.rootid = null;
+        this.initialCameraName = null;
         this.lights = [];
         
         this.defaultTexture = new THREE.TextureLoader().load('scenes/demo/textures/table.png');
@@ -20,13 +21,21 @@ class MyYASFParser {
 
     async parse(data) {
 
+        if (!data.yasf) console.error("Invalid data format: yasf object not found.");
+
         data = data.yasf;
+
+        if (!data.globals) console.error("Invalid data format: globals object not found.");
+        if (!data.cameras) console.error("Invalid data format: cameras object not found.");
+        if (!data.textures) console.error("Invalid data format: textures object not found.");
+        if (!data.materials) console.error("Invalid data format: materials object not found.");
+        if (!data.graph) console.error("Invalid data format: graph object not found.");
 
         this.setUpGlobals(data.globals);
         this.setUpCameras(data.cameras);
-        this.initialCameraName = this.cameras.initial;
-
-        await this.loadTextures(data.textures);
+        
+        if (Object.keys(data.textures).length === 0) console.warn("No textures found.");
+        else await this.loadTextures(data.textures);
 
         this.loadMaterials(data.materials);
         this.parseGraph(data.graph);
@@ -35,22 +44,26 @@ class MyYASFParser {
 
     setUpGlobals(globals) {
 
-        if (globals.background) {
+        if (!globals.background) console.warn("Background color not defined.");
+        else {
             const { r, g, b } = globals.background;
             this.globals.background = new THREE.Color(r, g, b);
         }
 
-        if (globals.ambient) {
-            const { r, g, b, intensity = 1 } = globals.ambient;
+        if (!globals.ambient) console.warn("Ambient light not defined.");
+        else {
+            const { r, g, b, intensity } = globals.ambient;
             this.globals.ambient = new THREE.AmbientLight(new THREE.Color(r, g, b), intensity);
         }
 
-        if (globals.fog) {
+        if (!globals.fog) console.warn("Fog not defined.");
+        else {
             const { r, g, b } = globals.fog.color;
             this.globals.fog = new THREE.Fog(new THREE.Color(r, g, b), globals.fog.near, globals.fog.far);
         }
 
-        if (globals.skybox) {
+        if (!globals.skybox) console.warn("Skybox not defined.");
+        else {
 
             const { size, center, emissive, intensity, front, back, up, down, left, right } = globals.skybox;
 
@@ -73,7 +86,8 @@ class MyYASFParser {
             }
 
             if (emissive) {
-                const emissiveColor = new THREE.Color(emissive);
+                const { r, g, b } = emissive;
+                const emissiveColor = new THREE.Color(r, g, b);
                 skyBox.materials.forEach(material => {
                     material.emissive = emissiveColor;
                     material.emissiveIntensity = intensity || 1;
@@ -88,7 +102,7 @@ class MyYASFParser {
     setUpCameras(cameras) {
 
         this.initialCameraName = cameras.initial;
-        delete cameras.initial; // testar se funciona
+        delete cameras.initial;
     
         Object.keys(cameras).forEach(cameraID => {
     
@@ -106,9 +120,6 @@ class MyYASFParser {
                     camera.far
                 );
     
-                if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-                if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-    
             } else if (camera.type == 'perspective') {
                 newCamera = new THREE.PerspectiveCamera(
                     camera.angle,
@@ -117,13 +128,13 @@ class MyYASFParser {
                     camera.far
                 );
     
-                if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-                if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-    
             } else {
                 console.error(`Unknown camera type: ${camera.type}`);
                 return; 
             }
+
+            newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
+            newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
     
             newCamera.updateProjectionMatrix();
             newCamera.updateMatrixWorld();
@@ -133,8 +144,7 @@ class MyYASFParser {
     
         if (this.initialCameraName && this.cameras[this.initialCameraName]) {
             this.activeCamera = this.cameras[this.initialCameraName];
-        } 
-        else {
+        } else {
             console.error("Initial camera not defined or not found.");
             this.activeCamera = Object.values(this.cameras)[0];
         }
@@ -144,6 +154,7 @@ class MyYASFParser {
     async loadTextures(textures) {
 
         const loader = new THREE.TextureLoader();
+        const imageLoader = new THREE.ImageLoader();
         const allPromises = [];
         
         Object.keys(textures).forEach(textureID => {
@@ -151,19 +162,76 @@ class MyYASFParser {
 
             allPromises.push(
                 new Promise((resolve, reject) => {
-                    loader.load(
-                        textureInfo.filepath,
+                    if (textureInfo.isVideo) {
 
-                        (texture) => {
-                            texture.wrapS = THREE.RepeatWrapping;
-                            texture.wrapT = THREE.RepeatWrapping;
+                        const video = document.createElement('video');
+                        video.src = textureInfo.filepath;
+                        video.load();
+                        video.loop = true;
+                        video.muted = true;
+                        video.play();
 
-                            this.textures[textureID] = texture;
-                            resolve(texture);
-                        },
-                        undefined,
-                        (error) => reject(error)
-                    );
+                        const texture = new THREE.VideoTexture(video);
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        texture.minFilter = THREE.LinearFilter;
+
+                        this.textures[textureID] = texture;
+                        resolve(texture);
+                    }
+
+                    else {
+                        loader.load(
+                            textureInfo.filepath,
+
+                            async (texture) => {
+                                texture.wrapS = THREE.RepeatWrapping;
+                                texture.wrapT = THREE.RepeatWrapping;
+
+                                const mipmaps = [];
+                                let level = 0;
+                                let hasCustomMipmaps = false;
+
+                                while(`mipmap${level}` in textureInfo && level <= 7) {
+                                    hasCustomMipmaps = true;
+
+                                    const mipmapPromise = new Promise((mipmapResolve, mipmapReject) => {
+                                        imageLoader.load(
+                                            textureInfo[`mipmap${level}`],
+                                            (image) => {
+                                                mipmaps.push(image);
+                                                mipmapResolve();
+                                            },
+                                            undefined,
+                                            (error) => mipmapReject(error)
+                                        );
+                                    });
+
+                                    try {
+                                        await mipmapPromise;
+                                    } catch (error) {
+                                        console.error(`Error loading mipmap level ${level} for texture ${textureID}: ${error}`);
+                                        return reject(error);
+                                    }
+
+                                    level++;
+                                }
+
+                                if (hasCustomMipmaps) {
+                                    texture.mipmaps = mipmaps;
+                                    texture.minFilter = THREE.LinearMipmapLinearFilter;
+                                    texture.generateMipmaps = false;
+                                } else {
+                                    texture.generateMipmaps = true;
+                                }
+
+                                this.textures[textureID] = texture;
+                                resolve(texture);
+                            },
+                            undefined,
+                            (error) => reject(error)
+                        );
+                    }
                 })
             );
         });
