@@ -49,8 +49,6 @@ class MyGuiInterface {
                 this.app.setActiveCamera(value);
             });
     }
-    
-    
 }
 
 export { MyGuiInterface };

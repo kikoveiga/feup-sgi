@@ -14,8 +14,6 @@ class MyYASFParser {
         this.rootid = null;
         this.lights = [];
         
-        this.defaultTexture = new THREE.TextureLoader().load('scenes/demo/textures/table.png');
-        this.defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff, map: this.defaultTexture });
     }
 
     async parse(data) {
@@ -53,50 +51,40 @@ class MyYASFParser {
         if (globals.skybox) {
 
             const { size, center, emissive, intensity, front, back, up, down, left, right } = globals.skybox;
-
+        
             const skyBoxGeometry = new THREE.BoxGeometry(size.x, size.y, size.z);
             const loader = new THREE.TextureLoader();
-
+            
             const materials = [
-                new THREE.MeshBasicMaterial({ map: loader.load(front), side: THREE.BackSide }),
-                new THREE.MeshBasicMaterial({ map: loader.load(back), side: THREE.BackSide }),
-                new THREE.MeshBasicMaterial({ map: loader.load(up), side: THREE.BackSide }),
-                new THREE.MeshBasicMaterial({ map: loader.load(down), side: THREE.BackSide }),
-                new THREE.MeshBasicMaterial({ map: loader.load(left), side: THREE.BackSide }),
-                new THREE.MeshBasicMaterial({ map: loader.load(right), side: THREE.BackSide })
+                new THREE.MeshStandardMaterial({ map: loader.load(front), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(back), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(up), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(down), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(left), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(right), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide })
             ];
-
+        
             const skyBox = new THREE.Mesh(skyBoxGeometry, materials);
-
+        
             if (center) {
                 skyBox.position.set(center.x, center.y, center.z);
             }
-
-            if (emissive) {
-                const emissiveColor = new THREE.Color(emissive);
-                skyBox.materials.forEach(material => {
-                    material.emissive = emissiveColor;
-                    material.emissiveIntensity = intensity || 1;
-                });
-            }
-
+            
+            console.log(`skybox loaded: ${skyBox}`);
             this.globals.skybox = skyBox;
-
         }
+        
     }
 
     setUpCameras(cameras) {
-
         this.initialCameraName = cameras.initial;
-        delete cameras.initial; // testar se funciona
-    
+        delete cameras.initial; 
+        
         Object.keys(cameras).forEach(cameraID => {
-    
             const camera = cameras[cameraID];
-    
             let newCamera;
     
-            if (camera.type == 'orthogonal') {
+            if (camera.type === 'orthogonal') {
                 newCamera = new THREE.OrthographicCamera(
                     camera.left,
                     camera.right,
@@ -105,25 +93,20 @@ class MyYASFParser {
                     camera.near,
                     camera.far
                 );
-    
-                if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-                if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-    
-            } else if (camera.type == 'perspective') {
+            } else if (camera.type === 'perspective') {
                 newCamera = new THREE.PerspectiveCamera(
                     camera.angle,
                     window.innerWidth / window.innerHeight,
                     camera.near,
                     camera.far
                 );
-    
-                if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-                if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
-    
             } else {
                 console.error(`Unknown camera type: ${camera.type}`);
                 return; 
             }
+    
+            if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
+            if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
     
             newCamera.updateProjectionMatrix();
             newCamera.updateMatrixWorld();
@@ -132,13 +115,14 @@ class MyYASFParser {
         });
     
         if (this.initialCameraName && this.cameras[this.initialCameraName]) {
+            console.log(`Initial camera is ${this.initialCameraName}!`);
             this.activeCamera = this.cameras[this.initialCameraName];
-        } 
-        else {
+        } else {
             console.error("Initial camera not defined or not found.");
             this.activeCamera = Object.values(this.cameras)[0];
         }
     }
+    
     
 
     async loadTextures(textures) {
@@ -278,24 +262,24 @@ class MyYASFParser {
             const { type, amount } = transform;
     
             switch (type) {
-                case 'translate':
-                    nodeGroup.position.x += amount.x;
-                    nodeGroup.position.y += amount.y;
-                    nodeGroup.position.z += amount.z;
-                    break;
-    
-                case 'rotate':
-                    nodeGroup.rotation.x += THREE.MathUtils.degToRad(amount.x);
-                    nodeGroup.rotation.y += THREE.MathUtils.degToRad(amount.y);
-                    nodeGroup.rotation.z += THREE.MathUtils.degToRad(amount.z);
-                    break;
-    
                 case 'scale':
                     nodeGroup.scale.x *= amount.x;
                     nodeGroup.scale.y *= amount.y;
                     nodeGroup.scale.z *= amount.z;
                     break;
-    
+
+                case 'rotate':
+                    nodeGroup.rotation.x += THREE.MathUtils.degToRad(amount.x);
+                    nodeGroup.rotation.y += THREE.MathUtils.degToRad(amount.y);
+                    nodeGroup.rotation.z += THREE.MathUtils.degToRad(amount.z);
+                    break;    
+
+                case 'translate':
+                    nodeGroup.position.x += amount.x;
+                    nodeGroup.position.y += amount.y;
+                    nodeGroup.position.z += amount.z;
+                    break;
+
                 default:
                     console.error(`Unknown transform type: ${type}`);
             }

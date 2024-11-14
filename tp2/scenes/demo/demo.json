@@ -7,47 +7,56 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 0.5,
-                "g": 0.0,
-                "b": 0.0
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
             },
             "fog": {
                 "color": {
-                    "r": 0.5,
-                    "g": 1.0,
-                    "b": 1.0
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
                 },
                 "near": 1.0,
-                "far": 100.0
+                "far": 250.0
+            },
+            "skybox": {
+                "size": {
+                    "x": 75,
+                    "y": 50,
+                    "z": 75
+                },
+                "center": {
+                    "x": 0,
+                    "y": 25,
+                    "z": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "intensity": 1.0,
+                "front": "scenes/demo/textures/sides.jpg",
+                "back": "scenes/demo/textures/sides.jpg",
+                "up": "scenes/demo/textures/top.jpg",
+                "down": "scenes/demo/textures/wood.jpg",
+                "left": "scenes/demo/textures/sides.jpg",
+                "right": "scenes/demo/textures/sides.jpg"
             }
         },
         "textures": {
-            "leftWallTex": {
-                "filepath": "scenes/demo/textures/scratchedWall.jpg"
-            },
-            "rightWallTex": {
-                "filepath": "scenes/demo/textures/bloodyWall.jpg"
-            },
-            "floorTex": {
-                "filepath": "scenes/demo/textures/test1.jpg"
-            },
             "tableTex": {
                 "filepath": "scenes/demo/textures/table.png"
             },
-            "crimeWeaponTex": {
-                "filepath": "scenes/demo/textures/bloodyPrints.jpg"
+            "glassTex": {
+                "filepath": "scenes/demo/textures/glass.jpg"
             },
-            "tapeTex": {
-                "filepath": "scenes/demo/textures/pTape.jpg"
+            "woodTex": {
+                "filepath": "scenes/demo/textures/wood.jpg"
             },
-            "tapeSupportTex": {
-                "filepath": "scenes/demo/textures/lamp.png"
-            },
-            "pineTex": {
-                "filepath": "scenes/demo/textures/pine.png"
-            },
-            "vaseTex": {
-                "filepath": "scenes/demo/textures/vase.png"
+            "stoneTex": {
+                "filepath": "scenes/demo/textures/stone.jpg"
             }
         },
         "materials": {
@@ -74,199 +83,81 @@
                 "texlength_s": 1,
                 "texlength_t": 1
             },
-            "leftWallApp": {
+            "glassApp": {
                 "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
+                    "r": 0.3,
+                    "g": 0.6,
+                    "b": 0.8
+                },
+                "color": {
+                    "r": 0.7,
+                    "g": 0.9,
+                    "b": 1.0
+                },
+                "specular": {
+                    "r": 0.5,
+                    "g": 0.7,
+                    "b": 1.0
+                },
+                "shininess": 100.0,
+                "transparent": true,
+                "opacity": 0.9,
+                "textureref": "glassTex",
+                "texlength_s": 10,
+                "texlength_t": 10,
+                "twosided": true
+            },
+            "woodApp": {
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.05,
                     "b": 0.0
                 },
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 1.0,
+                    "g": 0.85,
+                    "b": 0.6
                 },
                 "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.2,
+                    "g": 0.15,
+                    "b": 0.1
                 },
-                "shininess": 0.0,
+                "shininess": 10.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "leftWallTex",
-                "texlength_s": 15,
+                "textureref": "woodTex",
+                "texlength_s": 8,
                 "texlength_t": 8,
                 "twosided": true
             },
-            "rightWallApp": {
+            "stoneApp": {
                 "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.05,
+                    "g": 0.05,
+                    "b": 0.05
                 },
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 0.7,
+                    "g": 0.7,
+                    "b": 0.7
                 },
                 "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.2
                 },
-                "shininess": 0.0,
+                "shininess": 5.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "rightWallTex",
-                "texlength_s": 15,
-                "texlength_t": 8,
+                "textureref": "stoneTex",
+                "texlength_s": 10,
+                "texlength_t": 10,
                 "twosided": true
-            },
-            "floorApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "floorTex",
-                "texlength_s": 15,
-                "texlength_t": 15,
-                "twosided": true
-            },
-            "crimeWeaponApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "crimeWeaponTex",
-                "texlength_s": 1,
-                "texlength_t": 1
-            },
-            "tapeApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "tapeTex",
-                "texlength_s": 1,
-                "texlength_t": 0.4,
-                "twosided": true
-            },
-            "tapeSupportApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "tapeSupportTex",
-                "texlength_s": 1,
-                "texlength_t": 1
-            },
-            "pineApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "pineTex",
-                "texlength_s": 1,
-                "texlength_t": 1,
-                "wireframe": true
-            },
-            "vaseApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "vaseTex",
-                "texlength_s": 1,
-                "texlength_t": 1,
-                "shading": "flat"
             }
         },
         "cameras": {
-            "initial": "cam1",
+            "initial": "cam3",
             "cam1": {
                 "type": "perspective",
                 "angle": 60,
@@ -301,6 +192,22 @@
                 "right": 5,
                 "bottom": -5,
                 "top": 5
+            },
+            "cam3": {
+                "type": "perspective",
+                "angle": 90,
+                "near": 0.1,
+                "far": 100,
+                "location": {
+                    "x": 10,
+                    "y": 5,
+                    "z": 10
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
             }
         },
         "graph": {
@@ -334,12 +241,11 @@
             },
             "table": {
                 "type": "node",
-                "transforms": [
-                    
+                "transforms": [               
                     {
                         "type": "rotate",
                         "amount": {
-                            "x": 89.5,
+                            "x": 90.0,
                             "y": 0.0,
                             "z": 0.0
                         }
@@ -348,7 +254,7 @@
                         "type": "scale",
                         "amount": {
                             "x": 4.5,
-                            "y": 2.5,
+                            "y": 4.5,
                             "z": 3.0
                         }
                     },
@@ -362,7 +268,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "tableApp"
+                    "materialId": "glassApp"
                 },
                 "children": {
                     "tableTop": {
@@ -391,21 +297,30 @@
                 "type": "node",
                 "transforms": [
                     {
-                        "type": "translate",
+                        "type": "scale",
                         "amount": {
-                            "x": 0.0,
-                            "y": 0.48,
-                            "z": 0
+                            "x": 1.2,
+                            "y": 0.4,
+                            "z": 1.2
                         }
                     },
                     {
-                        "type": "scale",
+                        "type": "rotate",
                         "amount": {
-                            "x": 1.0,
-                            "y": 0.08,
-                            "z": 1.0
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 2.0,
+                            "z": -1.0
                         }
                     }
+
                 ],
                 "children": {
                     "unitCube": {
@@ -418,14 +333,33 @@
                 "type": "node",
                 "transforms": [
                     {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 1.6,
+                            "z": 0.25
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
                         "type": "translate",
                         "amount": {
-                            "x": 0.45,
-                            "y": 0.0,
-                            "z": 0.42
+                            "x": 0.475,
+                            "y": 1.53,
+                            "z": 0.0
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "glassApp"
+                },
                 "children": {
                     "unitCube": {
                         "type": "noderef",
@@ -437,14 +371,33 @@
                 "type": "node",
                 "transforms": [
                     {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 1.5,
+                            "z": 0.25
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
                         "type": "translate",
                         "amount": {
-                            "x": 0.45,
-                            "y": 0.0,
-                            "z": -0.42
+                            "x": 0.475,
+                            "y": 2.475,
+                            "z": -0.05
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "glassApp"
+                },
                 "children": {
                     "unitCube": {
                         "type": "noderef",
@@ -456,14 +409,33 @@
                 "type": "node",
                 "transforms": [
                     {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.4,
+                            "y": 1.5,
+                            "z": 0.4
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
                         "type": "translate",
                         "amount": {
-                            "x": -0.45,
-                            "y": 0.0,
-                            "z": 0.42
+                            "x": -0.40,
+                            "y": 1.6,
+                            "z": -0.05                        
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "glassApp"
+                },
                 "children": {
                     "unitCube": {
                         "type": "noderef",
@@ -475,14 +447,33 @@
                 "type": "node",
                 "transforms": [
                     {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.25,
+                            "y": 1.5,
+                            "z": 0.25
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
                         "type": "translate",
                         "amount": {
-                            "x": -0.45,
-                            "y": 0.0,
-                            "z": -0.42
+                            "x": -0.475,
+                            "y": 2.475,
+                            "z": -0.05
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "glassApp"
+                },
                 "children": {
                     "unitCube": {
                         "type": "noderef",
