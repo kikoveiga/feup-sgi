@@ -18,7 +18,7 @@
                     "b": 0.0
                 },
                 "near": 1.0,
-                "far": 250.0
+                "far": 500.0
             },
             "skybox": {
                 "size": {
@@ -40,7 +40,7 @@
                 "front": "scenes/demo/textures/sides.jpg",
                 "back": "scenes/demo/textures/sides.jpg",
                 "up": "scenes/demo/textures/top.jpg",
-                "down": "scenes/demo/textures/wood.jpg",
+                "down": "scenes/demo/textures/down1.jpg",
                 "left": "scenes/demo/textures/sides.jpg",
                 "right": "scenes/demo/textures/sides.jpg"
             }
