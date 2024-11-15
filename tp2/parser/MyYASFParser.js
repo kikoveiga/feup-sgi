@@ -82,8 +82,7 @@ class MyYASFParser {
             if (center) {
                 skyBox.position.set(center.x, center.y, center.z);
             }
-            
-            console.log(`skybox loaded: ${skyBox}`);
+
             this.globals.skybox = skyBox;
         }
         
@@ -133,7 +132,6 @@ class MyYASFParser {
         });
     
         if (this.initialCameraName && this.cameras[this.initialCameraName]) {
-            console.log(`Initial camera is ${this.initialCameraName}!`);
             this.activeCamera = this.cameras[this.initialCameraName];
         } else {
             console.error("Initial camera not defined or not found.");
@@ -401,6 +399,7 @@ class MyYASFParser {
         switch (primitiveData.type) {
 
             case 'rectangle':
+                console.log("got into rectangle");
                 geometry = new THREE.PlaneGeometry(
                     Math.abs(primitiveData.xy2.x - primitiveData.xy1.x),
                     Math.abs(primitiveData.xy2.y - primitiveData.xy1.y)
@@ -432,28 +431,39 @@ class MyYASFParser {
                 );
                 break;
 
-            case 'cylinder':
-                geometry = new THREE.CylinderGeometry(
-                    primitiveData.top,
-                    primitiveData.base,
-                    primitiveData.height,
-                    primitiveData.slices,
-                    primitiveData.stacks,
-                    primitiveData.capsclose || false,
-                    primitiveData.thetaStart || 0,
-                    primitiveData.thetaLength || Math.PI * 2
-                );
-                break;
+                case 'cylinder':
+                    const thetaStartCylinder = (primitiveData.thetaStart || 0) * (Math.PI / 180);
+                    const thetaLengthCylinder = (primitiveData.thetaLength || 360) * (Math.PI / 180);
+                
+                    geometry = new THREE.CylinderGeometry(
+                        primitiveData.top,
+                        primitiveData.base,
+                        primitiveData.height,
+                        primitiveData.slices,
+                        primitiveData.stacks,
+                        primitiveData.capsclose || false,
+                        thetaStartCylinder,
+                        thetaLengthCylinder
+                    );
+                    break;
+                
 
             case 'sphere':
+                console.log("got into sphere");
+                    
+                const thetaStartSphere = primitiveData.thetastart * (Math.PI / 180) || 0;
+                const thetaLengthSphere = primitiveData.thetalength * (Math.PI / 180) || Math.PI * 2;
+                const phiStartSphere = primitiveData.phistart * (Math.PI / 180) || 0;
+                const phiLengthSphere = primitiveData.philength * (Math.PI / 180) || Math.PI;
+
                 geometry = new THREE.SphereGeometry(
                     primitiveData.radius,
                     primitiveData.slices,
                     primitiveData.stacks,
-                    primitiveData.thetastart || 0,
-                    primitiveData.thetalength || Math.PI * 2,
-                    primitiveData.phistart || 0,
-                    primitiveData.philength || Math.PI * 2
+                    thetaStartSphere,
+                    thetaLengthSphere,
+                    phiStartSphere,
+                    phiLengthSphere
                 );
                 break;
         
@@ -483,7 +493,7 @@ class MyYASFParser {
             material = this.defaultMaterial;
         }
 
-        const a = new THREE.Mesh(geometry, material); // testing
+        const a = new THREE.Mesh(geometry, material); 
         return a;
     }
 
