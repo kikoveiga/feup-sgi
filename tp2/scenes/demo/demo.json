@@ -23,12 +23,12 @@
             "skybox": {
                 "size": {
                     "x": 75,
-                    "y": 50,
+                    "y": 60,
                     "z": 75
                 },
                 "center": {
                     "x": 0,
-                    "y": 25,
+                    "y": 30,
                     "z": 0
                 },
                 "emissive": {
@@ -46,9 +46,6 @@
             }
         },
         "textures": {
-            "tableTex": {
-                "filepath": "scenes/demo/textures/table.png"
-            },
             "glassTex1": {
                 "filepath": "scenes/demo/textures/glass.jpg"
             },
@@ -64,6 +61,9 @@
             "azulTex": {
                 "filepath": "scenes/demo/textures/azul.jpg"
             },
+            "azulTex2": {
+                "filepath": "scenes/demo/textures/azul2.jpg"
+            },
             "whiteTex": {
                 "filepath": "scenes/demo/textures/white.jpg"
             },
@@ -75,10 +75,87 @@
             },
             "yellowTex": {
                 "filepath": "scenes/demo/textures/yellow.jpg"
+            },
+            "redTex": {
+                "filepath": "scenes/demo/textures/red.jpg"
+            },
+            "ropeTex": {
+                "filepath": "scenes/demo/textures/rope.jpg"
+            },
+            "tntTex": {
+                "filepath": "scenes/demo/textures/tnt.png"
             }
-
         },
         "materials": {
+            "tntApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "tntTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0
+            },
+            "ropeApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "ropeTex",
+                "texlength_s": 1.5,
+                "texlength_t": 5.0
+            },
+            "redApp": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 80,
+                "transparent": true,
+                "opacity": 0.95,
+                "textureref": "redTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0
+            },
             "orangeApp": {
                 "color": {
                     "r": 1.0,
@@ -99,8 +176,8 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "orangeTex",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 0.5
             },
             "yellowApp": {
                 "color": {
@@ -194,10 +271,10 @@
                 "texlength_s": 1,
                 "texlength_t": 1
             },
-            "tableApp": {
+            "azulApp2": {
                 "color": {
-                    "r": 1.0,
-                    "g": 1.0,
+                    "r": 0.0,
+                    "g": 0.0,
                     "b": 1.0
                 },
                 "emissive": {
@@ -206,16 +283,17 @@
                     "b": 0.0
                 },
                 "specular": {
-                    "r": 0.1,
-                    "g": 0.1,
-                    "b": 0.1
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
                 },
                 "shininess": 30,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "tableTex",
+                "textureref": "azulTex2",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided": true
             },
             "glassApp1": {
                 "emissive": {
@@ -357,9 +435,9 @@
                 "near": 0.1,
                 "far": 100,
                 "location": {
-                    "x": 15,
-                    "y": 30,
-                    "z": 15
+                    "x": 30,
+                    "y": 25,
+                    "z": 30
                 },
                 "target": {
                     "x": 0,
@@ -373,43 +451,321 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "table": {
+                    "blueTower": {
                         "type": "noderef",
-                        "nodeId": "table"
+                        "nodeId": "blueTower"
                     },
-                    "bird": {
+                    "bird1": {
                         "type": "noderef",
-                        "nodeId": "bird"
+                        "nodeId": "bird1"
+                    },
+                    "bird2": {
+                        "type": "noderef",
+                        "nodeId": "bird2"
+                    },
+                    "bird3": {
+                        "type": "noderef",
+                        "nodeId": "bird3"
+                    },
+                    "tnt": {
+                        "type": "noderef",
+                        "nodeId": "tnt"
                     },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
                         "color": {
-                            "r": 0.5,
-                            "g": 0.6,
-                            "b": 0.8
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
                         },
-                        "intensity": 1.0,
+                        "intensity": 10.0,
                         "distance": 1000,
                         "decay": 2.0,
                         "castshadow": false,
                         "position": {
-                            "x": 33.75,
-                            "y": 37.3,
-                            "z": 33.75
+                            "x": 0.0,
+                            "y": 35.0,
+                            "z": 0.0
                         }
                     }
                 }
             },
-            "bird": {
+            "tnt": {
                 "type": "node",
                 "transforms": [      
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.7,
-                            "y": 0.7,
-                            "z": 0.7
+                            "x": 0.85,
+                            "y": 0.85,
+                            "z": 0.85
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 20.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -10.0,
+                            "y": 37.0,
+                            "z": -5.0
+                        }
+                    }
+                ],
+                "children": {
+                    "tntbox": {
+                        "type": "noderef",
+                        "nodeId": "tntbox"
+                    },
+                    "balloon": {
+                        "type": "noderef",
+                        "nodeId": "balloon"
+                    },
+                    "rope": {
+                        "type": "noderef",
+                        "nodeId": "rope"
+                    }
+                }
+            },
+            "rope": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.6,
+                            "y": 1.1,
+                            "z": 0.6
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "ropeApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "radiusTop": 1,
+                        "radiusBottom": 1,
+                        "height": 10.0,
+                        "radialSegments": 32,
+                        "heightSegments": 1,
+                        "openEnded": false
+                    }    
+                }
+            },
+            "balloon": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.1,
+                            "z": 1.2
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 15.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "redApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 5,
+                        "slices": 32,
+                        "stacks": 16,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "tntbox": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -4.5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "tntApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 8.5, "y": 8.5, "z": 8.5 },
+                        "parts_x": 8.5,
+                        "parts_y": 8.5,
+                        "parts_z": 8.5
+                    }
+                }
+            },
+            "bird3": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 130.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -4.0,
+                            "y": 25.5,
+                            "z": 20.0
+                        }
+                    }
+                ],
+                "children": {
+                    "body": {
+                        "type": "noderef",
+                        "nodeId": "body"
+                    },
+                    "eyes": {
+                        "type": "noderef",
+                        "nodeId": "eyes"
+                    },
+                    "beak": {
+                        "type": "noderef",
+                        "nodeId": "beak"
+                    },
+                    "feathers": {
+                        "type": "noderef",
+                        "nodeId": "feathers"
+                    }
+                }
+            },
+            "bird2": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 10.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4.0,
+                            "y": 25.5,
+                            "z": 23.5
+                        }
+                    }
+                ],
+                "children": {
+                    "body": {
+                        "type": "noderef",
+                        "nodeId": "body"
+                    },
+                    "eyes": {
+                        "type": "noderef",
+                        "nodeId": "eyes"
+                    },
+                    "beak": {
+                        "type": "noderef",
+                        "nodeId": "beak"
+                    },
+                    "feathers": {
+                        "type": "noderef",
+                        "nodeId": "feathers"
+                    }
+                }
+            },
+            "bird1": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
                         }
                     },         
                     {
@@ -423,9 +779,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 0.0,
-                            "y": 26.4,
-                            "z": 15.0
+                            "x": 4.0,
+                            "y": 25.5,
+                            "z": 16.5
                         }
                     }
                 ],
@@ -505,7 +861,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "woodApp"
+                    "materialId": "azulApp2"
                 },
                 "children": {
                     "head": {
@@ -539,7 +895,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "woodApp"
+                    "materialId": "azulApp2"
                 },
                 "children": {
                     "triangle4": {
@@ -581,7 +937,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "woodApp"
+                    "materialId": "azulApp2"
                 },
                 "children": {
                     "triangle4": {
@@ -664,6 +1020,9 @@
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "tetrahedron": {
                         "type": "noderef",
@@ -683,6 +1042,9 @@
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "tetrahedron": {
                         "type": "noderef",
@@ -871,7 +1233,7 @@
                     }
                 }
             },
-            "table": {
+            "blueTower": {
                 "type": "node",
                 "transforms": [               
                     {
@@ -885,8 +1247,8 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 7.5,
-                            "y": 7.5,
+                            "x": 10.0,
+                            "y": 10.0,
                             "z": 6.0
                         }
                     },
@@ -1326,6 +1688,9 @@
             },
             "tetrahedron": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "triangle1": {
                         "type": "noderef",
@@ -1343,6 +1708,9 @@
             },
             "triangle1": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -1354,6 +1722,9 @@
             },
             "triangle2": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -1365,6 +1736,9 @@
             },
             "triangle3": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -1394,6 +1768,9 @@
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "azulApp2"
+                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -1423,6 +1800,9 @@
                         }
                     }
                 ],
+                "materialref": {
+                    "materialId": "azulApp2"
+                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
