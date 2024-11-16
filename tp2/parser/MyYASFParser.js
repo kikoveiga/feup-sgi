@@ -265,7 +265,7 @@ class MyYASFParser {
                 color: new THREE.Color(color),
                 specular: new THREE.Color(specular),
                 shininess: shininess,
-                emissive: new THREE.Color(emissive),
+                // emissive: new THREE.Color(emissive),
                 transparent: transparent,
                 opacity: opacity,
                 wireframe: wireframe,
