@@ -275,8 +275,6 @@ class MyYASFParser {
 
             if (textureref && this.textures[textureref]) {
                 const texture = this.textures[textureref];
-                texture.texlength_s = texlength_s;
-                texture.texlength_t = texlength_t;
                 texture.repeat.set(texlength_s, texlength_t);
                 materialParams.map = texture;
             }
@@ -418,32 +416,6 @@ class MyYASFParser {
                 ]);
 
                 geometry.setIndex([0, 1, 2]);
-
-                const texlength_s = material.map.texlength_s || 1; // Default to 1 if missing
-                const texlength_t = material.map.texlength_t || 1; // Default to 1 if missing
-
-                // Extract vertex positions
-                const v1 = new THREE.Vector3(vertices[0], vertices[1], vertices[2]);
-                const v2 = new THREE.Vector3(vertices[3], vertices[4], vertices[5]);
-                const v3 = new THREE.Vector3(vertices[6], vertices[7], vertices[8]);
-
-                // Compute edge vectors and lengths
-                const edge1 = new THREE.Vector3().subVectors(v2, v1); // v2 - v1
-                const edge2 = new THREE.Vector3().subVectors(v3, v1); // v3 - v1
-                const b = edge2.length(); // Length of v3 - v1
-                const alpha = edge2.angleTo(edge1); // Angle between v2-v1 and v3-v1
-
-                // UVs calculation
-                const uvs = new Float32Array([
-                    0, 0, // v1 (s1, t1)
-                    edge1.length() / texlength_s, 0, // v2 (s2, t2)
-                    (b * Math.cos(alpha)) / texlength_s, (b * Math.sin(alpha)) / texlength_t, // v3 (s3, t3)
-                ]);
-
-                console.log('Vertices: ' + uvs);
-                console.log(vertices);
-
-                // geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
                 geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
                 geometry.computeVertexNormals();
 
