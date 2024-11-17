@@ -74,6 +74,9 @@
             "blackTex": {
                 "filepath": "scenes/demo/textures/black.jpg"
             },
+            "blackTex2": {
+                "filepath": "scenes/demo/textures/black2.jpg"
+            },
             "orangeTex": {
                 "filepath": "scenes/demo/textures/orange.jpg"
             },
@@ -88,9 +91,86 @@
             },
             "tntTex": {
                 "filepath": "scenes/demo/textures/tnt.png"
+            },
+            "redbirdTex": {
+                "filepath": "scenes/demo/textures/redbird.jpg"
+            },
+            "fullredTex": {
+                "filepath": "scenes/demo/textures/fullred.jpg"
             }
         },
         "materials": {
+            "blackApp2": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "blackTex2",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0
+            },
+            "fullredApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "fullredTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true
+            },
+            "redbirdApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "redbirdTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true
+            },
             "tntApp": {
                 "color": {
                     "r": 1.0,
@@ -204,7 +284,8 @@
                 "opacity": 1.0,
                 "textureref": "yellowTex",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided": true
             },
             "blackApp": {
                 "color": {
@@ -227,7 +308,8 @@
                 "opacity": 1.0,
                 "textureref": "blackTex",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided": true
             },
             "whiteApp": {
                 "color": {
@@ -533,6 +615,511 @@
                     {
                         "type": "scale",
                         "amount": {
+                            "x": 0.9,
+                            "y": 0.85,
+                            "z": 0.9
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 15.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 14.0,
+                            "y": 28.5,
+                            "z": -5.5
+                        }
+                    }
+                ],
+                "children": {
+                    "redbody": {
+                        "type": "noderef",
+                        "nodeId": "redbody"
+                    },
+                    "redeyes": {
+                        "type": "noderef",
+                        "nodeId": "redeyes"
+                    },
+                    "redbeak": {
+                        "type": "noderef",
+                        "nodeId": "redbeak"
+                    },
+                    "redfeathers": {
+                        "type": "noderef",
+                        "nodeId": "redfeathers"
+                    },
+                    "redbrows": {
+                        "type": "noderef",
+                        "nodeId": "redbrows"
+                    }
+                }
+            },
+            "redfeathers": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "redbirdApp"
+                },
+                "children": {
+                    "redhead": {
+                        "type": "noderef",
+                        "nodeId": "redhead"
+                    },
+                    "redtail": {
+                        "type": "noderef",
+                        "nodeId": "redtail"
+                    }
+                }
+            },
+            "redhead": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "azulApp2"
+                },
+                "children": {
+                    "feather1": {
+                        "type": "noderef",
+                        "nodeId": "feather1"
+                    },
+                    "feather2": {
+                        "type": "noderef",
+                        "nodeId": "feather2"
+                    }
+                }
+            },
+            "feather1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.5,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 180.0,
+                            "y": 0.0,
+                            "z": 90.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -7.5,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "triangularPrism1": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism1"
+                    },
+                    "triangularPrism2": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism2"
+                    }
+                }
+            },
+            "feather2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 7.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "triangularPrism1": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism1"
+                    },
+                    "triangularPrism2": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism2"
+                    }
+                }
+            },
+            "triangularPrism1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.5,
+                            "z": 2.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 20.0,
+                            "z": 280.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -0.8,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "fullredApp"
+                },
+                "children": {
+                    "triangularPrism": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism"
+                    }
+                }
+            },
+            "triangularPrism2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.5,
+                            "z": 2.0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 20.0,
+                            "z": 70.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -1.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "fullredApp"
+                },
+                "children": {
+                    "triangularPrism": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism"
+                    }
+                }
+            },
+            "redtail": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "azulApp2"
+                },
+                "children": {
+                    "feather1": {
+                        "type": "noderef",
+                        "nodeId": "feather1"
+                    },
+                    "feather2": {
+                        "type": "noderef",
+                        "nodeId": "feather2"
+                    }
+                }
+            },
+            "redbrows": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.15,
+                            "y": 1.2,
+                            "z": 1.9
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5.7,
+                            "y": 0.6,
+                            "z": -3.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "blackApp"
+                },
+                "children": {
+                    "rightBrow": {
+                        "type": "noderef",
+                        "nodeId": "rightBrow"
+                    },
+                    "leftBrow": {
+                        "type": "noderef",
+                        "nodeId": "leftBrow"
+                    }
+                }
+            },
+            "rightBrow": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 0.5,
+                            "z": 2.5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -180.0,
+                            "z": 90.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.5,
+                            "y": 0.0,
+                            "z": 3.2
+                        }
+                    }
+                ],
+                "children": {
+                    "triangularPrism": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism"
+                    }
+                }
+            },
+            "leftBrow": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 0.5,
+                            "z": 2.5
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 90.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "triangularPrism": {
+                        "type": "noderef",
+                        "nodeId": "triangularPrism"
+                    }
+                }
+            },
+            "redbeak": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.6,
+                            "y": 2,
+                            "z": 3.1
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 180.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5.5,
+                            "y": -1.55,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "yellowApp"
+                },
+                "children": {
+                    "topBeak": {
+                        "type": "noderef",
+                        "nodeId": "topBeak"
+                    },
+                    "downBeak": {
+                        "type": "noderef",
+                        "nodeId": "downBeak"
+                    }
+                }
+            },
+            "redbody": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.1,
+                            "y": 1.05,
+                            "z": 1.1
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "redbirdApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 5,
+                        "slices": 64,
+                        "stacks": 64,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "redeyes": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
                             "x": 1.0,
                             "y": 1.0,
                             "z": 1.0
@@ -556,21 +1143,185 @@
                     }
                 ],
                 "children": {
-                    "redbody": {
+                    "redrightEye": {
                         "type": "noderef",
-                        "nodeId": "redbody"
+                        "nodeId": "redrightEye"
                     },
-                    "redeyes": {
+                    "redleftEye": {
                         "type": "noderef",
-                        "nodeId": "redeyes"
+                        "nodeId": "redleftEye"
+                    }
+                }
+            },
+            "redrightEye": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     },
-                    "redbeak": {
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.3,
+                            "y": 0.0,
+                            "z": 1.2
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "whiteApp"
+                },
+                "children": {
+                    "redeyeBall": {
                         "type": "noderef",
-                        "nodeId": "redbeak"
+                        "nodeId": "redeyeBall"
                     },
-                    "redfeathers": {
+                    "redeyeCenter": {
                         "type": "noderef",
-                        "nodeId": "redfeathers"
+                        "nodeId": "redeyeCenter"
+                    }
+                }
+            },
+            "redleftEye": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.3,
+                            "y": 0.0,
+                            "z": -1.2
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "whiteApp"
+                },
+                "children": {
+                    "redeyeBall": {
+                        "type": "noderef",
+                        "nodeId": "redeyeBall"
+                    },
+                    "redeyeCenter": {
+                        "type": "noderef",
+                        "nodeId": "redeyeCenter"
+                    }
+                }
+            },
+            "redeyeBall": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "whiteApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1.65,
+                        "slices": 64,
+                        "stacks": 64,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "redeyeCenter": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 60.0,
+                            "y": 70.0,
+                            "z": -50.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5.1,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "blackApp2"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 0.75,
+                        "slices": 32,
+                        "stacks": 16,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
                     }
                 }
             },
@@ -1292,7 +2043,7 @@
                         "amount": {
                             "x": 180.0,
                             "y": 0.0,
-                            "z": -5.0
+                            "z": -2.5
                         }
                     },
                     {
@@ -1964,6 +2715,147 @@
                     "unitCube": {
                         "type": "noderef",
                         "nodeId": "leg"
+                    }
+                }
+            },
+            "triangularPrism": {
+                "type": "node",
+                "children": {
+                    "triangleBase1": {
+                        "type": "noderef",
+                        "nodeId": "triangleBase1"
+                    },
+                    "triangleBase2": {
+                        "type": "noderef",
+                        "nodeId": "triangleBase2"
+                    },
+                    "rectangleSide1": {
+                        "type": "noderef",
+                        "nodeId": "rectangleSide1"
+                    },
+                    "rectangleSide2": {
+                        "type": "noderef",
+                        "nodeId": "rectangleSide2"
+                    },
+                    "rectangleSide3": {
+                        "type": "noderef",
+                        "nodeId": "rectangleSide3"
+                    }
+                }
+            },
+            "triangleBase1": {
+                "type": "node",
+                "children": {
+                    "trianglePrim": {
+                        "type": "triangle",
+                        "xyz1": { "x": 0, "y": 0, "z": 0 },
+                        "xyz2": { "x": 1, "y": 0, "z": 0 },
+                        "xyz3": { "x": 0.5, "y": 0, "z": 1 }
+                    }
+                }
+            },
+            "triangleBase2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "trianglePrim": {
+                        "type": "triangle",
+                        "xyz1": { "x": 0, "y": 0, "z": 0 },
+                        "xyz2": { "x": 1, "y": 0, "z": 0 },
+                        "xyz3": { "x": 0.5, "y": 0, "z": 1 }
+                    }
+                }
+            },
+            "rectangleSide1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 1, "y": 1 }
+                    }
+                }
+            },
+            "rectangleSide2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.26,
+                            "y": 0.5,
+                            "z": 0.51
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 117.5,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 1, "y": 1.11 }
+                    }
+                }
+            },
+            "rectangleSide3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.75,
+                            "y": 0.5,
+                            "z": 0.49
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 63.5,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 1, "y": 1.1 }
                     }
                 }
             },
