@@ -399,7 +399,6 @@ class MyYASFParser {
         switch (primitiveData.type) {
 
             case 'rectangle':
-                console.log("got into rectangle");
                 geometry = new THREE.PlaneGeometry(
                     Math.abs(primitiveData.xy2.x - primitiveData.xy1.x),
                     Math.abs(primitiveData.xy2.y - primitiveData.xy1.y)
@@ -448,9 +447,7 @@ class MyYASFParser {
                     break;
                 
 
-            case 'sphere':
-                console.log("got into sphere");
-                    
+            case 'sphere':          
                 const thetaStartSphere = primitiveData.thetastart * (Math.PI / 180) || 0;
                 const thetaLengthSphere = primitiveData.thetalength * (Math.PI / 180) || Math.PI * 2;
                 const phiStartSphere = primitiveData.phistart * (Math.PI / 180) || 0;

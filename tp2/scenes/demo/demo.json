@@ -10,7 +10,7 @@
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0, 
-                "intensity": 1.0
+                "intensity": 1.2
             },
             "fog": {
                 "color": {
@@ -53,7 +53,10 @@
             "glassTex2": {
                 "filepath": "scenes/demo/textures/glass.jpg"
             },
-            "woodTex": {
+            "woodTex1": {
+                "filepath": "scenes/demo/textures/wood.jpg"
+            },
+            "woodTex2": {
                 "filepath": "scenes/demo/textures/wood.jpg"
             },
             "stoneTex": {
@@ -344,7 +347,7 @@
                 "texlength_t": 1,
                 "twosided": true
             },
-            "woodApp": {
+            "woodApp1": {
                 "emissive": {
                     "r": 0.1,
                     "g": 0.05,
@@ -363,9 +366,33 @@
                 "shininess": 10.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "woodTex",
-                "texlength_s": 8,
-                "texlength_t": 8,
+                "textureref": "woodTex1",
+                "texlength_s": 0.5,
+                "texlength_t": 1,
+                "twosided": true
+            },
+            "woodApp2": {
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.05,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 1.0,
+                    "g": 0.85,
+                    "b": 0.6
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.15,
+                    "b": 0.1
+                },
+                "shininess": 10.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "woodTex2",
+                "texlength_s": 1,
+                "texlength_t": 4,
                 "twosided": true
             },
             "stoneApp": {
@@ -456,17 +483,25 @@
                         "type": "noderef",
                         "nodeId": "blueTower"
                     },
-                    "bird1": {
+                    "woodtower": {
                         "type": "noderef",
-                        "nodeId": "bird1"
+                        "nodeId": "woodtower"
                     },
-                    "bird2": {
+                    "bluebird1": {
                         "type": "noderef",
-                        "nodeId": "bird2"
+                        "nodeId": "bluebird1"
                     },
-                    "bird3": {
+                    "bluebird2": {
                         "type": "noderef",
-                        "nodeId": "bird3"
+                        "nodeId": "bluebird2"
+                    },
+                    "bluebird3": {
+                        "type": "noderef",
+                        "nodeId": "bluebird3"
+                    },
+                    "redbird": {
+                        "type": "noderef",
+                        "nodeId": "redbird"
                     },
                     "tnt": {
                         "type": "noderef",
@@ -489,6 +524,254 @@
                             "y": 35.0,
                             "z": 0.0
                         }
+                    }
+                }
+            },
+            "redbird": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "redbody": {
+                        "type": "noderef",
+                        "nodeId": "redbody"
+                    },
+                    "redeyes": {
+                        "type": "noderef",
+                        "nodeId": "redeyes"
+                    },
+                    "redbeak": {
+                        "type": "noderef",
+                        "nodeId": "redbeak"
+                    },
+                    "redfeathers": {
+                        "type": "noderef",
+                        "nodeId": "redfeathers"
+                    }
+                }
+            },
+            "woodtower": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.8,
+                            "y": 0.8,
+                            "z": 0.8
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 100.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 12.5,
+                            "y": 0.0,
+                            "z": -5.0
+                        }
+                    }
+                ],
+                "children": {
+                    "upperBlock": {
+                        "type": "noderef",
+                        "nodeId": "tntbox"
+                    },
+                    "lowerBlock": {
+                        "type": "noderef",
+                        "nodeId": "balloon"
+                    }
+                }
+            },
+            "lowerBlock": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.6,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "box1": {
+                        "type": "noderef",
+                        "nodeId": "box1"
+                    },
+                    "box2": {
+                        "type": "noderef",
+                        "nodeId": "box2"
+                    },
+                    "box3": {
+                        "type": "noderef",
+                        "nodeId": "box3"
+                    },
+                    "box4": {
+                        "type": "noderef",
+                        "nodeId": "box4"
+                    }
+                }
+            },
+            "upperBlock": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -50.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 15.6,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "box1": {
+                        "type": "noderef",
+                        "nodeId": "box1"
+                    },
+                    "box2": {
+                        "type": "noderef",
+                        "nodeId": "box2"
+                    },
+                    "box3": {
+                        "type": "noderef",
+                        "nodeId": "box3"
+                    },
+                    "box4": {
+                        "type": "noderef",
+                        "nodeId": "box4"
+                    }
+                }
+            },
+            "box1": {
+                "type": "node",
+                "transforms": [          
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 1.25,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "woodApp1"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 15.0, "y": 3.5, "z": 7.0 }
+                    }
+                }
+            },
+            "box2": {
+                "type": "node",
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 7.0,
+                            "z": 5.25
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "woodApp2"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 15.0, "y": 15.0, "z": 3.5 }
+                    }
+                }
+            },
+            "box3": {
+                "type": "node",
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 7.0,
+                            "z": -5.25
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "woodApp2"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 15.0, "y": 15.0, "z": 3.5 }
+                    }
+                }
+            },
+            "box4": {
+                "type": "node",
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 12.75,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "woodApp1"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 15.0, "y": 3.5, "z": 7.0 }
                     }
                 }
             },
@@ -664,7 +947,7 @@
                     }
                 }
             },
-            "bird3": {
+            "bluebird3": {
                 "type": "node",
                 "transforms": [      
                     {
@@ -686,9 +969,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": -4.0,
-                            "y": 25.5,
-                            "z": 20.0
+                            "x": -5.5,
+                            "y": 28.65,
+                            "z": 24.0
                         }
                     }
                 ],
@@ -711,7 +994,7 @@
                     }
                 }
             },
-            "bird2": {
+            "bluebird2": {
                 "type": "node",
                 "transforms": [      
                     {
@@ -733,9 +1016,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 4.0,
-                            "y": 25.5,
-                            "z": 23.5
+                            "x": 5.5,
+                            "y": 28.65,
+                            "z": 27.5
                         }
                     }
                 ],
@@ -758,7 +1041,7 @@
                     }
                 }
             },
-            "bird1": {
+            "bluebird1": {
                 "type": "node",
                 "transforms": [      
                     {
@@ -773,16 +1056,16 @@
                         "type": "rotate",
                         "amount": {
                             "x": 0.0,
-                            "y": 30.0,
+                            "y": 50.0,
                             "z": 0.0
                         }
                     },
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 4.0,
-                            "y": 25.5,
-                            "z": 16.5
+                            "x": 3.5,
+                            "y": 28.65,
+                            "z": 19.0
                         }
                     }
                 ],
@@ -1065,9 +1348,6 @@
                         }
                     }
                 ],
-                "materialref": {
-                    "materialId": "woodApp"
-                },
                 "children": {
                     "rightEye": {
                         "type": "noderef",
@@ -1248,9 +1528,9 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 6.0
+                            "x": 12.0,
+                            "y": 12.0,
+                            "z": 7.0
                         }
                     },
                     {
