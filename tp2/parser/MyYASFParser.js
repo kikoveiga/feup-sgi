@@ -67,14 +67,16 @@ class MyYASFParser {
         
             const skyBoxGeometry = new THREE.BoxGeometry(size.x, size.y, size.z);
             const loader = new THREE.TextureLoader();
+
+            const emissiveColor = new THREE.Color(emissive.r, emissive.g, emissive.b);
             
             const materials = [
-                new THREE.MeshStandardMaterial({ map: loader.load(front), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(back), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(up), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(down), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(left), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(right), emissive: new THREE.Color(emissive.r, emissive.g, emissive.b), emissiveIntensity: intensity, side: THREE.BackSide })
+                new THREE.MeshStandardMaterial({ map: loader.load(front), emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(back) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(up)   , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(down) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(left) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
+                new THREE.MeshStandardMaterial({ map: loader.load(right), emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide })
             ];
         
             const skyBox = new THREE.Mesh(skyBoxGeometry, materials);
@@ -244,10 +246,10 @@ class MyYASFParser {
             const {
                 color,
                 specular,
-                shininess = 30,
+                shininess,
                 emissive,
-                transparent = false,
-                opacity = 1,
+                transparent,
+                opacity,
                 wireframe = false,
                 shading = false,
                 textureref = null,
@@ -267,11 +269,9 @@ class MyYASFParser {
                 transparent: transparent,
                 opacity: opacity,
                 wireframe: wireframe,
+                shading: shading ? THREE.FlatShading : THREE.SmoothShading,
                 side: twosided ? THREE.DoubleSide : THREE.FrontSide,
             };
-
-            if (shading === 'flat') materialParams.flatShading = true;
-            else if (shading === 'smooth') materialParams.flatShading = false;
 
             if (textureref && this.textures[textureref]) {
                 const texture = this.textures[textureref];
@@ -414,8 +414,10 @@ class MyYASFParser {
                     primitiveData.xyz3.x, primitiveData.xyz3.y, primitiveData.xyz3.z,
                 ]);
 
-                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
                 geometry.setIndex([0, 1, 2]);
+                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                geometry.computeVertexNormals();
+
                 break;
             }
 
@@ -430,7 +432,7 @@ class MyYASFParser {
                 );
                 break;
 
-                case 'cylinder':
+                case 'cylinder': {
                     const thetaStartCylinder = (primitiveData.thetaStart || 0) * (Math.PI / 180);
                     const thetaLengthCylinder = (primitiveData.thetaLength || 360) * (Math.PI / 180);
                 
@@ -445,9 +447,10 @@ class MyYASFParser {
                         thetaLengthCylinder
                     );
                     break;
+                }
                 
 
-            case 'sphere':          
+            case 'sphere': {          
                 const thetaStartSphere = primitiveData.thetastart * (Math.PI / 180) || 0;
                 const thetaLengthSphere = primitiveData.thetalength * (Math.PI / 180) || Math.PI * 2;
                 const phiStartSphere = primitiveData.phistart * (Math.PI / 180) || 0;
@@ -463,6 +466,7 @@ class MyYASFParser {
                     phiLengthSphere
                 );
                 break;
+            }
         
             case 'polygon':
                 geometry = new THREE.CylinderGeometry(
@@ -490,8 +494,7 @@ class MyYASFParser {
             material = this.defaultMaterial;
         }
 
-        const a = new THREE.Mesh(geometry, material); 
-        return a;
+        return new THREE.Mesh(geometry, material);
     }
 
     createLight(lightData, inheritedcastShadow = false) {
