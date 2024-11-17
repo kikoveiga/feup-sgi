@@ -415,8 +415,10 @@ class MyYASFParser {
                     primitiveData.xyz3.x, primitiveData.xyz3.y, primitiveData.xyz3.z,
                 ]);
 
-                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
                 geometry.setIndex([0, 1, 2]);
+                geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                geometry.computeVertexNormals();
+
                 break;
             }
 
@@ -495,8 +497,7 @@ class MyYASFParser {
             material = this.defaultMaterial;
         }
 
-        const a = new THREE.Mesh(geometry, material); 
-        return a;
+        return new THREE.Mesh(geometry, material);
     }
 
     createLight(lightData, inheritedcastShadow = false) {
