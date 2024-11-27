@@ -433,8 +433,8 @@ class MyYASFParser {
                 break;
 
                 case 'cylinder': {
-                    const thetaStartCylinder = (primitiveData.thetaStart || 0) * (Math.PI / 180);
-                    const thetaLengthCylinder = (primitiveData.thetaLength || 360) * (Math.PI / 180);
+                    const thetaStartCylinder = (primitiveData.thetastart || 0) * (Math.PI / 180);
+                    const thetaLengthCylinder = (primitiveData.thetalength || 360) * (Math.PI / 180);
                 
                     geometry = new THREE.CylinderGeometry(
                         primitiveData.top,
