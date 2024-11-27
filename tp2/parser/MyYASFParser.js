@@ -360,13 +360,13 @@ class MyYASFParser {
         });
     }    
 
-    parseChildren(children, parentGroup, graph, inheritedMaterial, inheritedcastShadow, inheritedReceiveshadow) {
+    parseChildren(children, parentGroup, graph, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow) {
         Object.keys(children).forEach(childID => {
             const child = children[childID];
 
-            if (child.type === 'nodesList') {
+            if (childID === 'nodesList') {
 
-                child.nodesList.forEach(nodeId => {
+                child.forEach(nodeId => {
                     const node = this.parseNode(graph, nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
                     if (node) parentGroup.add(node);
                 });
@@ -376,8 +376,8 @@ class MyYASFParser {
                 const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
                 if (primitive) {
-                    primitive.castShadow = inheritedcastShadow;
-                    primitive.receiveshadow = inheritedReceiveshadow;
+                    primitive.castShadow = inheritedCastShadow;
+                    primitive.receiveshadow = inheritedReceiveShadow;
                     parentGroup.add(primitive);
                 }
             }
@@ -394,10 +394,8 @@ class MyYASFParser {
                 if (light) parentGroup.add(light);
             }
 
-            else {
-                console.error(`Unknown child type: ${child.type}`);
-            }
-
+            else console.error(`Unknown child type: ${child.type}`);
+            
         });
     }
 
@@ -506,7 +504,7 @@ class MyYASFParser {
         return new THREE.Mesh(geometry, material);
     }
 
-    createLight(lightData, inheritedcastShadow = false) {
+    createLight(lightData, inheritedCastShadow = false) {
         let light;
 
         const color = new THREE.Color(lightData.color.r, lightData.color.g, lightData.color.b);
@@ -517,7 +515,7 @@ class MyYASFParser {
             case 'directionalLight':
                 light = new THREE.DirectionalLight(color, intensity);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
-                light.castShadow = inheritedcastShadow || lightData.castShadow;
+                light.castShadow = inheritedCastShadow || lightData.castShadow;
 
                 if (light.castShadow) {
                     
@@ -534,7 +532,7 @@ class MyYASFParser {
             case 'pointlight':
                 light = new THREE.PointLight(color, intensity, lightData.distance || 1000, lightData.decay || 2);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
-                light.castShadow = inheritedcastShadow || lightData.castShadow;
+                light.castShadow = inheritedCastShadow || lightData.castShadow;
 
                 if (light.castShadow) {
                     light.shadow.camera.far = lightData.shadow.far || 500.0;
@@ -547,7 +545,7 @@ class MyYASFParser {
                 light = new THREE.SpotLight(color, intensity, lightData.distance || 1000, lightData.angle, lightData.decay || 2);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
                 light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
-                light.castShadow = inheritedcastShadow || lightData.castShadow;
+                light.castShadow = inheritedCastShadow || lightData.castShadow;
                 light.penumbra = lightData.penumbra || 1;
 
                 if (light.castShadow) {
