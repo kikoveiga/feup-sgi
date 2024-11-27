@@ -364,12 +364,14 @@ class MyYASFParser {
         Object.keys(children).forEach(childID => {
             const child = children[childID];
 
+            if (child.type === 'nodesList') {
 
-            if (child.type === 'noderef') {
-                const referencedNode = this.parseNode(graph, childID, inheritedMaterial, inheritedcastShadow, inheritedReceiveshadow);
-                if (referencedNode) parentGroup.add(referencedNode);
-            }
-            
+                child.nodesList.forEach(nodeId => {
+                    const node = this.parseNode(graph, nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
+                    if (node) parentGroup.add(node);
+                });
+            } 
+
             else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon'].includes(child.type)) {
                 const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
@@ -379,6 +381,13 @@ class MyYASFParser {
                     parentGroup.add(primitive);
                 }
             }
+
+            else if (child.type === 'lodsList') {
+                child.lodsList.forEach(lodId => {
+                    const lodNode = this.parseNode(graph, lodId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
+                    if (lodNode) parentGroup.add(lodNode);
+                });
+            } 
 
             else if (['directionalLight', 'pointlight', 'spotLight'].includes(child.type)) {
                 const light = this.createLight(child);
