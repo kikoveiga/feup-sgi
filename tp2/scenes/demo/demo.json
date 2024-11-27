@@ -545,13 +545,13 @@
                 "near": 0.1,
                 "far": 100,
                 "location": {
-                    "x": 30,
-                    "y": 25,
-                    "z": 30
+                    "x": 45,
+                    "y": 37.5,
+                    "z": 0
                 },
                 "target": {
                     "x": 0,
-                    "y": 25,
+                    "y": 37.5,
                     "z": 0
                 }
             }
@@ -561,34 +561,15 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "blueTower": {
-                        "type": "noderef",
-                        "nodeId": "blueTower"
-                    },
-                    "woodtower": {
-                        "type": "noderef",
-                        "nodeId": "woodtower"
-                    },
-                    "bluebird1": {
-                        "type": "noderef",
-                        "nodeId": "bluebird1"
-                    },
-                    "bluebird2": {
-                        "type": "noderef",
-                        "nodeId": "bluebird2"
-                    },
-                    "bluebird3": {
-                        "type": "noderef",
-                        "nodeId": "bluebird3"
-                    },
-                    "redbird": {
-                        "type": "noderef",
-                        "nodeId": "redbird"
-                    },
-                    "tnt": {
-                        "type": "noderef",
-                        "nodeId": "tnt"
-                    },
+                    "nodesList": [
+                        "bluetower",
+                        "woodtower",
+                        "bluebird1",
+                        "bluebird2",
+                        "bluebird3",
+                        "redbird",
+                        "tnt"
+                    ],
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -638,26 +619,13 @@
                     }
                 ],
                 "children": {
-                    "redbody": {
-                        "type": "noderef",
-                        "nodeId": "redbody"
-                    },
-                    "redeyes": {
-                        "type": "noderef",
-                        "nodeId": "redeyes"
-                    },
-                    "redbeak": {
-                        "type": "noderef",
-                        "nodeId": "redbeak"
-                    },
-                    "redfeathers": {
-                        "type": "noderef",
-                        "nodeId": "redfeathers"
-                    },
-                    "redbrows": {
-                        "type": "noderef",
-                        "nodeId": "redbrows"
-                    }
+                    "nodesList": [
+                        "redbody",
+                        "redeyes",
+                        "redbeak",
+                        "redfeathers",
+                        "redbrows"
+                    ]
                 }
             },
             "redfeathers": {
@@ -692,14 +660,10 @@
                     "materialId": "redbirdApp"
                 },
                 "children": {
-                    "redhead": {
-                        "type": "noderef",
-                        "nodeId": "redhead"
-                    },
-                    "redtail": {
-                        "type": "noderef",
-                        "nodeId": "redtail"
-                    }
+                    "nodesList": [
+                        "redhead",
+                        "redtail"
+                    ]
                 }
             },
             "redhead": {
@@ -726,14 +690,10 @@
                     "materialId": "azulApp2"
                 },
                 "children": {
-                    "feather1": {
-                        "type": "noderef",
-                        "nodeId": "feather1"
-                    },
-                    "feather2": {
-                        "type": "noderef",
-                        "nodeId": "feather2"
-                    }
+                    "nodesList": [
+                        "redhead",
+                        "redtail"
+                    ]
                 }
             },
             "feather1": {
@@ -765,14 +725,10 @@
                     }
                 ],
                 "children": {
-                    "triangularPrism1": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism1"
-                    },
-                    "triangularPrism2": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism2"
-                    }
+                    "nodesList": [
+                        "triangularPrism1",
+                        "triangularPrism2"
+                    ]
                 }
             },
             "feather2": {
@@ -796,14 +752,10 @@
                     }
                 ],
                 "children": {
-                    "triangularPrism1": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism1"
-                    },
-                    "triangularPrism2": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism2"
-                    }
+                    "nodesList": [
+                        "triangularPrism1",
+                        "triangularPrism2"
+                    ]
                 }
             },
             "triangularPrism1": {
@@ -838,10 +790,9 @@
                     "materialId": "fullredApp"
                 },
                 "children": {
-                    "triangularPrism": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism"
-                    }
+                    "nodesList": [
+                        "triangularPrism"
+                    ]
                 }
             },
             "triangularPrism2": {
@@ -876,10 +827,9 @@
                     "materialId": "fullredApp"
                 },
                 "children": {
-                    "triangularPrism": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism"
-                    }
+                    "nodesList": [
+                        "triangularPrism"
+                    ]
                 }
             },
             "redtail": {
@@ -906,14 +856,10 @@
                     "materialId": "azulApp2"
                 },
                 "children": {
-                    "feather1": {
-                        "type": "noderef",
-                        "nodeId": "feather1"
-                    },
-                    "feather2": {
-                        "type": "noderef",
-                        "nodeId": "feather2"
-                    }
+                    "nodesList": [
+                        "feather1",
+                        "feather2"
+                    ]
                 }
             },
             "redbrows": {
@@ -925,14 +871,6 @@
                             "x": 1.15,
                             "y": 1.2,
                             "z": 2.1
-                        }
-                    },
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
                         }
                     },
                     {
@@ -948,14 +886,10 @@
                     "materialId": "blackApp"
                 },
                 "children": {
-                    "rightBrow": {
-                        "type": "noderef",
-                        "nodeId": "rightBrow"
-                    },
-                    "leftBrow": {
-                        "type": "noderef",
-                        "nodeId": "leftBrow"
-                    }
+                    "nodesList": [
+                        "rightBrow",
+                        "leftBrow"
+                    ]
                 }
             },
             "rightBrow": {
@@ -987,10 +921,9 @@
                     }
                 ],
                 "children": {
-                    "triangularPrism": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism"
-                    }
+                    "nodesList": [
+                        "triangularPrism"
+                    ]
                 }
             },
             "leftBrow": {
@@ -1022,10 +955,9 @@
                     }
                 ],
                 "children": {
-                    "triangularPrism": {
-                        "type": "noderef",
-                        "nodeId": "triangularPrism"
-                    }
+                    "nodesList": [
+                        "triangularPrism"
+                    ]
                 }
             },
             "redbeak": {
@@ -1060,14 +992,10 @@
                     "materialId": "yellowApp"
                 },
                 "children": {
-                    "topBeak": {
-                        "type": "noderef",
-                        "nodeId": "topBeak"
-                    },
-                    "downBeak": {
-                        "type": "noderef",
-                        "nodeId": "downBeak"
-                    }
+                    "nodesList": [
+                        "topBeak",
+                        "downBeak"
+                    ]
                 }
             },
             "redbody": {
@@ -1079,22 +1007,6 @@
                             "x": 1.1,
                             "y": 1.05,
                             "z": 1.1
-                        }
-                    },         
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    },
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
                         }
                     }
                 ],
@@ -1118,22 +1030,6 @@
                 "type": "node",
                 "transforms": [      
                     {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },         
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    },
-                    {
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
@@ -1143,35 +1039,15 @@
                     }
                 ],
                 "children": {
-                    "redrightEye": {
-                        "type": "noderef",
-                        "nodeId": "redrightEye"
-                    },
-                    "redleftEye": {
-                        "type": "noderef",
-                        "nodeId": "redleftEye"
-                    }
+                    "nodesList": [
+                        "redrightEye",
+                        "redleftEye"
+                    ]
                 }
             },
             "redrightEye": {
                 "type": "node",
                 "transforms": [      
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },         
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    },
                     {
                         "type": "translate",
                         "amount": {
@@ -1185,35 +1061,15 @@
                     "materialId": "whiteApp"
                 },
                 "children": {
-                    "redeyeBall": {
-                        "type": "noderef",
-                        "nodeId": "redeyeBall"
-                    },
-                    "redeyeCenter": {
-                        "type": "noderef",
-                        "nodeId": "redeyeCenter"
-                    }
+                    "nodesList": [
+                        "redeyeBall",
+                        "redeyeCenter"
+                    ]
                 }
             },
             "redleftEye": {
                 "type": "node",
                 "transforms": [      
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },         
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    },
                     {
                         "type": "translate",
                         "amount": {
@@ -1227,35 +1083,15 @@
                     "materialId": "whiteApp"
                 },
                 "children": {
-                    "redeyeBall": {
-                        "type": "noderef",
-                        "nodeId": "redeyeBall"
-                    },
-                    "redeyeCenter": {
-                        "type": "noderef",
-                        "nodeId": "redeyeCenter"
-                    }
+                    "nodesList":[
+                        "redeyeBall",
+                        "redeyeCenter"
+                    ]
                 }
             },
             "redeyeBall": {
                 "type": "node",
                 "transforms": [      
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },         
-                    {
-                        "type": "rotate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    },
                     {
                         "type": "translate",
                         "amount": {
@@ -1283,15 +1119,7 @@
             },
             "redeyeCenter": {
                 "type": "node",
-                "transforms": [      
-                    {
-                        "type": "scale",
-                        "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    },         
+                "transforms": [             
                     {
                         "type": "rotate",
                         "amount": {
@@ -1354,14 +1182,10 @@
                     }
                 ],
                 "children": {
-                    "upperBlock": {
-                        "type": "noderef",
-                        "nodeId": "tntbox"
-                    },
-                    "lowerBlock": {
-                        "type": "noderef",
-                        "nodeId": "balloon"
-                    }
+                    "nodesList":[
+                        "upperBlock",
+                        "lowerBlock"
+                    ]
                 }
             },
             "lowerBlock": {
@@ -1377,22 +1201,12 @@
                     }
                 ],
                 "children": {
-                    "box1": {
-                        "type": "noderef",
-                        "nodeId": "box1"
-                    },
-                    "box2": {
-                        "type": "noderef",
-                        "nodeId": "box2"
-                    },
-                    "box3": {
-                        "type": "noderef",
-                        "nodeId": "box3"
-                    },
-                    "box4": {
-                        "type": "noderef",
-                        "nodeId": "box4"
-                    }
+                    "nodesList": [
+                        "box1",
+                        "box2",
+                        "box3",
+                        "box4"
+                    ]
                 }
             },
             "upperBlock": {
@@ -1416,22 +1230,12 @@
                     }
                 ],
                 "children": {
-                    "box1": {
-                        "type": "noderef",
-                        "nodeId": "box1"
-                    },
-                    "box2": {
-                        "type": "noderef",
-                        "nodeId": "box2"
-                    },
-                    "box3": {
-                        "type": "noderef",
-                        "nodeId": "box3"
-                    },
-                    "box4": {
-                        "type": "noderef",
-                        "nodeId": "box4"
-                    }
+                    "nodesList": [
+                        "box1",
+                        "box2",
+                        "box3",
+                        "box4"
+                    ]
                 }
             },
             "box1": {
@@ -1555,18 +1359,11 @@
                     }
                 ],
                 "children": {
-                    "tntbox": {
-                        "type": "noderef",
-                        "nodeId": "tntbox"
-                    },
-                    "balloon": {
-                        "type": "noderef",
-                        "nodeId": "balloon"
-                    },
-                    "rope": {
-                        "type": "noderef",
-                        "nodeId": "rope"
-                    }
+                    "nodesList": [
+                        "tntbox",
+                        "balloon",
+                        "rope"
+                    ]
                 }
             },
             "rope": {
@@ -1727,22 +1524,12 @@
                     }
                 ],
                 "children": {
-                    "body": {
-                        "type": "noderef",
-                        "nodeId": "body"
-                    },
-                    "eyes": {
-                        "type": "noderef",
-                        "nodeId": "eyes"
-                    },
-                    "beak": {
-                        "type": "noderef",
-                        "nodeId": "beak"
-                    },
-                    "feathers": {
-                        "type": "noderef",
-                        "nodeId": "feathers"
-                    }
+                    "nodesList": [
+                        "body",
+                        "eyes",
+                        "beak",
+                        "feathers"
+                    ]
                 }
             },
             "bluebird2": {
@@ -1774,22 +1561,12 @@
                     }
                 ],
                 "children": {
-                    "body": {
-                        "type": "noderef",
-                        "nodeId": "body"
-                    },
-                    "eyes": {
-                        "type": "noderef",
-                        "nodeId": "eyes"
-                    },
-                    "beak": {
-                        "type": "noderef",
-                        "nodeId": "beak"
-                    },
-                    "feathers": {
-                        "type": "noderef",
-                        "nodeId": "feathers"
-                    }
+                    "nodesList": [
+                        "body",
+                        "eyes",
+                        "beak",
+                        "feathers"
+                    ]
                 }
             },
             "bluebird1": {
@@ -1821,22 +1598,12 @@
                     }
                 ],
                 "children": {
-                    "body": {
-                        "type": "noderef",
-                        "nodeId": "body"
-                    },
-                    "eyes": {
-                        "type": "noderef",
-                        "nodeId": "eyes"
-                    },
-                    "beak": {
-                        "type": "noderef",
-                        "nodeId": "beak"
-                    },
-                    "feathers": {
-                        "type": "noderef",
-                        "nodeId": "feathers"
-                    }
+                    "nodesList": [
+                        "body",
+                        "eyes",
+                        "beak",
+                        "feathers"
+                    ]   
                 }
             },
             "body": {
@@ -1899,14 +1666,10 @@
                     "materialId": "azulApp2"
                 },
                 "children": {
-                    "head": {
-                        "type": "noderef",
-                        "nodeId": "head"
-                    },
-                    "tail": {
-                        "type": "noderef",
-                        "nodeId": "tail"
-                    }
+                    "nodesList": [
+                        "head",
+                        "tail"
+                    ]
                 }
             },
             "head": {
@@ -1933,14 +1696,10 @@
                     "materialId": "azulApp2"
                 },
                 "children": {
-                    "triangle4": {
-                        "type": "noderef",
-                        "nodeId": "triangle4"
-                    },
-                    "triangle5": {
-                        "type": "noderef",
-                        "nodeId": "triangle5"
-                    }
+                    "nodesList": [
+                        "triangle4",
+                        "triangle5"
+                    ]
                 }
             },
             "tail": {
@@ -1975,14 +1734,10 @@
                     "materialId": "azulApp2"
                 },
                 "children": {
-                    "triangle4": {
-                        "type": "noderef",
-                        "nodeId": "triangle4"
-                    },
-                    "triangle5": {
-                        "type": "noderef",
-                        "nodeId": "triangle5"
-                    }
+                    "nodesList": [
+                        "triangle4",
+                        "triangle5"
+                    ]
                 }
             },
             "beak": {
@@ -2017,14 +1772,10 @@
                     "materialId": "yellowApp"
                 },
                 "children": {
-                    "topBeak": {
-                        "type": "noderef",
-                        "nodeId": "topBeak"
-                    },
-                    "downBeak": {
-                        "type": "noderef",
-                        "nodeId": "downBeak"
-                    }
+                    "nodesList": [
+                        "topBeak",
+                        "downBeak"
+                    ]
                 }
             },
             "downBeak": {
@@ -2059,10 +1810,9 @@
                     "materialId": "yellowApp"
                 },
                 "children": {
-                    "tetrahedron": {
-                        "type": "noderef",
-                        "nodeId": "tetrahedron"
-                    }
+                    "nodesList": [
+                        "tetrahedron"
+                    ]
                 }
             },
             "topBeak": {
@@ -2081,10 +1831,9 @@
                     "materialId": "yellowApp"
                 },
                 "children": {
-                    "tetrahedron": {
-                        "type": "noderef",
-                        "nodeId": "tetrahedron"
-                    }
+                    "nodesList": [
+                        "tetrahedron"
+                    ]
                 }
             },
             "eyes": {
@@ -2100,14 +1849,10 @@
                     }
                 ],
                 "children": {
-                    "rightEye": {
-                        "type": "noderef",
-                        "nodeId": "rightEye"
-                    },
-                    "leftEye": {
-                        "type": "noderef",
-                        "nodeId": "leftEye"
-                    }
+                    "nodesList": [
+                        "rightEye",
+                        "leftEye"
+                    ]
                 }
             },
             "rightEye": {
@@ -2123,18 +1868,11 @@
                     }
                 ],
                 "children": {
-                    "eyeBall": {
-                        "type": "noderef",
-                        "nodeId": "eyeBall"
-                    },
-                    "eyeCenter": {
-                        "type": "noderef",
-                        "nodeId": "eyeCenter"
-                    },
-                    "eyeBlacks": {
-                        "type": "noderef",
-                        "nodeId": "eyeBlacks"
-                    }
+                    "nodesList": [
+                        "eyeBall",
+                        "eyeCenter",
+                        "eyeBlacks"
+                    ]
                 }
             },
             "leftEye": {
@@ -2151,18 +1889,11 @@
                     }
                 ],
                 "children": {
-                    "eyeBall": {
-                        "type": "noderef",
-                        "nodeId": "eyeBall"
-                    },
-                    "eyeCenter": {
-                        "type": "noderef",
-                        "nodeId": "eyeCenter"
-                    },
-                    "eyeBlacks": {
-                        "type": "noderef",
-                        "nodeId": "eyeBlacks"
-                    }
+                    "nodesList" : [
+                        "eyeBall",
+                        "eyeCenter",
+                        "eyeBlacks"
+                    ]
                 }
             },
             "eyeBall": {
@@ -2294,46 +2025,18 @@
                     }
                 ],
                 "children": {
-                    "tableTop1": {
-                        "type": "noderef",
-                        "nodeId": "tableTop1"
-                    },
-                    "tableTop2": {
-                        "type": "noderef",
-                        "nodeId": "tableTop2"
-                    },
-                    "leg1": {
-                        "type": "noderef",
-                        "nodeId": "leg1"
-                    },
-                    "leg2": {
-                        "type": "noderef",
-                        "nodeId": "leg2"
-                    },
-                    "leg3": {
-                        "type": "noderef",
-                        "nodeId": "leg3"
-                    },
-                    "leg4": {
-                        "type": "noderef",
-                        "nodeId": "leg4"
-                    },
-                    "leg5": {
-                        "type": "noderef",
-                        "nodeId": "leg5"
-                    },
-                    "leg6": {
-                        "type": "noderef",
-                        "nodeId": "leg6"
-                    },
-                    "leg7": {
-                        "type": "noderef",
-                        "nodeId": "leg7"
-                    },
-                    "leg8": {
-                        "type": "noderef",
-                        "nodeId": "leg8"
-                    }
+                    "nodesList":[
+                        "tableTop1",
+                        "tableTop2",
+                        "leg1",
+                        "leg2", 
+                        "leg3",
+                        "leg4",
+                        "leg5",
+                        "leg6",
+                        "leg7",
+                        "leg8"                    
+                    ]
                 }
             },
             "tableTop1": {
@@ -2369,10 +2072,9 @@
                     "materialId": "glassApp1"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "unitCube"
-                    }
+                    "nodesList": [
+                        "unitCube"
+                    ]
                 }
             },
             "tableTop2": {
@@ -2408,10 +2110,9 @@
                     "materialId": "glassApp1"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "unitCube"
-                    }
+                    "nodesList": [
+                        "unitCube"
+                    ]
                 }
             },
             "leg1": {
@@ -2446,10 +2147,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "unitCube"
+                    ]
                 }
             },
             "leg2": {
@@ -2484,10 +2184,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg3": {
@@ -2522,10 +2221,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg4": {
@@ -2560,10 +2258,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg5": {
@@ -2598,10 +2295,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg6": {
@@ -2636,10 +2332,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg7": {
@@ -2674,10 +2369,9 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]
                 }
             },
             "leg8": {
@@ -2712,35 +2406,21 @@
                     "materialId": "glassApp2"
                 },
                 "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
+                    "nodesList": [
+                        "leg"
+                    ]   
                 }
             },
             "triangularPrism": {
                 "type": "node",
                 "children": {
-                    "triangleBase1": {
-                        "type": "noderef",
-                        "nodeId": "triangleBase1"
-                    },
-                    "triangleBase2": {
-                        "type": "noderef",
-                        "nodeId": "triangleBase2"
-                    },
-                    "rectangleSide1": {
-                        "type": "noderef",
-                        "nodeId": "rectangleSide1"
-                    },
-                    "rectangleSide2": {
-                        "type": "noderef",
-                        "nodeId": "rectangleSide2"
-                    },
-                    "rectangleSide3": {
-                        "type": "noderef",
-                        "nodeId": "rectangleSide3"
-                    }
+                    "nodesList": [
+                        "triangleBase1",
+                        "triangleBase2",
+                        "rectangleSide1",
+                        "rectangleSide2",
+                        "rectangleSide3"
+                    ]
                 }
             },
             "triangleBase1": {
@@ -2865,18 +2545,11 @@
                     "materialId": "yellowApp"
                 },
                 "children": {
-                    "triangle1": {
-                        "type": "noderef",
-                        "nodeId": "triangle1"
-                    },
-                    "triangle2": {
-                        "type": "noderef",
-                        "nodeId": "triangle2"
-                    },
-                    "triangle3": {
-                        "type": "noderef",
-                        "nodeId": "triangle3"
-                    }
+                    "nodesList": [
+                        "triangle1",
+                        "triangle2",
+                        "triangle3"
+                    ]
                 }
             },
             "triangle1": {
@@ -2988,30 +2661,14 @@
             "unitCube": {
                 "type": "node",
                 "children": {
-                    "rectangle1": {
-                        "type": "noderef",
-                        "nodeId": "rectangle1"
-                    },
-                    "rectangle2": {
-                        "type": "noderef",
-                        "nodeId": "rectangle2"
-                    },
-                    "rectangle3": {
-                        "type": "noderef",
-                        "nodeId": "rectangle3"
-                    },
-                    "rectangle4": {
-                        "type": "noderef",
-                        "nodeId": "rectangle4"
-                    },
-                    "rectangle5": {
-                        "type": "noderef",
-                        "nodeId": "rectangle5"
-                    },
-                    "rectangle6": {
-                        "type": "noderef",
-                        "nodeId": "rectangle6"
-                    }
+                    "nodesList": [
+                        "rectangle1",
+                        "rectangle2",
+                        "rectangle3",
+                        "rectangle4",
+                        "rectangle5",
+                        "rectangle6"
+                    ]
                 }
             },
             "rectangle1": {
