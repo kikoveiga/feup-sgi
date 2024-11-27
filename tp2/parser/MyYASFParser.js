@@ -364,9 +364,9 @@ class MyYASFParser {
         Object.keys(children).forEach(childID => {
             const child = children[childID];
 
-            if (child.type === 'nodesList') {
+            if (childID === 'nodesList') {
 
-                child.nodesList.forEach(nodeId => {
+                child.forEach(nodeId => {
                     const node = this.parseNode(graph, nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
                     if (node) parentGroup.add(node);
                 });
@@ -394,10 +394,8 @@ class MyYASFParser {
                 if (light) parentGroup.add(light);
             }
 
-            else {
-                console.error(`Unknown child type: ${child.type}`);
-            }
-
+            else console.error(`Unknown child type: ${child.type}`);
+            
         });
     }
 

@@ -1996,7 +1996,7 @@
                     }
                 }
             },
-            "blueTower": {
+            "bluetower": {
                 "type": "node",
                 "transforms": [               
                     {
