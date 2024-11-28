@@ -70,14 +70,11 @@ class MyYASFParser {
 
             const emissiveColor = new THREE.Color(emissive.r, emissive.g, emissive.b);
             
-            const materials = [
-                new THREE.MeshStandardMaterial({ map: loader.load(front), emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(back) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(up)   , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(down) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(left) , emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }),
-                new THREE.MeshStandardMaterial({ map: loader.load(right), emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide })
-            ];
+            const materials = [];
+
+            [front, back, up, down, left, right].forEach((texture) => {
+                materials.push( new THREE.MeshStandardMaterial({ map: loader.load(texture), emissive: emissiveColor, emissiveIntensity: intensity, side: THREE.BackSide }));
+            });
         
             const skyBox = new THREE.Mesh(skyBoxGeometry, materials);
         
@@ -262,14 +259,14 @@ class MyYASFParser {
             } = materialInfo;
 
             const materialParams = {
-                color: new THREE.Color(color),
-                specular: new THREE.Color(specular),
+                color: new THREE.Color(color.r, color.g, color.b),
+                specular: new THREE.Color(specular.r, specular.g, specular.b),
                 shininess: shininess,
-                // emissive: new THREE.Color(emissive),
+                emissive: new THREE.Color(emissive.r, emissive.g, emissive.b),
                 transparent: transparent,
                 opacity: opacity,
                 wireframe: wireframe,
-                shading: shading ? THREE.FlatShading : THREE.SmoothShading,
+                flatShading: shading,
                 side: twosided ? THREE.DoubleSide : THREE.FrontSide,
             };
 
