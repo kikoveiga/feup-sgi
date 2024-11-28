@@ -439,24 +439,23 @@ class MyYASFParser {
                 );
                 break;
 
-                case 'cylinder': {
-                    const thetaStartCylinder = (primitiveData.thetastart || 0) * (Math.PI / 180);
-                    const thetaLengthCylinder = (primitiveData.thetalength || 360) * (Math.PI / 180);
+            case 'cylinder': {
+                const thetaStartCylinder = (primitiveData.thetastart || 0) * (Math.PI / 180);
+                const thetaLengthCylinder = (primitiveData.thetalength || 360) * (Math.PI / 180);
                 
-                    geometry = new THREE.CylinderGeometry(
-                        primitiveData.top,
-                        primitiveData.base,
-                        primitiveData.height,
-                        primitiveData.slices,
-                        primitiveData.stacks,
-                        primitiveData.capsclose || false,
-                        thetaStartCylinder,
-                        thetaLengthCylinder
-                    );
-                    break;
-                }
+                geometry = new THREE.CylinderGeometry(
+                    primitiveData.top,
+                    primitiveData.base,
+                    primitiveData.height,
+                    primitiveData.slices,
+                    primitiveData.stacks,
+                    primitiveData.capsclose || false,
+                    thetaStartCylinder,
+                    thetaLengthCylinder
+                );
+                break;
+            }
                 
-
             case 'sphere': {          
                 const thetaStartSphere = primitiveData.thetastart * (Math.PI / 180) || 0;
                 const thetaLengthSphere = primitiveData.thetalength * (Math.PI / 180) || Math.PI * 2;
@@ -472,23 +471,95 @@ class MyYASFParser {
                     phiStartSphere,
                     phiLengthSphere
                 );
+
                 break;
             }
-        
-            case 'polygon':
-                geometry = new THREE.CylinderGeometry(
-                    primitiveData.radius,
-                    primitiveData.radius,
-                    0,
-                    primitiveData.slices,
-                    primitiveData.stacks
-                );
-                material.color = new THREE.Color(
-                    primitiveData.color_c.r,
-                    primitiveData.color_c.g,
-                    primitiveData.color_c.b
-                );
+            
+            case 'nurbs': {
+                
+                const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
+                
+                if (controlpoints.length !== (degree_u + 1) * (degree_v + 1)) {
+                    console.error("Invalid control points for NURBS surface.");
+                    return null;
+                }
+                
+                const controlPoints = [];
+                for (let v = 0; v <= degree_v; v++) {
+                    const row = [];
+                    for (let u = 0; u <= degree_u; u++) {
+                        const index = v * (degree_u + 1) + u;
+                        const point = controlpoints[index];
+                        row.push(new THREE.Vector4(point.x, point.y, point.z, 1));
+                    }
+                    controlPoints.push(row);
+                }
+                
+                const nurbsSurface = new THREE.NURBSSurface(degree_u, degree_v, controlPoints);
+                
+                geometry = new THREE.Geometry();
+                
+                const uStep = 1 / parts_u;
+                const vStep = 1 / parts_v;
+                
+                // Generate vertices by evaluating the NURBS surface
+                for (let i = 0; i <= parts_u; i++) {
+                    for (let j = 0; j <= parts_v; j++) {
+    
+                        const u = i * uStep;
+                        const v = j * vStep;
+                        const point = nurbsSurface.getPointAt(u, v);
+                        geometry.vertices.push(new THREE.Vector3(point.x, point.y, point.z));
+                    }
+                }
+    
+                // Optionally: Compute face indices or use some other method to connect the vertices
+                // You can triangulate the surface, for example:
+                const faces = [];
+                for (let i = 0; i < parts_u; i++) {
+                    for (let j = 0; j < parts_v; j++) {
+                        const a = i * (parts_v + 1) + j;
+                        const b = a + 1;
+                        const c = a + (parts_v + 1);
+                        const d = c + 1;
+                        faces.push(new THREE.Face3(a, b, c));
+                        faces.push(new THREE.Face3(b, d, c));
+                   }
+                }
+    
+                geometry.faces = faces;
+                geometry.computeVertexNormals();  // For correct shading
+    
+                // Set the material (default to MeshBasicMaterial, can be adjusted)
+                material = new THREE.MeshBasicMaterial({ vertexColors: true });
+                
                 break;
+                
+            }
+            
+            case 'polygon': {
+                geometry = new THREE.CircleGeometry(primitiveData.radius, primitiveData.slices);
+                
+                const colors = [];
+
+                geometry.vertices.forEach((vertex) => {
+                    const distance = vertex.length();
+                    const lerpedColor = new THREE.Color().lerpColors(
+                        new THREE.Color(primitiveData.color_c.r, primitiveData.color_c.g, primitiveData.color_c.b),
+                        new THREE.Color(primitiveData.color_p.r, primitiveData.color_p.g, primitiveData.color_p.b),
+                        distance / primitiveData.radius
+                    );
+
+                    colors.push(lerpedColor.r, lerpedColor.g, lerpedColor.b);
+                });
+
+                geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+                
+                material = new THREE.MeshBasicMaterial({ vertexColors: true });
+
+                
+                break;
+            }
 
             default:
                 console.error(`Unknown primitive type: ${primitiveData.type}`);
