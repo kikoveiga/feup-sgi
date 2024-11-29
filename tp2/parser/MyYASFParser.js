@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyYASFParser {
 
@@ -14,6 +15,7 @@ class MyYASFParser {
         this.rootid = null;
         this.initialCameraName = null;
         this.lights = [];
+        this.nurbsBuilder = new MyNurbsBuilder();
         
     }
 
@@ -236,7 +238,6 @@ class MyYASFParser {
     
 
     loadMaterials(materials) {
-
         Object.keys(materials).forEach(materialID => {
             const materialInfo = materials[materialID];
     
@@ -277,7 +278,7 @@ class MyYASFParser {
             }
 
             if (bumpref && this.textures[bumpref]) {
-                materialParams.bumpMap = this.textures[textureref];
+                materialParams.bumpMap = this.textures[bumpref];
                 materialParams.bumpScale = bumpscale;
             }
 
@@ -362,14 +363,13 @@ class MyYASFParser {
             const child = children[childID];
 
             if (childID === 'nodesList') {
-
                 child.forEach(nodeId => {
                     const node = this.parseNode(graph, nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
                     if (node) parentGroup.add(node);
                 });
             } 
 
-            else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon'].includes(child.type)) {
+            else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon', 'nurbs'].includes(child.type)) {
                 const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
                 if (primitive) {
@@ -473,90 +473,93 @@ class MyYASFParser {
             }
             
             case 'nurbs': {
-                
+                console.log("Entrou aqui!");
                 const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
-                
-                if (controlpoints.length !== (degree_u + 1) * (degree_v + 1)) {
-                    console.error("Invalid control points for NURBS surface.");
+    
+                const numUPoints = controlpoints.numUPoints || degree_u + 1;
+                const numVPoints = controlpoints.numVPoints || degree_v + 1;
+    
+                if (controlpoints.points.length !== numUPoints * numVPoints) {
+                    console.error("Invalid number of control points for NURBS surface.");
                     return null;
                 }
-                
-                const controlPoints = [];
-                for (let v = 0; v <= degree_v; v++) {
-                    const row = [];
-                    for (let u = 0; u <= degree_u; u++) {
-                        const index = v * (degree_u + 1) + u;
-                        const point = controlpoints[index];
-                        row.push(new THREE.Vector4(point.x, point.y, point.z, 1));
+    
+                let controlPoints2D = [];
+                for (let i = 0; i < numVPoints; i++) {
+                    let row = [];
+                    for (let j = 0; j < numUPoints; j++) {
+                        const index = i * numUPoints + j;
+                        const point = controlpoints.points[index];
+                        row.push([point.x, point.y, point.z, point.w || 1]);
                     }
-                    controlPoints.push(row);
-                }
-                
-                const nurbsSurface = new THREE.NURBSSurface(degree_u, degree_v, controlPoints);
-                
-                geometry = new THREE.Geometry();
-                
-                const uStep = 1 / parts_u;
-                const vStep = 1 / parts_v;
-                
-                // Generate vertices by evaluating the NURBS surface
-                for (let i = 0; i <= parts_u; i++) {
-                    for (let j = 0; j <= parts_v; j++) {
-    
-                        const u = i * uStep;
-                        const v = j * vStep;
-                        const point = nurbsSurface.getPointAt(u, v);
-                        geometry.vertices.push(new THREE.Vector3(point.x, point.y, point.z));
-                    }
+                    controlPoints2D.push(row);
                 }
     
-                // Optionally: Compute face indices or use some other method to connect the vertices
-                // You can triangulate the surface, for example:
-                const faces = [];
-                for (let i = 0; i < parts_u; i++) {
-                    for (let j = 0; j < parts_v; j++) {
-                        const a = i * (parts_v + 1) + j;
-                        const b = a + 1;
-                        const c = a + (parts_v + 1);
-                        const d = c + 1;
-                        faces.push(new THREE.Face3(a, b, c));
-                        faces.push(new THREE.Face3(b, d, c));
-                   }
-                }
+                geometry = this.nurbsBuilder.build(
+                    controlPoints2D,
+                    degree_u,
+                    degree_v,
+                    parts_u,
+                    parts_v
+                );
     
-                geometry.faces = faces;
-                geometry.computeVertexNormals();  // For correct shading
-    
-                // Set the material (default to MeshBasicMaterial, can be adjusted)
-                material = new THREE.MeshBasicMaterial({ vertexColors: true });
-                
                 break;
-                
             }
             
             case 'polygon': {
-                geometry = new THREE.CircleGeometry(primitiveData.radius, primitiveData.slices);
-                
+                const radius = primitiveData.radius;
+                const stacks = primitiveData.stacks;
+                const slices = primitiveData.slices;
+                const colorCenter = new THREE.Color(primitiveData.color_c.r, primitiveData.color_c.g, primitiveData.color_c.b);
+                const colorPeriphery = new THREE.Color(primitiveData.color_p.r, primitiveData.color_p.g, primitiveData.color_p.b);
+            
+                geometry = new THREE.BufferGeometry();
+            
+                const vertices = [];
+                const indices = [];
                 const colors = [];
+            
+                for (let i = 0; i <= stacks; i++) {
+                    const r = (radius / stacks) * i; 
+                    for (let j = 0; j <= slices; j++) {
+                        const theta = (j / slices) * Math.PI * 2; 
+                        const x = r * Math.cos(theta);
+                        const y = r * Math.sin(theta);
+                        const z = 0;
+            
+                        vertices.push(x, y, z);
+            
+                        const t = r / radius;
+                        const vertexColor = colorCenter.clone().lerp(colorPeriphery, t);
+                        colors.push(vertexColor.r, vertexColor.g, vertexColor.b);
+                    }
+                }
+            
+                for (let i = 0; i < stacks; i++) {
+                    for (let j = 0; j < slices; j++) {
+                        const first = i * (slices + 1) + j;
+                        const second = first + slices + 1;
 
-                geometry.vertices.forEach((vertex) => {
-                    const distance = vertex.length();
-                    const lerpedColor = new THREE.Color().lerpColors(
-                        new THREE.Color(primitiveData.color_c.r, primitiveData.color_c.g, primitiveData.color_c.b),
-                        new THREE.Color(primitiveData.color_p.r, primitiveData.color_p.g, primitiveData.color_p.b),
-                        distance / primitiveData.radius
-                    );
+                        indices.push(first, second, first + 1);
+                        indices.push(second, second + 1, first + 1);
+                    }
+                }
+            
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+                geometry.setIndex(indices);
+                geometry.computeVertexNormals();
 
-                    colors.push(lerpedColor.r, lerpedColor.g, lerpedColor.b);
-                });
-
-                geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
-                
-                material = new THREE.MeshBasicMaterial({ vertexColors: true });
-
-                
+                if (material) {
+                    material.vertexColors = true;
+                } else {
+                    material = new THREE.MeshBasicMaterial({ vertexColors: true });
+                }
+            
+                // Assign the geometry to be used
                 break;
             }
+                       
 
             default:
                 console.error(`Unknown primitive type: ${primitiveData.type}`);

@@ -7,19 +7,19 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0, 
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5, 
                 "intensity": 1.2
             },
             "fog": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "near": 1.0,
-                "far": 500.0
+                "far": 5000.0
             },
             "skybox": {
                 "size": {
@@ -77,6 +77,9 @@
             "blackTex2": {
                 "filepath": "scenes/demo/textures/black2.jpg"
             },
+            "blackTex3": {
+                "filepath": "scenes/demo/textures/black3.jpg"
+            },
             "orangeTex": {
                 "filepath": "scenes/demo/textures/orange.jpg"
             },
@@ -103,15 +106,26 @@
             },
             "feathersblackTex": {
                 "filepath": "scenes/demo/textures/feathersblack.jpg"
-            }
-            
+            },
+            "woodBump": {
+                "filepath": "scenes/demo/textures/bump.jpg"
+            },          
+            "stoneBump": {
+                "filepath": "scenes/demo/textures/stonebump.jpg"
+            },
+            "glassBump": {
+                "filepath": "scenes/demo/textures/glassbump.jpg"
+            },
+            "feathersBump": {
+                "filepath": "scenes/demo/textures/feathersbump.jpg"
+            } 
         },
         "materials": {
             "blackfethearsApp": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
                 "emissive": {
                     "r": 0.0,
@@ -132,34 +146,9 @@
                 "twosided": true,
                 "shading": false
             },
-            "blackbirdApp": {
+            "browsApp": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 80,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "blackbirdTex",
-                "texlength_s": 1.0,
-                "texlength_t": 1.0,
-                "twosided": true,
-                "shading": false
-            },
-            "blackApp2": {
-                "color": {
-                    "r": 0.0,
+                    "r": 0.35,
                     "g": 0.0,
                     "b": 0.0
                 },
@@ -176,7 +165,80 @@
                 "shininess": 0,
                 "transparent": false,
                 "opacity": 1.0,
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": false,
+                "shading": false
+            },
+            "blackbirdApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "shininess": 80,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "blackbirdTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false
+            },
+            "blackApp2": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
                 "textureref": "blackTex2",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "shading": false
+            },
+            "blackApp3": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "blackTex3",
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "shading": false
@@ -281,9 +343,9 @@
             },
             "redApp": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
                 "emissive": {
                     "r": 0.0,
@@ -403,8 +465,8 @@
             },
             "azulApp": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
+                    "r": 1.0,
+                    "g": 1.0,
                     "b": 1.0
                 },
                 "emissive": {
@@ -427,9 +489,9 @@
             },
             "azulApp2": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 1.0
+                    "r": 0.9,
+                    "g": 0.9,
+                    "b": 0.9
                 },
                 "emissive": {
                     "r": 0.0,
@@ -452,9 +514,9 @@
             },
             "glassApp1": {
                 "emissive": {
-                    "r": 0.3,
-                    "g": 0.6,
-                    "b": 0.8
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "color": {
                     "r": 0.7,
@@ -473,13 +535,15 @@
                 "texlength_s": 1,
                 "texlength_t": 0.2,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "glassBump",
+                "bumpscale": 0.5
             },
             "glassApp2": {
                 "emissive": {
-                    "r": 0.3,
-                    "g": 0.6,
-                    "b": 0.8
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "color": {
                     "r": 0.7,
@@ -498,7 +562,9 @@
                 "texlength_s": 0.2,
                 "texlength_t": 1,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "glassBump",
+                "bumpscale": 0.5
             },
             "woodApp1": {
                 "emissive": {
@@ -523,7 +589,9 @@
                 "texlength_s": 0.5,
                 "texlength_t": 1,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "woodBump",
+                "bumpscale": 0.5
             },
             "woodApp2": {
                 "emissive": {
@@ -548,7 +616,9 @@
                 "texlength_s": 1,
                 "texlength_t": 4,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "woodBump",
+                "bumpscale": 0.5
             },
             "stoneApp": {
                 "emissive": {
@@ -573,7 +643,9 @@
                 "texlength_s": 0.5,
                 "texlength_t": 0.5,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "stoneBump",
+                "bumpscale": 0.35
             }
         },
         "cameras": {
@@ -619,13 +691,13 @@
                 "near": 0.1,
                 "far": 100,
                 "location": {
-                    "x": -35,
+                    "x": 45,
                     "y": 30.0,
-                    "z": -10
+                    "z": 0
                 },
                 "target": {
                     "x": 0,
-                    "y": 37.5,
+                    "y": 45,
                     "z": 0
                 }
             }
@@ -644,25 +716,83 @@
                         "redbird",
                         "tnt",
                         "greytower",
-                        "blackbird"
+                        "blackbird",
+                        "sun",
+                        "nurbsPrim"
                     ],
-                    "pointLight": {
-                        "type": "pointlight",
+                    "directionalLight": {
+                        "type": "directionalLight",
                         "enabled": true,
                         "color": {
                             "r": 1.0,
                             "g": 1.0,
                             "b": 1.0
                         },
-                        "intensity": 10.0,
-                        "distance": 1000,
-                        "decay": 2.0,
-                        "castshadow": false,
+                        "intensity": 1.0,
+                        "castshadow": true,
                         "position": {
+                            "x": -37.4,
+                            "y": 50.0,
+                            "z": 20.0
+                        },
+                        "target": {
                             "x": 0.0,
-                            "y": 35.0,
+                            "y": 0.0,
                             "z": 0.0
                         }
+                    }
+                }
+            },
+            "nurbsPrim": {
+                "type": "nurbs",
+                "degree_u": 2,
+                "degree_v": 2,
+                "parts_u": 20,
+                "parts_v": 20,
+                "controlpoints": {
+                    "numUPoints": 3,
+                    "numVPoints": 3,
+                    "points": [
+                        { "x": -1, "y": -1, "z": 0, "w": 1 },
+                        { "x": 0,  "y": -1, "z": 1, "w": 1 },
+                        { "x": 1,  "y": -1, "z": 0, "w": 1 },
+                        { "x": -1, "y": 0,  "z": 1, "w": 1 },
+                        { "x": 0,  "y": 0,  "z": 2, "w": 1 },
+                        { "x": 1,  "y": 0,  "z": 1, "w": 1 },
+                        { "x": -1, "y": 1,  "z": 0, "w": 1 },
+                        { "x": 0,  "y": 1,  "z": 1, "w": 1 },
+                        { "x": 1,  "y": 1,  "z": 0, "w": 1 }
+                    ]
+                }
+            },
+            "sun": {
+                "type": "node",
+                "transforms": [             
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 90.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -37.4,
+                            "y": 50.0,
+                            "z": 20.0
+                        }
+                    }
+                ],
+                "children": {
+                    "polygon": {
+                        "type": "polygon",
+                        "radius": 6.0,
+                        "stacks": 1,    
+                        "slices": 16,      
+                        "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
+                        "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
                     }
                 }
             },
@@ -934,16 +1064,16 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 1.2
                         }
                     },         
                     {
                         "type": "rotate",
                         "amount": {
                             "x": 0.0,
-                            "y": 180.0,
+                            "y": 5.0,
                             "z": 0.0
                         }
                     },
@@ -951,7 +1081,7 @@
                         "type": "translate",
                         "amount": {
                             "x": -10.0,
-                            "y": 18.0,
+                            "y": 19.0,
                             "z": -20.0
                         }
                     }
@@ -1000,25 +1130,25 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 0.2,
-                            "y": 0.0,
-                            "z": 0.7
+                            "x": 1.0,
+                            "y": 5.5,
+                            "z": 1.0
                         }
                     },
                     {
                         "type": "rotate",
                         "amount": {
-                            "x": 90.0,
-                            "y": 15.0,
-                            "z": 90.0
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 195.0
                         }
                     },
                     {
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": 7.5,
-                            "z": -1.0
+                            "y": 7.0,
+                            "z": 0.0
                         }
                     }
                 ],
@@ -1026,12 +1156,9 @@
                     "materialId": "blackfethearsApp"
                 },
                 "children": {
-                    "trianglePrim": {
-                        "type": "triangle",
-                        "xyz1": { "x": 5, "y": 0, "z": 10 },
-                        "xyz2": { "x": 10, "y": 0, "z": 0 },
-                        "xyz3": { "x": 0, "y": 0, "z": 0 }
-                    }
+                    "nodesList": [
+                        "tetrahedron"
+                    ]
                 }
             },
             "blackbeak": {
@@ -1073,19 +1200,90 @@
                 "type": "node",
                 "transforms": [      
                     {
-                        "type": "scale",
+                        "type": "translate",
                         "amount": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 4.3,
+                            "y": 2.6,
+                            "z": 0.0
                         }
                     }
                 ],
                 "materialref": {
-                    "materialId": "lmao"
+                    "materialId": "browsApp"
                 },
                 "children": {
-
+                    "nodesList": [
+                        "blackrightBrow",
+                        "blackleftBrow"
+                    ]
+                }
+            },
+            "blackrightBrow": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 2.7
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 15.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -2.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
+            },
+            "blackleftBrow": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 2.7
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -8.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
                 }
             },
             "blackeyes": {
@@ -1094,17 +1292,133 @@
                     {
                         "type": "scale",
                         "amount": {
+                            "x": 0.7,
+                            "y": 0.65,
+                            "z": 0.65
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 1.1,
+                            "z": -0.15
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "blackrightEye",
+                        "blackleftEye"
+                    ]
+                }
+            },
+            "blackrightEye": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.3,
+                            "y": 0.0,
+                            "z": 2.1
                         }
                     }
                 ],
                 "materialref": {
-                    "materialId": "lmao"
+                    "materialId": "whiteApp"
                 },
                 "children": {
-
+                    "nodesList": [
+                        "blackeyeBall",
+                        "blackeyeCenter"
+                    ]
+                }
+            },
+            "blackleftEye": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.3,
+                            "y": 0.0,
+                            "z": -2.1
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "whiteApp"
+                },
+                "children": {
+                    "nodesList":[
+                        "blackeyeBall",
+                        "blackeyeCenter"
+                    ]
+                }
+            },
+            "blackeyeBall": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "whiteApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1.65,
+                        "slices": 64,
+                        "stacks": 64,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "blackeyeCenter": {
+                "type": "node",
+                "transforms": [             
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 60.0,
+                            "y": 70.0,
+                            "z": -50.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5.1,
+                            "y": 0.15,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "blackApp3"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 0.75,
+                        "slices": 32,
+                        "stacks": 16,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
                 }
             },
             "redbird": {
@@ -1545,16 +1859,6 @@
             },
             "redeyes": {
                 "type": "node",
-                "transforms": [      
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                ],
                 "children": {
                     "nodesList": [
                         "redrightEye",
@@ -3058,9 +3362,6 @@
             },
             "tetrahedron": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "yellowApp"
-                },
                 "children": {
                     "nodesList": [
                         "triangle1",
@@ -3071,9 +3372,6 @@
             },
             "triangle1": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "yellowApp"
-                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3085,9 +3383,6 @@
             },
             "triangle2": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "yellowApp"
-                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3099,9 +3394,6 @@
             },
             "triangle3": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "yellowApp"
-                },
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
