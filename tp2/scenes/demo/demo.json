@@ -718,7 +718,7 @@
                         "greytower",
                         "blackbird",
                         "sun",
-                        "nurbsPrim"
+                        "nurbsNode"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
@@ -743,26 +743,51 @@
                     }
                 }
             },
-            "nurbsPrim": {
-                "type": "nurbs",
-                "degree_u": 2,
-                "degree_v": 2,
-                "parts_u": 20,
-                "parts_v": 20,
-                "controlpoints": {
-                    "numUPoints": 3,
-                    "numVPoints": 3,
-                    "points": [
-                        { "x": -1, "y": -1, "z": 0, "w": 1 },
-                        { "x": 0,  "y": -1, "z": 1, "w": 1 },
-                        { "x": 1,  "y": -1, "z": 0, "w": 1 },
-                        { "x": -1, "y": 0,  "z": 1, "w": 1 },
-                        { "x": 0,  "y": 0,  "z": 2, "w": 1 },
-                        { "x": 1,  "y": 0,  "z": 1, "w": 1 },
-                        { "x": -1, "y": 1,  "z": 0, "w": 1 },
-                        { "x": 0,  "y": 1,  "z": 1, "w": 1 },
-                        { "x": 1,  "y": 1,  "z": 0, "w": 1 }
-                    ]
+            "nurbsNode": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": { "x": 0, "y": 0, "z": 0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "stoneApp"
+                },
+                "children": {
+                    "nurbsPrim": {
+                        "type": "nurbs",
+                        "degree_u": 2,
+                        "degree_v": 2,
+                        "parts_u": 20,
+                        "parts_v": 20,
+                        "controlpoints": {
+                            "numUPoints": 5,
+                            "numVPoints": 3,
+                            "points": [
+
+                                { "x": 1, "y": 0, "z": 0, "w": 1 },
+                                { "x": 0.707, "y": 0.707, "z": 0, "w": 1 },
+                                { "x": 0, "y": 1, "z": 0, "w": 1 },
+                                { "x": -0.707, "y": 0.707, "z": 0, "w": 1 },
+                                { "x": -1, "y": 0, "z": 0, "w": 1 },
+                                
+
+                                { "x": 1, "y": 0, "z": 1, "w": 1 },
+                                { "x": 0.707, "y": 0.707, "z": 1, "w": 1 },
+                                { "x": 0, "y": 1, "z": 1, "w": 1 },
+                                { "x": -0.707, "y": 0.707, "z": 1, "w": 1 },
+                                { "x": -1, "y": 0, "z": 1, "w": 1 },
+
+
+                                { "x": 1, "y": 0, "z": 2, "w": 1 },
+                                { "x": 0.707, "y": 0.707, "z": 2, "w": 1 },
+                                { "x": 0, "y": 1, "z": 2, "w": 1 },
+                                { "x": -0.707, "y": 0.707, "z": 2, "w": 1 },
+                                { "x": -1, "y": 0, "z": 2, "w": 1 }
+                            ]
+                        }
+                    }
                 }
             },
             "sun": {

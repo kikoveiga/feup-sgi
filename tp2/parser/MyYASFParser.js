@@ -473,7 +473,6 @@ class MyYASFParser {
             }
             
             case 'nurbs': {
-                console.log("Entrou aqui!");
                 const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
     
                 const numUPoints = controlpoints.numUPoints || degree_u + 1;
@@ -556,7 +555,6 @@ class MyYASFParser {
                     material = new THREE.MeshBasicMaterial({ vertexColors: true });
                 }
             
-                // Assign the geometry to be used
                 break;
             }
                        
