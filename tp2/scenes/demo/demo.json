@@ -87,7 +87,8 @@
                 "filepath": "scenes/demo/textures/yellow.jpg"
             },
             "redTex": {
-                "filepath": "scenes/demo/textures/red.jpg"
+                "filepath": "scenes/demo/textures/testing1.mp4",
+                "isVideo": true
             },
             "ropeTex": {
                 "filepath": "scenes/demo/textures/rope.jpg"
