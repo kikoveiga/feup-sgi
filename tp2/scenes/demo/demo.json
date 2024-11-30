@@ -7,10 +7,10 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 0.5,
-                "g": 0.5,
-                "b": 0.5, 
-                "intensity": 1.2
+                "r": 0.4,
+                "g": 0.4,
+                "b": 0.4, 
+                "intensity": 1.3
             },
             "fog": {
                 "color": {
@@ -151,7 +151,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "blackfethearsApp": {
                 "color": {
@@ -176,7 +177,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "browsApp": {
                 "color": {
@@ -200,7 +202,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": false,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "blackbirdApp": {
                 "color": {
@@ -225,7 +228,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "blackApp2": {
                 "color": {
@@ -249,7 +253,8 @@
                 "textureref": "blackTex2",
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "blackApp3": {
                 "color": {
@@ -273,7 +278,8 @@
                 "textureref": "blackTex3",
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "fullredApp": {
                 "color": {
@@ -298,7 +304,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "redbirdApp": {
                 "color": {
@@ -323,7 +330,8 @@
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "tntApp": {
                 "color": {
@@ -347,7 +355,8 @@
                 "textureref": "tntTex",
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "ropeApp": {
                 "color": {
@@ -371,7 +380,8 @@
                 "textureref": "ropeTex",
                 "texlength_s": 1.5,
                 "texlength_t": 5.0,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "redApp": {
                 "color": {
@@ -395,7 +405,8 @@
                 "textureref": "redTex",
                 "texlength_s": 1.0,
                 "texlength_t": 1.0,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "orangeApp": {
                 "color": {
@@ -419,7 +430,8 @@
                 "textureref": "orangeTex",
                 "texlength_s": 0.5,
                 "texlength_t": 0.5,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "yellowApp": {
                 "color": {
@@ -444,7 +456,8 @@
                 "texlength_s": 1,
                 "texlength_t": 1,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "blackApp": {
                 "color": {
@@ -469,7 +482,8 @@
                 "texlength_s": 1,
                 "texlength_t": 1,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "whiteApp": {
                 "color": {
@@ -493,7 +507,8 @@
                 "textureref": "whiteTex",
                 "texlength_s": 1,
                 "texlength_t": 1,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "azulApp": {
                 "color": {
@@ -517,7 +532,8 @@
                 "textureref": "azulTex",
                 "texlength_s": 1,
                 "texlength_t": 1,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "azulApp2": {
                 "color": {
@@ -542,7 +558,8 @@
                 "texlength_s": 1,
                 "texlength_t": 1,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "wireframe": false
             },
             "glassApp1": {
                 "emissive": {
@@ -569,7 +586,8 @@
                 "twosided": true,
                 "shading": false,
                 "bumpref": "glassBump",
-                "bumpscale": 0.5
+                "bumpscale": 0.5,
+                "wireframe": false
             },
             "glassApp2": {
                 "emissive": {
@@ -596,7 +614,8 @@
                 "twosided": true,
                 "shading": false,
                 "bumpref": "glassBump",
-                "bumpscale": 0.5
+                "bumpscale": 0.5,
+                "wireframe": false
             },
             "woodApp1": {
                 "emissive": {
@@ -623,7 +642,8 @@
                 "twosided": true,
                 "shading": false,
                 "bumpref": "woodBump",
-                "bumpscale": 0.5
+                "bumpscale": 0.5,
+                "wireframe": false
             },
             "woodApp2": {
                 "emissive": {
@@ -650,7 +670,8 @@
                 "twosided": true,
                 "shading": false,
                 "bumpref": "woodBump",
-                "bumpscale": 0.5
+                "bumpscale": 0.5,
+                "wireframe": false
             },
             "stoneApp": {
                 "emissive": {
@@ -677,7 +698,8 @@
                 "twosided": true,
                 "shading": false,
                 "bumpref": "stoneBump",
-                "bumpscale": 0.35
+                "bumpscale": 0.35,
+                "wireframe": false
             },
             "trunkApp": {
                 "emissive": {
@@ -702,7 +724,10 @@
                 "texlength_s": 0.5,
                 "texlength_t": 0.5,
                 "twosided": true,
-                "shading": false
+                "shading": false,
+                "bumpref": "woodBump",
+                "bumpscale": 10,
+                "wireframe": false
             }
         },
         "cameras": {
@@ -763,6 +788,8 @@
             "rootid": "scene",
             "scene": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "bluetower",
@@ -783,11 +810,10 @@
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 1.0,
-                            "b": 1.0
+                            "g": 0.5,
+                            "b": 0.1
                         },
-                        "intensity": 1.0,
-                        "castshadow": true,
+                        "intensity": 1.2,
                         "position": {
                             "x": -37.4,
                             "y": 50.0,
@@ -797,12 +823,118 @@
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        }
+                        },
+                        "castshadow": true,
+                        "shadowfar": 2000,      
+                        "shadowmapsize": 1024
+                    },
+                    "spotLight1": {
+                        "type": "spotLight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
+                        },
+                        "intensity": 1000.0,
+                        "distance": 100,
+                        "angle": 0.8,
+                        "penumbra": 0.2,
+                        "decay": 2.0,
+                        "position": {
+                            "x": -37.5,
+                            "y": 60,
+                            "z": -75
+                        },
+                        "target": {
+                            "x": 0.0,
+                            "y": 30.0,
+                            "z": 0.0
+                        },
+                        "castshadow": true,
+                        "shadowfar": 100
+                    },
+                    "spotLight2": {
+                        "type": "spotLight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
+                        },
+                        "intensity": 1000.0,
+                        "distance": 100,
+                        "angle": 0.8,
+                        "penumbra": 0.2,
+                        "decay": 2.0,
+                        "position": {
+                            "x": 37.5,
+                            "y": 60,
+                            "z": -75
+                        },
+                        "target": {
+                            "x": 0.0,
+                            "y": 30.0,
+                            "z": 0.0
+                        },
+                        "castshadow": true
+                    },
+                    "spotLight3": {
+                        "type": "spotLight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
+                        },
+                        "intensity": 1000.0,
+                        "distance": 100,
+                        "angle": 0.8,
+                        "penumbra": 0.2,
+                        "decay": 2.0,
+                        "position": {
+                            "x": -37.5,
+                            "y": 60,
+                            "z": 75
+                        },
+                        "target": {
+                            "x": 0.0,
+                            "y": 30.0,
+                            "z": 0.0
+                        },
+                        "castshadow": true
+                    },
+                    "spotLight4": {
+                        "type": "spotLight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 1.0,
+                            "b": 1.0
+                        },
+                        "intensity": 1000.0,
+                        "distance": 100,
+                        "angle": 0.8,
+                        "penumbra": 0.2,
+                        "decay": 2.0,
+                        "position": {
+                            "x": 37.5,
+                            "y": 60,
+                            "z": 75
+                        },
+                        "target": {
+                            "x": 0.0,
+                            "y": 30.0,
+                            "z": 0.0
+                        },
+                        "castshadow": true
                     }
                 }
             },
             "tree2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -843,6 +975,8 @@
             },
             "tree1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -883,6 +1017,8 @@
             },
             "trunk": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -911,6 +1047,8 @@
             },
             "leaf1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -937,6 +1075,8 @@
             },
             "leaf2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -963,6 +1103,8 @@
             },
             "leaf3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -989,6 +1131,8 @@
             },
             "leaf4": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1015,6 +1159,8 @@
             },
             "leaf5": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1041,6 +1187,8 @@
             },
             "leaf6": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1067,6 +1215,8 @@
             },
             "leaf": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms":[
                     {
                         "type": "scale",
@@ -1105,6 +1255,8 @@
             },
             "sun": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [             
                     {
                         "type": "rotate",
@@ -1127,7 +1279,7 @@
                     "polygon": {
                         "type": "polygon",
                         "radius": 6.0,
-                        "stacks": 1,    
+                        "stacks": 5,    
                         "slices": 16,      
                         "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
                         "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
@@ -1136,6 +1288,8 @@
             },
             "greytower": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1172,6 +1326,8 @@
             },
             "greyPrism": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1209,6 +1365,8 @@
             },
             "greyTriangle1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1248,6 +1406,8 @@
             },
             "greyTriangle2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1287,6 +1447,8 @@
             },
             "block1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1324,6 +1486,8 @@
             },
             "block2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1361,6 +1525,8 @@
             },
             "block3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1398,6 +1564,8 @@
             },
             "blackbird": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1436,6 +1604,8 @@
             },
             "blackbody": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1464,6 +1634,8 @@
             },
             "blackfeather": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1501,6 +1673,8 @@
             },
             "blackbeak": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1536,6 +1710,8 @@
             },
             "blackbrows": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -1558,6 +1734,8 @@
             },
             "blackrightBrow": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1592,6 +1770,8 @@
             },
             "blackleftBrow": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1626,6 +1806,8 @@
             },
             "blackeyes": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1653,6 +1835,8 @@
             },
             "blackrightEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -1675,6 +1859,8 @@
             },
             "blackleftEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -1697,6 +1883,8 @@
             },
             "blackeyeBall": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -1725,6 +1913,8 @@
             },
             "blackeyeCenter": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [             
                     {
                         "type": "rotate",
@@ -1761,6 +1951,8 @@
             },
             "redbird": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,     
                 "transforms": [      
                     {
                         "type": "scale",
@@ -1799,6 +1991,8 @@
             },
             "redfeathers": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1837,6 +2031,8 @@
             },
             "redhead": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1867,6 +2063,8 @@
             },
             "feather1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1902,6 +2100,8 @@
             },
             "feather2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1929,6 +2129,8 @@
             },
             "triangularPrism1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -1966,6 +2168,8 @@
             },
             "triangularPrism2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2003,6 +2207,8 @@
             },
             "redtail": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2033,6 +2239,8 @@
             },
             "redbrows": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2063,6 +2271,8 @@
             },
             "rightBrow": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2097,6 +2307,8 @@
             },
             "leftBrow": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2131,6 +2343,8 @@
             },
             "redbeak": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2169,6 +2383,8 @@
             },
             "redbody": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2197,6 +2413,8 @@
             },
             "redeyes": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "redrightEye",
@@ -2206,6 +2424,8 @@
             },
             "redrightEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -2228,6 +2448,8 @@
             },
             "redleftEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -2250,6 +2472,8 @@
             },
             "redeyeBall": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -2278,6 +2502,8 @@
             },
             "redeyeCenter": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [             
                     {
                         "type": "rotate",
@@ -2314,6 +2540,8 @@
             },
             "woodtower": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2349,6 +2577,8 @@
             },
             "lowerBlock": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "translate",
@@ -2370,6 +2600,8 @@
             },
             "upperBlock": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -2399,6 +2631,8 @@
             },
             "box1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [          
                     {
                         "type": "translate",
@@ -2422,6 +2656,8 @@
             },
             "box2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [            
                     {
                         "type": "translate",
@@ -2445,6 +2681,8 @@
             },
             "box3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [            
                     {
                         "type": "translate",
@@ -2468,6 +2706,8 @@
             },
             "box4": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [            
                     {
                         "type": "translate",
@@ -2491,6 +2731,8 @@
             },
             "tnt": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2522,11 +2764,33 @@
                         "tntbox",
                         "balloon",
                         "rope"
-                    ]
+                    ],
+                    "light": {
+                        "type": "pointlight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 0.5,
+                            "b": 0.0
+                        },
+                        "intensity": 100.0,
+                        "distance": 100.0,
+                        "decay": 2.0,
+                        "position": {
+                            "x": -10.0,
+                            "y": 35.0,
+                            "z": -5.0
+                        },
+                        "castshadow": true,
+                        "shadowfar": 2000,      
+                        "shadowmapsize": 1024
+                    }
                 }
             },
             "rope": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2570,6 +2834,8 @@
             },
             "balloon": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2614,6 +2880,8 @@
             },
             "tntbox": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2656,6 +2924,8 @@
             },
             "bluebird3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2693,6 +2963,8 @@
             },
             "bluebird2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2730,6 +3002,8 @@
             },
             "bluebird1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [      
                     {
                         "type": "scale",
@@ -2767,6 +3041,8 @@
             },
             "body": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2795,6 +3071,8 @@
             },
             "feathers": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2833,6 +3111,8 @@
             },
             "head": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2863,6 +3143,8 @@
             },
             "tail": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2901,6 +3183,8 @@
             },
             "beak": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2939,6 +3223,8 @@
             },
             "downBeak": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2976,6 +3262,8 @@
             },
             "topBeak": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -2997,6 +3285,8 @@
             },
             "eyes": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3016,6 +3306,8 @@
             },
             "rightEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3036,6 +3328,8 @@
             },
             "leftEye": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
 
                     {
@@ -3057,6 +3351,8 @@
             },
             "eyeBall": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3085,6 +3381,8 @@
             },
             "eyeCenter": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3113,6 +3411,8 @@
             },
             "eyeBlacks": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3157,6 +3457,8 @@
             },
             "bluetower": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [               
                     {
                         "type": "rotate",
@@ -3200,6 +3502,8 @@
             },
             "tableTop1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3238,6 +3542,8 @@
             },
             "tableTop2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3276,6 +3582,8 @@
             },
             "leg1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3313,6 +3621,8 @@
             },
             "leg2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3350,6 +3660,8 @@
             },
             "leg3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3387,6 +3699,8 @@
             },
             "leg4": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3424,6 +3738,8 @@
             },
             "leg5": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3461,6 +3777,8 @@
             },
             "leg6": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3498,6 +3816,8 @@
             },
             "leg7": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3535,6 +3855,8 @@
             },
             "leg8": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "scale",
@@ -3572,6 +3894,8 @@
             },
             "triangularPrism": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "triangleBase1",
@@ -3584,6 +3908,8 @@
             },
             "triangleBase1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3595,6 +3921,8 @@
             },
             "triangleBase2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3616,6 +3944,8 @@
             },
             "rectangleSide1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3644,6 +3974,8 @@
             },
             "rectangleSide2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3672,6 +4004,8 @@
             },
             "rectangleSide3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3700,6 +4034,8 @@
             },
             "tetrahedron": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "triangle1",
@@ -3710,6 +4046,8 @@
             },
             "triangle1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3721,6 +4059,8 @@
             },
             "triangle2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3732,6 +4072,8 @@
             },
             "triangle3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "trianglePrim": {
                         "type": "triangle",
@@ -3743,6 +4085,8 @@
             },
             "triangle4": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3775,6 +4119,8 @@
             },
             "triangle5": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3807,6 +4153,8 @@
             },
             "unitCube": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": {
                     "nodesList": [
                         "rectangle1",
@@ -3820,6 +4168,8 @@
             },
             "rectangle1": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3854,6 +4204,8 @@
             },
             "rectangle2": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3880,6 +4232,8 @@
             },
             "rectangle3": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3914,6 +4268,8 @@
             },
             "rectangle4": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3948,6 +4304,8 @@
             },
             "rectangle5": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -3982,6 +4340,8 @@
             },
             "rectangle6": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",

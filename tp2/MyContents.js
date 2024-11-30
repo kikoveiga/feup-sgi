@@ -51,6 +51,7 @@ class MyContents {
         // this.onAfterSceneLoadedAndBeforeRender(data)
     }
 
+    
     printYASF(data, indent = '') {
         for (let key in data) {
             if (typeof data[key] === 'object' && data[key] !== null) {
@@ -113,6 +114,22 @@ class MyContents {
             }  
         }
     }   
+    
+    toggleWireframe(enableWireframe) {
+        this.app.scene.traverse(node => {
+            if (node.isMesh && node.material) {
+                if (Array.isArray(node.material)) {
+                    node.material.forEach(material => {
+                        material.wireframe = enableWireframe;
+                        material.needsUpdate = true;
+                    });
+                } else {
+                    node.material.wireframe = enableWireframe;
+                    node.material.needsUpdate = true;
+                }
+            }
+        });
+    }    
     
     update() {
     }
