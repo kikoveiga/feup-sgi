@@ -52,27 +52,50 @@ class MyGuiInterface {
 
         this.objectsFolder = this.datgui.addFolder('Objects');
 
-        const toggleVisibility = {
-            visible: true,
-        }
-
         const controllers = [];
 
-        this.objectsFolder.add(toggleVisibility, 'visible').name('ALL').onChange((value) => {
-            if (this.contents && this.contents.objects) {
-                this.contents.objects.forEach((object, index) => {
-                    object.visible = value;
-                    controllers[index].updateDisplay();
+        const addVisibilityController = (object, folder) => {
+            const controller = folder.add(object, 'visible').name(object.name);
+            controllers.push(controller);
+        };
+
+        const addSubfoldersForChildren = (object, folder) => {
+            if (object.children) {
+                const childFolder = folder.addFolder(object.name);
+
+                object.children.forEach(child => {
+                    addVisibilityController(child, childFolder);
                 });
+
+                object.children.forEach(child => {
+                    addSubfoldersForChildren(child, childFolder);
+                });
+
+                childFolder.close();
             }
+        }
+
+        const sceneController = this.objectsFolder.add(this.contents.objects[0], 'visible').name('Scene');
+        controllers.push(sceneController);
+
+        sceneController.onChange((value) => {
+            this.contents.objects[0].visible = value;
+            this.contents.objects[0].children.forEach(child => {
+                child.visible = value;
+            });
+        });
+        
+        const sceneFolder = this.objectsFolder.addFolder('Scene');
+
+        this.contents.objects[0].children.forEach(child => {
+            addVisibilityController(child, sceneFolder);
+        });
+        
+        this.contents.objects[0].children.forEach(child => {
+            addSubfoldersForChildren(child, sceneFolder);
         });
 
-        if (this.contents && this.contents.objects) {
-            this.contents.objects.forEach( object => {
-                const controller = this.objectsFolder.add(object, 'visible').name(object.name);
-                controllers.push(controller);
-            });
-        }
+        sceneFolder.close();
 
         this.objectsFolder.close();
     }

@@ -107,7 +107,7 @@ class MyContents {
             if (root) {
             
                 this.app.scene.add(root);
-                this.objects = Object.values(this.parser.objects);
+                this.objects.push(root);
 
                 this.app.gui.updateObjects();
             }  
