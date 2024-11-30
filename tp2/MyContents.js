@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
@@ -20,6 +19,8 @@ class MyContents {
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
+
+        this.objects = [];
     }
 
     /**
@@ -65,10 +66,6 @@ class MyContents {
         this.printYASF(data)
     }
 
-    visitNodes() {
-        
-    }
-
     addGlobals() {
 
         if (this.parser.globals.background) {
@@ -107,7 +104,13 @@ class MyContents {
         if (this.parser.objects) {
             const root = this.parser.objects[this.parser.rootid];
 
-            if (root) this.app.scene.add(root);
+            if (root) {
+            
+                this.app.scene.add(root);
+                this.objects = Object.values(this.parser.objects);
+
+                this.app.gui.updateObjects();
+            }  
         }
     }   
     
