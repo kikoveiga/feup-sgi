@@ -55,49 +55,59 @@ class MyGuiInterface {
         const controllers = [];
 
         const addVisibilityController = (object, folder) => {
-            const controller = folder.add(object, 'visible').name(object.name);
+            const controller = folder.add(object, 'visible').name(object.name || 'Primitive');
             controllers.push(controller);
+
+            controller.onChange((value) => {
+                if (object.children) {
+                    setVisibilityRecursive(object, value);
+                }
+            });
         };
 
-        const addSubfoldersForChildren = (object, folder) => {
-            if (object.children) {
-                const childFolder = folder.addFolder(object.name);
+        const setVisibilityRecursive = (object, value) => {
+            object.visible = value;
 
+            if (object.children && object.children.length > 0) {
                 object.children.forEach(child => {
-                    addVisibilityController(child, childFolder);
+                    child.visible = value;
+                    const childController = controllers.find(controller => controller.object === child);
+                    if (childController) {
+                        childController.setValue(value);
+                        childController.updateDisplay();
+                    }
+                    setVisibilityRecursive(child, value);
                 });
-
-                object.children.forEach(child => {
-                    addSubfoldersForChildren(child, childFolder);
-                });
-
-                childFolder.close();
             }
         }
 
-        const sceneController = this.objectsFolder.add(this.contents.objects[0], 'visible').name('Scene');
-        controllers.push(sceneController);
+        const addSubfoldersForChildren = (object, folder) => {
+            if (object.children && object.children.length > 0) {
+                const subfolder = folder.addFolder(object.name);
+                addVisibilitiesThenSubfolders(object.children, subfolder);
 
-        sceneController.onChange((value) => {
-            this.contents.objects[0].visible = value;
-            this.contents.objects[0].children.forEach(child => {
-                child.visible = value;
+                subfolder.close();
+            }
+        }
+
+        function addVisibilitiesThenSubfolders(object, folder) {
+
+            object.forEach(child => {
+                addVisibilityController(child, folder);
             });
-        });
-        
-        const sceneFolder = this.objectsFolder.addFolder('Scene');
 
-        this.contents.objects[0].children.forEach(child => {
-            addVisibilityController(child, sceneFolder);
-        });
-        
-        this.contents.objects[0].children.forEach(child => {
-            addSubfoldersForChildren(child, sceneFolder);
-        });
+            object.forEach(child => {
+                addSubfoldersForChildren(child, folder);
+            });
+        };
 
-        sceneFolder.close();
+        if (this.contents && this.contents.objects) {
+            addVisibilitiesThenSubfolders(this.contents.objects, this.objectsFolder);
+        }
 
         this.objectsFolder.close();
+
+        console.log(this.contents);
     }
         
 }
