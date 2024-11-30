@@ -184,6 +184,7 @@ class MyYASFParser {
                                 let hasCustomMipmaps = false;
 
                                 while(`mipmap${level}` in textureInfo && level <= 7) {
+                                    console.log(`Loading mipmap level ${level} for texture ${textureID}`);
                                     hasCustomMipmaps = true;
 
                                     const mipmapPromise = new Promise((mipmapResolve, mipmapReject) => {

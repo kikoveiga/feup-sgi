@@ -91,7 +91,11 @@
                 "isVideo": true
             },
             "ropeTex": {
-                "filepath": "scenes/demo/textures/rope.jpg"
+                "filepath": "scenes/demo/textures/rope.jpg",
+                "isVideo": false,
+                "mipmap0": "scenes/demo/textures/rope_mipmap0.jpg",
+                "mipmap1": "scenes/demo/textures/rope_mipmap1.jpg",
+                "mipmap2": "scenes/demo/textures/rope_mipmap2.jpg"
             },
             "tntTex": {
                 "filepath": "scenes/demo/textures/tnt.png"
