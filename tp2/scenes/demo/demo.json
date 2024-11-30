@@ -118,9 +118,40 @@
             },
             "feathersBump": {
                 "filepath": "scenes/demo/textures/feathersbump.jpg"
+            },
+            "leafTex": {
+                "filepath": "scenes/demo/textures/leaf.jpg"
+            },
+            "trunkTex": {
+                "filepath": "scenes/demo/textures/trunk.jpg"
             } 
         },
         "materials": {
+            "leafApp": {
+                "color": {
+                    "r": 0.2,
+                    "g": 1.0,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "leafTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false
+            },
             "blackfethearsApp": {
                 "color": {
                     "r": 1.0,
@@ -646,6 +677,31 @@
                 "shading": false,
                 "bumpref": "stoneBump",
                 "bumpscale": 0.35
+            },
+            "trunkApp": {
+                "emissive": {
+                    "r": 0.2,
+                    "g": 0.1,
+                    "b": 0.0
+                },
+                "color": {
+                    "r": 0.25,
+                    "g": 0.175,
+                    "b": 0.1
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.15,
+                    "b": 0.1
+                },
+                "shininess": 15.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "trunkTex",
+                "texlength_s": 0.5,
+                "texlength_t": 0.5,
+                "twosided": true,
+                "shading": false
             }
         },
         "cameras": {
@@ -718,7 +774,8 @@
                         "greytower",
                         "blackbird",
                         "sun",
-                        "nurbsNode"
+                        "tree1",
+                        "tree2"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
@@ -743,50 +800,305 @@
                     }
                 }
             },
-            "nurbsNode": {
+            "tree2": {
                 "type": "node",
-                "transforms": [
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        }
+                    },   
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -5.0,
+                            "y": 0.0,
+                            "z": -5.0
+                        }
+                    },      
                     {
                         "type": "translate",
-                        "amount": { "x": 0, "y": 0, "z": 0 }
+                        "amount": {
+                            "x": -25.0,
+                            "y": 10.0,
+                            "z": -20.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "trunk",
+                        "leaf1",
+                        "leaf2",
+                        "leaf3",
+                        "leaf4",
+                        "leaf5",
+                        "leaf6"
+                    ]
+                }
+            },
+            "tree1": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.25,
+                            "y": 1.25,
+                            "z": 1.25
+                        }
+                    },   
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 5.0,
+                            "y": 0.0,
+                            "z": 5.0
+                        }
+                    },      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -20.0,
+                            "y": 10.0,
+                            "z": 15.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "trunk",
+                        "leaf1",
+                        "leaf2",
+                        "leaf3",
+                        "leaf4",
+                        "leaf5",
+                        "leaf6"
+                    ]
+                }
+            },
+            "trunk": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 9.0,
+                            "z": 1.0
+                        }
                     }
                 ],
                 "materialref": {
-                    "materialId": "stoneApp"
+                    "materialId": "trunkApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1.8,
+                        "slices": 32,
+                        "stacks": 32,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "leaf1": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -70.0,
+                            "y": 0.0,
+                            "z": 30.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 2.2,
+                            "y": 13.3,
+                            "z": 4.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf2": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -90.0,
+                            "y": 0.0,
+                            "z": 70.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 5.0,
+                            "y": 14.75,
+                            "z": 1.5
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf3": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -110.0,
+                            "y": 0.0,
+                            "z": 130.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3.9,
+                            "y": 14.0,
+                            "z": -2.9
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf4": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -100.0,
+                            "y": 0.0,
+                            "z": 120.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -4.7,
+                            "y": 15.0,
+                            "z": 2.8
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf5": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -110.0,
+                            "y": 0.0,
+                            "z": 50.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -4.0,
+                            "y": 14.0,
+                            "z": -2.5
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf6": {
+                "type": "node",
+                "transforms": [      
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -80.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 15.5,
+                            "z": -5.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leaf"
+                    ]
+                }
+            },
+            "leaf": {
+                "type": "node",
+                "transforms":[
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.5,
+                            "y": 3.0,
+                            "z": 1.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "leafApp"
                 },
                 "children": {
                     "nurbsPrim": {
                         "type": "nurbs",
                         "degree_u": 2,
                         "degree_v": 2,
-                        "parts_u": 20,
-                        "parts_v": 20,
-                        "controlpoints": {
-                            "numUPoints": 5,
-                            "numVPoints": 3,
-                            "points": [
-
-                                { "x": 1, "y": 0, "z": 0, "w": 1 },
-                                { "x": 0.707, "y": 0.707, "z": 0, "w": 1 },
-                                { "x": 0, "y": 1, "z": 0, "w": 1 },
-                                { "x": -0.707, "y": 0.707, "z": 0, "w": 1 },
-                                { "x": -1, "y": 0, "z": 0, "w": 1 },
-                                
-
-                                { "x": 1, "y": 0, "z": 1, "w": 1 },
-                                { "x": 0.707, "y": 0.707, "z": 1, "w": 1 },
-                                { "x": 0, "y": 1, "z": 1, "w": 1 },
-                                { "x": -0.707, "y": 0.707, "z": 1, "w": 1 },
-                                { "x": -1, "y": 0, "z": 1, "w": 1 },
-
-
-                                { "x": 1, "y": 0, "z": 2, "w": 1 },
-                                { "x": 0.707, "y": 0.707, "z": 2, "w": 1 },
-                                { "x": 0, "y": 1, "z": 2, "w": 1 },
-                                { "x": -0.707, "y": 0.707, "z": 2, "w": 1 },
-                                { "x": -1, "y": 0, "z": 2, "w": 1 }
-                            ]
-                        }
+                        "parts_u": 10,
+                        "parts_v": 10,
+                        "controlpoints": [
+                            { "x": -1.0, "y": -1.0, "z": 1.0 }, 
+                            { "x": 0.0, "y": -2.5, "z": 1.5 },
+                            { "x": 1.0, "y": -1.0, "z": 1.0 },
+                            
+                            { "x": -1.5, "y": 0.0, "z": 2.0 },
+                            { "x": 0.0, "y": 0.0, "z": 5.0 }, 
+                            { "x": 1.5, "y": 0.0, "z": 2.0 },
+                            
+                            { "x": -1.0, "y": 1.0, "z": 1.0 },
+                            { "x": 0.0, "y": 2.5, "z": 1.5 }, 
+                            { "x": 1.0, "y": 1.0, "z": 1.0 } 
+                        ]
                     }
                 }
             },
@@ -2261,9 +2573,9 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 1.2,
+                            "x": 1.1,
                             "y": 1.1,
-                            "z": 1.2
+                            "z": 1.1
                         }
                     },         
                     {

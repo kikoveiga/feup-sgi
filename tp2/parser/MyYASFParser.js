@@ -474,26 +474,44 @@ class MyYASFParser {
             
             case 'nurbs': {
                 const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
-    
-                const numUPoints = controlpoints.numUPoints || degree_u + 1;
-                const numVPoints = controlpoints.numVPoints || degree_v + 1;
-    
-                if (controlpoints.points.length !== numUPoints * numVPoints) {
+            
+                // Calculate the number of control points in U and V directions
+                const numUPoints = degree_u + 1;
+                const numVPoints = degree_v + 1;
+            
+                // Validate the total number of control points
+                if (controlpoints.length !== numUPoints * numVPoints) {
                     console.error("Invalid number of control points for NURBS surface.");
                     return null;
                 }
-    
+            
+                // Convert flat control points array to 2D array for NURBS parsing
                 let controlPoints2D = [];
                 for (let i = 0; i < numVPoints; i++) {
                     let row = [];
                     for (let j = 0; j < numUPoints; j++) {
                         const index = i * numUPoints + j;
-                        const point = controlpoints.points[index];
-                        row.push([point.x, point.y, point.z, point.w || 1]);
+                        const point = controlpoints[index];
+            
+                        if (point.x === undefined || point.y === undefined || point.z === undefined) {
+                            console.error(`Control x = ${point.x}`);
+                            console.error(`Control y = ${point.y}`);
+                            console.error(`Control z = ${point.z}`);
+                            console.error(`Control point at index ${index} is missing 'x', 'y', or 'z'.`);
+                            return null;
+                        }
+            
+                        const x = point.x;
+                        const y = point.y;
+                        const z = point.z;
+                        const w = point.w || 1; // Default weight to 1 if not provided
+            
+                        row.push([x, y, z, w]);
                     }
                     controlPoints2D.push(row);
                 }
-    
+            
+                // Pass control points and other data to the NURBS builder
                 geometry = this.nurbsBuilder.build(
                     controlPoints2D,
                     degree_u,
@@ -501,10 +519,11 @@ class MyYASFParser {
                     parts_u,
                     parts_v
                 );
-    
+            
                 break;
             }
             
+        
             case 'polygon': {
                 const radius = primitiveData.radius;
                 const stacks = primitiveData.stacks;
