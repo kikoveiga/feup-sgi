@@ -3841,7 +3841,6 @@
                 "children": {
                     "rectanglePrim": {
                         "type": "rectangle",
-                        "flag": "aqui",
                         "xy1": {
                             "x": -0.5,
                             "y": -0.5

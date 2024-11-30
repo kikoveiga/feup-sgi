@@ -52,29 +52,62 @@ class MyGuiInterface {
 
         this.objectsFolder = this.datgui.addFolder('Objects');
 
-        const toggleVisibility = {
-            visible: true,
-        }
-
         const controllers = [];
 
-        this.objectsFolder.add(toggleVisibility, 'visible').name('ALL').onChange((value) => {
-            if (this.contents && this.contents.objects) {
-                this.contents.objects.forEach((object, index) => {
-                    object.visible = value;
-                    controllers[index].updateDisplay();
+        const addVisibilityController = (object, folder) => {
+            const controller = folder.add(object, 'visible').name(object.name || 'Primitive');
+            controllers.push(controller);
+
+            controller.onChange((value) => {
+                if (object.children) {
+                    setVisibilityRecursive(object, value);
+                }
+            });
+        };
+
+        const setVisibilityRecursive = (object, value) => {
+            object.visible = value;
+
+            if (object.children && object.children.length > 0) {
+                object.children.forEach(child => {
+                    child.visible = value;
+                    const childController = controllers.find(controller => controller.object === child);
+                    if (childController) {
+                        childController.setValue(value);
+                        childController.updateDisplay();
+                    }
+                    setVisibilityRecursive(child, value);
                 });
             }
-        });
+        }
+
+        const addSubfoldersForChildren = (object, folder) => {
+            if (object.children && object.children.length > 0) {
+                const subfolder = folder.addFolder(object.name);
+                addVisibilitiesThenSubfolders(object.children, subfolder);
+
+                subfolder.close();
+            }
+        }
+
+        function addVisibilitiesThenSubfolders(object, folder) {
+
+            object.forEach(child => {
+                addVisibilityController(child, folder);
+            });
+
+            object.forEach(child => {
+                addSubfoldersForChildren(child, folder);
+            });
+        };
 
         if (this.contents && this.contents.objects) {
-            this.contents.objects.forEach( object => {
-                const controller = this.objectsFolder.add(object, 'visible').name(object.name);
-                controllers.push(controller);
-            });
+            addVisibilitiesThenSubfolders(this.contents.objects, this.objectsFolder);
         }
 
         this.objectsFolder.close();
+
+        console.log(this.contents);
     }
         
 }
