@@ -29,9 +29,20 @@ class MyGuiInterface {
         this.lightsFolder = this.datgui.addFolder('Lights');
 
         this.updateCameraOptions();
-
+        this.addWireframeToggle();
     }
-
+    
+    addWireframeToggle() {
+        const settings = { wireframe: false };
+    
+        this.datgui.add(settings, 'wireframe')
+            .name('Wireframe Mode')
+            .onChange((value) => {
+                if (this.contents) {
+                    this.contents.toggleWireframe(value);
+                }
+            });
+    }
     /**
      * Adds camera selection options to the GUI
      */

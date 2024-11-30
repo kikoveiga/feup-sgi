@@ -313,13 +313,13 @@ class MyYASFParser {
         const nodeGroup = new THREE.Group();
         nodeGroup.name = nodeID;
     
-        nodeGroup.castShadow = node.castShadow ?? inheritedCastShadow;
-        nodeGroup.receiveShadow = node.receiveShadow ?? inheritedReceiveShadow;
+        nodeGroup.castShadow = node.castshadows ?? inheritedCastShadow;
+        nodeGroup.receiveShadow = node.receiveshadows ?? inheritedReceiveShadow;
     
         if (node.transforms) this.applyTransforms(nodeGroup, node.transforms);
     
         const materialID = node.materialref?.materialId || inheritedMaterial;
-        
+    
         if (node.children) {
             this.parseChildren(node.children, nodeGroup, graph, materialID, nodeGroup.castShadow, nodeGroup.receiveShadow);
         }
@@ -327,7 +327,7 @@ class MyYASFParser {
         this.objects[nodeID] = nodeGroup;
     
         return nodeGroup;
-    }
+    }    
     
 
     applyTransforms(nodeGroup, transforms) {
@@ -362,7 +362,7 @@ class MyYASFParser {
     parseChildren(children, parentGroup, graph, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow) {
         Object.keys(children).forEach(childID => {
             const child = children[childID];
-
+    
             if (childID === 'nodesList') {
                 child.forEach(nodeID => {
                     const node = this.parseNode(graph, nodeID, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
@@ -376,25 +376,26 @@ class MyYASFParser {
                     if (lodGroup) parentGroup.add(lodGroup);
                 });
             } 
-
+    
             else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon', 'nurbs'].includes(child.type)) {
                 const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
                 if (primitive) {
                     primitive.castShadow = inheritedCastShadow;
-                    primitive.receiveshadow = inheritedReceiveShadow;
+                    primitive.receiveShadow = inheritedReceiveShadow;
                     parentGroup.add(primitive);
                 }
             }
-
-            else if (['directionalLight', 'pointlight', 'spotLight'].includes(child.type)) {
-                const light = this.createLight(child);
+    
+            else if (['directionalLight', 'pointLight', 'spotLight'].includes(child.type)) {
+                const light = this.createLight(child, inheritedCastShadow);
                 if (light) parentGroup.add(light);
             }
 
             else console.error(`Unknown child type: ${child.type}`); 
         });
     }
+    
 
     parseLods(graph, lodID, parentGroup, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow) {
         const lod = graph[lodID];
@@ -615,66 +616,67 @@ class MyYASFParser {
         return new THREE.Mesh(geometry, material);
     }
 
-    createLight(lightData, inheritedCastShadow = false) {
+    createLight(lightData, inheritedCastShadow = true) {
         let light;
-
+    
         const color = new THREE.Color(lightData.color.r, lightData.color.g, lightData.color.b);
         const intensity = lightData.intensity || 1;
-
-        switch (lightData.type) {
-
-            case 'directionalLight':
+    
+        switch (lightData.type.toLowerCase()) { // Ensure type comparison is case-insensitive
+            case 'directionallight':
                 light = new THREE.DirectionalLight(color, intensity);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
-                light.castShadow = inheritedCastShadow || lightData.castShadow;
-
+                light.castShadow = inheritedCastShadow || lightData.castshadow;
+    
                 if (light.castShadow) {
-                    
-                    light.shadow.camera.left = lightData.shadowLeft || -5;
-                    light.shadow.camera.right = lightData.shadowRight || 5;
-                    light.shadow.camera.top = lightData.shadowTop || 5;
-                    light.shadow.camera.bottom = lightData.shadowBottom || -5;
-                    light.shadow.camera.far = lightData.shadow.far || 500.0;
-                    light.shadow.mapSize.width = lightData.shadowMapSize || 512;
-                    light.shadow.mapSize.height = lightData.shadowMapSize || 512;
+                    light.shadow.camera.left = lightData.shadowleft || -5;
+                    light.shadow.camera.right = lightData.shadowright || 5;
+                    light.shadow.camera.top = lightData.shadowtop || 5;
+                    light.shadow.camera.bottom = lightData.shadowbottom || -5;
+                    light.shadow.camera.far = lightData.shadowfar || 500.0;
+                    light.shadow.mapSize.width = lightData.shadowmapsize || 512;
+                    light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
+                console.log(`Create directional light`);
                 break;
-
+    
             case 'pointlight':
                 light = new THREE.PointLight(color, intensity, lightData.distance || 1000, lightData.decay || 2);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
-                light.castShadow = inheritedCastShadow || lightData.castShadow;
-
+                light.castShadow = inheritedCastShadow || lightData.castshadow;
+    
                 if (light.castShadow) {
-                    light.shadow.camera.far = lightData.shadow.far || 500.0;
-                    light.shadow.mapSize.width = lightData.shadowMapSize || 512;
-                    light.shadow.mapSize.height = lightData.shadowMapSize || 512;
+                    light.shadow.camera.far = lightData.shadowfar || 500.0;
+                    light.shadow.mapSize.width = lightData.shadowmapsize || 512;
+                    light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
+                console.log(`Create point light`);
                 break;
-
-            case 'spotLight':
+    
+            case 'spotlight':
                 light = new THREE.SpotLight(color, intensity, lightData.distance || 1000, lightData.angle, lightData.decay || 2);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
                 light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
-                light.castShadow = inheritedCastShadow || lightData.castShadow;
+                light.castShadow = inheritedCastShadow || lightData.castshadow;
                 light.penumbra = lightData.penumbra || 1;
-
+    
                 if (light.castShadow) {
-                    light.shadow.camera.far = lightData.shadow.far || 500.0;
-                    light.shadow.mapSize.width = lightData.shadowMapSize || 512;
-                    light.shadow.mapSize.height = lightData.shadowMapSize || 512;
+                    light.shadow.camera.far = lightData.shadowfar || 500.0;
+                    light.shadow.mapSize.width = lightData.shadowmapsize || 512;
+                    light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
+                console.log(`Create spot light`);
                 break;
-
+    
             default:
                 console.error(`Unknown light type: ${lightData.type}`);
                 return null;
         }
-
+    
         this.lights.push(light);
         return light;
-
     }
+    
 
 }
 
