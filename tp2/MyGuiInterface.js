@@ -1,6 +1,4 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import { MyApp } from './MyApp.js';
-import { MyContents } from './MyContents.js';
 
 /**
     This class customizes the gui interface for the app
@@ -28,10 +26,10 @@ class MyGuiInterface {
      */
     init() {
         this.cameraFolder = this.datgui.addFolder("Camera");
-        this.objectFolder = this.datgui.addFolder('Objects');
         this.lightsFolder = this.datgui.addFolder('Lights');
 
         this.updateCameraOptions();
+
     }
 
     /**
@@ -49,6 +47,36 @@ class MyGuiInterface {
                 this.app.setActiveCamera(value);
             });
     }
+
+    updateObjects() {
+
+        this.objectsFolder = this.datgui.addFolder('Objects');
+
+        const toggleVisibility = {
+            visible: true,
+        }
+
+        const controllers = [];
+
+        this.objectsFolder.add(toggleVisibility, 'visible').name('ALL').onChange((value) => {
+            if (this.contents && this.contents.objects) {
+                this.contents.objects.forEach((object, index) => {
+                    object.visible = value;
+                    controllers[index].updateDisplay();
+                });
+            }
+        });
+
+        if (this.contents && this.contents.objects) {
+            this.contents.objects.forEach( object => {
+                const controller = this.objectsFolder.add(object, 'visible').name(object.name);
+                controllers.push(controller);
+            });
+        }
+
+        this.objectsFolder.close();
+    }
+        
 }
 
 export { MyGuiInterface };
