@@ -22,6 +22,7 @@ class MyContents {
         this.reader.open("scenes/demo/demo.json");
 
         this.objects = [];
+        this.lights = [];
     }
 
     /**
@@ -98,7 +99,9 @@ class MyContents {
         if (this.parser.lights) {
             this.parser.lights.forEach(light => {
                 this.app.scene.add(light);
+                this.lights.push(light);
             });
+            this.app.gui.updateLights();
         }
     }
 

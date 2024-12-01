@@ -26,7 +26,6 @@ class MyGuiInterface {
      */
     init() {
         this.cameraFolder = this.datgui.addFolder("Camera");
-        this.lightsFolder = this.datgui.addFolder('Lights');
 
         this.updateCameraOptions();
         this.addWireframeToggle();
@@ -117,6 +116,19 @@ class MyGuiInterface {
         }
 
         this.objectsFolder.close();
+    }
+
+    /**
+     * Adds light selection options to the GUI
+     */
+    updateLights() {
+        
+        this.lightsFolder = this.datgui.addFolder('Lights');
+        this.contents.lights.forEach(light => {
+            this.lightsFolder.add(light, 'intensity', 0, 1).name(light.name || 'Light');
+        });
+
+        this.lightsFolder.close();
     }
         
 }

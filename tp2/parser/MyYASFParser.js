@@ -393,7 +393,7 @@ class MyYASFParser {
             }
     
             else if (['directionalLight', 'pointLight', 'spotLight'].includes(child.type)) {
-                const light = this.createLight(child, inheritedCastShadow);
+                const light = this.createLight(child, childID, inheritedCastShadow);
                 if (light) parentGroup.add(light);
             }
 
@@ -617,7 +617,7 @@ class MyYASFParser {
         return new THREE.Mesh(geometry, material);
     }
 
-    createLight(lightData, inheritedCastShadow = true) {
+    createLight(lightData, lightName, inheritedCastShadow = true) {
         let light;
     
         const color = new THREE.Color(lightData.color.r, lightData.color.g, lightData.color.b);
@@ -710,6 +710,8 @@ class MyYASFParser {
                 console.error(`Unknown light type: ${lightData.type}`);
                 return null;
         }
+
+        light.name = lightName;
         light.visible = ('enabled' in lightData) ? lightData.enabled : true;
         this.lights.push(light);
         return light;

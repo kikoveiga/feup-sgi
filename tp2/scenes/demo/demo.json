@@ -2870,7 +2870,7 @@
                         "balloon",
                         "rope"
                     ],
-                    "light": {
+                    "pointLight": {
                         "type": "pointLight",
                         "enabled": true,
                         "color": {
