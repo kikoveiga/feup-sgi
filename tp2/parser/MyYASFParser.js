@@ -120,12 +120,16 @@ class MyYASFParser {
                 console.error(`Unknown camera type: ${camera.type}`);
                 return; 
             }
-
-            newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-            newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
     
-            if (camera.location) newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
-            if (camera.target) newCamera.lookAt(camera.target.x, camera.target.y, camera.target.z);
+            if (camera.location) {
+                newCamera.position.set(camera.location.x, camera.location.y, camera.location.z);
+            }
+    
+            if (camera.target) {
+                const targetVector = new THREE.Vector3(camera.target.x, camera.target.y, camera.target.z);
+                newCamera.lookAt(targetVector);
+                newCamera.userData.target = targetVector;
+            }
     
             newCamera.updateProjectionMatrix();
             newCamera.updateMatrixWorld();
@@ -141,8 +145,6 @@ class MyYASFParser {
         }
     }
     
-    
-
     async loadTextures(textures) {
 
         const loader = new THREE.TextureLoader();
@@ -632,7 +634,7 @@ class MyYASFParser {
 
                 if (light.castShadow) {
                     const helper = new THREE.CameraHelper(light.shadow.camera);
-                    this.scene.add(helper); 
+                    // this.scene.add(helper); 
                 }
 
                 if (light.castShadow) {
@@ -641,6 +643,7 @@ class MyYASFParser {
                     light.shadow.camera.top = lightData.shadowtop || 5;
                     light.shadow.camera.bottom = lightData.shadowbottom || -5;
                     light.shadow.camera.far = lightData.shadowfar || 500.0;
+                    light.shadow.camera.near = lightData.shadownear || 1;
                     light.shadow.mapSize.width = lightData.shadowmapsize || 512;
                     light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
@@ -654,10 +657,11 @@ class MyYASFParser {
                 
                 if (light.castShadow) {
                     const helper = new THREE.CameraHelper(light.shadow.camera);
-                    this.scene.add(helper); 
+                    // this.scene.add(helper); 
                 }
 
                 if (light.castShadow) {
+                    light.shadow.camera.near = lightData.shadownear || 1;
                     light.shadow.camera.far = lightData.shadowfar || 500.0;
                     light.shadow.mapSize.width = lightData.shadowmapsize || 512;
                     light.shadow.mapSize.height = lightData.shadowmapsize || 512;
@@ -687,10 +691,11 @@ class MyYASFParser {
                     
                     if (light.castShadow) {
                         const helper = new THREE.CameraHelper(light.shadow.camera);
-                        this.scene.add(helper); 
+                        // this.scene.add(helper); 
                     }
 
                     if (light.castShadow) {
+                        light.shadow.camera.near = lightData.shadownear || 1;
                         light.shadow.camera.far = lightData.shadowfar || 500.0;
                         light.shadow.mapSize.width = lightData.shadowmapsize || 512;
                         light.shadow.mapSize.height = lightData.shadowmapsize || 512;

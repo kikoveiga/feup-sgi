@@ -735,35 +735,40 @@
             }
         },
         "cameras": {
-            "initial": "cam3",
-            "cam1": {
+            "initial": "TntAndSun",
+            "AllScene": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
                 "far": 1000,
                 "location": {
-                    "x": 15,
-                    "y": 15,
-                    "z": 15
+                    "x": 65,
+                    "y": 35,
+                    "z": -10
                 },
                 "target": {
                     "x": 0,
-                    "y": 0,
+                    "y": 25,
                     "z": 0
-                }
+                },
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
             },
-            "cam2": {
-                "type": "orthogonal",
+            "RedBird": {
+                "type": "perspective",
+                "angle": 60,
                 "near": 0.1,
                 "far": 1000,
                 "location": {
-                    "x": 0,
-                    "y": 15,
-                    "z": 15
+                    "x": 37.5,
+                    "y": 30,
+                    "z": -10
                 },
                 "target": {
                     "x": 0,
-                    "y": 15,
+                    "y": 25,
                     "z": 0
                 },
                 "left": -5,
@@ -771,21 +776,65 @@
                 "bottom": -5,
                 "top": 5
             },
-            "cam3": {
+            "BlackBird": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 20,
+                    "y": 15,
+                    "z": -20
+                },
+                "target": {
+                    "x": -30,
+                    "y": 20,
+                    "z": -30
+                },
+                "left": -5,
+                "right": 5,
+                "bottom": -5,
+                "top": 5
+            },
+            "BlueBirds": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 23,
+                    "y": 32,
+                    "z": 16
+                },
+                "target": {
+                    "x": 0,
+                    "y": 25,
+                    "z": 15
+                },
+                "left": -5,
+                "right": 5,
+                "bottom": -5,
+                "top": 5
+            },
+            "TntAndSun": {
                 "type": "perspective",
                 "angle": 90,
                 "near": 0.1,
-                "far": 100,
+                "far": 1000,
                 "location": {
-                    "x": 45,
-                    "y": 30.0,
+                    "x": 10,
+                    "y": 40,
                     "z": 0
                 },
                 "target": {
                     "x": 0,
-                    "y": 45,
-                    "z": 0
-                }
+                    "y": 40,
+                    "z": -2
+                },
+                "left": -5,
+                "right": 5,
+                "bottom": -5,
+                "top": 5
             }
         },
         "graph": {
@@ -819,7 +868,7 @@
                         },
                         "intensity": 1.2,
                         "position": {
-                            "x": -37.4,
+                            "x": -36,
                             "y": 50.0,
                             "z": 20.0
                         },
@@ -1040,8 +1089,8 @@
                     "sphere": {
                         "type": "sphere",
                         "radius": 1.8,
-                        "slices": 32,
-                        "stacks": 32,
+                        "slices": 16,
+                        "stacks": 16,
                         "thetastart": 0,
                         "thetalength": 360,
                         "phistart": 0,
