@@ -38,100 +38,100 @@
                     "b": 0.0
                 },
                 "intensity": 1.0,
-                "front": "scenes/demo/textures/sides.jpg",
-                "back": "scenes/demo/textures/sides.jpg",
-                "up": "scenes/demo/textures/top.jpg",
-                "down": "scenes/demo/textures/down1.jpg",
-                "left": "scenes/demo/textures/sides.jpg",
-                "right": "scenes/demo/textures/sides.jpg"
+                "front": "scenes/textures/sides.jpg",
+                "back": "scenes/textures/sides.jpg",
+                "up": "scenes/textures/top.jpg",
+                "down": "scenes/textures/down1.jpg",
+                "left": "scenes/textures/sides.jpg",
+                "right": "scenes/textures/sides.jpg"
             }
         },
         "textures": {
             "glassTex1": {
-                "filepath": "scenes/demo/textures/glass.jpg"
+                "filepath": "scenes/textures/glass.jpg"
             },
             "glassTex2": {
-                "filepath": "scenes/demo/textures/glass.jpg"
+                "filepath": "scenes/textures/glass.jpg"
             },
             "woodTex1": {
-                "filepath": "scenes/demo/textures/wood.jpg"
+                "filepath": "scenes/textures/wood.jpg"
             },
             "woodTex2": {
-                "filepath": "scenes/demo/textures/wood.jpg"
+                "filepath": "scenes/textures/wood.jpg"
             },
             "stoneTex": {
-                "filepath": "scenes/demo/textures/stone.jpg"
+                "filepath": "scenes/textures/stone.jpg"
             },
             "azulTex": {
-                "filepath": "scenes/demo/textures/azul.jpg"
+                "filepath": "scenes/textures/azul.jpg"
             },
             "azulTex2": {
-                "filepath": "scenes/demo/textures/azul2.jpg"
+                "filepath": "scenes/textures/azul2.jpg"
             },
             "whiteTex": {
-                "filepath": "scenes/demo/textures/white.jpg"
+                "filepath": "scenes/textures/white.jpg"
             },
             "blackTex": {
-                "filepath": "scenes/demo/textures/black.jpg"
+                "filepath": "scenes/textures/black.jpg"
             },
             "blackTex2": {
-                "filepath": "scenes/demo/textures/black2.jpg"
+                "filepath": "scenes/textures/black2.jpg"
             },
             "blackTex3": {
-                "filepath": "scenes/demo/textures/black3.jpg"
+                "filepath": "scenes/textures/black3.jpg"
             },
             "orangeTex": {
-                "filepath": "scenes/demo/textures/orange.jpg"
+                "filepath": "scenes/textures/orange.jpg"
             },
             "yellowTex": {
-                "filepath": "scenes/demo/textures/yellow.jpg"
+                "filepath": "scenes/textures/yellow.jpg"
             },
             "redTex": {
-                "filepath": "scenes/demo/textures/red.mp4",
+                "filepath": "scenes/textures/red.mp4",
                 "isVideo": true
             },
             "ropeTex": {
-                "filepath": "scenes/demo/textures/rope.jpg",
+                "filepath": "scenes/textures/rope.jpg",
                 "isVideo": false,
-                "mipmap0": "scenes/demo/textures/rope_test.jpg",
-                "mipmap1": "scenes/demo/textures/rope_1.jpg",
-                "mipmap2": "scenes/demo/textures/rope_mipmap2.jpg"
+                "mipmap0": "scenes/textures/rope_test.jpg",
+                "mipmap1": "scenes/textures/rope_1.jpg",
+                "mipmap2": "scenes/textures/rope_mipmap2.jpg"
             },
             "tntTex": {
-                "filepath": "scenes/demo/textures/tnt.png",
-                "mipmap0": "scenes/demo/textures/tnt_mipmap0.png",
-                "mipmap1": "scenes/demo/textures/tnt_mipmap1.png",
-                "mipmap2": "scenes/demo/textures/tnt_mipmap2.png"
+                "filepath": "scenes/textures/tnt.png",
+                "mipmap0": "scenes/textures/tnt_mipmap0.png",
+                "mipmap1": "scenes/textures/tnt_mipmap1.png",
+                "mipmap2": "scenes/textures/tnt_mipmap2.png"
             },
             "redbirdTex": {
-                "filepath": "scenes/demo/textures/redbird.jpg"
+                "filepath": "scenes/textures/redbird.jpg"
             },
             "fullredTex": {
-                "filepath": "scenes/demo/textures/fullred.jpg"
+                "filepath": "scenes/textures/fullred.jpg"
             },
             "blackbirdTex": {
-                "filepath": "scenes/demo/textures/blackbird.jpg"
+                "filepath": "scenes/textures/blackbird.jpg"
             },
             "feathersblackTex": {
-                "filepath": "scenes/demo/textures/feathersblack.jpg"
+                "filepath": "scenes/textures/feathersblack.jpg"
             },
             "woodBump": {
-                "filepath": "scenes/demo/textures/bump.jpg"
+                "filepath": "scenes/textures/bump.jpg"
             },          
             "stoneBump": {
-                "filepath": "scenes/demo/textures/stonebump.jpg"
+                "filepath": "scenes/textures/stonebump.jpg"
             },
             "glassBump": {
-                "filepath": "scenes/demo/textures/glassbump.jpg"
+                "filepath": "scenes/textures/glassbump.jpg"
             },
             "feathersBump": {
-                "filepath": "scenes/demo/textures/feathersbump.jpg"
+                "filepath": "scenes/textures/feathersbump.jpg"
             },
             "leafTex": {
-                "filepath": "scenes/demo/textures/leaf.jpg"
+                "filepath": "scenes/textures/leaf.jpg"
             },
             "trunkTex": {
-                "filepath": "scenes/demo/textures/trunk.jpg"
+                "filepath": "scenes/textures/trunk.jpg"
             } 
         },
         "materials": {

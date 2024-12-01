@@ -19,7 +19,7 @@ class MyContents {
 
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/demo.json");
+        this.reader.open("scenes/scene.json");
 
         this.objects = [];
         this.lights = [];
