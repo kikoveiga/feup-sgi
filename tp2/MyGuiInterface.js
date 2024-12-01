@@ -117,6 +117,7 @@ class MyGuiInterface {
         }
 
         this.objectsFolder.close();
+        console.log(this.contents);
     }
         
 }

@@ -735,7 +735,7 @@
             }
         },
         "cameras": {
-            "initial": "TntAndSun",
+            "initial": "AllScene",
             "AllScene": {
                 "type": "perspective",
                 "angle": 60,
@@ -866,10 +866,10 @@
                             "g": 0.5,
                             "b": 0.1
                         },
-                        "intensity": 1.2,
+                        "intensity": 1.0,
                         "position": {
                             "x": -36,
-                            "y": 50.0,
+                            "y": 55.0,
                             "z": 20.0
                         },
                         "target": {
@@ -878,26 +878,30 @@
                             "z": 0.0
                         },
                         "castshadow": true,
-                        "shadowfar": 2000,      
-                        "shadowmapsize": 1024
+                        "shadowfar": 1000,      
+                        "shadowmapsize": 1024,
+                        "shadowright": 35,
+                        "shadowleft": -35,
+                        "shadowtop": 35,
+                        "shadowbottom": -35
                     },
                     "spotLight1": {
                         "type": "spotLight",
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 1.0,
-                            "b": 1.0
+                            "g": 0.5,
+                            "b": 0.1
                         },
-                        "intensity": 1000.0,
-                        "distance": 100,
-                        "angle": 150,
-                        "penumbra": 0.2,
+                        "intensity": 25.0,
+                        "distance": 1000,
+                        "angle": 90,
+                        "penumbra": 1,
                         "decay": 2.0,
                         "position": {
-                            "x": -37.5,
-                            "y": 60,
-                            "z": -75
+                            "x": -37,
+                            "y": 59.5,
+                            "z": -37
                         },
                         "target": {
                             "x": 0.0,
@@ -905,82 +909,85 @@
                             "z": 0.0
                         },
                         "castshadow": true,
-                        "shadowfar": 100
+                        "shadowfar": 500
                     },
                     "spotLight2": {
                         "type": "spotLight",
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 1.0,
-                            "b": 1.0
+                            "g": 0.5,
+                            "b": 0.1
                         },
-                        "intensity": 1000.0,
-                        "distance": 100,
+                        "intensity": 25.0,
+                        "distance": 1000,
                         "angle": 90,
-                        "penumbra": 0.2,
+                        "penumbra": 1.0,
                         "decay": 2.0,
                         "position": {
-                            "x": 37.5,
-                            "y": 60,
-                            "z": -75
+                            "x": 37,
+                            "y": 59.5,
+                            "z": -37
                         },
                         "target": {
                             "x": 0.0,
                             "y": 30.0,
                             "z": 0.0
                         },
-                        "castshadow": true
+                        "castshadow": true,
+                        "shadowfar": 500
                     },
                     "spotLight3": {
                         "type": "spotLight",
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 1.0,
-                            "b": 1.0
+                            "g": 0.5,
+                            "b": 0.1
                         },
-                        "intensity": 1000.0,
+                        "intensity": 25.0,
                         "distance": 1000,
                         "angle": 90,
-                        "penumbra": 0.2,
+                        "penumbra": 1.0,
                         "decay": 2.0,
                         "position": {
-                            "x": -37.5,
-                            "y": 60,
-                            "z": 75
+                            "x": -37,
+                            "y": 59.5,
+                            "z": 37
                         },
                         "target": {
                             "x": 0.0,
                             "y": 30.0,
                             "z": 0.0
                         },
-                        "castshadow": true
+                        "castshadow": true,
+                        "shadowfar": 500
                     },
                     "spotLight4": {
                         "type": "spotLight",
                         "enabled": true,
                         "color": {
                             "r": 1.0,
-                            "g": 1.0,
-                            "b": 1.0
+                            "g": 0.5,
+                            "b": 0.1
                         },
-                        "intensity": 1000.0,
-                        "distance": 100,
-                        "angle": 150,
-                        "penumbra": 0.2,
+                        "intensity": 25.0,
+                        "distance": 1000,
+                        "angle": 90,
+                        "penumbra": 1.0,
                         "decay": 2.0,
                         "position": {
-                            "x": 37.5,
-                            "y": 60,
-                            "z": 75
+                            "x": 37,
+                            "y": 59.5,
+                            "z": 37
                         },
                         "target": {
                             "x": 0.0,
                             "y": 30.0,
                             "z": 0.0
                         },
-                        "castshadow": true
+                        "castshadow": true,
+                        "shadowfar": 500
                     }
                 }
             },
@@ -1101,7 +1108,7 @@
             "leaf1": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1129,7 +1136,7 @@
             "leaf2": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1157,7 +1164,7 @@
             "leaf3": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1185,7 +1192,7 @@
             "leaf4": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1213,7 +1220,7 @@
             "leaf5": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1241,7 +1248,7 @@
             "leaf6": {
                 "type": "node",
                 "castshadows": true,
-                "receiveshadows": true,
+                "receiveshadows": false,
                 "transforms": [      
                     {
                         "type": "rotate",
@@ -1308,8 +1315,8 @@
             },
             "sun": {
                 "type": "node",
-                "castshadows": true,
-                "receiveshadows": true,
+                "castshadows": false,
+                "receiveshadows": false,
                 "transforms": [             
                     {
                         "type": "rotate",
@@ -2875,16 +2882,16 @@
                             "g": 0.5,
                             "b": 0.0
                         },
-                        "intensity": 100.0,
+                        "intensity": 50.0,
                         "distance": 100.0,
                         "decay": 2.0,
                         "position": {
                             "x": -10.0,
-                            "y": 35.0,
+                            "y": 29.5,
                             "z": -5.0
                         },
                         "castshadow": true,
-                        "shadowfar": 2000,      
+                        "shadowfar": 1000,      
                         "shadowmapsize": 1024
                     }
                 }

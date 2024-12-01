@@ -85,6 +85,8 @@ class MyYASFParser {
                 skyBox.position.set(center.x, center.y, center.z);
             }
 
+            skyBox.receiveShadow = true;
+
             this.globals.skybox = skyBox;
         }
         
@@ -315,9 +317,11 @@ class MyYASFParser {
     
         const nodeGroup = new THREE.Group();
         nodeGroup.name = nodeID;
-    
+        
+
         nodeGroup.castShadow = node.castshadows ?? inheritedCastShadow;
         nodeGroup.receiveShadow = node.receiveshadows ?? inheritedReceiveShadow;
+        // console.log(`${nodeGroup.castShadow} ${nodeGroup.receiveShadow}`);
     
         if (node.transforms) this.applyTransforms(nodeGroup, node.transforms);
     
@@ -634,7 +638,6 @@ class MyYASFParser {
 
                 if (light.castShadow) {
                     const helper = new THREE.CameraHelper(light.shadow.camera);
-                    // this.scene.add(helper); 
                 }
 
                 if (light.castShadow) {
