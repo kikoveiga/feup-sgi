@@ -3,7 +3,7 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyYASFParser {
 
-    constructor() {
+    constructor(scene) {
 
         this.data = {};
 
@@ -16,6 +16,7 @@ class MyYASFParser {
         this.initialCameraName = null;
         this.lights = [];
         this.nurbsBuilder = new MyNurbsBuilder();
+        this.scene = scene;
         
     }
 
@@ -476,17 +477,14 @@ class MyYASFParser {
             case 'nurbs': {
                 const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
             
-                // Calculate the number of control points in U and V directions
                 const numUPoints = degree_u + 1;
                 const numVPoints = degree_v + 1;
             
-                // Validate the total number of control points
                 if (controlpoints.length !== numUPoints * numVPoints) {
                     console.error("Invalid number of control points for NURBS surface.");
                     return null;
                 }
             
-                // Convert flat control points array to 2D array for NURBS parsing
                 let controlPoints2D = [];
                 for (let i = 0; i < numVPoints; i++) {
                     let row = [];
@@ -505,14 +503,13 @@ class MyYASFParser {
                         const x = point.x;
                         const y = point.y;
                         const z = point.z;
-                        const w = point.w || 1; // Default weight to 1 if not provided
+                        const w = point.w || 1; 
             
                         row.push([x, y, z, w]);
                     }
                     controlPoints2D.push(row);
                 }
             
-                // Pass control points and other data to the NURBS builder
                 geometry = this.nurbsBuilder.build(
                     controlPoints2D,
                     degree_u,
@@ -599,12 +596,22 @@ class MyYASFParser {
         const color = new THREE.Color(lightData.color.r, lightData.color.g, lightData.color.b);
         const intensity = lightData.intensity || 1;
     
-        switch (lightData.type.toLowerCase()) { // Ensure type comparison is case-insensitive
+        switch (lightData.type.toLowerCase()) { 
             case 'directionallight':
                 light = new THREE.DirectionalLight(color, intensity);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
                 light.castShadow = inheritedCastShadow || lightData.castshadow;
-    
+
+                if (lightData.target) {
+                    light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
+                    this.scene.add(light.target); 
+                }
+
+                if (light.castShadow) {
+                    const helper = new THREE.CameraHelper(light.shadow.camera);
+                    this.scene.add(helper); 
+                }
+
                 if (light.castShadow) {
                     light.shadow.camera.left = lightData.shadowleft || -5;
                     light.shadow.camera.right = lightData.shadowright || 5;
@@ -614,42 +621,66 @@ class MyYASFParser {
                     light.shadow.mapSize.width = lightData.shadowmapsize || 512;
                     light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
-                console.log(`Create directional light`);
+
                 break;
     
             case 'pointlight':
                 light = new THREE.PointLight(color, intensity, lightData.distance || 1000, lightData.decay || 2);
                 light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
                 light.castShadow = inheritedCastShadow || lightData.castshadow;
-    
+                
+                if (light.castShadow) {
+                    const helper = new THREE.CameraHelper(light.shadow.camera);
+                    this.scene.add(helper); 
+                }
+
                 if (light.castShadow) {
                     light.shadow.camera.far = lightData.shadowfar || 500.0;
                     light.shadow.mapSize.width = lightData.shadowmapsize || 512;
                     light.shadow.mapSize.height = lightData.shadowmapsize || 512;
                 }
-                console.log(`Create point light`);
+
                 break;
     
-            case 'spotlight':
-                light = new THREE.SpotLight(color, intensity, lightData.distance || 1000, lightData.angle, lightData.decay || 2);
-                light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
-                light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
-                light.castShadow = inheritedCastShadow || lightData.castshadow;
-                light.penumbra = lightData.penumbra || 1;
-    
-                if (light.castShadow) {
-                    light.shadow.camera.far = lightData.shadowfar || 500.0;
-                    light.shadow.mapSize.width = lightData.shadowmapsize || 512;
-                    light.shadow.mapSize.height = lightData.shadowmapsize || 512;
-                }
-                console.log(`Create spot light`);
-                break;
+                case 'spotlight':
+                    const angleInRadians = THREE.MathUtils.degToRad(lightData.angle); 
+                
+                    light = new THREE.SpotLight(
+                        color,
+                        intensity,
+                        lightData.distance || 1000,
+                        angleInRadians,
+                        lightData.penumbra || 1, 
+                        lightData.decay || 2
+                    );
+                    
+                    light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
+                    light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
+                    light.castShadow = inheritedCastShadow || lightData.castshadow;
+                
+                    if ('penumbra' in lightData) {
+                        light.penumbra = lightData.penumbra;
+                    }
+                    
+                    if (light.castShadow) {
+                        const helper = new THREE.CameraHelper(light.shadow.camera);
+                        this.scene.add(helper); 
+                    }
+
+                    if (light.castShadow) {
+                        light.shadow.camera.far = lightData.shadowfar || 500.0;
+                        light.shadow.mapSize.width = lightData.shadowmapsize || 512;
+                        light.shadow.mapSize.height = lightData.shadowmapsize || 512;
+                    }
+                
+                    break;
+                
     
             default:
                 console.error(`Unknown light type: ${lightData.type}`);
                 return null;
         }
-    
+        light.visible = ('enabled' in lightData) ? lightData.enabled : true;
         this.lights.push(light);
         return light;
     }

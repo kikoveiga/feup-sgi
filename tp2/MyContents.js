@@ -15,7 +15,8 @@ class MyContents {
         this.app = app
         this.axis = null
 
-        this.parser = new MyYASFParser();
+        this.parser = new MyYASFParser(this.app.scene);
+
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
