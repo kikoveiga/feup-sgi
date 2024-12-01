@@ -365,16 +365,16 @@ class MyYASFParser {
             const child = children[childID];
     
             if (childID === 'nodesList') {
-                child.forEach(nodeId => {
-                    const node = this.parseNode(graph, nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
+                child.forEach(nodeID => {
+                    const node = this.parseNode(graph, nodeID, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
                     if (node) parentGroup.add(node);
                 });
             }
-    
-            else if (child.type === 'lodsList') {
-                child.forEach(lodId => {
-                    const lodNode = this.parseNode(graph, lodId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
-                    if (lodNode) parentGroup.add(lodNode);
+
+            else if (childID === 'lodsList') {
+                child.forEach(lodID => {
+                    const lodGroup = this.parseLods(graph, lodID, parentGroup, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
+                    if (lodGroup) parentGroup.add(lodGroup);
                 });
             } 
     
@@ -392,11 +392,34 @@ class MyYASFParser {
                 const light = this.createLight(child, inheritedCastShadow);
                 if (light) parentGroup.add(light);
             }
-    
-            else console.error(`Unknown child type: ${child.type}`);
+
+            else console.error(`Unknown child type: ${child.type}`); 
         });
     }
     
+
+    parseLods(graph, lodID, parentGroup, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow) {
+        const lod = graph[lodID];
+
+        if (lod && lod.type === 'lod') {
+            const lodObject = new THREE.LOD();
+
+            lod.lodNodes.forEach(lodNodeData => {
+                const lodNode = this.parseNode(graph, lodNodeData.nodeId, inheritedMaterial, inheritedCastShadow, inheritedReceiveShadow);
+
+                if (lodNode) lodObject.addLevel(lodNode, lodNodeData.mindist);
+                
+            });
+            
+            parentGroup.add(lodObject);
+            this.objects[lodID] = lodObject;
+            return lodObject;
+
+        } else {
+            console.error(`LOD node ${lodID} not found or not defined.`);
+        }
+        
+    }
 
     createPrimitive(primitiveData, material) {
 

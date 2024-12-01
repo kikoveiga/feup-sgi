@@ -1280,11 +1280,60 @@
                     }
                 ],
                 "children": {
-                    "polygon": {
+
+                    "lodsList": [
+                        "sunLod"
+                    ]
+                }
+            },
+            "sunLod": {
+                "type": "lod",
+                "lodNodes": [
+                    {
+                        "nodeId": "sunHigh",
+                        "mindist": 30.0
+                    },
+                    {
+                        "nodeId": "sunMedium",
+                        "mindist": 50.0
+                    },
+                    {
+                        "nodeId": "sunLow",
+                        "mindist": 70.0
+                    }
+                ]
+            },
+            "sunHigh": {
+                "children": {
+                    "polygonPrim": {
                         "type": "polygon",
                         "radius": 6.0,
                         "stacks": 5,    
                         "slices": 16,      
+                        "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
+                        "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
+                    }
+                }
+            },
+            "sunMedium": {
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 6.0,
+                        "stacks": 1,    
+                        "slices": 8,      
+                        "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
+                        "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
+                    }
+                }
+            },
+            "sunLow": {
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 6.0,
+                        "stacks": 1,    
+                        "slices": 4,      
                         "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
                         "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
                     }
