@@ -7,13 +7,12 @@
 | José Francisco Reis Pedreiras Neves Veiga | 202108753 | up202108753@up.pt  |
 
 ----
+
 ## Project Information
 
 This project is a 3D graphics application built using Three.js and a custom scene description format called **YASF** (Yet Another Scene Format). The application dynamically generates 3D scenes from a JSON file that follows the YASF specification, enabling a robust and hierarchical approach to building 3D environments.
 
----
-
-## Features
+### Features
 
 1. **Scene Graph Implementation**:
    - The application parses a hierarchical JSON structure to create 3D scenes.
@@ -24,7 +23,7 @@ This project is a 3D graphics application built using Three.js and a custom scen
    - Lights can cast shadows based on their configuration in the JSON.
 
 3. **Primitives**:
-   - Supports basic primitives like rectangles, triangles, spheres, cylinders, polygons and NURBS surfaces.
+   - Supports basic primitives like rectangles, triangles, spheres, cylinders, polygons, and NURBS surfaces.
    - NURBS surfaces are dynamically generated using control points defined in the JSON.
 
 4. **Skybox**:
@@ -41,6 +40,41 @@ This project is a 3D graphics application built using Three.js and a custom scen
    - Toggle between wireframe and solid rendering modes.
    - Change light states (on/off) and shadow settings dynamically.
    - Make objects appear/disappear.
+
+---
+
+## Screenshots
+
+Below are some screenshots of the implemented features:
+
+### All Scene
+![All Scene](image/print1.png)
+
+### Red Bird
+![Red Bird](image/print2.png)
+
+### Black Bird
+![Black Bird](image/print3.png)
+
+### Blue Birds
+![Blue Birds](image/print4.png)
+
+### Tnt & Sun
+![Tnt & Sun](image/print5.png)
+
+---
+
+## Issues/Problems
+
+During the development of the project, the following issues were encountered:
+
+1. **NURBS Parsing**:
+   - Problem: Setting `degree_u` or `degree_v` to `1` caused runtime errors.
+   - Solution: Adjusted the NURBS builder to handle edge cases for low-degree surfaces and ensure proper knot vector calculations.
+
+2. **Some Performance Optimization**:
+   - Problem: Rendering large scenes with multiple lights and high-polygon objects caused performance drops.
+   - Solution: Implemented LOD for distant objects and used mipmap textures for better performance.
 
 ---
 
