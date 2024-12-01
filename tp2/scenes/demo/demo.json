@@ -738,8 +738,8 @@
             }
         },
         "cameras": {
-            "initial": "AllScene",
-            "AllScene": {
+            "initial": "Scene",
+            "Scene": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -759,7 +759,7 @@
                 "bottom": -10,
                 "top": 10
             },
-            "RedBird": {
+            "Red Bird": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -779,7 +779,7 @@
                 "bottom": -5,
                 "top": 5
             },
-            "BlackBird": {
+            "Black Bird": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -799,7 +799,7 @@
                 "bottom": -5,
                 "top": 5
             },
-            "BlueBirds": {
+            "Blue Birds": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -819,7 +819,7 @@
                 "bottom": -5,
                 "top": 5
             },
-            "TntAndSun": {
+            "Tnt & Sun": {
                 "type": "perspective",
                 "angle": 90,
                 "near": 0.1,
