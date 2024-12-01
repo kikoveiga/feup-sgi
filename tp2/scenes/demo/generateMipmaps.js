@@ -1,14 +1,16 @@
 const sharp = require('sharp');
 const path = require('path');
 
-const mipmapCount = process.argv[2] || 7; 
-const originalImage = 'textures/rope.jpg'; 
+const mipmapCount = process.argv[2] || 7;
+const name = "rope"; // Change this to the name of the texture you want to generate mipmaps for
+const extension = "jpg"; // Change this to the extension of the texture you want to generate mipmaps for
+const originalImage = `textures/${name}.${extension}`;
 const outputDir = 'textures/';
 
 function generateMipmaps(imagePath, width, height, level = 0) {
   if (width < 1 || height < 1 || level >= mipmapCount) return;
 
-  const outputFileName = path.join(outputDir, `rope_mipmap${level}.jpg`);
+  const outputFileName = path.join(outputDir, `${name}_mipmap${level}.${extension}`);
 
   sharp(imagePath)
     .resize(width, height)

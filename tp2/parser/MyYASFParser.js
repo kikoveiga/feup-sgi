@@ -213,9 +213,11 @@ class MyYASFParser {
                                 }
 
                                 if (hasCustomMipmaps) {
+                                    texture.maxMiplevel = level;
                                     texture.mipmaps = mipmaps;
-                                    texture.minFilter = THREE.LinearMipmapLinearFilter;
                                     texture.generateMipmaps = false;
+                                    texture.minFilter = THREE.LinearMipmapNearestFilter;
+                                    texture.needsUpdate = true;
                                 } else {
                                     texture.generateMipmaps = true;
                                 }

@@ -93,12 +93,15 @@
             "ropeTex": {
                 "filepath": "scenes/demo/textures/rope.jpg",
                 "isVideo": false,
-                "mipmap0": "scenes/demo/textures/rope_mipmap0.jpg",
-                "mipmap1": "scenes/demo/textures/rope_mipmap1.jpg",
+                "mipmap0": "scenes/demo/textures/rope_test.jpg",
+                "mipmap1": "scenes/demo/textures/rope_1.jpg",
                 "mipmap2": "scenes/demo/textures/rope_mipmap2.jpg"
             },
             "tntTex": {
-                "filepath": "scenes/demo/textures/tnt.png"
+                "filepath": "scenes/demo/textures/tnt.png",
+                "mipmap0": "scenes/demo/textures/tnt_mipmap0.png",
+                "mipmap1": "scenes/demo/textures/tnt_mipmap1.png",
+                "mipmap2": "scenes/demo/textures/tnt_mipmap2.png"
             },
             "redbirdTex": {
                 "filepath": "scenes/demo/textures/redbird.jpg"
@@ -1358,7 +1361,7 @@
                         "type": "polygon",
                         "radius": 6.0,
                         "stacks": 5,    
-                        "slices": 64,      
+                        "slices": 32,      
                         "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
                         "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
                     }
@@ -1370,7 +1373,7 @@
                         "type": "polygon",
                         "radius": 6.0,
                         "stacks": 1,    
-                        "slices": 32,      
+                        "slices": 16,      
                         "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
                         "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
                     }
@@ -1382,7 +1385,7 @@
                         "type": "polygon",
                         "radius": 6.0,
                         "stacks": 1,    
-                        "slices": 16,      
+                        "slices": 8,      
                         "color_c": { "r": 1.0, "g": 1.0, "b": 0.0 },  
                         "color_p": { "r": 1.0, "g": 0.5, "b": 0.0 }
                     }
