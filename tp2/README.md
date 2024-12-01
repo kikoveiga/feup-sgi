@@ -1,23 +1,46 @@
-# sgi-tp2-base
-The starting point of the second assignment of SGI.
+# SGI 2024/2025 - TP2
 
-# Getting started
+## Group T04G07
+| Name                                      | Number    | E-Mail             |
+| ----------------------------------------- | --------- | ------------------ |
+| João Brandão Alves                        | 202108670 | up202108670@up.pt  |
+| José Francisco Reis Pedreiras Neves Veiga | 202108753 | up202108753@up.pt  |
 
-Considering a code block (for instance class A.js), to load a JSON file (in the defined structure) call:
+----
+## Project Information
 
-    let reader = new MyFileReader(app, this, *this.onSceneLoaded*);
-    reader.open("<path to JSON file>");	
+This project is a 3D graphics application built using Three.js and a custom scene description format called **YASF** (Yet Another Scene Format). The application dynamically generates 3D scenes from a JSON file that follows the YASF specification, enabling a robust and hierarchical approach to building 3D environments.
 
-The last argument in the MyFileReader object call is the name of the method that is to be called when the JSON file is loaded and parsed.
+---
 
-Hence, In the same code block (for instance class A.js) add a function method with the following signature: 
+## Features
 
-    onSceneLoaded(data) {
-        // do something with the data object
-    }
+1. **Scene Graph Implementation**:
+   - The application parses a hierarchical JSON structure to create 3D scenes.
+   - Supports nodes with inheritance for transformations, materials, and shadows.
 
-This method is called once the JSON file is loaded and parsed successfully. This method single input argument, *data*, is an object containing the entire scene data object.
+2. **Lighting**:
+   - Directional, Point, and Spotlights are supported.
+   - Lights can cast shadows based on their configuration in the JSON.
 
-# Version
+3. **Primitives**:
+   - Supports basic primitives like rectangles, triangles, spheres, cylinders, polygons and NURBS surfaces.
+   - NURBS surfaces are dynamically generated using control points defined in the JSON.
 
-20241105v1
+4. **Skybox**:
+   - Includes support for textured skyboxes with user-defined dimensions and positions.
+
+5. **Level of Detail (LOD)**:
+   - Nodes can have LOD configurations for efficient rendering based on the camera's distance.
+
+6. **Advanced Textures**:
+   - Includes support for mipmaps, bump maps, and video textures.
+   - Materials can be customized with emissive, specular, and diffuse properties.
+
+7. **Interactive Controls**:
+   - Toggle between wireframe and solid rendering modes.
+   - Change light states (on/off) and shadow settings dynamically.
+   - Make objects appear/disappear.
+
+---
+
