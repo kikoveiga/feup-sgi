@@ -1,0 +1,188 @@
+{
+    "yasf": {
+        "globals": {
+            "background": {
+                "r": 0.05,
+                "g": 0.05,
+                "b": 0.05
+            },
+            "ambient": {
+                "r": 0.35,
+                "g": 0.35,
+                "b": 0.35, 
+                "intensity": 1.5
+            },
+            "fog": {
+                "color": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "near": 1.0,
+                "far": 5000.0
+            },
+            "skybox": {
+                "size": {
+                    "x": 100,
+                    "y": 65,
+                    "z": 100
+                },
+                "center": {
+                    "x": 0,
+                    "y": 32.5,
+                    "z": 0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "intensity": 1.0,
+                "front": "scenes/textures/sides.jpg",
+                "back": "scenes/textures/sides.jpg",
+                "up": "scenes/textures/top.jpg",
+                "down": "scenes/textures/down1.jpg",
+                "left": "scenes/textures/sides.jpg",
+                "right": "scenes/textures/sides.jpg"
+            }
+        },
+        "textures": {
+            "exampleTex": {
+                "filepath": "scenes/textures/example.jpg"
+            }
+        },
+        "materials": {
+            "exampleApp": {
+                "color": {
+                    "r": 0.2,
+                    "g": 1.0,
+                    "b": 0.2
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "exampleTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            }
+        },
+        "cameras": {
+            "initial": "Scene",
+            "Scene": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 65,
+                    "y": 35,
+                    "z": -10
+                },
+                "target": {
+                    "x": 0,
+                    "y": 25,
+                    "z": 0
+                },
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
+            }
+        },
+        "graph": {
+            "rootid": "scene",
+            "scene": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "basicSphere"
+                    ],
+                    "directionalLight": {
+                        "type": "directionalLight",
+                        "enabled": true,
+                        "color": {
+                            "r": 1.0,
+                            "g": 0.5,
+                            "b": 0.1
+                        },
+                        "intensity": 1.5,
+                        "position": {
+                            "x": -36,
+                            "y": 55.0,
+                            "z": 20.0
+                        },
+                        "target": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "castshadow": true,
+                        "shadowfar": 1000,      
+                        "shadowmapsize": 1024,
+                        "shadowright": 35,
+                        "shadowleft": -35,
+                        "shadowtop": 35,
+                        "shadowbottom": -35
+                    }
+                }
+            },
+            "basicSphere": {
+                "type": "node",
+                "transforms": [    
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },  
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 20.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "exampleApp"
+                },
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1.8,
+                        "slices": 16,
+                        "stacks": 16,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            }         
+        }
+    }
+}
