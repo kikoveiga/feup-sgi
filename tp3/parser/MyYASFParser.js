@@ -323,7 +323,6 @@ class MyYASFParser {
 
         nodeGroup.castShadow = node.castshadows ?? inheritedCastShadow;
         nodeGroup.receiveShadow = node.receiveshadows ?? inheritedReceiveShadow;
-        // console.log(`${nodeGroup.castShadow} ${nodeGroup.receiveShadow}`);
     
         if (node.transforms) this.applyTransforms(nodeGroup, node.transforms);
     

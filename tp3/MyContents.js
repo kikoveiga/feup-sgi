@@ -2,16 +2,9 @@ import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
 import { MyBalloon } from './objects/MyBalloon.js';
+import { MyTrack } from './objects/MyTrack.js';
 
-/**
- *  This class contains the contents of out application
- */
 class MyContents {
-
-    /**
-       constructs the object
-       @param {MyApp} app The application object
-    */
     constructor(app) {
         this.app = app
         this.axis = null
@@ -24,24 +17,26 @@ class MyContents {
 
         this.objects = [];
         this.lights = [];
+
+        this.track = null;
     }
 
-    /**
-     * initializes the contents
-     */
+    buildTrack() {
+        this.track = new MyTrack(this.app);
+        this.track.scale.set(10, 10, 10);
+        this.app.scene.add(this.track);
+        this.objects.push(this.track);
+    }    
+
     init() {
-        // create once 
         if (this.axis === null) {
-            // create and attach the axis to the scene
             this.axis = new MyAxis(this)
             this.app.scene.add(this.axis)
         }
+        this.buildTrack();
     }
 
-    /**
-     * Called when the scene JSON file load is completed
-     * @param {Object} data with the entire scene object
-     */
+
     async onSceneLoaded(data) {
         console.info("YASF loaded.")
 
@@ -51,7 +46,6 @@ class MyContents {
         this.addLights();
         this.addObjects();
 
-        // this.onAfterSceneLoadedAndBeforeRender(data)
     }
 
     
