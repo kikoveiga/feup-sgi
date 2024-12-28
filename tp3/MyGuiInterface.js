@@ -126,7 +126,6 @@ class MyGuiInterface {
         
         this.lightsFolder = this.datgui.addFolder('Lights');
         this.contents.lights.forEach(light => {
-            // console.log(light);
             this.lightsFolder.add(light, 'intensity', 0, light.intensity*2).name(light.name || 'Light');
         });
 

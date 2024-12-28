@@ -23,17 +23,22 @@ class MyContents {
 
     buildTrack() {
         this.track = new MyTrack(this.app);
-        this.track.scale.set(10, 10, 10);
+        this.track.position.set(25, 5, 0);   
+        this.track.scale.set(25, 25, 25);
         this.app.scene.add(this.track);
         this.objects.push(this.track);
+        console.log(this.track)
     }    
 
     init() {
+
         if (this.axis === null) {
             this.axis = new MyAxis(this)
             this.app.scene.add(this.axis)
         }
+
         this.buildTrack();
+
     }
 
 
