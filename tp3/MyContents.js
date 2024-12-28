@@ -23,11 +23,10 @@ class MyContents {
 
     buildTrack() {
         this.track = new MyTrack(this.app);
-        this.track.position.set(25, 5, 0);   
-        this.track.scale.set(25, 25, 25);
+        this.track.position.set(35, 5, 0);   
+        this.track.scale.set(35, 35, 35);
         this.app.scene.add(this.track);
         this.objects.push(this.track);
-        console.log(this.track)
     }    
 
     init() {
@@ -135,8 +134,12 @@ class MyContents {
         });
     }    
     
-    update() {
+    update(delta) {
+        if (this.track) {
+            this.track.update(delta);
+        }
     }
+    
 }
 
 export { MyContents };

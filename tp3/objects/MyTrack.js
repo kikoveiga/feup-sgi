@@ -1,12 +1,13 @@
 import * as THREE from "three";
+import { MyObject } from "./MyObject.js";
+import { MyObstacle } from "./MyObstacle.js";
+import { MyPowerup } from "./MyPowerUp.js";
+import { MyRoute } from "./MyRoute.js";
 
-
-/**
- *  This class contains the contents of out application
- */
-class MyTrack extends THREE.Object3D {
-     constructor(app) {
+class MyTrack extends MyObject {
+     constructor(app, name) {
           super();
+          this.name = name;
           this.app = app;
           this.type = 'Group';
 
@@ -17,7 +18,7 @@ class MyTrack extends THREE.Object3D {
           this.showWireframe = false;
           this.showMesh = true;
           this.showLine = true;
-          this.closedCurve = false;
+          this.closedCurve = true;
 
           this.path = new THREE.CatmullRomCurve3([
                // vertical
@@ -26,35 +27,38 @@ class MyTrack extends THREE.Object3D {
                new THREE.Vector3(-2, 0, 1),
                new THREE.Vector3(-2, 0, -1),
                new THREE.Vector3(-2, 0, -3),
-               new THREE.Vector3(-2, 0, -5),
+               new THREE.Vector3(-2, 0.1, -5),
            
                // bottom
                new THREE.Vector3(4.5, 0, -5),
                new THREE.Vector3(6, 0, -4),
                new THREE.Vector3(5.75, 0, -2.5),
                new THREE.Vector3(5, 0, -1.5),
-               new THREE.Vector3(1, 0.05, 0),
+               new THREE.Vector3(1, 0.1, 0),
            
                // top
-               new THREE.Vector3(4.5, -0.05, 1.5),
+               new THREE.Vector3(4.5, -0.1, 1.5),
                new THREE.Vector3(5.5, 0, 3),
                new THREE.Vector3(4, 0, 5),
                new THREE.Vector3(0.5, 0, 5),
            
                // connect
-               new THREE.Vector3(-2.85, 0.05, 5),
+               new THREE.Vector3(-2.85, 0.1, 5),
            ]);
            
 
           this.createCurveMaterialsTextures();
           this.createCurveObjects();
+          this.initializeObstacles();
+          this.initializePowerUps();
+          this.initializeRoute();
      }
 
      createCurveMaterialsTextures() {
-          const texture = new THREE.TextureLoader().load("./images/track.jpg");
+          const texture = new THREE.TextureLoader().load("./images/road.jpg");
           texture.wrapS = THREE.RepeatWrapping;
           texture.wrapT = THREE.RepeatWrapping;
-          texture.repeat.set(4, 4);
+          texture.repeat.set(5, 3);
       
 
           this.material = new THREE.MeshStandardMaterial({
@@ -109,7 +113,61 @@ class MyTrack extends THREE.Object3D {
           this.add(this.curve);
      }
 
-     update() {}
+     initializeObstacles() {
+          this.obstacles = [];
+
+          const obstaclePositions = [
+              new THREE.Vector3(-5, 2, -2),  
+              new THREE.Vector3(2.5, 1, -2),   
+              new THREE.Vector3(1.5, 1.5, 1.7),   
+              new THREE.Vector3(0, 2.5, 5)     
+          ];
+
+          obstaclePositions.forEach((pos, index) => {
+              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 0.5, 0xffffff);
+              this.obstacles.push(obstacle);
+              this.add(obstacle);
+          });
+     }
+
+     initializePowerUps() {
+          this.powerUps = [];
+  
+          const powerUpPositions = [
+              new THREE.Vector3(-4, 2, -5),
+              new THREE.Vector3(2.4, 2, -3),
+              new THREE.Vector3(1.7, 2, 3),
+              new THREE.Vector3(-3, 2, 5),
+              new THREE.Vector3(-1.5, 2, 0.5),
+          ];
+  
+          powerUpPositions.forEach((pos, index) => {
+              const powerUp = new MyPowerup(this.app, `PowerUp_${index}`, pos, 0.35, 0xffffff);
+              this.powerUps.push(powerUp);
+              this.add(powerUp); 
+          });
+     }
+
+     initializeRoute() {
+          this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 12);
+          this.myRoute.position.set(-3, 1.5, 0);
+
+          this.add(this.myRoute);
+     }
+
+     update(delta) {
+          this.obstacles.forEach((obstacle) => {
+              obstacle.update(delta); 
+          });
+          this.powerUps.forEach((power) => {
+               power.update(delta); 
+          });
+
+          if (this.myRoute) {
+               this.myRoute.update(delta);
+          }
+     }
+      
 }
 
 MyTrack.prototype.isGroup = true;
