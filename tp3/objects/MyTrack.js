@@ -17,7 +17,7 @@ class MyTrack extends MyObject {
           this.textureRepeat = 1;
           this.showWireframe = false;
           this.showMesh = true;
-          this.showLine = true;
+          this.showLine = false;
           this.closedCurve = true;
 
           this.path = new THREE.CatmullRomCurve3([
@@ -34,7 +34,7 @@ class MyTrack extends MyObject {
                new THREE.Vector3(6, 0, -4),
                new THREE.Vector3(5.75, 0, -2.5),
                new THREE.Vector3(5, 0, -1.5),
-               new THREE.Vector3(1, 0.1, 0),
+               new THREE.Vector3(1, 0.8, 0),
            
                // top
                new THREE.Vector3(4.5, -0.1, 1.5),
@@ -43,8 +43,8 @@ class MyTrack extends MyObject {
                new THREE.Vector3(0.5, 0, 5),
            
                // connect
-               new THREE.Vector3(-2.85, 0.1, 5),
-           ]);
+               new THREE.Vector3(-2.85, 0.5, 5),
+          ]);
            
 
           this.createCurveMaterialsTextures();
@@ -117,14 +117,16 @@ class MyTrack extends MyObject {
           this.obstacles = [];
 
           const obstaclePositions = [
-              new THREE.Vector3(-5, 2, -2),  
-              new THREE.Vector3(2.5, 1, -2),   
-              new THREE.Vector3(1.5, 1.5, 1.7),   
-              new THREE.Vector3(0, 2.5, 5)     
+              new THREE.Vector3(-2.7, 1.5, -0.5),  
+              new THREE.Vector3(-2.5, 1.5, -4.8),   
+              new THREE.Vector3(1, 1.5, 4.65),   
+              new THREE.Vector3(-5, 1.5, -5.1)     
           ];
 
           obstaclePositions.forEach((pos, index) => {
               const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 0.5, 0xffffff);
+              obstacle.scale.set(1, 3, 1);
+              obstacle.position.y = -3.6;
               this.obstacles.push(obstacle);
               this.add(obstacle);
           });
@@ -134,11 +136,9 @@ class MyTrack extends MyObject {
           this.powerUps = [];
   
           const powerUpPositions = [
-              new THREE.Vector3(-4, 2, -5),
-              new THREE.Vector3(2.4, 2, -3),
-              new THREE.Vector3(1.7, 2, 3),
-              new THREE.Vector3(-3, 2, 5),
-              new THREE.Vector3(-1.5, 2, 0.5),
+              new THREE.Vector3(-5.5, 1.0, -3.0), 
+              new THREE.Vector3(-4.5, 1.0, 2.2),
+              new THREE.Vector3(2.3, 1.0, 3.0), 
           ];
   
           powerUpPositions.forEach((pos, index) => {
@@ -149,23 +149,17 @@ class MyTrack extends MyObject {
      }
 
      initializeRoute() {
-          this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 12);
-          this.myRoute.position.set(-3, 1.5, 0);
-
+          this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 10);
+          this.myRoute.position.set(0, 1.2, 0);
+          this.myRoute.rotation.y = Math.PI;
+          this.myRoute.rotation.x = Math.PI;
           this.add(this.myRoute);
      }
 
      update(delta) {
-          this.obstacles.forEach((obstacle) => {
-              obstacle.update(delta); 
-          });
           this.powerUps.forEach((power) => {
                power.update(delta); 
           });
-
-          if (this.myRoute) {
-               this.myRoute.update(delta);
-          }
      }
       
 }

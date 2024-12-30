@@ -9,7 +9,7 @@ class MyPowerup extends MyObject {
           this.type = "Group";
 
           this.initialPosition = position.clone();
-          this.amplitude = 1;
+          this.amplitude = 0.5;
           this.speed = 0.25; 
 
           const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');

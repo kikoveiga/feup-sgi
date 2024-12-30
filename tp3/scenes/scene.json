@@ -19,17 +19,17 @@
                     "b": 0.1
                 },
                 "near": 1.0,
-                "far": 5000.0
+                "far": 50000.0
             },
             "skybox": {
                 "size": {
-                    "x": 500,
-                    "y": 200,
-                    "z": 500
+                    "x": 2000,
+                    "y": 800,
+                    "z": 2000
                 },
                 "center": {
                     "x": 0,
-                    "y": 100,
+                    "y": 395,
                     "z": 0
                 },
                 "emissive": {
@@ -38,17 +38,26 @@
                     "b": 0.0
                 },
                 "intensity": 1.0,
-                "front": "scenes/textures/sides.jpg",
-                "back": "scenes/textures/sides.jpg",
-                "up": "scenes/textures/top.jpg",
-                "down": "scenes/textures/down1.jpg",
-                "left": "scenes/textures/sides.jpg",
-                "right": "scenes/textures/sides.jpg"
+                "front": "scenes/textures/sky.jpg",
+                "back": "scenes/textures/sky.jpg",
+                "up": "scenes/textures/sky.jpg",
+                "down": "scenes/textures/sky.jpg",
+                "left": "scenes/textures/sky.jpg",
+                "right": "scenes/textures/sky.jpg"
             }
         },
         "textures": {
             "xadrezTex": {
                 "filepath": "scenes/textures/xadrez.jpg"
+            },
+            "screenTex": {
+                "filepath": "scenes/textures/screen.jpg"
+            },
+            "steelTex": {
+                "filepath": "scenes/textures/steel.jpg"
+            },
+            "mossTex": {
+                "filepath": "scenes/textures/moss.jpg"
             }
         },
         "materials": {
@@ -77,6 +86,86 @@
                 "twosided": true,
                 "shading": false,
                 "wireframe": false
+            },
+            "steelApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 80,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "steelTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "screenApp": {
+                "color": {
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 40,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "screenTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "mossApp": {
+                "emissive": {
+                    "r": 0.05,
+                    "g": 0.2,
+                    "b": 0.05
+                },
+                "color": {
+                    "r": 0.5,
+                    "g": 1,
+                    "b": 0.5
+                },
+                "specular": {
+                    "r": 0.1,
+                    "g": 0.3,
+                    "b": 0.1
+                },
+                "shininess": 10.0,
+                "transparent": true,
+                "opacity": 1.0,
+                "textureref": "mossTex",
+                "texlength_s": 15,
+                "texlength_t": 15,
+                "twosided": true,
+                "shading": true,
+                "bumpref": "mossTex",
+                "bumpscale": 10.0,
+                "wireframe": false
             }
         },
         "cameras": {
@@ -85,10 +174,10 @@
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
-                "far": 1000,
+                "far": 10000,
                 "location": {
                     "x": 0,
-                    "y": 150,
+                    "y": 575,
                     "z": 0
                 },
                 "target": {
@@ -108,7 +197,9 @@
                 "type": "node",
                 "children": {
                     "nodesList": [
-                        "finishLine"
+                        "finishLine",
+                        "outdoor",
+                        "floor"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
@@ -137,6 +228,214 @@
                         "shadowtop": 35,
                         "shadowbottom": -35
                     }
+                }
+            },
+            "floor": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "mossApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 2000, "y": 2000 }
+                    }
+                }
+            },
+            "outdoor": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 2.0,
+                            "y": 2.0,
+                            "z": 2.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 60.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 190.0,
+                            "y": 0.0,
+                            "z": 140.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "leg1",
+                        "leg2",
+                        "screen"
+                    ]
+                }
+            },
+            "screen": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 1.2
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 42.5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "screenApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 50.0, "y": 30.0, "z": 4.0 }
+                    }  
+                }
+            },
+            "leg1": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 2.0,
+                            "y": 1.0,
+                            "z": 2.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -20.0,
+                            "y": 15.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "steelApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "radiusTop": 1,
+                        "radiusBottom": 1,
+                        "height": 30.0,
+                        "radialSegments": 32,
+                        "heightSegments": 1,
+                        "openEnded": false
+                    }    
+                }
+            },
+            "leg2": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 2.0,
+                            "y": 1.0,
+                            "z": 2.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 20.0,
+                            "y": 15.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "steelApp"
+                },
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "radiusTop": 1,
+                        "radiusBottom": 1,
+                        "height": 30.0,
+                        "radialSegments": 32,
+                        "heightSegments": 1,
+                        "openEnded": false
+                    }    
                 }
             },
             "finishLine": {

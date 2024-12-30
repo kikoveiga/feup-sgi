@@ -7,11 +7,7 @@ class MyObstacle extends MyObject {
           this.name = name;
           this.app = app;
           this.type = "Group";
-
-          // this.initialPosition = position.clone();
-
-          // this.amplitude = 0.5;
-          // this.speed = 0.1;       
+    
           const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
           const geometry = new THREE.BoxGeometry(size, size, size);
           const material = new THREE.MeshStandardMaterial({
@@ -22,19 +18,11 @@ class MyObstacle extends MyObject {
           });
 
           this.obstacle = new THREE.Mesh(geometry, material);
-          // this.obstacle.castShadow = true;
-          // this.obstacle.receiveShadow = true;
           this.obstacle.position.copy(position);
 
           this.add(this.obstacle);
      }
 
- 
-     update(delta) {
-          // const time = this.app.clock.getElapsedTime(); 
-          // this.obstacle.position.y = this.initialPosition.y + Math.sin(time * this.speed) * this.amplitude;
-          // this.obstacle.rotation.y += delta * 0.2;
-     }
 }
 
 export { MyObstacle };

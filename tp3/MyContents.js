@@ -3,6 +3,7 @@ import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
 import { MyBalloon } from './objects/MyBalloon.js';
 import { MyTrack } from './objects/MyTrack.js';
+import { MyReader } from './objects/MyReader.js';
 
 class MyContents {
     constructor(app) {
@@ -22,10 +23,15 @@ class MyContents {
     }
 
     buildTrack() {
+        this.balloon = new MyBalloon(this.app);
         this.track = new MyTrack(this.app);
         this.track.position.set(35, 5, 0);   
         this.track.scale.set(35, 35, 35);
+        this.balloon.scale.set(35, 35, 35);
+        this.balloon.position.set(-250, 150, -250);
         this.app.scene.add(this.track);
+        this.app.scene.add(this.balloon);
+        this.objects.push(this.balloon);
         this.objects.push(this.track);
     }    
 
