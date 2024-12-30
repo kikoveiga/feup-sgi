@@ -18,21 +18,6 @@ class MyContents {
 
         this.track = null;
     }
-
-    buildTrack() {
-        this.textMesh = this.myreader.createTextMesh("Come work lil n bird", 0, 100, 0, 0x0000ff);
-        this.textMesh.scale.set(10, 10, 10);
-        this.app.scene.add(this.textMesh);
-
-        this.balloon = new MyBalloon(this.app);
-        this.track = new MyTrack(this.app);
-        this.track.position.set(35, 5, 0);   
-        this.track.scale.set(35, 35, 35);
-        this.balloon.scale.set(35, 35, 35);
-        this.balloon.position.set(-250, 150, -250);
-        this.app.scene.add(this.track);
-        this.app.scene.add(this.balloon);
-    }
     
     buildBalloonsPickings() {
         this.balloon1 = new MyBalloon(this.app, "Balloon1");
@@ -49,7 +34,7 @@ class MyContents {
             this.app.scene.add(this.axis)
         }
 
-        this.buildTrack();
+        this.myreader.buildTrack();
         this.buildBalloonsPickings();
     }
 
