@@ -2,18 +2,13 @@ const GameStates = {
     INITIAL: 0,
     RUNNING: 1,
     PAUSED: 2,
-    GAME_OVER: 3
+    FINAL_RESULTS: 3
 };
 
 class GameStateManager {
     constructor() {
         this.state = GameStates.INITIAL;
-        this.handlers = {
-            [GameStates.INITIAL]: this.handleInitialState.bind(this),
-            [GameStates.RUNNING]: this.handleRunningState.bind(this),
-            [GameStates.PAUSED]: this.handlePausedState.bind(this),
-            [GameStates.GAME_OVER]: this.handleGameOverState.bind(this)
-        };
+        this.callbacks = [];
     }
 
     getState() {
@@ -27,7 +22,16 @@ class GameStateManager {
 
         console.log(`State changed from ${this.state} to ${newState}`);
         this.state = newState;
-        this.handlers[this.state]();
+
+        this.callbacks.forEach(callback => callback(newState));
+    }
+
+    onStateChange(callback) {
+        if (typeof callback === 'function') {
+            this.callbacks.push(callback);
+        } else {
+            console.error('Callback must be a function.');
+        }
     }
 
     handleInitialState() {
@@ -52,3 +56,5 @@ class GameStateManager {
     }
     
 }
+
+export { GameStateManager, GameStates };

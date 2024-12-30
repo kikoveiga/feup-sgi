@@ -1,7 +1,8 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import Stats from 'three/addons/libs/stats.module.js'
+import Stats from 'three/addons/libs/stats.module.js';
+import { GameStateManager, GameStates } from './GameStateManager.js';
 
 /**
  * This class contains the application object
@@ -11,22 +12,23 @@ class MyApp  {
      * the constructor
      */
     constructor() {
-        this.scene = null
-        this.stats = null
+        this.scene = null;
+        this.gameStateManager = null;
+        this.stats = null;
 
         // camera related attributes
-        this.activeCamera = null
-        this.activeCameraName = null
-        this.lastCameraName = null
-        this.cameras = {}
-        this.frustumSize = 20
+        this.activeCamera = null;
+        this.activeCameraName = null;
+        this.lastCameraName = null;
+        this.cameras = {};
+        this.frustumSize = 20;
 
         // other attributes
-        this.renderer = null
-        this.controls = null
-        this.gui = null
-        this.axis = null
-        this.contents == null
+        this.renderer = null;
+        this.controls = null;
+        this.gui = null;
+        this.axis = null;
+        this.contents = null;
 
         this.clock = new THREE.Clock();
     }
@@ -56,8 +58,6 @@ class MyApp  {
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-
-
         // Append Renderer to DOM
         document.getElementById("canvas").appendChild( this.renderer.domElement );
 
@@ -67,6 +67,36 @@ class MyApp  {
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false );
+
+        this.gameStateManager = new GameStateManager();
+        this.gameStateManager.onStateChange(newState => this.switchScene(newState));
+        this.gameStateManager.setState(GameStates.INITIAL);
+    }
+
+    switchScene(newState) {
+        
+        switch (newState) {
+            case GameStates.INITIAL:
+                this.activeScene = new InitialScene(this);
+                break;
+            case GameStates.RUNNING:
+                this.activeScene = new RunningScene(this);
+                break;
+            case GameStates.PAUSED:
+                this.activeScene = new PausedScene(this);
+                break;
+            case GameStates.FINAL_RESULTS:
+                this.activeScene = new GameOverScene(this);
+                break;
+
+            default:
+                console.error(`Unknown state: ${newState}`);
+                return;
+        }
+        
+        if (this.activeScene) {
+            this.activeScene.init(); 
+        }
     }
 
     /**
@@ -164,17 +194,22 @@ class MyApp  {
      * @param {MyGuiInterface} contents the gui interface object
      */
     setGui(gui) {   
-        this.gui = gui
+        this.gui = gui;
     }
 
     /**
     * the main render function. Called in a requestAnimationFrame loop
     */
-    render () {
-        this.stats.begin()
-        this.updateCameraIfRequired()
+    render() {
+        this.stats.begin();
+        this.updateCameraIfRequired();
 
         const delta = this.clock.getDelta();
+
+        if (this.activeScene) {
+            this.activeScene.update(delta);
+            this.activeScene.render();
+        }
 
         if (this.activeCamera !== undefined && this.activeCamera !== null) {
             this.contents.update(delta);
@@ -187,10 +222,10 @@ class MyApp  {
         this.renderer.render(this.scene, this.activeCamera);
 
         // subsequent async calls to the render loop
-        requestAnimationFrame( this.render.bind(this) );
+        requestAnimationFrame(this.render.bind(this));
 
-        this.lastCameraName = this.activeCameraName
-        this.stats.end()
+        this.lastCameraName = this.activeCameraName;
+        this.stats.end();
     }
 }
 
