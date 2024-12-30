@@ -6,9 +6,9 @@ import { MyTrack } from './objects/MyTrack.js';
 import { MyReader } from './objects/MyReader.js';
 
 class MyContents {
-    constructor(app) {
-        this.app = app
-        this.axis = null
+    constructor(app, sceneType) {
+        this.app = app;
+        this.sceneType = sceneType;
 
         this.parser = new MyYASFParser(this.app.scene);
         this.myreader = new MyReader(this.app);
@@ -16,7 +16,26 @@ class MyContents {
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/scene.json");
 
+        this.axis = null;
+
+        this.parser = null;
+        this.reader = null;
+        
+        this.objects = [];
+        this.lights = [];
+
         this.track = null;
+        this.balloon = null;
+        this.balloon1 = null;
+        this.balloon2 = null;
+    }
+
+    async loadScene(jsonFile) {
+        console.log(`Loading scene from ${jsonFile}`);
+
+        this.parser = new MyYASFParser(this.app.scene);
+        this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
+        this.reader.open(`scenes/${jsonFile}.json`);
     }
     
     buildBalloonsPickings() {
@@ -27,15 +46,61 @@ class MyContents {
         this.app.scene.add(this.balloon2);
     }
 
-    init() {
+    async init() {
+        console.log("Initializing contents for scene: " + this.sceneType);
+
+        this.clearScene();
 
         if (this.axis === null) {
-            this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            this.axis = new MyAxis(this.app);
+            this.app.scene.add(this.axis);
+        }
+
+        switch (this.sceneType) {
+            case "initial":
+                await this.loadScene("initial");
+                this.buildBalloonsPickings();
+                break;
+
+            case "running":
+                await this.loadScene("scene");
+                this.myreader.buildTrack();
+                break;
+
+            case "final_results":
+                await this.loadScene("final_results");
+                break;
+            
+            default:
+                console.error("Invalid scene type: " + sceneType);
         }
 
         this.myreader.buildTrack();
         this.buildBalloonsPickings();
+    }
+
+    clearScene() {
+        console.log("Clearing current scene...");
+
+        this.objects.forEach(obj => this.app.scene.remove(obj));
+        this.objects = [];
+
+        this.lights.forEach(light => this.app.scene.remove(light));
+        this.lights = [];
+
+        this.track = null;
+        this.balloon = null;
+        this.balloon1 = null;
+        this.balloon2 = null;
+
+        if (this.axis !== null) {
+            this.app.scene.remove(this.axis);
+            this.axis = null;
+        }
+
+        if (this.parser !== null) {
+            this.parser = null;
+        }
     }
 
 
