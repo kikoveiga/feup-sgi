@@ -123,13 +123,7 @@ class MyGuiInterface {
      * Adds light selection options to the GUI
      */
     updateLights() {
-        
-        this.lightsFolder = this.datgui.addFolder('Lights');
-        this.contents.lights.forEach(light => {
-            this.lightsFolder.add(light, 'intensity', 0, light.intensity*2).name(light.name || 'Light');
-        });
 
-        this.lightsFolder.close();
     }
         
 }

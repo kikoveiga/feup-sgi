@@ -16,9 +16,6 @@ class MyContents {
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/scene.json");
 
-        // this.objects = [];
-        this.lights = [];
-
         this.track = null;
     }
 
@@ -26,7 +23,7 @@ class MyContents {
         this.textMesh = this.myreader.createTextMesh("Come work lil n bird", 0, 100, 0, 0x0000ff);
         this.textMesh.scale.set(10, 10, 10);
         this.app.scene.add(this.textMesh);
-        // this.objects.push(this.textMesh);
+
         this.balloon = new MyBalloon(this.app);
         this.track = new MyTrack(this.app);
         this.track.position.set(35, 5, 0);   
@@ -35,9 +32,15 @@ class MyContents {
         this.balloon.position.set(-250, 150, -250);
         this.app.scene.add(this.track);
         this.app.scene.add(this.balloon);
-        // this.objects.push(this.balloon);
-        // this.objects.push(this.track);
-    }    
+    }
+    
+    buildBalloonsPickings() {
+        this.balloon1 = new MyBalloon(this.app, "Balloon1");
+        this.balloon2 = new MyBalloon(this.app, "Balloon2");
+
+        this.app.scene.add(this.balloon1);
+        this.app.scene.add(this.balloon2);
+    }
 
     init() {
 
@@ -47,7 +50,7 @@ class MyContents {
         }
 
         this.buildTrack();
-
+        this.buildBalloonsPickings();
     }
 
 
@@ -108,7 +111,7 @@ class MyContents {
         if (this.parser.lights) {
             this.parser.lights.forEach(light => {
                 this.app.scene.add(light);
-                this.lights.push(light);
+
             });
             this.app.gui.updateLights();
         }
@@ -121,8 +124,6 @@ class MyContents {
             if (root) {
             
                 this.app.scene.add(root);
-                // this.objects.push(root);
-
                 this.app.gui.updateObjects();
             }  
         }
