@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MyObject } from "./MyObject.js";
 import { MyObstacle } from "./MyObstacle.js";
-import { MyPowerup } from "./MyPowerUp.js";
+import { MyPowerUp } from "./MyPowerUp.js";
 import { MyRoute } from "./MyRoute.js";
 
 class MyTrack extends MyObject {
@@ -142,7 +142,7 @@ class MyTrack extends MyObject {
           ];
   
           powerUpPositions.forEach((pos, index) => {
-              const powerUp = new MyPowerup(this.app, `PowerUp_${index}`, pos, 0.35, 0xffffff);
+              const powerUp = new MyPowerUp(this.app, `PowerUp_${index}`, pos, 0.35, 0xffffff);
               this.powerUps.push(powerUp);
               this.add(powerUp); 
           });

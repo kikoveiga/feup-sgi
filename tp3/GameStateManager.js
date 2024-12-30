@@ -29,5 +29,26 @@ class GameStateManager {
         this.state = newState;
         this.handlers[this.state]();
     }
+
+    handleInitialState() {
+        console.log('Game is in initial state');
+    }
+
+    handleRunningState() {
+        console.log('Game is running');
+        
+    }
+
+    handlePausedState() {
+        console.log('Game is paused');
+    }
+
+    handleGameOverState() {
+        console.log('Game is over');
+    }
+
+    startGame() {
+        this.setState(GameStates.RUNNING);
+    }
     
 }

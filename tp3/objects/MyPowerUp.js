@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MyObject } from "./MyObject.js";
 
-class MyPowerup extends MyObject {
+class MyPowerUp extends MyObject {
      constructor(app, name, position = new THREE.Vector3(0, 0, 0), size = 0.5, color = 0x0000ff) {
           super();
           this.name = name;
@@ -34,4 +34,4 @@ class MyPowerup extends MyObject {
      }
 }
 
-export { MyPowerup };
+export { MyPowerUp };
