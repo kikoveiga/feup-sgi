@@ -33,7 +33,17 @@ class MyContents {
         this.app.scene.add(this.balloon);
         this.objects.push(this.balloon);
         this.objects.push(this.track);
-    }    
+    }
+    
+    buildBalloonsPickings() {
+        this.balloon1 = new MyBalloon(this.app, "Balloon1");
+        this.balloon2 = new MyBalloon(this.app, "Balloon2");
+
+        this.app.scene.add(this.balloon1);
+        this.objects.push(this.balloon1);
+        this.app.scene.add(this.balloon2);
+        this.objects.push(this.balloon2);
+    }
 
     init() {
 
@@ -43,7 +53,7 @@ class MyContents {
         }
 
         this.buildTrack();
-
+        this.buildBalloonsPickings();
     }
 
 
