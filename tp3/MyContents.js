@@ -11,18 +11,22 @@ class MyContents {
         this.axis = null
 
         this.parser = new MyYASFParser(this.app.scene);
-
+        this.myreader = new MyReader(this.app);
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/scene.json");
 
-        this.objects = [];
+        // this.objects = [];
         this.lights = [];
 
         this.track = null;
     }
 
     buildTrack() {
+        this.textMesh = this.myreader.createTextMesh("Come work lil n bird", 0, 100, 0, 0x0000ff);
+        this.textMesh.scale.set(10, 10, 10);
+        this.app.scene.add(this.textMesh);
+        // this.objects.push(this.textMesh);
         this.balloon = new MyBalloon(this.app);
         this.track = new MyTrack(this.app);
         this.track.position.set(35, 5, 0);   
@@ -31,8 +35,8 @@ class MyContents {
         this.balloon.position.set(-250, 150, -250);
         this.app.scene.add(this.track);
         this.app.scene.add(this.balloon);
-        this.objects.push(this.balloon);
-        this.objects.push(this.track);
+        // this.objects.push(this.balloon);
+        // this.objects.push(this.track);
     }    
 
     init() {
@@ -117,7 +121,7 @@ class MyContents {
             if (root) {
             
                 this.app.scene.add(root);
-                this.objects.push(root);
+                // this.objects.push(root);
 
                 this.app.gui.updateObjects();
             }  
