@@ -1,9 +1,8 @@
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
-import { MyBalloon } from './objects/MyBalloon.js';
-import { MyTrack } from './objects/MyTrack.js';
 import { MyReader } from './objects/MyReader.js';
+import { PickingManager } from './PickingManager.js';
 
 class MyContents {
     constructor(app, sceneType) {
@@ -13,8 +12,7 @@ class MyContents {
         this.parser = new MyYASFParser(this.app.scene);
         this.myreader = new MyReader(this.app);
 
-        this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/scene.json");
+        this.reader = null;
 
         this.axis = null;
 
@@ -24,10 +22,7 @@ class MyContents {
         this.objects = [];
         this.lights = [];
 
-        this.track = null;
-        this.balloon = null;
-        this.balloon1 = null;
-        this.balloon2 = null;
+        this.pickingManager = null;
     }
 
     async loadScene(jsonFile) {
@@ -36,14 +31,6 @@ class MyContents {
         this.parser = new MyYASFParser(this.app.scene);
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open(`scenes/${jsonFile}.json`);
-    }
-    
-    buildBalloonsPickings() {
-        this.balloon1 = new MyBalloon(this.app, "Balloon1");
-        this.balloon2 = new MyBalloon(this.app, "Balloon2");
-
-        this.app.scene.add(this.balloon1);
-        this.app.scene.add(this.balloon2);
     }
 
     async init() {
@@ -59,8 +46,17 @@ class MyContents {
         switch (this.sceneType) {
             case "initial":
                 await this.loadScene("initial");
-                this.buildBalloonsPickings();
                 this.myreader.buildMainMenu();
+                this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer);
+                console.log("Adding interactable objects");
+                console.log(this.objects);
+                this.objects.forEach(obj => {
+                    obj.traverse(child => {
+                        if (child.isMesh) {
+                            this.pickingManager.addInteractableObject(child);
+                        }
+                    });
+                });
                 break;
 
             case "running":
@@ -75,9 +71,6 @@ class MyContents {
             default:
                 console.error("Invalid scene type: " + sceneType);
         }
-
-        this.myreader.buildTrack();
-        this.buildBalloonsPickings();
     }
 
     clearScene() {
@@ -89,11 +82,6 @@ class MyContents {
         this.lights.forEach(light => this.app.scene.remove(light));
         this.lights = [];
 
-        this.track = null;
-        this.balloon = null;
-        this.balloon1 = null;
-        this.balloon2 = null;
-
         if (this.axis !== null) {
             this.app.scene.remove(this.axis);
             this.axis = null;
@@ -104,7 +92,6 @@ class MyContents {
         }
     }
 
-
     async onSceneLoaded(data) {
         console.info("YASF loaded.")
 
@@ -113,7 +100,6 @@ class MyContents {
         this.addCameras();
         this.addLights();
         this.addObjects();
-
     }
 
     
@@ -157,7 +143,6 @@ class MyContents {
         this.app.gui.updateCameraOptions(); 
     }
     
-
     addLights() {
         if (this.parser.lights) {
             this.parser.lights.forEach(light => {
@@ -175,6 +160,7 @@ class MyContents {
             if (root) {
             
                 this.app.scene.add(root);
+                this.objects.push(root);
                 this.app.gui.updateObjects();
             }  
         }
