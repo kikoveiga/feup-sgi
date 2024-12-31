@@ -62,18 +62,68 @@ class MyReader {
      }
 
      buildMainMenu() {
-          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 15, 1987.5, 0xffffff);
-          this.topMesh.scale.set(2, 2, 2);
+          // Title text
+          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); // Bright orange
+          this.topMesh.scale.set(1.9, 1.9, 1.9);
           this.topMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh);
-
-          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1983.5, 0xA0A0A0);
+      
+          // Subheading for player's selection
+          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); // Sky blue
           this.topMesh.scale.set(1.8, 1.8, 1.8);
           this.topMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh);
+      
+          // Subheading for opponent's selection
+          this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4); // Light pink
+          this.topMesh2.scale.set(1.8, 1.8, 1.8);
+          this.topMesh2.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh2);
+      
+          // Play button text
+          this.topMesh = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32); // Lime green
+          this.topMesh.scale.set(2, 2, 2);
+          this.topMesh.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh);
+      
+          // Player's selected balloon (default)
+          this.playerSelected = this.createTextMesh("Not choosen", 2024.7, 12, 2006, 0xb0b0b0); // Gray
+          this.playerSelected.scale.set(1.8, 1.8, 1.8);
+          this.playerSelected.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.playerSelected);
+      
+          // Opponent's selected balloon (default)
+          this.playerSelected2 = this.createTextMesh("Not choosen", 2024.7, 10, 2010.5, 0xb0b0b0); // Gray
+          this.playerSelected2.scale.set(1.8, 1.8, 1.8);
+          this.playerSelected2.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.playerSelected2);
+      
+          // Game credits
+          this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); // Light yellow
+          this.gameMesh.scale.set(1.5, 1.5, 1.5);
+          this.gameMesh.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.gameMesh);
+      
+          this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); // Light yellow
+          this.gameMesh2.scale.set(1.5, 1.5, 1.5);
+          this.gameMesh2.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.gameMesh2);
 
-          // FALTA ADICIONAR O TEXTO DO BALÃO SELECIONADO
-     }     
+          // Player Name
+          this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); // Black
+          this.playerNameMesh.scale.set(1.8, 1.8, 1.8);
+          this.playerNameMesh.rotation.x = - Math.PI / 2;
+          this.playerNameMesh.rotation.z = - Math.PI / 2;
+          this.app.scene.add(this.playerNameMesh);
+
+          // Player Name Default
+          this.playerSelected3 = this.createTextMesh("Not choosen", 1981.5, 0.1, 2002, 0xb0b0b0); // Gray
+          this.playerSelected3.scale.set(1.8, 1.8, 1.8);
+          this.playerSelected3.rotation.x = - Math.PI / 2;
+          this.playerSelected3.rotation.z = - Math.PI / 2;
+          this.app.scene.add(this.playerSelected3);
+     }
+       
 
      buildTrack() {
           // Outdoor Text

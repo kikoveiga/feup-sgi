@@ -52,9 +52,67 @@
             },
             "crateTex": {
                 "filepath": "scenes/textures/crate.jpg"
+            },
+            "skyTex": {
+                "filepath": "scenes/textures/sides2.jpg"
+            },
+            "feupTex": {
+                "filepath": "scenes/textures/feup_logo.jpg"
             }    
         },
         "materials": {
+            "feupApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "feupTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": true,
+                "wireframe": false
+            },
+            "skyApp": {
+                "color": {
+                    "r": 0.7,
+                    "g": 0.8,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "shininess": 30,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "skyTex",
+                "texlength_s": 3.0,
+                "texlength_t": 2.0,
+                "twosided": true,
+                "shading": true,
+                "wireframe": false
+            },
             "orangeApp": {
                 "color": {
                     "r": 1.0,
@@ -204,12 +262,12 @@
             "initial": "Scene",
             "Scene": {
                 "type": "perspective",
-                "angle": 51,
+                "angle": 65,
                 "near": 0.1,
                 "far": 1000,
                 "location": {
-                    "x": 1963,
-                    "y": 11,
+                    "x": 1965,
+                    "y": 15,
                     "z": 2000
                 },
                 "target": {
@@ -236,11 +294,13 @@
                         "orangeButton",
                         "greenButton",
                         "blueButton",
-                        "pinkButton"
+                        "pinkButton",
+                        "playButton",
+                        "feupLogo"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
-                        "enabled": false,
+                        "enabled": true,
                         "color": {
                             "r": 1.0,
                             "g": 0.5,
@@ -265,6 +325,72 @@
                         "shadowtop": 35,
                         "shadowbottom": -35
                     }
+                }
+            },
+            "feupLogo": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [   
+                    {
+                      "type": "scale",
+                        "amount": {
+                            "x": 1.2,
+                            "y": 1.2,
+                            "z": 1.2
+                        }  
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        }
+                    },             
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 2024.6,
+                            "y": 2,
+                            "z": 1979.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "feupApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 5, "y": 2 }
+                    }
+                }
+            },
+            "playButton": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [               
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 2024.6,
+                            "y": 17.5,
+                            "z": 2000.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "skyApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 0.8, "y": 3, "z": 20 }
+                    } 
                 }
             },
             "pinkButton": {
