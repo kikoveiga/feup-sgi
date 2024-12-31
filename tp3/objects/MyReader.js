@@ -61,8 +61,21 @@ class MyReader {
           return group;
      }
 
-     buildTrack() {
+     buildMainMenu() {
+          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 15, 1987.5, 0xffffff);
+          this.topMesh.scale.set(2, 2, 2);
+          this.topMesh.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh);
 
+          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1983.5, 0xA0A0A0);
+          this.topMesh.scale.set(1.8, 1.8, 1.8);
+          this.topMesh.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh);
+
+          // FALTA ADICIONAR O TEXTO DO BALÃO SELECIONADO
+     }     
+
+     buildTrack() {
           // Outdoor Text
           this.ElapsedTimeMesh = this.createTextMesh("Elapsed time: ", 230, 175, 70, 0xffffff);
           this.LapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);

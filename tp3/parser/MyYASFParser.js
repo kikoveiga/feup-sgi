@@ -385,7 +385,7 @@ class MyYASFParser {
                 });
             } 
     
-            else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon', 'nurbs'].includes(child.type)) {
+            else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon', 'nurbs', 'cone'].includes(child.type)) {
                 const material = this.materials[inheritedMaterial];
                 const primitive = this.createPrimitive(child, material);
                 if (primitive) {
@@ -503,7 +503,23 @@ class MyYASFParser {
 
                 break;
             }
+
+            case 'cone': {
+                const thetaStartCone = (primitiveData.thetastart || 0) * (Math.PI / 180);
+                const thetaLengthCone = (primitiveData.thetalength || 360) * (Math.PI / 180);
             
+                geometry = new THREE.ConeGeometry(
+                    primitiveData.radius,         
+                    primitiveData.height,         
+                    primitiveData.slices,         
+                    primitiveData.stacks,         
+                    primitiveData.openended || false,  
+                    thetaStartCone,              
+                    thetaLengthCone             
+                );
+                break;
+            }
+              
             case 'nurbs': {
                 const { degree_u, degree_v, parts_u, parts_v, controlpoints } = primitiveData;
             

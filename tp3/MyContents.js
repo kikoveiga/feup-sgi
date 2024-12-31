@@ -60,6 +60,7 @@ class MyContents {
             case "initial":
                 await this.loadScene("initial");
                 this.buildBalloonsPickings();
+                this.myreader.buildMainMenu();
                 break;
 
             case "running":
