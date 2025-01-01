@@ -12,8 +12,6 @@ class MyReader {
           this.track = new MyTrack(this.app);
      }
 
-
-
      createTextMesh(text, x, y, z, color) {
           const texture = new THREE.TextureLoader().load("./images/font.png");
           
@@ -124,6 +122,40 @@ class MyReader {
           this.app.scene.add(this.playerSelected3);
      }
        
+     buildFinalMenu(winnercolor, losercolor, winnername, losername, winnerTime) {
+          this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 15, 2, 0x111111);
+          this.MenuMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.MenuMesh);
+
+          this.RematchMesh = this.createTextMesh("Rematch!", -3, 10, 2, 0x111111);
+          this.RematchMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.RematchMesh);
+
+          this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 36, 0.1, 0x111111);
+          this.WinnerTextMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.WinnerTextMesh);
+
+          this.LoserTextMesh = this.createTextMesh("LOSER", 23, 36, 0.1, 0x111111);
+          this.LoserTextMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.LoserTextMesh);
+
+          this.WinnerNameMesh = this.createTextMesh(winnername, -31, 33.5, 0.1, 0x111111);
+          this.WinnerNameMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.WinnerNameMesh);
+
+          this.LoserNameMesh = this.createTextMesh(losername, 20, 33.5, 0.1, 0x111111);
+          this.LoserNameMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.LoserNameMesh);
+
+          this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 28, 0.1, 0x111111);
+          this.WinnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.WinnerTimeMesh);
+
+          this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 26, 0.1, 0x111111);
+          this.WinnerMesh.scale.set(-1.8, 1.8, 1.8);
+          this.app.scene.add(this.WinnerMesh);
+          
+     }     
 
      buildTrack() {
           // Outdoor Text

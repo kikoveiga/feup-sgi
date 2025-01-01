@@ -64,8 +64,13 @@ class MyContents {
                 this.myreader.buildTrack();
                 break;
 
-            case "final_results":
-                await this.loadScene("final_results");
+            case "final":
+                await this.loadScene("final");
+                this.winnercolor = "pink"; // TROCAR PARA A COR DO VENCEDOR
+                this.losercolor = "blue"; // TROCAR PARA A COR DO PERDEDOR
+                this.winner = "joaoalvesss" // TROCAR PARA O NOME DO VENCEDOR
+                this.loser = "kikoveiga" // TROCAR PARA O NOME DO PERDEDOR
+                this.myreader.buildFinalMenu(this.winnercolor, this.losercolor, this.winner, this.loser);
                 break;
             
             default:
