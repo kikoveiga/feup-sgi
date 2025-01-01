@@ -187,7 +187,7 @@ class MyReader {
           this.app.scene.add(this.track);
 
           // Example Balloon
-          this.balloon = new MyBalloon(this.app);
+          this.balloon = new MyBalloon(this.app, 'Balloon', 'blue');
           this.balloon.scale.set(35, 35, 35);
           this.balloon.position.set(-250, 150, -250);
           this.app.scene.add(this.balloon);

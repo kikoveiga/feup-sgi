@@ -5,7 +5,7 @@ import { MyContents } from './MyContents.js';
 let app = new MyApp();
 app.init();
 
-let contents = new MyContents(app, 'final');
+let contents = new MyContents(app, 'running');
 contents.init();
 app.setContents(contents);
 
