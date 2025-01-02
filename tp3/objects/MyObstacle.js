@@ -19,7 +19,8 @@ class MyObstacle extends MyObject {
 
           this.obstacle = new THREE.Mesh(geometry, material);
           this.obstacle.position.copy(position);
-
+          this.obstacle.castShadow = true;
+          this.obstacle.receiveShadow = true;
           this.add(this.obstacle);
      }
 

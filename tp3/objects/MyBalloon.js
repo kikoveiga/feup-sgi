@@ -117,6 +117,8 @@ class MyBalloon extends MyObject {
           sphereMesh.scale.set(1.0, 1.0, 1.5);
           sphereMesh.rotation.x = THREE.MathUtils.degToRad(270);
           sphereMesh.position.set(0, 9.34, 0);
+          sphereMesh.castShadow = true;
+          sphereMesh.receiveShadow = true;
           bodyGroup.add(sphereMesh);
   
           // Cylinder
@@ -124,6 +126,8 @@ class MyBalloon extends MyObject {
           const cylinderMesh = new THREE.Mesh(cylinderGeometry, this.mat);
           cylinderMesh.rotation.x = THREE.MathUtils.degToRad(180);
           cylinderMesh.position.set(0, 8.5, 0);
+          cylinderMesh.castShadow = true;
+          cylinderMesh.receiveShadow = true;
           bodyGroup.add(cylinderMesh);
   
           // Cone
@@ -131,15 +135,19 @@ class MyBalloon extends MyObject {
           const coneMesh = new THREE.Mesh(coneGeometry, this.mat);
           coneMesh.rotation.x = THREE.MathUtils.degToRad(180);
           coneMesh.position.set(0, 6.8, 0);
+          coneMesh.castShadow = true;
+          coneMesh.receiveShadow = true;
           bodyGroup.add(coneMesh);
-          bodyGroup.scale.set(1.1, 1.0, 1.1);
 
+          bodyGroup.scale.set(1.1, 1.0, 1.1);
           return bodyGroup;
      }
 
      createBalloonBasket() {
           const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8); 
           geometry.translate(0, 6, 0);
+          geometry.receiveShadow = true;
+          geometry.castShadow = true;
           return new THREE.Mesh(geometry, this.crateApp);
      }
 
@@ -167,6 +175,14 @@ class MyBalloon extends MyObject {
           rope4.rotation.z = THREE.MathUtils.degToRad(-5);
           rope4.position.set(0.35, 1.2, 0.4);
 
+          rope1.receiveShadow = true;
+          rope1.castShadow = true;
+          rope2.receiveShadow = true;
+          rope2.castShadow = true;
+          rope3.receiveShadow = true;
+          rope3.castShadow = true;
+          rope4.receiveShadow = true;
+          rope4.castShadow = true;
 
           ropes.add(rope1);
           ropes.add(rope2);
