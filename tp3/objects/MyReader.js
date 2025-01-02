@@ -4,6 +4,7 @@ import { MyObstacle } from "./MyObstacle.js";
 import { MyPowerUp } from "./MyPowerUp.js";
 import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
+import { MyFirework } from "./MyFirework.js";
 
 
 class MyReader {
@@ -22,6 +23,9 @@ class MyReader {
           this.enableAnimationRotation = true
           this.enableAnimationPosition = true
           this.initBalloonAnimation();
+
+          this.fireworks = [];
+          this.raceFisnished = true;
      }
 
      initBalloonAnimation() {
@@ -365,6 +369,21 @@ class MyReader {
                     if (!actions[i].isRunning())
                          actions[i].play()
                }
+          }
+     }
+
+     updateFireworks() {
+          if (Math.random() < 0.025) {
+              const randomScale = THREE.MathUtils.randFloat(0.8, 1.5);
+              this.fireworks.push(new MyFirework(this.app, this, randomScale));
+          }
+      
+          for (let i = 0; i < this.fireworks.length; i++) {
+              if (this.fireworks[i].done) {
+                  this.fireworks.splice(i, 1);
+                  continue;
+              }
+              this.fireworks[i].update();
           }
      }
 

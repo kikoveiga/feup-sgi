@@ -189,6 +189,10 @@ class MyContents {
             this.track.update(delta);
         }
         this.myreader.update();
+
+        if (this.sceneType === 'final') {
+            this.myreader.updateFireworks(); 
+        }
     }
     
 }
