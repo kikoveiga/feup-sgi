@@ -29,7 +29,7 @@
           },
           "center": {
             "x": 0,
-            "y": 0,
+            "y": 10000,
             "z": 0
           },
           "emissive": {
@@ -176,12 +176,12 @@
           "far": 2000,
           "location": {
             "x": 0,
-            "y": 20,
+            "y": 10020,
             "z": 50
           },
           "target": {
             "x": 0,
-            "y": 20,
+            "y": 10020,
             "z": 40
           },
           "left": -10,
@@ -213,7 +213,7 @@
                     "intensity": 0.5,
                     "position": {
                         "x": 10.0,
-                        "y": 20.0,
+                        "y": 10020.0,
                         "z": 10.0
                     },
                     "target": {
@@ -236,7 +236,7 @@
                 "transforms": [
                     {
                     "type": "translate",
-                    "amount": { "x": -25.0, "y": 35.0, "z": 0.0 }
+                    "amount": { "x": -25.0, "y": 10035.0, "z": 0.0 }
                     }
                 ],
                 "materialref": { "materialId": "skyApp" },
@@ -253,7 +253,7 @@
                 "transforms": [
                     {
                     "type": "translate",
-                    "amount": { "x": 25.0, "y": 35.0, "z": 0.0 }
+                    "amount": { "x": 25.0, "y": 10035.0, "z": 0.0 }
                     }
                 ],
                 "materialref": { "materialId": "skyApp" },
@@ -270,7 +270,7 @@
                 "transforms": [
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": 27.5, "z": 0.0 }
+                    "amount": { "x": 0.0, "y": 10027.5, "z": 0.0 }
                     }
                 ],
                 "materialref": { "materialId": "skyApp" },
@@ -287,7 +287,7 @@
                 "transforms": [
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": 10.0, "z": 0.0 }
+                    "amount": { "x": 0.0, "y": 10010.0, "z": 0.0 }
                     }
                 ],
                 "materialref": { "materialId": "skyApp" },
@@ -304,7 +304,7 @@
                 "transforms": [
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": 15.0, "z": 0.0 }
+                    "amount": { "x": 0.0, "y": 10015.0, "z": 0.0 }
                     }
                 ],
                 "materialref": { "materialId": "skyApp" },

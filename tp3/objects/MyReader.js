@@ -10,6 +10,71 @@ class MyReader {
      constructor(app) {
           this.app = app;
           this.track = new MyTrack(this.app);
+          this.route = new MyRoute(this.app);
+
+          this.keyPoints = this.route.getRoutePoints();
+
+          this.buildTrack();
+          this.setupKeyFrames();
+     }
+
+     setupKeyFrames() {
+
+          const keyframes = [
+               { time: 0, value: this.keyPoints[0] },
+               { time: 1, value: this.keyPoints[1] },
+               { time: 2, value: this.keyPoints[2] },
+               { time: 3, value: this.keyPoints[3] },
+               { time: 4, value: this.keyPoints[4] },
+               { time: 5, value: this.keyPoints[5] },
+               { time: 6, value: this.keyPoints[6] },
+               { time: 7, value: this.keyPoints[7] },
+               { time: 8, value: this.keyPoints[8] },
+               { time: 9, value: this.keyPoints[9] },
+               { time: 10, value: this.keyPoints[10] },
+               { time: 11, value: this.keyPoints[11] },
+               { time: 12, value: this.keyPoints[12] },
+               { time: 13, value: this.keyPoints[13] },
+               { time: 14, value: this.keyPoints[14] },
+               { time: 15, value: this.keyPoints[15] },
+               { time: 16, value: this.keyPoints[16] },
+               { time: 17, value: this.keyPoints[17] },
+               { time: 18, value: this.keyPoints[18] },
+               { time: 19, value: this.keyPoints[19] },
+               { time: 20, value: this.keyPoints[20] },
+               { time: 21, value: this.keyPoints[21] },
+               { time: 22, value: this.keyPoints[22] },
+               { time: 23, value: this.keyPoints[23] },
+               { time: 24, value: this.keyPoints[24] },
+               { time: 25, value: this.keyPoints[25] },
+               { time: 26, value: this.keyPoints[26] },
+               { time: 27, value: this.keyPoints[27] },
+               { time: 28, value: this.keyPoints[28] },
+               { time: 29, value: this.keyPoints[29] },
+               { time: 30, value: this.keyPoints[30] },
+          ];
+  
+          // Generate points using a catmull spline
+  
+          this.spline = new THREE.CatmullRomCurve3(keyframes.map(kf => kf.value));
+  
+          // Setup visual control points
+  
+          for (let i = 0; i < this.keyPoints.length; i++) {
+              const geometry = new THREE.SphereGeometry(1, 32, 32);
+              const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+              const sphere = new THREE.Mesh(geometry, material);
+              sphere.scale.set(5, 5, 5)
+              sphere.position.set(... this.keyPoints[i])
+  
+              this.app.scene.add(sphere)
+          }
+  
+          const tubeGeometry = new THREE.TubeGeometry(this.spline, 100, 0.5, 10, false);
+          const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+          const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
+          this.app.scene.add(tubeMesh)
+  
      }
 
      createTextMesh(text, x, y, z, color) {
@@ -123,37 +188,49 @@ class MyReader {
      }
        
      buildFinalMenu(winnercolor, losercolor, winnername, losername, winnerTime) {
-          this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 15, 2, 0x111111);
+          this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
           this.MenuMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.MenuMesh);
 
-          this.RematchMesh = this.createTextMesh("Rematch!", -3, 10, 2, 0x111111);
+          this.RematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
           this.RematchMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.RematchMesh);
 
-          this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 36, 0.1, 0x111111);
+          this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
           this.WinnerTextMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.WinnerTextMesh);
 
-          this.LoserTextMesh = this.createTextMesh("LOSER", 23, 36, 0.1, 0x111111);
+          this.LoserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
           this.LoserTextMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.LoserTextMesh);
 
-          this.WinnerNameMesh = this.createTextMesh(winnername, -31, 33.5, 0.1, 0x111111);
+          this.WinnerNameMesh = this.createTextMesh(winnername, -31, 10033.5, 0.1, 0x111111);
           this.WinnerNameMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.WinnerNameMesh);
 
-          this.LoserNameMesh = this.createTextMesh(losername, 20, 33.5, 0.1, 0x111111);
+          this.LoserNameMesh = this.createTextMesh(losername, 20, 10033.5, 0.1, 0x111111);
           this.LoserNameMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.LoserNameMesh);
 
-          this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 28, 0.1, 0x111111);
+          this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
           this.WinnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.WinnerTimeMesh);
 
-          this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 26, 0.1, 0x111111);
+          this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
           this.WinnerMesh.scale.set(-1.8, 1.8, 1.8);
           this.app.scene.add(this.WinnerMesh);
+
+          this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnercolor);
+          this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
+          this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
+          this.winnerBalloon.position.set(-25, 9987.5, 0);
+          this.app.scene.add(this.winnerBalloon);
+
+          this.loserBalloon = new MyBalloon(this.app, 'Balloon', losercolor);
+          this.loserBalloon.scale.set(3.5, 3.5, 3.5);
+          this.loserBalloon.rotation.y = -20 * Math.PI / 180;
+          this.loserBalloon.position.set(25, 9987.5, 0);
+          this.app.scene.add(this.loserBalloon);
           
      }     
 
@@ -188,9 +265,15 @@ class MyReader {
 
           // Example Balloon
           this.balloon = new MyBalloon(this.app, 'Balloon', 'blue');
-          this.balloon.scale.set(35, 35, 35);
+          this.balloon.scale.set(10, 10, 10);
           this.balloon.position.set(-250, 150, -250);
           this.app.scene.add(this.balloon);
+     }
+
+     update() {
+          const time = (Date.now() % 36000) / 36000;
+          const point = this.spline.getPointAt(time);
+          this.balloon.position.set(...point);
      }
 }
 

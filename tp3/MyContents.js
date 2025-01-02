@@ -61,7 +61,7 @@ class MyContents {
 
             case "running":
                 await this.loadScene("scene");
-                this.myreader.buildTrack();
+                // this.myreader.buildTrack();
                 break;
 
             case "final":
@@ -166,7 +166,7 @@ class MyContents {
             
                 this.app.scene.add(root);
                 this.objects.push(root);
-                this.app.gui.updateObjects();
+                // this.app.gui.updateObjects();
             }  
         }
     }   
@@ -191,6 +191,7 @@ class MyContents {
         if (this.track) {
             this.track.update(delta);
         }
+        this.myreader.update();
     }
     
 }

@@ -3,43 +3,44 @@ import { MyObject } from "./MyObject.js";
 
 
 class MyRoute extends MyObject {
-    constructor(app, name) {
+    constructor(app, name = 'Route') {
           super();
           this.app = app;
           this.name = name;
           this.type = "Group";
 
           this.route = [
-               new THREE.Vector3(-2, 0, -1), 
-               new THREE.Vector3(-2, 0, 2.5), 
-               new THREE.Vector3(-1.8, 0, 3.75), 
-               new THREE.Vector3(-1.6, 0, 4.7), 
-               new THREE.Vector3(-1.0, 0, 5.3), 
-               new THREE.Vector3(0.5, 0, 5), 
-               new THREE.Vector3(2.8, 0, 4.8),
-               new THREE.Vector3(3.5, 0, 4.6),
-               new THREE.Vector3(4.2, 0, 4.25),
-               new THREE.Vector3(4.5, 0, 3.7),
-               new THREE.Vector3(4.7, 0, 3.1),
-               new THREE.Vector3(4.4, 0, 2.3),
-               new THREE.Vector3(3.5, 0, 1.5),
-               new THREE.Vector3(2.0, 0, 0.5),
-               new THREE.Vector3(1.5, 0, 0.0),
-               new THREE.Vector3(1.5, 0, -0.6),
-               new THREE.Vector3(2.0, 0, -1.0),
-               new THREE.Vector3(2.7, 0, -1.2),
-               new THREE.Vector3(3.9, 0, -1.5),
-               new THREE.Vector3(4.6, 0, -1.9),
-               new THREE.Vector3(5.2, 0, -2.3),
-               new THREE.Vector3(5.5, 0, -2.85),
-               new THREE.Vector3(5.4, 0, -3.35),
-               new THREE.Vector3(5.1, 0, -3.8),
-               new THREE.Vector3(4.5, 0, -4.5),
-               new THREE.Vector3(3.7, 0, -5.2),
-               new THREE.Vector3(1.5, 0, -5.6),
-               new THREE.Vector3(0, 0, -5.3),
-               new THREE.Vector3(-1.3, 0, -4.8),
-               new THREE.Vector3(-2.0, 0, -3.5),
+               new THREE.Vector3(100, 0, -35), 
+               new THREE.Vector3(100, 0, 87.5), 
+               new THREE.Vector3(93, 0, 131.25), 
+               new THREE.Vector3(86, 0, 164.5), 
+               new THREE.Vector3(65, 0, 185.5), 
+               new THREE.Vector3(12.5, 0, 175), 
+               new THREE.Vector3(-68, 0, 168),
+               new THREE.Vector3(-92.5, 0, 161),
+               new THREE.Vector3(-117, 0, 148.75),
+               new THREE.Vector3(-127.5, 0, 129.5),
+               new THREE.Vector3(-134.5, 0, 108.5),
+               new THREE.Vector3(-124, 0, 80.5),
+               new THREE.Vector3(-92.5, 0, 52.5),
+               new THREE.Vector3(-40, 0, 17.5),
+               new THREE.Vector3(-22.5, 0, 0),
+               new THREE.Vector3(-22.5, 0, -21),
+               new THREE.Vector3(-40, 0, -35),
+               new THREE.Vector3(-64.5, 0, -42),
+               new THREE.Vector3(-106.5, 0, -52.5),
+               new THREE.Vector3(-131, 0, -66.5),
+               new THREE.Vector3(-152, 0, -80.5),
+               new THREE.Vector3(-162.5, 0, -99.75),
+               new THREE.Vector3(-159, 0, -117.25),
+               new THREE.Vector3(-148.5, 0, -133),
+               new THREE.Vector3(-127.5, 0, -157.5),
+               new THREE.Vector3(-99.5, 0, -182),
+               new THREE.Vector3(-22.5, 0, -196),
+               new THREE.Vector3(30, 0, -185.5),
+               new THREE.Vector3(75.5, 0, -168),
+               new THREE.Vector3(100, 0, -122.5),
+               new THREE.Vector3(100, 0, -35),                
           ];
 
           const texture = new THREE.TextureLoader().load("./images/tourus.jpg");

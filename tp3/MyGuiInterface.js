@@ -28,7 +28,7 @@ class MyGuiInterface {
         this.cameraFolder = this.datgui.addFolder("Camera");
 
         this.updateCameraOptions();
-        this.addWireframeToggle();
+        // this.addWireframeToggle();
     }
     
     addWireframeToggle() {
