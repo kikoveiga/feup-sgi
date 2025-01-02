@@ -50,13 +50,8 @@ class MyContents {
                 this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer);
                 console.log("Adding interactable objects");
                 console.log(this.objects);
-                this.objects.forEach(obj => {
-                    obj.traverse(child => {
-                        if (child.isMesh) {
-                            this.pickingManager.addInteractableObject(child);
-                        }
-                    });
-                });
+                this.getMeshesObjects().forEach(obj => this.pickingManager.add(obj));
+                console.log(this.getMeshesObjects());
                 break;
 
             case "running":
@@ -166,7 +161,20 @@ class MyContents {
                 this.objects.push(root);
             }  
         }
-    }   
+    }
+
+    getMeshesObjects() {
+        const meshes = [];
+        this.objects.forEach(obj => {
+            obj.traverse(child => {
+                if (child.isMesh) {
+                    meshes.push(child);
+                }
+            });
+        });
+
+        return meshes;
+    }
     
     toggleWireframe(enableWireframe) {
         this.app.scene.traverse(node => {
