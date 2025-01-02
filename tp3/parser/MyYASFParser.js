@@ -17,7 +17,8 @@ class MyYASFParser {
         this.lights = [];
         this.nurbsBuilder = new MyNurbsBuilder();
         this.scene = scene;
-        
+
+        this.meshes = [];
     }
 
     async parse(data) {
@@ -387,7 +388,7 @@ class MyYASFParser {
     
             else if (['rectangle', 'triangle', 'box', 'cylinder', 'sphere', 'polygon', 'nurbs', 'cone'].includes(child.type)) {
                 const material = this.materials[inheritedMaterial];
-                const primitive = this.createPrimitive(child, material);
+                const primitive = this.createPrimitive(child, material, parentGroup.name);
                 if (primitive) {
                     primitive.castShadow = inheritedCastShadow;
                     primitive.receiveShadow = inheritedReceiveShadow;
@@ -428,7 +429,7 @@ class MyYASFParser {
         
     }
 
-    createPrimitive(primitiveData, material) {
+    createPrimitive(primitiveData, material, name = 'default') {
 
         let geometry;
 
@@ -632,8 +633,11 @@ class MyYASFParser {
             console.error(`Material not found for primitive ${primitiveData.type}`);
             material = this.defaultMaterial;
         }
-
-        return new THREE.Mesh(geometry, material);
+        
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.name = name;
+        this.meshes.push(mesh);
+        return mesh;
     }
 
     createLight(lightData, lightName, inheritedCastShadow = true) {

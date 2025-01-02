@@ -9,57 +9,57 @@ class MyContents {
         this.app = app;
         this.sceneType = sceneType;
 
-        this.parser = new MyYASFParser(this.app.scene);
-        this.myreader = new MyReader(this.app);
-
-        this.reader = null;
-
-        this.axis = null;
-
         this.parser = null;
         this.reader = null;
-        
+
+        this.myreader = new MyReader(this.app);
+
+        this.axis = null;
+    
         this.objects = [];
         this.lights = [];
 
         this.pickingManager = null;
-    }
-
-    async loadScene(jsonFile) {
-        console.log(`Loading scene from ${jsonFile}`);
-
-        this.parser = new MyYASFParser(this.app.scene);
-        this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open(`scenes/${jsonFile}.json`);
+        this.meshes = [];
     }
 
     async init() {
         console.log("Initializing contents for scene: " + this.sceneType);
-
-        this.clearScene();
 
         if (this.axis === null) {
             this.axis = new MyAxis(this.app);
             this.app.scene.add(this.axis);
         }
 
+        this.parser = new MyYASFParser(this.app.scene);
+        
+        await new Promise((resolve, reject) => {
+            this.reader = new MyFileReader(async (data) => {
+                await this.onSceneLoaded(data);
+                console.log("Scene loaded successfully.");
+                resolve();
+            });
+
+            this.reader.open(`scenes/${this.sceneType}.json`);
+        });
+
         switch (this.sceneType) {
             case "initial":
-                await this.loadScene("initial");
                 this.myreader.buildMainMenu();
                 this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer);
-                console.log("Adding interactable objects");
-                console.log(this.objects);
-                this.getMeshesObjects().forEach(obj => this.pickingManager.add(obj));
-                console.log(this.getMeshesObjects());
+                this.meshes.forEach(mesh => {
+                    if (mesh.name.includes("Button")) {
+                        this.pickingManager.addInteractableObject(mesh);
+                    }
+                });
+                    
+
                 break;
 
             case "running":
-                await this.loadScene("scene");
                 break;
 
             case "final":
-                await this.loadScene("final");
                 this.winnercolor = "pink"; // TROCAR PARA A COR DO VENCEDOR
                 this.losercolor = "blue"; // TROCAR PARA A COR DO PERDEDOR
                 this.winner = "joaoalvesss" // TROCAR PARA O NOME DO VENCEDOR
@@ -92,15 +92,16 @@ class MyContents {
     }
 
     async onSceneLoaded(data) {
-        console.info("YASF loaded.")
 
         await this.parser.parse(data);
+
         this.addGlobals();
         this.addCameras();
         this.addLights();
         this.addObjects();
-    }
 
+        console.info("YASF parsed and loaded.");
+    }
     
     printYASF(data, indent = '') {
         for (let key in data) {
@@ -154,6 +155,7 @@ class MyContents {
 
     addObjects() {
         if (this.parser.objects) {
+
             const root = this.parser.objects[this.parser.rootid];
 
             if (root) {
@@ -161,21 +163,14 @@ class MyContents {
                 this.objects.push(root);
             }  
         }
-    }
 
-    getMeshesObjects() {
-        const meshes = [];
-        this.objects.forEach(obj => {
-            obj.traverse(child => {
-                if (child.isMesh) {
-                    meshes.push(child);
-                }
+        if (this.parser.meshes) {
+            this.parser.meshes.forEach(mesh => {
+                this.meshes.push(mesh);
             });
-        });
-
-        return meshes;
+        }
     }
-    
+
     toggleWireframe(enableWireframe) {
         this.app.scene.traverse(node => {
             if (node.isMesh && node.material) {

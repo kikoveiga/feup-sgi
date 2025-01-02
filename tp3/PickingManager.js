@@ -18,7 +18,6 @@ class PickingManager {
     }
     
     addInteractableObject(object) {
-        console.log("Adding interactable object");
         this.interactableObjects.push(object);
     }
 
