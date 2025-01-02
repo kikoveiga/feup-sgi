@@ -61,7 +61,6 @@ class MyContents {
 
             case "running":
                 await this.loadScene("scene");
-                // this.myreader.buildTrack();
                 break;
 
             case "final":
@@ -163,10 +162,8 @@ class MyContents {
             const root = this.parser.objects[this.parser.rootid];
 
             if (root) {
-            
                 this.app.scene.add(root);
                 this.objects.push(root);
-                // this.app.gui.updateObjects();
             }  
         }
     }   

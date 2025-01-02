@@ -13,8 +13,8 @@ class MyRoute extends MyObject {
                new THREE.Vector3(100, 0, -35), 
                new THREE.Vector3(100, 0, 87.5), 
                new THREE.Vector3(93, 0, 131.25), 
-               new THREE.Vector3(86, 0, 164.5), 
-               new THREE.Vector3(65, 0, 185.5), 
+               new THREE.Vector3(96, 0, 164.5), 
+               new THREE.Vector3(65, 0, 190), 
                new THREE.Vector3(12.5, 0, 175), 
                new THREE.Vector3(-68, 0, 168),
                new THREE.Vector3(-92.5, 0, 161),
@@ -52,7 +52,6 @@ class MyRoute extends MyObject {
           });
 
           this.rings = [];
-          // this.createRoute();
      }
 
     createRoute() {

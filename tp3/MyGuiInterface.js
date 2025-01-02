@@ -29,8 +29,30 @@ class MyGuiInterface {
 
         this.updateCameraOptions();
         // this.addWireframeToggle();
+        this.updateAnimations();
     }
     
+    updateAnimations() {
+        const animationFolder = this.datgui.addFolder('Animation');
+    
+        animationFolder
+        .add(this.contents.myreader, 'mixerPause', true)
+        .name("Pause");
+    
+        animationFolder
+        .add(this.contents.myreader, 'enableAnimationPosition', true)
+        .name("Pos. Track");
+    
+        animationFolder
+        .add(this.contents.myreader, 'mixerTime', 0, 30)
+        .name("Track Time")
+        .onChange(() => {
+            this.contents.myreader.setMixerTime();
+        });
+        
+        animationFolder.open();
+    }
+
     addWireframeToggle() {
         const settings = { wireframe: false };
     
