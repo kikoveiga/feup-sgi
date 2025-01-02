@@ -20,12 +20,11 @@ class MyFileReader {
 	   constructs the object
 	*/
 	constructor(onSceneLoadedCallback) {
-		this.errorMessage = null;
 		this.onSceneLoadedCallback = onSceneLoadedCallback;
 	}
 
-	open(jsonfile) {
-		fetch(jsonfile)
+	async open(jsonfile) {
+		return fetch(jsonfile)
 			.then((res) => {
 				if (!res.ok) {
 					throw new Error(`HTTP error! Status: ${res.status}`);
@@ -35,10 +34,8 @@ class MyFileReader {
 			.then((data) => {
 				this.onSceneLoadedCallback(data);
 			})
-			.catch((error) =>
-				console.error("Unable to fetch data:", error));
+			.catch((error) => console.error("Unable to fetch data:", error));
 	};
-
 }
 
 export { MyFileReader };
