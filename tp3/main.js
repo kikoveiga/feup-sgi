@@ -10,7 +10,7 @@ async function main() {
     let gui = new MyGuiInterface(app);
     app.setGui(gui);
 
-    let contents = new MyContents(app, 'initial');
+    let contents = new MyContents(app, 'running');
     gui.setContents(contents);
     gui.init();
 

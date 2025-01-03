@@ -156,6 +156,14 @@ class MyTrack extends MyObject {
           this.add(this.myRoute);
      }
 
+     getPowerUps() {
+          return this.powerUps;
+     }
+
+     getObstacles() {
+          return this.obstacles;
+     }
+     
      update(delta) {
           this.powerUps.forEach((power) => {
                power.update(delta); 

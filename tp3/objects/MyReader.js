@@ -5,6 +5,7 @@ import { MyPowerUp } from "./MyPowerUp.js";
 import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
 import { MyFirework } from "./MyFirework.js";
+import { MyShader } from "./MyShader.js";
 
 
 class MyReader {
@@ -17,17 +18,71 @@ class MyReader {
 
           this.buildTrack();
 
-          this.clock = new THREE.Clock()
-          this.mixerTime = 0
-          this.mixerPause = false
-          this.enableAnimationRotation = true
-          this.enableAnimationPosition = true
+          this.clock = new THREE.Clock();
+          this.mixerTime = 0;
+          this.mixerPause = false;
+          this.enableAnimationRotation = true;
+          this.enableAnimationPosition = true;
           this.initBalloonAnimation();
 
           this.fireworks = [];
           this.raceFisnished = true;
+
+          this.powerups = this.track.getPowerUps();
+          this.obstacles = this.track.getObstacles();
+
+          const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
+          const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
+
+          this.shaders = [
+               new MyShader(this.app, "input 1", "input 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                        timeFactor: {type: 'f', value: 1.0 },
+                        uSampler: {type: 'sampler2D', value: obstacleTexture }
+               }),
+               new MyShader(this.app, "input 2", "input 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                    timeFactor: {type: 'f', value: 1.0 },
+                    uSampler: {type: 'sampler2D', value: powerupTexture }
+           }),
+          ];
+
+          this.waitForShaders();
+           
      }
 
+     /*********************** SHADERS ZONE /***********************/
+     waitForShaders() {
+          for (let i=0; i<this.shaders.length; i++) {
+              if (this.shaders[i].ready === false) {
+                  setTimeout(this.waitForShaders.bind(this), 100)
+                  return;
+              }
+          }
+          for (const obstacle in this.obstacles) {
+              this.setCurrentShader(this.shaders[0], this.obstacles[obstacle])
+              console.log("Obstacle " + obstacle + " has shader")
+          }
+
+          for (const powerup in this.powerups) {
+               this.setCurrentShader(this.shaders[1], this.powerups[powerup])
+               console.log("Powerup " + powerup + " has shader")
+          }
+
+     }
+  
+     setCurrentShader(shader, selectedObject) {
+          if (shader === null || shader === undefined) {
+               console.error("shader is null or undefined")
+               return
+          }
+    
+          if (selectedObject !== null) {
+              selectedObject.material = shader.material
+              selectedObject.material.needsUpdate = true
+              console.log("Shader set to object")
+          }
+     }
+     
+     /*********************** ANIMATION ZONE /***********************/
      initBalloonAnimation() {
           // this.debugKeyFrames()
 
@@ -153,6 +208,32 @@ class MyReader {
   
      }
 
+     checkAnimationStateIsPause() {
+          if (this.mixerPause)
+               this.mixer.timeScale = 0
+          else
+               this.mixer.timeScale = 1
+     }
+
+     checkTracksEnabled() {
+          const actions = this.mixer._actions
+          for (let i = 0; i < actions.length; i++) {
+               const track = actions[i]._clip.tracks[0]
+
+               if (track.name === '.quaternion' && this.enableAnimationRotation === false) {
+                    actions[i].stop()
+               }
+               else if (track.name === '.position' && this.enableAnimationPosition === false) {
+                    actions[i].stop()
+               }
+               else {
+                    if (!actions[i].isRunning())
+                         actions[i].play()
+               }
+          }
+     }
+
+     /*********************** TEXTS ZONE /***********************/
      createTextMesh(text, x, y, z, color) {
           const texture = new THREE.TextureLoader().load("./images/font.png");
           
@@ -201,62 +282,52 @@ class MyReader {
      }
 
      buildMainMenu() {
-          // Title text
-          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); // Bright orange
-          this.topMesh.scale.set(1.9, 1.9, 1.9);
+          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
           this.topMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh);
       
-          // Subheading for player's selection
-          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); // Sky blue
+          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
           this.topMesh.scale.set(1.8, 1.8, 1.8);
           this.topMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh);
       
-          // Subheading for opponent's selection
-          this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4); // Light pink
+          this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4);
           this.topMesh2.scale.set(1.8, 1.8, 1.8);
           this.topMesh2.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh2);
       
-          // Play button text
-          this.topMesh = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32); // Lime green
+          this.topMesh = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
           this.topMesh.scale.set(2, 2, 2);
           this.topMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh);
       
-          // Player's selected balloon (default)
-          this.playerSelected = this.createTextMesh("Not choosen", 2024.7, 12, 2006, 0xb0b0b0); // Gray
+          this.playerSelected = this.createTextMesh("Not choosen", 2024.7, 12, 2006, 0xb0b0b0); 
           this.playerSelected.scale.set(1.8, 1.8, 1.8);
           this.playerSelected.rotation.y = Math.PI / 2;
           this.app.scene.add(this.playerSelected);
       
-          // Opponent's selected balloon (default)
-          this.playerSelected2 = this.createTextMesh("Not choosen", 2024.7, 10, 2010.5, 0xb0b0b0); // Gray
+          this.playerSelected2 = this.createTextMesh("Not choosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
           this.playerSelected2.scale.set(1.8, 1.8, 1.8);
           this.playerSelected2.rotation.y = Math.PI / 2;
           this.app.scene.add(this.playerSelected2);
       
-          // Game credits
-          this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); // Light yellow
+          this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); 
           this.gameMesh.scale.set(1.5, 1.5, 1.5);
           this.gameMesh.rotation.y = Math.PI / 2;
           this.app.scene.add(this.gameMesh);
       
-          this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); // Light yellow
+          this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); 
           this.gameMesh2.scale.set(1.5, 1.5, 1.5);
           this.gameMesh2.rotation.y = Math.PI / 2;
           this.app.scene.add(this.gameMesh2);
 
-          // Player Name
-          this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); // Black
+          this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); 
           this.playerNameMesh.scale.set(1.8, 1.8, 1.8);
           this.playerNameMesh.rotation.x = - Math.PI / 2;
           this.playerNameMesh.rotation.z = - Math.PI / 2;
           this.app.scene.add(this.playerNameMesh);
 
-          // Player Name Default
-          this.playerSelected3 = this.createTextMesh("Not choosen", 1981.5, 0.1, 2002, 0xb0b0b0); // Gray
+          this.playerSelected3 = this.createTextMesh("Not choosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
           this.playerSelected3.scale.set(1.8, 1.8, 1.8);
           this.playerSelected3.rotation.x = - Math.PI / 2;
           this.playerSelected3.rotation.z = - Math.PI / 2;
@@ -311,7 +382,6 @@ class MyReader {
      }     
 
      buildTrack() {
-          // Outdoor Text
           this.ElapsedTimeMesh = this.createTextMesh("Elapsed time: ", 230, 175, 70, 0xffffff);
           this.LapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);
           this.LayerMesh = this.createTextMesh("Current Air Layer: ", 230, 135, 70, 0xffffff);
@@ -333,13 +403,11 @@ class MyReader {
           this.app.scene.add(this.GameStatusMesh);
           this.app.scene.add(this.LayerMesh);
   
-          // Track
           this.track = new MyTrack(this.app);
           this.track.position.set(35, 5, 0);   
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          // Example Balloon
           this.balloon = new MyBalloon(this.app, 'Balloon', 'blue');
           this.balloon.scale.set(10, 10, 10);
           this.balloon.position.set(-250, 150, -250);
@@ -347,31 +415,7 @@ class MyReader {
      }
 
 
-     checkAnimationStateIsPause() {
-          if (this.mixerPause)
-               this.mixer.timeScale = 0
-          else
-               this.mixer.timeScale = 1
-     }
-
-     checkTracksEnabled() {
-          const actions = this.mixer._actions
-          for (let i = 0; i < actions.length; i++) {
-               const track = actions[i]._clip.tracks[0]
-
-               if (track.name === '.quaternion' && this.enableAnimationRotation === false) {
-                    actions[i].stop()
-               }
-               else if (track.name === '.position' && this.enableAnimationPosition === false) {
-                    actions[i].stop()
-               }
-               else {
-                    if (!actions[i].isRunning())
-                         actions[i].play()
-               }
-          }
-     }
-
+     /*********************** PARTICLES ZONE /***********************/
      updateFireworks() {
           if (Math.random() < 0.025) {
               const randomScale = THREE.MathUtils.randFloat(0.8, 1.5);
@@ -393,6 +437,11 @@ class MyReader {
 
           this.checkAnimationStateIsPause()
           this.checkTracksEnabled()
+
+          for (const currentShader in this.shaders)
+               if (this.shaders[currentShader] !== undefined && this.shaders[currentShader] !== null) {
+                   this.shaders[currentShader].update(this.app.clock.getElapsedTime())
+           }
      }
 }
 
