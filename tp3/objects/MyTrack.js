@@ -5,10 +5,8 @@ import { MyPowerUp } from "./MyPowerUp.js";
 import { MyRoute } from "./MyRoute.js";
 
 class MyTrack extends MyObject {
-     constructor(app, name) {
-          super();
-          this.name = name;
-          this.app = app;
+     constructor(app, name = "Track") {
+          super(app, name);
           this.type = 'Group';
 
           //Curve related attributes

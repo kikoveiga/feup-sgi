@@ -1,11 +1,7 @@
 import * as THREE from "three";
 import { MyBalloon } from "./MyBalloon.js";
-import { MyObstacle } from "./MyObstacle.js";
-import { MyPowerUp } from "./MyPowerUp.js";
 import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
-import { MyFirework } from "./MyFirework.js";
-import { MyShader } from "./MyShader.js";
 
 class MyReader {
      constructor(app) {
