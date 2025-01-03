@@ -20,7 +20,7 @@ class MyContents {
         this.parser = null;
         this.reader = null;
 
-        this.myreader = new MyReader(this.app);
+        this.myReader = new MyReader(this.app);
 
         this.axis = null;
     
@@ -35,8 +35,8 @@ class MyContents {
         this.opponentBalloonString = "Not chosen";
         this.playerNameString = "Not chosen";
 
-        this.powerups = this.myreader.getPowerUps();
-        this.obstacles = this.myreader.getObstacles();
+        this.powerups = this.myReader.getPowerUps();
+        this.obstacles = this.myReader.getObstacles();
 
         const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
         const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
@@ -297,7 +297,7 @@ class MyContents {
                 return;
             }
 
-            this.gameStateManager.startGame(this.playerBalloonString, this.opponentBalloonString);
+            this.gameStateManager.setState(GameStates.RUNNING, this.playerBalloonString, this.opponentBalloonString);
         }
     }
 
