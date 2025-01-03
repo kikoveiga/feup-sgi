@@ -4,8 +4,11 @@ import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
 
 class MyReader {
-     constructor(app) {
+     constructor(app, playerBalloonColor = null, opponentBalloonColor = null) {
           this.app = app;
+          this.playerBalloonColor = playerBalloonColor;
+          this.opponentBalloonColor = opponentBalloonColor;
+
           this.route = new MyRoute(this.app);
 
           this.keyPoints = this.route.getRoutePoints();
@@ -188,11 +191,10 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.balloon = new MyBalloon(this.app, 'Balloon', 'green');
+          this.balloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor || 'green');
           this.balloon.scale.set(10, 10, 10);
           this.app.scene.add(this.balloon);
      }
-
 
      update() {
           const delta = this.clock.getDelta()
