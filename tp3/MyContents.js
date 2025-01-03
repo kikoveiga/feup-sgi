@@ -1,15 +1,7 @@
-import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
-import { MyReader } from './objects/MyReader.js';
-import { PickingManager } from './PickingManager.js';
 import { GameStates } from './GameStateManager.js';
-import { MyBalloon } from './objects/MyBalloon.js';
-import { MyFirework } from './objects/MyFirework.js';
-import { MyShader } from './objects/MyShader.js';
-import { MyPowerUp } from './objects/MyPowerUp.js';
-import { MyObstacle } from './objects/MyObstacle.js';
 import { InitialState } from './scenes/initial/InitialState.js';
 import { RunningState } from './scenes/running/RunningState.js';
 import { FinalState } from './scenes/final/FinalState.js';
@@ -58,7 +50,7 @@ class MyContents {
         switch (newState) {
             case GameStates.INITIAL:
                 this.state = new InitialState(this.app, this.gameStateManager, this.meshes);
-                await this.state.init();
+                this.state.init();
                 break;
 
             case GameStates.RUNNING:
