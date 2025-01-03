@@ -24,64 +24,21 @@ class MyReader {
           this.enableAnimationPosition = true;
           this.initBalloonAnimation();
 
-          this.fireworks = [];
           this.raceFisnished = true;
 
           this.powerups = this.track.getPowerUps();
           this.obstacles = this.track.getObstacles();
-
-          const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
-          const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
-
-          this.shaders = [
-               new MyShader(this.app, "input 1", "input 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                        timeFactor: {type: 'f', value: 100.0 },
-                        uSampler: {type: 'sampler2D', value: obstacleTexture }
-               }),
-               new MyShader(this.app, "input 2", "input 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                    timeFactor: {type: 'f', value: 100.0 },
-                    uSampler: {type: 'sampler2D', value: powerupTexture }
-           }),
-          ];
-
-          this.waitForShaders();
-           
      }
 
-     /*********************** SHADERS ZONE /***********************/
-     waitForShaders() {
-          for (let i = 0; i < this.shaders.length; i++) {
-               if (this.shaders[i].ready === false) {
-                    setTimeout(this.waitForShaders.bind(this), 100)
-                    return;
-               }
-          }
-          for (const obstacle in this.obstacles) {
-              this.setCurrentShader(this.shaders[0], this.obstacles[obstacle])
-          //     console.log("Obstacle " + obstacle + " has shader")
-          }
-
-          for (const powerup in this.powerups) {
-               this.setCurrentShader(this.shaders[1], this.powerups[powerup])
-               // console.log("Powerup " + powerup + " has shader")
-          }
-
+     getPowerUps() {
+          return this.powerups;
      }
-  
-     setCurrentShader(shader, selectedObject) {
-          if (shader === null || shader === undefined) {
-               console.error("shader is null or undefined")
-               return
-          }
-    
-          if (selectedObject !== null) {
-              selectedObject.material = shader.material
-              selectedObject.material.needsUpdate = true
-          //     console.log("Shader set to object")
-          }
+
+     getObstacles() {
+          return this.obstacles;
      }
      
-     /*********************** ANIMATION ZONE /***********************/
+     /*********************** ANIMATION ZONE ***********************/
      initBalloonAnimation() {
           // this.debugKeyFrames()
 
@@ -187,7 +144,6 @@ class MyReader {
      }
   
      debugKeyFrames() {
-  
           let spline = new THREE.CatmullRomCurve3([...this.keyPoints])
   
           for (let i = 0; i < this.keyPoints.length; i++) {
@@ -204,7 +160,6 @@ class MyReader {
           const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
           const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial)
           this.app.scene.add(tubeMesh)
-  
      }
 
      checkAnimationStateIsPause() {
@@ -238,38 +193,11 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.balloon = new MyBalloon(this.app, 'Balloon', 'blue');
+          this.balloon = new MyBalloon(this.app, 'Balloon', 'green');
           this.balloon.scale.set(10, 10, 10);
-          this.balloon.position.set(-250, 150, -250);
           this.app.scene.add(this.balloon);
      }
 
-
-     /*********************** PARTICLES ZONE /***********************/
-     updateFireworks() {
-          if (Math.random() < 0.025) {
-              const randomScale = THREE.MathUtils.randFloat(0.8, 1.5);
-              this.fireworks.push(new MyFirework(this.app, this, randomScale));
-          }
-      
-          for (let i = 0; i < this.fireworks.length; i++) {
-              if (this.fireworks[i].done) {
-                  this.fireworks.splice(i, 1);
-                  continue;
-              }
-              this.fireworks[i].update();
-          }
-     }
-
-     updateShaders() {
-          for (const currentShader in this.shaders){
-               // console.log("Shader: " + currentShader)
-               if (this.shaders[currentShader] !== undefined && this.shaders[currentShader] !== null) {
-                    // console.log("Got in here")
-                    this.shaders[currentShader].update(this.app.clock.getElapsedTime())
-               }
-          }
-     }
 
      update() {
           const delta = this.clock.getDelta()
@@ -277,8 +205,6 @@ class MyReader {
 
           this.checkAnimationStateIsPause()
           this.checkTracksEnabled()
-
-          this.updateShaders();
      }
 }
 
