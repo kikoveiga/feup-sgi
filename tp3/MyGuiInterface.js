@@ -34,23 +34,25 @@ class MyGuiInterface {
     
     updateAnimations() {
         const animationFolder = this.datgui.addFolder('Animation');
-    
-        animationFolder
-        .add(this.contents.myReader, 'mixerPause', true)
-        .name("Pause");
-    
-        animationFolder
-        .add(this.contents.myReader, 'enableAnimationPosition', true)
-        .name("Pos. Track");
-    
-        animationFolder
-        .add(this.contents.myReader, 'mixerTime', 0, 30)
-        .name("Track Time")
-        .onChange(() => {
-            this.contents.myReader.setMixerTime();
-        });
         
-        animationFolder.open();
+        if (this.contents.myReader) {
+            animationFolder
+                .add(this.contents.myReader, 'mixerPause', true)
+                .name("Pause");
+            
+            animationFolder
+                .add(this.contents.myReader, 'enableAnimationPosition', true)
+                .name("Pos. Track");
+            
+            animationFolder
+                .add(this.contents.myReader, 'mixerTime', 0, 30)
+                .name("Track Time")
+                .onChange(() => {
+                    this.contents.myReader.setMixerTime();
+                });
+            
+            animationFolder.open();
+        }
     }
 
     addWireframeToggle() {

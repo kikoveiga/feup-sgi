@@ -7,7 +7,7 @@ const GameStates = {
 
 class GameStateManager {
     constructor() {
-        this.state = GameStates.INITIAL;
+        this.state = null;
         this.callbacks = [];
         this.playerBalloonColor = null;
         this.oponentBalloonColor = null;
@@ -42,23 +42,6 @@ class GameStateManager {
         } else {
             console.error('Callback must be a function.');
         }
-    }
-
-    handleInitialState() {
-        console.log('Game is in initial state');
-    }
-
-    handleRunningState() {
-        console.log('Game is running');
-        
-    }
-
-    handlePausedState() {
-        console.log('Game is paused');
-    }
-
-    handleGameOverState() {
-        console.log('Game is over');
     }
 }
 
