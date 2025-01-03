@@ -144,7 +144,7 @@ class MyContents {
         group.position.set(x, y, z);
         group.rotation.x = -Math.PI;
         group.rotation.y = -Math.PI;
-        group.rotation.y =en.forEach(child => mesh.add(child));
+        return group;
     }
 
     buildMainMenu() {
@@ -409,53 +409,53 @@ class MyContents {
     }
     
     buildMainMenu() {
-        this.topMesh1 = this.myreader.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
+        this.topMesh1 = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
         this.topMesh1.scale.set(1.8, 1.8, 1.8);
         this.topMesh1.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh1);
     
-        this.topMesh3 = this.myreader.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
+        this.topMesh3 = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
         this.topMesh3.scale.set(1.8, 1.8, 1.8);
         this.topMesh3.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh3);
     
-        this.topMesh2 = this.myreader.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4);
+        this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4);
         this.topMesh2.scale.set(1.8, 1.8, 1.8);
         this.topMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh2);
     
-        this.topMesh4 = this.myreader.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
+        this.topMesh4 = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
         this.topMesh4.scale.set(2, 2, 2);
         this.topMesh4.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh4);
     
-        this.playerSelected = this.myreader.createTextMesh("Not chosen", 2024.7, 12, 2006, 0xb0b0b0); 
+        this.playerSelected = this.createTextMesh("Not chosen", 2024.7, 12, 2006, 0xb0b0b0); 
         this.playerSelected.scale.set(1.8, 1.8, 1.8);
         this.playerSelected.rotation.y = Math.PI / 2;
         this.app.scene.add(this.playerSelected);
     
-        this.playerSelected2 = this.myreader.createTextMesh("Not chosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
+        this.playerSelected2 = this.createTextMesh("Not chosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
         this.playerSelected2.scale.set(1.8, 1.8, 1.8);
         this.playerSelected2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.playerSelected2);
     
-        this.gameMesh = this.myreader.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); 
+        this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); 
         this.gameMesh.scale.set(1.5, 1.5, 1.5);
         this.gameMesh.rotation.y = Math.PI / 2;
         this.app.scene.add(this.gameMesh);
     
-        this.gameMesh2 = this.myreader.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); 
+        this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); 
         this.gameMesh2.scale.set(1.5, 1.5, 1.5);
         this.gameMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.gameMesh2);
 
-        this.playerNameMesh = this.myreader.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); 
+        this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); 
         this.playerNameMesh.scale.set(1.8, 1.8, 1.8);
         this.playerNameMesh.rotation.x = - Math.PI / 2;
         this.playerNameMesh.rotation.z = - Math.PI / 2;
         this.app.scene.add(this.playerNameMesh);
 
-        this.playerSelected3 = this.myreader.createTextMesh("Not chosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
+        this.playerSelected3 = this.createTextMesh("Not chosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
         this.playerSelected3.scale.set(1.8, 1.8, 1.8);
         this.playerSelected3.rotation.x = - Math.PI / 2;
         this.playerSelected3.rotation.z = - Math.PI / 2;
@@ -463,35 +463,35 @@ class MyContents {
     }
         
     buildFinalMenu(winnercolor, losercolor, winnername, losername, winnerTime) {
-        this.MenuMesh = this.myreader.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
+        this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
         this.MenuMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.MenuMesh);
 
-        this.RematchMesh = this.myreader.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
+        this.RematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
         this.RematchMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.RematchMesh);
 
-        this.WinnerTextMesh = this.myreader.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
+        this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
         this.WinnerTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.WinnerTextMesh);
 
-        this.LoserTextMesh = this.myreader.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
+        this.LoserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
         this.LoserTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.LoserTextMesh);
 
-        this.WinnerNameMesh = this.myreader.createTextMesh(winnername, -31, 10033.5, 0.1, 0x111111);
+        this.WinnerNameMesh = this.createTextMesh(winnername, -31, 10033.5, 0.1, 0x111111);
         this.WinnerNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.WinnerNameMesh);
 
-        this.LoserNameMesh = this.myreader.createTextMesh(losername, 20, 10033.5, 0.1, 0x111111);
+        this.LoserNameMesh = this.createTextMesh(losername, 20, 10033.5, 0.1, 0x111111);
         this.LoserNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.LoserNameMesh);
 
-        this.WinnerTimeMesh = this.myreader.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
+        this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
         this.WinnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.WinnerTimeMesh);
 
-        this.WinnerMesh = this.myreader.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
+        this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
         this.WinnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.WinnerMesh);
 
