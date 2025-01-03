@@ -1,17 +1,18 @@
 import * as THREE from 'three';
 
 class PickingManager {
-    constructor(scene, camera, renderer, gameStateManager) {
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
+    constructor(scene, camera, renderer, selectionCallback) {
+
         this.scene = scene;
         this.camera = camera;
         this.renderer = renderer;
-        this.gameStateManager = gameStateManager;
+        this.selectionCallback = selectionCallback;
+
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
 
         this.hoveredObject = null;
-        this.selectedObject = null;
-        this.selectedColor = null;
+        this.selectedColorButton = null;
 
         this.interactableObjects = [];
 
@@ -20,7 +21,17 @@ class PickingManager {
     }
     
     addInteractableObject(object) {
-        this.interactableObjects.push(object);
+        if (object.isMesh) {
+            this.interactableObjects.push(object);
+        } else if (object.isGroup || object instanceof THREE.Group) {
+            object.traverse(child => {
+                if (child.isMesh) {
+                    child.name = object.name;
+                    this.interactableObjects.push(child);
+                }
+            });
+        } else console.warn('Object is not a mesh or group: ', object);
+            
     }
 
     removeInteractableObject(object) {
@@ -41,17 +52,17 @@ class PickingManager {
             const hoveredObject = intersects[0].object;
 
             if (this.hoveredObject !== hoveredObject) {
-                if (this.hoveredObject && this.hoveredObject !== this.selectedObject) {
+                if (this.hoveredObject && this.hoveredObject !== this.selectedColorButton) {
                     this.removeHighlight(this.hoveredObject);
                 }
 
                 this.hoveredObject = hoveredObject;
-                if (this.hoveredObject !== this.selectedObject) {
+                if (this.hoveredObject !== this.selectedColorButton) {
                     this.addHighlight(this.hoveredObject);
                 }
             }
         } else {
-            if (this.hoveredObject && this.hoveredObject !== this.selectedObject) {
+            if (this.hoveredObject && this.hoveredObject !== this.selectedColorButton) {
                 this.removeHighlight(this.hoveredObject);
             }
 
@@ -59,32 +70,42 @@ class PickingManager {
         }
     }
 
-    onClick(event) {
+    onClick() {
         this.raycaster.setFromCamera(this.mouse, this.camera);
         const intersects = this.raycaster.intersectObjects(this.interactableObjects);
 
         if (intersects.length > 0) {
             const clickedObject = intersects[0].object;
 
-            if (this.selectedObject === clickedObject) {
-                console.log('Deselecting object');
-                this.removeHighlight(this.selectedObject);
-                this.selectedObject = null;
-                this.handleSelection();
-            } else {
-                if (this.selectedObject) {
-                    this.removeHighlight(this.selectedObject);
+            if (clickedObject.name === 'playButton') {
+                this.selectionCallback("playButton");
+            }
+
+            else if (['orangeButton', 'greenButton', 'blueButton', 'pinkButton'].includes(clickedObject.name)) {
+                if (this.selectedColorButton === null) {
+                    this.selectedColorButton = clickedObject;
+                } else if (this.selectedColorButton === clickedObject) {
+                    this.selectedColorButton = null;
+                    this.removeHighlight(clickedObject);
+                } else {
+                    this.removeHighlight(this.selectedColorButton);
+                    this.selectedColorButton = clickedObject;
+                }
+            }
+
+            else if (clickedObject.name === 'playerBalloon' || clickedObject.name === 'opponentBalloon') {
+                if (this.selectedColorButton === null) {
+                    console.warn('Please select a color before selecting a balloon.');
+                    return;
                 }
 
-                this.selectedObject = clickedObject;
-                this.addHighlight(this.selectedObject);
-                this.handleSelection();
+                this.selectionCallback(clickedObject.name, this.selectedColorButton.name.replace('Button', ''));
             }
         } 
     }
 
     addHighlight(object) {
-        if (object && object.material) {
+        if (object && object.material && object.material.emissive) {
             if (!object.userData.originalEmissive) {
                 object.userData.originalEmissive = object.material.emissive.clone();
             }
@@ -97,29 +118,6 @@ class PickingManager {
         if (object && object.material && object.userData.originalEmissive) {
             object.material.emissive.copy(object.userData.originalEmissive);
             delete object.userData.originalEmissive;
-        }
-    }
-
-    handleSelection() {
-        if (!this.selectedObject) {
-            this.selectedColor = null;
-            return;
-        }
-
-        if (['orangeButton', 'greenButton', 'blueButton', 'pinkButton'].includes(this.selectedObject.name)) {
-            this.selectedColor = this.selectedObject.name.replace('Button', '');
-            console.log(`Selected color: ${this.selectedColor}`);
-        }
-
-        else if (this.selectedObject.name === 'playButton') {
-
-            if (this.selectedColor === null) {
-                this.selectedObject = null;
-                console.warn('Please select a color before starting the game.');
-
-            } else {
-                this.gameStateManager.startGame(this.selectedColor);
-            }
         }
     }
 }
