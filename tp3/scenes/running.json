@@ -169,7 +169,7 @@
             }
         },
         "cameras": {
-            "initial": "Scene",
+            "initial": "Scene1",
             "Scene1": {
                 "type": "perspective",
                 "angle": 60,

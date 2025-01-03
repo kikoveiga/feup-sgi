@@ -25,64 +25,21 @@ class MyReader {
           this.enableAnimationPosition = true;
           this.initBalloonAnimation();
 
-          this.fireworks = [];
           this.raceFisnished = true;
 
           this.powerups = this.track.getPowerUps();
           this.obstacles = this.track.getObstacles();
-
-          const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
-          const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
-
-          this.shaders = [
-               new MyShader(this.app, "input 1", "input 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                        timeFactor: {type: 'f', value: 100.0 },
-                        uSampler: {type: 'sampler2D', value: obstacleTexture }
-               }),
-               new MyShader(this.app, "input 2", "input 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                    timeFactor: {type: 'f', value: 100.0 },
-                    uSampler: {type: 'sampler2D', value: powerupTexture }
-           }),
-          ];
-
-          this.waitForShaders();
-           
      }
 
-     /*********************** SHADERS ZONE /***********************/
-     waitForShaders() {
-          for (let i = 0; i < this.shaders.length; i++) {
-               if (this.shaders[i].ready === false) {
-                    setTimeout(this.waitForShaders.bind(this), 100)
-                    return;
-               }
-          }
-          for (const obstacle in this.obstacles) {
-              this.setCurrentShader(this.shaders[0], this.obstacles[obstacle])
-          //     console.log("Obstacle " + obstacle + " has shader")
-          }
-
-          for (const powerup in this.powerups) {
-               this.setCurrentShader(this.shaders[1], this.powerups[powerup])
-               // console.log("Powerup " + powerup + " has shader")
-          }
-
+     getPowerUps() {
+          return this.powerups;
      }
-  
-     setCurrentShader(shader, selectedObject) {
-          if (shader === null || shader === undefined) {
-               console.error("shader is null or undefined")
-               return
-          }
-    
-          if (selectedObject !== null) {
-              selectedObject.material = shader.material
-              selectedObject.material.needsUpdate = true
-          //     console.log("Shader set to object")
-          }
+
+     getObstacles() {
+          return this.obstacles;
      }
      
-     /*********************** ANIMATION ZONE /***********************/
+     /*********************** ANIMATION ZONE ***********************/
      initBalloonAnimation() {
           // this.debugKeyFrames()
 
@@ -188,7 +145,6 @@ class MyReader {
      }
   
      debugKeyFrames() {
-  
           let spline = new THREE.CatmullRomCurve3([...this.keyPoints])
   
           for (let i = 0; i < this.keyPoints.length; i++) {
@@ -205,7 +161,6 @@ class MyReader {
           const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
           const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial)
           this.app.scene.add(tubeMesh)
-  
      }
 
      checkAnimationStateIsPause() {
@@ -233,7 +188,7 @@ class MyReader {
           }
      }
 
-     /*********************** TEXTS ZONE /***********************/
+     /*********************** TEXTS ZONE ***********************/
      createTextMesh(text, x, y, z, color) {
           const texture = new THREE.TextureLoader().load("./images/font.png");
           
@@ -279,108 +234,7 @@ class MyReader {
           group.rotation.x = -Math.PI;
           group.rotation.y = -Math.PI;
           return group;
-     }
-
-     buildMainMenu() {
-          this.topMesh1 = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
-          this.topMesh1.scale.set(1.8, 1.8, 1.8);
-          this.topMesh1.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh1);
-      
-          this.topMesh3 = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
-          this.topMesh3.scale.set(1.8, 1.8, 1.8);
-          this.topMesh3.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh3);
-      
-          this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4);
-          this.topMesh2.scale.set(1.8, 1.8, 1.8);
-          this.topMesh2.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh2);
-      
-          this.topMesh4 = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
-          this.topMesh4.scale.set(2, 2, 2);
-          this.topMesh4.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh4);
-      
-          this.playerSelected = this.createTextMesh("Not chosen", 2024.7, 12, 2006, 0xb0b0b0); 
-          this.playerSelected.scale.set(1.8, 1.8, 1.8);
-          this.playerSelected.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.playerSelected);
-      
-          this.playerSelected2 = this.createTextMesh("Not chosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
-          this.playerSelected2.scale.set(1.8, 1.8, 1.8);
-          this.playerSelected2.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.playerSelected2);
-      
-          this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); 
-          this.gameMesh.scale.set(1.5, 1.5, 1.5);
-          this.gameMesh.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.gameMesh);
-      
-          this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); 
-          this.gameMesh2.scale.set(1.5, 1.5, 1.5);
-          this.gameMesh2.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.gameMesh2);
-
-          this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); 
-          this.playerNameMesh.scale.set(1.8, 1.8, 1.8);
-          this.playerNameMesh.rotation.x = - Math.PI / 2;
-          this.playerNameMesh.rotation.z = - Math.PI / 2;
-          this.app.scene.add(this.playerNameMesh);
-
-          this.playerSelected3 = this.createTextMesh("Not chosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
-          this.playerSelected3.scale.set(1.8, 1.8, 1.8);
-          this.playerSelected3.rotation.x = - Math.PI / 2;
-          this.playerSelected3.rotation.z = - Math.PI / 2;
-          this.app.scene.add(this.playerSelected3);
-     }
-       
-     buildFinalMenu(winnercolor, losercolor, winnername, losername, winnerTime) {
-          this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
-          this.MenuMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.MenuMesh);
-
-          this.RematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
-          this.RematchMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.RematchMesh);
-
-          this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
-          this.WinnerTextMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.WinnerTextMesh);
-
-          this.LoserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
-          this.LoserTextMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.LoserTextMesh);
-
-          this.WinnerNameMesh = this.createTextMesh(winnername, -31, 10033.5, 0.1, 0x111111);
-          this.WinnerNameMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.WinnerNameMesh);
-
-          this.LoserNameMesh = this.createTextMesh(losername, 20, 10033.5, 0.1, 0x111111);
-          this.LoserNameMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.LoserNameMesh);
-
-          this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
-          this.WinnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.WinnerTimeMesh);
-
-          this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
-          this.WinnerMesh.scale.set(-1.8, 1.8, 1.8);
-          this.app.scene.add(this.WinnerMesh);
-
-          this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnercolor);
-          this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
-          this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
-          this.winnerBalloon.position.set(-25, 9987.5, 0);
-          this.app.scene.add(this.winnerBalloon);
-
-          this.loserBalloon = new MyBalloon(this.app, 'Balloon', losercolor);
-          this.loserBalloon.scale.set(3.5, 3.5, 3.5);
-          this.loserBalloon.rotation.y = -20 * Math.PI / 180;
-          this.loserBalloon.position.set(25, 9987.5, 0);
-          this.app.scene.add(this.loserBalloon);
-          
-     }     
+     }   
 
      buildTrack() {
           this.ElapsedTimeMesh = this.createTextMesh("Elapsed time: ", 230, 175, 70, 0xffffff);
@@ -409,38 +263,11 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.balloon = new MyBalloon(this.app, 'Balloon', 'blue');
+          this.balloon = new MyBalloon(this.app, 'Balloon', 'green');
           this.balloon.scale.set(10, 10, 10);
-          this.balloon.position.set(-250, 150, -250);
           this.app.scene.add(this.balloon);
      }
 
-
-     /*********************** PARTICLES ZONE /***********************/
-     updateFireworks() {
-          if (Math.random() < 0.025) {
-              const randomScale = THREE.MathUtils.randFloat(0.8, 1.5);
-              this.fireworks.push(new MyFirework(this.app, this, randomScale));
-          }
-      
-          for (let i = 0; i < this.fireworks.length; i++) {
-              if (this.fireworks[i].done) {
-                  this.fireworks.splice(i, 1);
-                  continue;
-              }
-              this.fireworks[i].update();
-          }
-     }
-
-     updateShaders() {
-          for (const currentShader in this.shaders){
-               // console.log("Shader: " + currentShader)
-               if (this.shaders[currentShader] !== undefined && this.shaders[currentShader] !== null) {
-                    // console.log("Got in here")
-                    this.shaders[currentShader].update(this.app.clock.getElapsedTime())
-               }
-          }
-     }
 
      update() {
           const delta = this.clock.getDelta()
@@ -448,8 +275,6 @@ class MyReader {
 
           this.checkAnimationStateIsPause()
           this.checkTracksEnabled()
-
-          this.updateShaders();
      }
 }
 

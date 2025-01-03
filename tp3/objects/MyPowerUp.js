@@ -21,16 +21,11 @@ class MyPowerUp extends MyObject {
                metalness: 0.1,
           });
 
-          this.obstacle = new THREE.Mesh(geometry, material);
-          this.obstacle.position.copy(position);
-
-          this.add(this.obstacle);
-     }
-
-     update(delta) {
-          const time = this.app.clock.getElapsedTime(); 
-          this.obstacle.position.y = this.initialPosition.y + Math.sin(time * this.speed) * this.amplitude;
-          this.obstacle.rotation.y += delta * 0.35;
+          this.powerup = new THREE.Mesh(geometry, material);
+          this.powerup.position.copy(position);
+          this.powerup.castShadow = true;
+          this.powerup.receiveShadow = true;
+          this.add(this.powerup);
      }
 }
 
