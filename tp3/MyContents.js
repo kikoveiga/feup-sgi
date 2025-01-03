@@ -3,7 +3,7 @@ import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
 import { MyReader } from './objects/MyReader.js';
 import { PickingManager } from './PickingManager.js';
-import { GameStateManager, GameStates } from './GameStateManager.js';
+import { GameStates } from './GameStateManager.js';
 
 class MyContents {
     constructor(app, state, gameStateManager) {

@@ -57,10 +57,9 @@ class GameStateManager {
         console.log('Game is over');
     }
 
-    startGame() {
-        this.setState(GameStates.RUNNING);
+    startGame(selectedColor) {
+        this.setState(GameStates.RUNNING, selectedColor);
     }
-
 }
 
 export { GameStateManager, GameStates };

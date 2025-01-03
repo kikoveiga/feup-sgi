@@ -11,6 +11,7 @@ class PickingManager {
 
         this.hoveredObject = null;
         this.selectedObject = null;
+        this.selectedColor = null;
 
         this.interactableObjects = [];
 
@@ -69,6 +70,7 @@ class PickingManager {
                 console.log('Deselecting object');
                 this.removeHighlight(this.selectedObject);
                 this.selectedObject = null;
+                this.handleSelection();
             } else {
                 if (this.selectedObject) {
                     this.removeHighlight(this.selectedObject);
@@ -100,16 +102,24 @@ class PickingManager {
 
     handleSelection() {
         if (!this.selectedObject) {
+            this.selectedColor = null;
             return;
         }
 
         if (['orangeButton', 'greenButton', 'blueButton', 'pinkButton'].includes(this.selectedObject.name)) {
-            console.log('Color button clicked');
+            this.selectedColor = this.selectedObject.name.replace('Button', '');
+            console.log(`Selected color: ${this.selectedColor}`);
         }
 
         else if (this.selectedObject.name === 'playButton') {
-            console.log('Play button clicked');
-            this.gameStateManager.startGame();
+
+            if (this.selectedColor === null) {
+                this.selectedObject = null;
+                console.warn('Please select a color before starting the game.');
+
+            } else {
+                this.gameStateManager.startGame(this.selectedColor);
+            }
         }
     }
 }
