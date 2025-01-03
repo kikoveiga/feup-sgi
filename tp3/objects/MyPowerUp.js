@@ -3,8 +3,7 @@ import { MyObject } from "./MyObject.js";
 
 class MyPowerUp extends MyObject {
      constructor(app, name, position = new THREE.Vector3(0, 0, 0), size = 0.5, color = 0x0000ff) {
-          super();
-          this.name = name;
+          super(app, name);
           this.app = app;
           this.type = "Group";
 

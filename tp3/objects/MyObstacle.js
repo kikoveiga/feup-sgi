@@ -2,10 +2,8 @@ import * as THREE from "three";
 import { MyObject } from "./MyObject.js";
 
 class MyObstacle extends MyObject {
-     constructor(app, name, position = new THREE.Vector3(0, 0, 0), size = 1, color = 0xffffff) {
-          super();
-          this.name = name;
-          this.app = app;
+     constructor(app, name = "obstacle", position = new THREE.Vector3(0, 0, 0), size = 1, color = 0xffffff) {
+          super(app, name);
           this.type = "Group";
     
           const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
