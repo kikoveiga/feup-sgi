@@ -6,7 +6,6 @@ import { MyTrack } from "./MyTrack.js";
 class MyReader {
      constructor(app) {
           this.app = app;
-          this.track = new MyTrack(this.app);
           this.route = new MyRoute(this.app);
 
           this.keyPoints = this.route.getRoutePoints();

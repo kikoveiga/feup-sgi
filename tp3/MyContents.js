@@ -40,6 +40,8 @@ class MyContents {
 
         const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
         const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
+        const depthTexture = new THREE.TextureLoader().load('./images/depth.jpg'); 
+        const colorTexture = new THREE.TextureLoader().load('./images/color.jpg'); 
 
         this.shaders = [
             new MyShader(this.app, "Pulse shader for obstacle", "Description 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
@@ -50,6 +52,12 @@ class MyContents {
                 timeFactor: {type: 'f', value: 1.0 },
                 uSampler: {type: 'sampler2D', value: powerupTexture }
             }),
+            new MyShader(
+                this.app, "Bas-Relief Shader", "Bas-relief effect", "./shaders/basrelief.vert","./shaders/basrelief.frag", {
+                    depthMap: { type: 'sampler2D', value: depthTexture },
+                    colorMap: { type: 'sampler2D', value: colorTexture },
+                    scaleFactor: { type: 'f', value: 0.1 },
+                }),
         ];
 
         this.waitForShaders();
@@ -116,7 +124,7 @@ class MyContents {
                 color: color
             });
 
-            const charCode = text.charCodeAt(i);
+            const charCode = text.charCodeAt(i) % 256;
             const cols = 16;
             const rows = 16;
             
@@ -318,12 +326,18 @@ class MyContents {
     updateTextMesh(mesh, nexText, color) {
 
         while (mesh.children.length > 0) {
-            const child = mesh.children.pop();
+            const child = mesh.children[0]; // Always take the first child
+            mesh.remove(child);
+        
             child.geometry.dispose();
             child.material.dispose();
         }
+        
 
+        // Create a new group with the updated text
         const updatedMesh = this.createTextMesh(nexText, 0, 0, 0, color);
+
+        // Re-add the newly created letters as children of the original group
         updatedMesh.children.forEach(child => mesh.add(child));
     }
 
