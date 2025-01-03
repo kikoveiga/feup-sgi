@@ -2,7 +2,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Stats from 'three/addons/libs/stats.module.js';
-import { GameStateManager, GameStates } from './GameStateManager.js';
 
 /**
  * This class contains the application object
@@ -13,7 +12,6 @@ class MyApp  {
      */
     constructor() {
         this.scene = null;
-        this.gameStateManager = null;
         this.stats = null;
 
         // camera related attributes
@@ -67,36 +65,6 @@ class MyApp  {
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false );
-
-        this.gameStateManager = new GameStateManager();
-        this.gameStateManager.onStateChange(newState => this.switchScene(newState));
-        this.gameStateManager.setState(GameStates.INITIAL);
-    }
-
-    switchScene(newState) {
-        
-        switch (newState) {
-            case GameStates.INITIAL:
-                this.activeScene = new InitialScene(this);
-                break;
-            case GameStates.RUNNING:
-                this.activeScene = new RunningScene(this);
-                break;
-            case GameStates.PAUSED:
-                this.activeScene = new PausedScene(this);
-                break;
-            case GameStates.FINAL_RESULTS:
-                this.activeScene = new GameOverScene(this);
-                break;
-
-            default:
-                console.error(`Unknown state: ${newState}`);
-                return;
-        }
-        
-        if (this.activeScene) {
-            this.activeScene.init(); 
-        }
     }
 
     /**
