@@ -1,12 +1,9 @@
 import * as THREE from "three";
 import { MyObject } from "./MyObject.js";
 
-
 class MyRoute extends MyObject {
     constructor(app, name = 'Route') {
-          super();
-          this.app = app;
-          this.name = name;
+          super(app, name);
           this.type = "Group";
 
           this.route = [
@@ -64,7 +61,7 @@ class MyRoute extends MyObject {
           });
      }
 
-     getRoutePoints()   {
+     getRoutePoints() {
           return this.route;
      }
 
