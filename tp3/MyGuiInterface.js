@@ -36,18 +36,18 @@ class MyGuiInterface {
         const animationFolder = this.datgui.addFolder('Animation');
     
         animationFolder
-        .add(this.contents.myreader, 'mixerPause', true)
+        .add(this.contents.myReader, 'mixerPause', true)
         .name("Pause");
     
         animationFolder
-        .add(this.contents.myreader, 'enableAnimationPosition', true)
+        .add(this.contents.myReader, 'enableAnimationPosition', true)
         .name("Pos. Track");
     
         animationFolder
-        .add(this.contents.myreader, 'mixerTime', 0, 30)
+        .add(this.contents.myReader, 'mixerTime', 0, 30)
         .name("Track Time")
         .onChange(() => {
-            this.contents.myreader.setMixerTime();
+            this.contents.myReader.setMixerTime();
         });
         
         animationFolder.open();
