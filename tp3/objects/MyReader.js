@@ -302,12 +302,12 @@ class MyReader {
           this.topMesh4.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh4);
       
-          this.playerSelected = this.createTextMesh("Not choosen", 2024.7, 12, 2006, 0xb0b0b0); 
+          this.playerSelected = this.createTextMesh("Not chosen", 2024.7, 12, 2006, 0xb0b0b0); 
           this.playerSelected.scale.set(1.8, 1.8, 1.8);
           this.playerSelected.rotation.y = Math.PI / 2;
           this.app.scene.add(this.playerSelected);
       
-          this.playerSelected2 = this.createTextMesh("Not choosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
+          this.playerSelected2 = this.createTextMesh("Not chosen", 2024.7, 10, 2010.5, 0xb0b0b0); 
           this.playerSelected2.scale.set(1.8, 1.8, 1.8);
           this.playerSelected2.rotation.y = Math.PI / 2;
           this.app.scene.add(this.playerSelected2);
@@ -328,7 +328,7 @@ class MyReader {
           this.playerNameMesh.rotation.z = - Math.PI / 2;
           this.app.scene.add(this.playerNameMesh);
 
-          this.playerSelected3 = this.createTextMesh("Not choosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
+          this.playerSelected3 = this.createTextMesh("Not chosen", 1981.5, 0.1, 2002, 0xb0b0b0); 
           this.playerSelected3.scale.set(1.8, 1.8, 1.8);
           this.playerSelected3.rotation.x = - Math.PI / 2;
           this.playerSelected3.rotation.z = - Math.PI / 2;
