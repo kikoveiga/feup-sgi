@@ -52,12 +52,11 @@ class MyContents {
                 timeFactor: {type: 'f', value: 1.0 },
                 uSampler: {type: 'sampler2D', value: powerupTexture }
             }),
-            new MyShader(
-                this.app, "Bas-Relief Shader", "Bas-relief effect", "./shaders/basrelief.vert","./shaders/basrelief.frag", {
+            new MyShader(this.app, "Bas-Relief Shader", "Bas-relief effect", "./shaders/basrelief.vert","./shaders/basrelief.frag", {
                     depthMap: { type: 'sampler2D', value: depthTexture },
                     colorMap: { type: 'sampler2D', value: colorTexture },
                     scaleFactor: { type: 'f', value: 0.1 },
-                }),
+            }),
         ];
 
         this.waitForShaders();

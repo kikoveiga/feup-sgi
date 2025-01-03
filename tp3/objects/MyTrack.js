@@ -163,9 +163,6 @@ class MyTrack extends MyObject {
      }
      
      update(delta) {
-          this.powerUps.forEach((power) => {
-               power.update(delta); 
-          });
      }
       
 }
