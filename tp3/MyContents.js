@@ -84,6 +84,7 @@ class MyContents {
                 break;
 
             case GameStates.RUNNING:
+                this.buildOutdoorDisplay();
                 break;
 
             case GameStates.FINAL:
@@ -115,7 +116,7 @@ class MyContents {
                 color: color
             });
 
-            const charCode = text.charCodeAt(i);
+            const charCode = text.charCodeAt(i) % 256;
             const cols = 16;
             const rows = 16;
             
@@ -312,12 +313,18 @@ class MyContents {
     updateTextMesh(mesh, nexText, color) {
 
         while (mesh.children.length > 0) {
-            const child = mesh.children.pop();
+            const child = mesh.children[0]; // Always take the first child
+            mesh.remove(child);
+        
             child.geometry.dispose();
             child.material.dispose();
         }
+        
 
+        // Create a new group with the updated text
         const updatedMesh = this.createTextMesh(nexText, 0, 0, 0, color);
+
+        // Re-add the newly created letters as children of the original group
         updatedMesh.children.forEach(child => mesh.add(child));
     }
 
