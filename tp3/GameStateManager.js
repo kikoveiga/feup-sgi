@@ -60,10 +60,6 @@ class GameStateManager {
     handleGameOverState() {
         console.log('Game is over');
     }
-
-    startGame(selectedColor) {
-        this.setState(GameStates.RUNNING, selectedColor);
-    }
 }
 
 export { GameStateManager, GameStates };
