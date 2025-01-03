@@ -87,11 +87,11 @@ class MyContents {
                 break;
 
             case GameStates.FINAL:
-                this.winnercolor = "pink"; // TROCAR PARA A COR DO VENCEDOR
-                this.losercolor = "blue"; // TROCAR PARA A COR DO PERDEDOR
+                this.winnerColor = "pink"; // TROCAR PARA A COR DO VENCEDOR
+                this.loserColor = "blue"; // TROCAR PARA A COR DO PERDEDOR
                 this.winner = "joaoalvesss" // TROCAR PARA O NOME DO VENCEDOR
                 this.loser = "kikoveiga" // TROCAR PARA O NOME DO PERDEDOR
-                this.buildFinalMenu(this.winnercolor, this.losercolor, this.winner, this.loser);
+                this.buildFinalMenu(this.winnerColor, this.loserColor, this.winner, this.loser);
                 break;
             
             default:
@@ -153,15 +153,15 @@ class MyContents {
         this.topMesh1.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh1);
     
-        this.topMesh3 = this.createTextMesh("Player balloon: ", 2024.7, 12, 1978.5, 0x87ceeb); 
-        this.topMesh3.scale.set(1.8, 1.8, 1.8);
-        this.topMesh3.rotation.y = Math.PI / 2;
-        this.app.scene.add(this.topMesh3);
-    
-        this.topMesh2 = this.createTextMesh("Opponent balloon: ", 2024.7, 10, 1978.5, 0xff69b4);
+        this.topMesh2 = this.createTextMesh("Player balloon: ", 2024.7, 12, 1978.5, 0x87ceeb); 
         this.topMesh2.scale.set(1.8, 1.8, 1.8);
         this.topMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh2);
+    
+        this.topMesh3 = this.createTextMesh("Opponent balloon: ", 2024.7, 10, 1978.5, 0xff69b4);
+        this.topMesh3.scale.set(1.8, 1.8, 1.8);
+        this.topMesh3.rotation.y = Math.PI / 2;
+        this.app.scene.add(this.topMesh3);
     
         this.topMesh4 = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
         this.topMesh4.scale.set(2, 2, 2);
@@ -207,20 +207,25 @@ class MyContents {
 
     buildOutdoorDisplay() {
         this.elapsedTimeMesh = this.createTextMesh("Elapsed time: ", 230, 175, 70, 0xffffff);
-        this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);
-        this.layerMesh = this.createTextMesh("Current Air Layer: ", 230, 135, 70, 0xffffff);
-        this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 230, 115, 70, 0xffffff);
-        this.gameStatusMesh = this.createTextMesh("Game Status: ", 230, 95, 70, 0xffffff);
         this.elapsedTimeMesh.scale.set(12, 12, 12);
-        this.lapsNumberMesh.scale.set(12, 12, 12);
-        this.avaiableVouchersMesh.scale.set(12, 12, 12);
-        this.gameStatusMesh.scale.set(12, 12, 12);
-        this.layerMesh.scale.set(12, 12, 12);
-        this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
-        this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
-        this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
+
+        this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);
+        this.lapsNumberMesh.scale.set(12, 12, 12);
+        this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
+
+        this.layerMesh = this.createTextMesh("Current Air Layer: ", 230, 135, 70, 0xffffff);
+        this.layerMesh.scale.set(12, 12, 12);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
+
+        this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 230, 115, 70, 0xffffff);
+        this.avaiableVouchersMesh.scale.set(12, 12, 12);
+        this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
+
+        this.gameStatusMesh = this.createTextMesh("Game Status: ", 230, 95, 70, 0xffffff);
+        this.gameStatusMesh.scale.set(12, 12, 12);
+        this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
+
         this.app.scene.add(this.elapsedTimeMesh);
         this.app.scene.add(this.lapsNumberMesh);
         this.app.scene.add(this.avaiableVouchersMesh);
@@ -228,46 +233,46 @@ class MyContents {
         this.app.scene.add(this.layerMesh);
     }
 
-    buildFinalMenu(winnercolor, losercolor, winnername, losername, winnerTime) {
-        this.MenuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
-        this.MenuMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.MenuMesh);
+    buildFinalMenu(winnerColor, loserColor, winnerName, loserName, winnerTime) {
+        this.menuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
+        this.menuMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.menuMesh);
 
-        this.RematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
-        this.RematchMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.RematchMesh);
+        this.rematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
+        this.rematchMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.rematchMesh);
 
-        this.WinnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
-        this.WinnerTextMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.WinnerTextMesh);
+        this.winnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
+        this.winnerTextMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.winnerTextMesh);
 
-        this.LoserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
-        this.LoserTextMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.LoserTextMesh);
+        this.loserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
+        this.loserTextMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.loserTextMesh);
 
-        this.WinnerNameMesh = this.createTextMesh(winnername, -31, 10033.5, 0.1, 0x111111);
-        this.WinnerNameMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.WinnerNameMesh);
+        this.winnerNameMesh = this.createTextMesh(winnerName, -31, 10033.5, 0.1, 0x111111);
+        this.winnerNameMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.winnerNameMesh);
 
-        this.LoserNameMesh = this.createTextMesh(losername, 20, 10033.5, 0.1, 0x111111);
-        this.LoserNameMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.LoserNameMesh);
+        this.loserNameMesh = this.createTextMesh(loserName, 20, 10033.5, 0.1, 0x111111);
+        this.loserNameMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.loserNameMesh);
 
-        this.WinnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
-        this.WinnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.WinnerTimeMesh);
+        this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
+        this.winnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.winnerTimeMesh);
 
-        this.WinnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
-        this.WinnerMesh.scale.set(-1.8, 1.8, 1.8);
-        this.app.scene.add(this.WinnerMesh);
+        this.winnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
+        this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
+        this.app.scene.add(this.winnerMesh);
 
-        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnercolor);
+        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerColor);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
         this.winnerBalloon.position.set(-25, 9987.5, 0);
         this.app.scene.add(this.winnerBalloon);
 
-        this.loserBalloon = new MyBalloon(this.app, 'Balloon', losercolor);
+        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserColor);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
         this.loserBalloon.position.set(25, 9987.5, 0);
@@ -423,7 +428,6 @@ class MyContents {
         }
     }
  
-   
     /*********************** SHADERS ZONE /***********************/
     waitForShaders() {
         for (const shader of this.shaders) {
