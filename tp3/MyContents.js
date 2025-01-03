@@ -84,6 +84,7 @@ class MyContents {
                 break;
 
             case GameStates.RUNNING:
+                this.buildOutdoorDisplay();
                 break;
 
             case GameStates.FINAL:
