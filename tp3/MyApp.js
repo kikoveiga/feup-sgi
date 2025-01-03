@@ -85,7 +85,7 @@ class MyApp  {
             case GameStates.PAUSED:
                 this.activeScene = new PausedScene(this);
                 break;
-            case GameStates.FINAL_RESULTS:
+            case GameStates.FINAL:
                 this.activeScene = new GameOverScene(this);
                 break;
 
