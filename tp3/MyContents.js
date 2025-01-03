@@ -38,14 +38,14 @@ class MyContents {
         const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
 
         this.shaders = [
-             new MyShader(this.app, "input 1", "input 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                      timeFactor: {type: 'f', value: 1.0 },
-                      uSampler: {type: 'sampler2D', value: obstacleTexture }
-             }),
-             new MyShader(this.app, "input 2", "input 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                  timeFactor: {type: 'f', value: 1.0 },
-                  uSampler: {type: 'sampler2D', value: powerupTexture }
-         }),
+            new MyShader(this.app, "Pulse shader for obstacle", "Description 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                    timeFactor: {type: 'f', value: 1.0 },
+                    uSampler: {type: 'sampler2D', value: obstacleTexture }
+            }),
+            new MyShader(this.app, "Pulse shader for powerup", "Description 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                timeFactor: {type: 'f', value: 1.0 },
+                uSampler: {type: 'sampler2D', value: powerupTexture }
+            }),
         ];
 
         this.waitForShaders();
