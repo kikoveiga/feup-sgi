@@ -36,11 +36,11 @@ class MyReader {
 
           this.shaders = [
                new MyShader(this.app, "input 1", "input 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                        timeFactor: {type: 'f', value: 1.0 },
+                        timeFactor: {type: 'f', value: 100.0 },
                         uSampler: {type: 'sampler2D', value: obstacleTexture }
                }),
                new MyShader(this.app, "input 2", "input 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                    timeFactor: {type: 'f', value: 1.0 },
+                    timeFactor: {type: 'f', value: 100.0 },
                     uSampler: {type: 'sampler2D', value: powerupTexture }
            }),
           ];
@@ -51,20 +51,20 @@ class MyReader {
 
      /*********************** SHADERS ZONE /***********************/
      waitForShaders() {
-          for (let i=0; i<this.shaders.length; i++) {
-              if (this.shaders[i].ready === false) {
-                  setTimeout(this.waitForShaders.bind(this), 100)
-                  return;
-              }
+          for (let i = 0; i < this.shaders.length; i++) {
+               if (this.shaders[i].ready === false) {
+                    setTimeout(this.waitForShaders.bind(this), 100)
+                    return;
+               }
           }
           for (const obstacle in this.obstacles) {
               this.setCurrentShader(this.shaders[0], this.obstacles[obstacle])
-              console.log("Obstacle " + obstacle + " has shader")
+          //     console.log("Obstacle " + obstacle + " has shader")
           }
 
           for (const powerup in this.powerups) {
                this.setCurrentShader(this.shaders[1], this.powerups[powerup])
-               console.log("Powerup " + powerup + " has shader")
+               // console.log("Powerup " + powerup + " has shader")
           }
 
      }
@@ -78,7 +78,7 @@ class MyReader {
           if (selectedObject !== null) {
               selectedObject.material = shader.material
               selectedObject.material.needsUpdate = true
-              console.log("Shader set to object")
+          //     console.log("Shader set to object")
           }
      }
      
@@ -282,24 +282,25 @@ class MyReader {
      }
 
      buildMainMenu() {
-          this.topMesh = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
-          this.topMesh.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh);
+          this.topMesh1 = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
+          this.topMesh1.scale.set(1.8, 1.8, 1.8);
+          this.topMesh1.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh1);
       
-          this.topMesh = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
-          this.topMesh.scale.set(1.8, 1.8, 1.8);
-          this.topMesh.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh);
+          this.topMesh3 = this.createTextMesh("Your current selection: ", 2024.7, 12, 1978.5, 0x87ceeb); 
+          this.topMesh3.scale.set(1.8, 1.8, 1.8);
+          this.topMesh3.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh3);
       
           this.topMesh2 = this.createTextMesh("Oponnent current selection: ", 2024.7, 10, 1978.5, 0xff69b4);
           this.topMesh2.scale.set(1.8, 1.8, 1.8);
           this.topMesh2.rotation.y = Math.PI / 2;
           this.app.scene.add(this.topMesh2);
       
-          this.topMesh = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
-          this.topMesh.scale.set(2, 2, 2);
-          this.topMesh.rotation.y = Math.PI / 2;
-          this.app.scene.add(this.topMesh);
+          this.topMesh4 = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
+          this.topMesh4.scale.set(2, 2, 2);
+          this.topMesh4.rotation.y = Math.PI / 2;
+          this.app.scene.add(this.topMesh4);
       
           this.playerSelected = this.createTextMesh("Not choosen", 2024.7, 12, 2006, 0xb0b0b0); 
           this.playerSelected.scale.set(1.8, 1.8, 1.8);
@@ -431,6 +432,16 @@ class MyReader {
           }
      }
 
+     updateShaders() {
+          for (const currentShader in this.shaders){
+               // console.log("Shader: " + currentShader)
+               if (this.shaders[currentShader] !== undefined && this.shaders[currentShader] !== null) {
+                    // console.log("Got in here")
+                    this.shaders[currentShader].update(this.app.clock.getElapsedTime())
+               }
+          }
+     }
+
      update() {
           const delta = this.clock.getDelta()
           this.mixer.update(delta)
@@ -438,10 +449,7 @@ class MyReader {
           this.checkAnimationStateIsPause()
           this.checkTracksEnabled()
 
-          for (const currentShader in this.shaders)
-               if (this.shaders[currentShader] !== undefined && this.shaders[currentShader] !== null) {
-                   this.shaders[currentShader].update(this.app.clock.getElapsedTime())
-           }
+          this.updateShaders();
      }
 }
 

@@ -4,8 +4,8 @@ uniform float timeFactor;
 void main() {
     vUv = uv;
 
-    float pulse = abs(sin(timeFactor * 2.0))* 0.20 + 1.0; 
-    vec3 scaledPosition = position * vec3(pulse, pulse, pulse) + vec3(0.0, 1.0 , 0.0);
+    float pulse = abs(sin(timeFactor * 2.0))* 0.7 + 1.0; 
+    vec3 scaledPosition = position * pulse;
 
     float rotationAngle = timeFactor;
     mat3 rotationMatrix = mat3(cos(rotationAngle), 0.0, sin(rotationAngle), 0.0, 1.0, 0.0, -sin(rotationAngle), 0.0, cos(rotationAngle));

@@ -77,10 +77,11 @@ class MyShader {
      }
 
      update(t) {
+          // console.log("updating shader " + this.name + " with time " + t)
           if (this.hasUniform("timeFactor")) {
-              this.updateUniformsValue("timeFactor", t  );
+               this.updateUniformsValue("timeFactor", t  );
           }
      }
 }
-export {MyShader}
+export { MyShader }
 

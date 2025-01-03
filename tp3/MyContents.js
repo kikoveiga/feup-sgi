@@ -3,11 +3,13 @@ import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
 import { MyReader } from './objects/MyReader.js';
 import { PickingManager } from './PickingManager.js';
+import { GameStateManager, GameStates } from './GameStateManager.js';
 
 class MyContents {
-    constructor(app, sceneType) {
+    constructor(app, state, gameStateManager) {
         this.app = app;
-        this.sceneType = sceneType;
+        this.state = state;
+        this.gameStateManager = gameStateManager;
 
         this.parser = null;
         this.reader = null;
@@ -24,7 +26,7 @@ class MyContents {
     }
 
     async init() {
-        console.log("Initializing contents for scene: " + this.sceneType);
+        console.log("Initializing contents for scene: " + this.state);
 
         if (this.axis === null) {
             this.axis = new MyAxis(this.app);
@@ -40,13 +42,13 @@ class MyContents {
                 resolve();
             });
 
-            this.reader.open(`scenes/${this.sceneType}.json`);
+            this.reader.open(`scenes/${this.state}.json`);
         });
 
-        switch (this.sceneType) {
-            case "initial":
+        switch (this.state) {
+            case GameStates.INITIAL:
                 this.myreader.buildMainMenu();
-                this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer);
+                this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer, this.gameStateManager);
                 this.meshes.forEach(mesh => {
                     if (mesh.name.includes("Button")) {
                         this.pickingManager.addInteractableObject(mesh);
@@ -56,10 +58,10 @@ class MyContents {
 
                 break;
 
-            case "running":
+            case GameStates.RUNNING:
                 break;
 
-            case "final":
+            case GameStates.FINAL:
                 this.winnercolor = "pink"; // TROCAR PARA A COR DO VENCEDOR
                 this.losercolor = "blue"; // TROCAR PARA A COR DO PERDEDOR
                 this.winner = "joaoalvesss" // TROCAR PARA O NOME DO VENCEDOR
@@ -68,7 +70,7 @@ class MyContents {
                 break;
             
             default:
-                console.error("Invalid scene type: " + sceneType);
+                console.error("Invalid scene type: " + state);
         }
     }
 
@@ -193,7 +195,7 @@ class MyContents {
         }
         this.myreader.update();
 
-        if (this.sceneType === 'final') {
+        if (this.state === 'final') {
             this.myreader.updateFireworks(); 
         }
     }

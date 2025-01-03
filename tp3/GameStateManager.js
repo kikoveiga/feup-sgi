@@ -1,27 +1,33 @@
 const GameStates = {
-    INITIAL: 0,
-    RUNNING: 1,
-    PAUSED: 2,
-    FINAL_RESULTS: 3
+    INITIAL: "initial",
+    RUNNING: "running",
+    PAUSED: "paused",
+    FINAL: "final"
 };
 
 class GameStateManager {
     constructor() {
         this.state = GameStates.INITIAL;
         this.callbacks = [];
+        this.selectedColor = null;
     }
 
     getState() {
         return this.state;
     }
 
-    setState(newState) {
+    setState(newState, selectedColor = null) {
         if (this.state === newState) {
             return;
         }
 
         console.log(`State changed from ${this.state} to ${newState}`);
         this.state = newState;
+
+        if (newState === GameStates.RUNNING && selectedColor) {
+            this.selectedColor = selectedColor;
+            console.log("Game started with color: ", selectedColor);
+        }
 
         this.callbacks.forEach(callback => callback(newState));
     }
@@ -54,7 +60,7 @@ class GameStateManager {
     startGame() {
         this.setState(GameStates.RUNNING);
     }
-    
+
 }
 
 export { GameStateManager, GameStates };

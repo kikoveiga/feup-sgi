@@ -170,7 +170,7 @@
         },
         "cameras": {
             "initial": "Scene",
-            "Scene": {
+            "Scene1": {
                 "type": "perspective",
                 "angle": 60,
                 "near": 0.1,
@@ -179,6 +179,26 @@
                     "x": -300,
                     "y": 200,
                     "z": -300
+                },
+                "target": {
+                    "x": 40,
+                    "y": 0,
+                    "z": 40
+                },
+                "left": -10,
+                "right": 10,
+                "bottom": -10,
+                "top": 10
+            },
+            "Top": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 10000,
+                "location": {
+                    "x": -500,
+                    "y": 500,
+                    "z": -500
                 },
                 "target": {
                     "x": 40,
@@ -199,7 +219,8 @@
                     "nodesList": [
                         "finishLine",
                         "outdoor",
-                        "floor"
+                        "floor",
+                        "mountains"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
@@ -228,6 +249,53 @@
                         "shadowtop": 35,
                         "shadowbottom": -35
                     }
+                }
+            },
+
+            "mountains": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "mossApp"
+                },
+                "children": {
+                    "nodesList":[
+                        "mountain1",
+                        "mountain2",
+                        "mountain3",
+                        "mountain4",
+                        "mountain5",
+                        "mountain6",
+                        "mountain7",
+                        "mountain8"
+                    ]
                 }
             },
             "floor": {
