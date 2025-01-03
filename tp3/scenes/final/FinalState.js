@@ -3,10 +3,9 @@ import { MyBalloon } from '../../objects/MyBalloon.js';
 import { MyFirework } from '../../objects/MyFirework.js';
 
 class FinalState {
-    constructor(app, gameStateManager, interactableObjects) {
+    constructor(app, gameStateManager) {
         this.app = app;
         this.gameStateManager = gameStateManager;
-        this.interactableObjects = interactableObjects;
 
         this.fireworks = [];
     }

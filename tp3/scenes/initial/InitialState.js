@@ -15,7 +15,7 @@ class InitialState {
         this.playerNameString = "Not chosen";
     }
 
-    async init() {
+    init() {
         this.buildMainMenu();
         this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer, this.handleBalloonSelection.bind(this));
         this.interactableObjects.forEach(obj => { this.pickingManager.addInteractableObject(obj); });
