@@ -518,7 +518,7 @@ class MyContents {
             }
         }
 
-        this.myreader.update();
+        this.myReader.update();
     }
     
 }
