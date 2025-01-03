@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 
 class PickingManager {
-    constructor(scene, camera, renderer) {
+    constructor(scene, camera, renderer, gameStateManager) {
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
         this.scene = scene;
         this.camera = camera;
         this.renderer = renderer;
+        this.gameStateManager = gameStateManager;
 
         this.hoveredObject = null;
         this.selectedObject = null;
@@ -39,18 +40,21 @@ class PickingManager {
             const hoveredObject = intersects[0].object;
 
             if (this.hoveredObject !== hoveredObject) {
-                if (this.hoveredObject) {
+                if (this.hoveredObject && this.hoveredObject !== this.selectedObject) {
                     this.removeHighlight(this.hoveredObject);
                 }
 
                 this.hoveredObject = hoveredObject;
-                this.addHighlight(this.hoveredObject);
+                if (this.hoveredObject !== this.selectedObject) {
+                    this.addHighlight(this.hoveredObject);
+                }
             }
         } else {
-            if (this.hoveredObject) {
+            if (this.hoveredObject && this.hoveredObject !== this.selectedObject) {
                 this.removeHighlight(this.hoveredObject);
-                this.hoveredObject = null;
             }
+
+            this.hoveredObject = null;
         }
     }
 
@@ -59,21 +63,38 @@ class PickingManager {
         const intersects = this.raycaster.intersectObjects(this.interactableObjects);
 
         if (intersects.length > 0) {
-            this.selectedObject = intersects[0].object;
-            console.log(`Selected object: ${this.selectedObject.name}`);
-            this.handleSelection();
-        }
+            const clickedObject = intersects[0].object;
+
+            if (this.selectedObject === clickedObject) {
+                console.log('Deselecting object');
+                this.removeHighlight(this.selectedObject);
+                this.selectedObject = null;
+            } else {
+                if (this.selectedObject) {
+                    this.removeHighlight(this.selectedObject);
+                }
+
+                this.selectedObject = clickedObject;
+                this.addHighlight(this.selectedObject);
+                this.handleSelection();
+            }
+        } 
     }
 
     addHighlight(object) {
         if (object && object.material) {
+            if (!object.userData.originalEmissive) {
+                object.userData.originalEmissive = object.material.emissive.clone();
+            }
+
             object.material.emissive = new THREE.Color(0x444444);
         }
     }
 
     removeHighlight(object) {
-        if (object && object.material) {
-            object.material.emissive = new THREE.Color(0x000000);
+        if (object && object.material && object.userData.originalEmissive) {
+            object.material.emissive.copy(object.userData.originalEmissive);
+            delete object.userData.originalEmissive;
         }
     }
 
@@ -82,18 +103,13 @@ class PickingManager {
             return;
         }
 
-        switch (this.selectedObject.name) {
+        if (['orangeButton', 'greenButton', 'blueButton', 'pinkButton'].includes(this.selectedObject.name)) {
+            console.log('Color button clicked');
+        }
 
-            case 'balloon':
-                console.log('Balloon selected!');
-                break;
-
-            case 'powerup':
-                console.log('Powerup selected!');
-                break;
-
-            default:
-                console.log('Unknown object selected!');
+        else if (this.selectedObject.name === 'playButton') {
+            console.log('Play button clicked');
+            this.gameStateManager.startGame();
         }
     }
 }
