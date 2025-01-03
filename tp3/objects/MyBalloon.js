@@ -40,6 +40,24 @@ class MyBalloon extends MyObject {
        
      }
 
+     updateAltitude(delta, direction) {
+          if (direction === 1 && this.windLayer < 4) this.windLayer++;
+          else if (direction === -1 && this.windLayer > 0) this.windLayer--;
+
+          this.altitude = this.windLayer * 10;
+          this.group.position.y = this.altitude;
+     }
+
+     applyWindMovement(delta, windDirection, windSpeed) {
+          const movement = windDirection.clone().multiplyScalar(windSpeed * delta);
+          this.group.position.add(movement);
+     }
+
+     update(delta, windLayers) {
+          const currentWind = windLayers[this.windLayer];
+          this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
+     }
+
      createTextures() {
           this.orangeApp = new THREE.MeshStandardMaterial({
                color: 0xff8000, 
