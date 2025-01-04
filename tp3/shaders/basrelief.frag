@@ -1,20 +1,12 @@
-#version 300 es
-
+#ifdef GL_ES
 precision mediump float;
+#endif
 
-// The RGB texture for coloring
-uniform sampler2D colorMap;
-
-// Incoming UV from the vertex shader
-in vec2 vUv;
-
-// Output color
-out vec4 fragColor;
+uniform sampler2D uSampler1; 
+varying vec2 vUv;
 
 void main() {
-    // Sample the color texture (the “original” RGB image)
-    vec4 color = texture(colorMap, vUv);
 
-    // Final fragment color
-    fragColor = color;
+    vec4 color = texture2D(uSampler1, vUv);
+    gl_FragColor = color;
 }

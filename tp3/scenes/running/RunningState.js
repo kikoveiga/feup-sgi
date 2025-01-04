@@ -34,21 +34,22 @@ class RunningState {
 
         this.shaders = [
             new MyShader(this.app, "Pulse shader for obstacle", "Description 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                    timeFactor: {type: 'f', value: 1.0 },
+                    timeFactor: {type: 'f', value: 0.8 },
                     uSampler: {type: 'sampler2D', value: obstacleTexture }
             }),
 
             new MyShader(this.app, "Pulse shader for powerup", "Description 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                timeFactor: {type: 'f', value: 1.0 },
+                timeFactor: {type: 'f', value: 0.8 },
                 uSampler: {type: 'sampler2D', value: powerupTexture }
             }),
 
-            new MyShader(
-                this.app, "Bas-Relief Shader", "Bas-relief effect", "./shaders/basrelief.vert","./shaders/basrelief.frag", {
-                    depthMap: { type: 'sampler2D', value: depthTexture },
-                    colorMap: { type: 'sampler2D', value: colorTexture },
-                 scaleFactor: { type: 'f', value: 0.1 },
-            }),
+            new MyShader(this.app, "Basrelief", "Bas-relief effect", "./shaders/basrelief.vert", "./shaders/basrelief.frag", {
+                  uSampler1: { type: 'sampler2D', value: colorTexture }, 
+                  uSampler2: { type: 'sampler2D', value: depthTexture }, 
+                  scaleFactor: { type: 'f', value: 2.5 }
+                }
+            )
+              
         ];
     
         this.waitForShaders();
@@ -80,6 +81,60 @@ class RunningState {
         this.app.scene.add(this.avaiableVouchersMesh);
         this.app.scene.add(this.gameStatusMesh);
         this.app.scene.add(this.layerMesh);
+
+
+        this.group = new THREE.Group();
+
+        const ironTexture = new THREE.TextureLoader().load('./images/iron.jpg');
+        const legMaterial = new THREE.MeshPhysicalMaterial({
+            map: ironTexture,            
+            color: "#808080",           
+            roughness: 0.3,              
+            metalness: 0.6,              
+            bumpMap: ironTexture,        
+            bumpScale: 0.02,             
+            reflectivity: 0.7,          
+        });
+
+        const planeMaterial = new THREE.MeshPhysicalMaterial({
+            map: ironTexture,           
+            color: "#dddddd",           
+            roughness: 0.5,              
+            metalness: 0.2,            
+            bumpMap: ironTexture,        
+            bumpScale: 0.02,             
+            reflectivity: 0.5,           
+        });
+
+        const geometry = new THREE.PlaneGeometry(50, 30, 100, 100);
+
+        this.outdoorDisplay = new THREE.Mesh(geometry);
+        this.outdoorDisplay.scale.set(1.2, 1.2, 1.2);
+        this.outdoorDisplay.position.set(0, 42.5, -2.35);
+        this.outdoorDisplay.rotation.y = -Math.PI;
+        
+        const cylinderGeometry = new THREE.CylinderGeometry( 0.5, 0.5, 30, 32 );
+        const cylinder1 = new THREE.Mesh(cylinderGeometry, legMaterial);
+        cylinder1.position.set(-20, 15, 0);
+        cylinder1.scale.set(2.0, 1.0, 2.0);
+
+        const cylinder2 = new THREE.Mesh(cylinderGeometry, legMaterial);
+        cylinder2.position.set(20, 15, 0);
+        cylinder2.scale.set(2.0, 1.0, 2.0);
+
+        const boxGeometry = new THREE.BoxGeometry( 50, 30, 2 );
+        const box = new THREE.Mesh(boxGeometry, planeMaterial);
+        box.position.set(0, 42.5, 0);
+        box.scale.set(1.2, 1.2, 1.2);
+
+        this.group.add(box);
+        this.group.add(cylinder1);
+        this.group.add(cylinder2);
+        this.group.add(this.outdoorDisplay);
+        this.group.scale.set(2.7, 2.7, 2.7);
+        this.group.position.set(-180, 0, 210);
+        this.group.rotation.y = - 30 * Math.PI / 180;
+        this.app.scene.add(this.group);
     }
 
     waitForShaders() {
@@ -93,7 +148,6 @@ class RunningState {
         for (const obstacle of this.obstacles) {
             if (obstacle instanceof MyObstacle) {
                 this.setCurrentShader(this.shaders[0], obstacle.obstacle);
-                // console.log("Shader applied to obstacle");
             } else {
                 console.error("Invalid obstacle object");
             }
@@ -102,11 +156,12 @@ class RunningState {
         for (const powerup of this.powerups) {
             if (powerup instanceof MyPowerUp) {
                 this.setCurrentShader(this.shaders[1], powerup.powerup);
-                // console.log("Shader applied to powerup");
             } else {
                 console.error("Invalid powerup object");
             }
         }
+
+        this.setCurrentShader(this.shaders[2], this.outdoorDisplay);
     }
     
     setCurrentShader(shader, selectedObject) {
