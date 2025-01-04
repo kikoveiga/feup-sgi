@@ -1,29 +1,19 @@
-#version 300 es
-
+#ifdef GL_ES
 precision mediump float;
+#endif
 
-in vec3 position;
-in vec3 normal;
-in vec2 uv;
+// Do NOT redeclare position, normal, uv, normalMatrix, etc. here.
 
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
-uniform mat4 normalMatrix;
+uniform sampler2D uSampler2;  // The depth texture
+uniform float scaleFactor;    
 
-uniform sampler2D depthMap;
-
-uniform float scaleFactor;
-
-out vec2 vUv;
+// Varying to pass UV
+varying vec2 vUv;
 
 void main() {
     vUv = uv;
-
-    float depthValue = texture(depthMap, uv).r;
-
-    vec3 normalView = normalize((normalMatrix * vec4(normal, 0.0)).xyz);
-
+    float depthValue = texture2D(uSampler2, uv).r;
+    vec3 normalView = normalize(normalMatrix * normal);
     vec3 displacedPosition = position + normalView * depthValue * scaleFactor;
-
     gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
 }

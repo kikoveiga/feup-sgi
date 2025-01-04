@@ -9,25 +9,17 @@ async function main() {
     app.init();
 
     const gameStateManager = new GameStateManager();
+    const contents = new MyContents(app, gameStateManager);
+    app.setContents(contents);
+
 
     const gui = new MyGuiInterface(app);
-    app.setGui(gui);
-
-    const contents = new MyContents(app, GameStates.RUNNING, gameStateManager);
     gui.setContents(contents);
     gui.init();
 
-    await contents.init();
-    app.setContents(contents);
-    
-    gameStateManager.onStateChange(async (newState) => {
-        console.log("Switching state to: ", newState);
+    app.setGui(gui);
 
-        const newContents = new MyContents(app, newState, gameStateManager);
-        await newContents.init();
-        app.setContents(newContents);
-        gui.setContents(newContents);
-    });
+    gameStateManager.setState(GameStates.RUNNING);
 
     // main animation loop - calls every 50-60 ms.
     app.render();
