@@ -149,6 +149,14 @@ class InitialState {
 
     updateTextMesh(mesh, newText, color) {
 
+        // Create a new group with the updated text
+        let updatedMesh = this.createTextMesh(newText, 2024, 0, 0, color);
+        console.log(" New text: ", newText);
+        console.log("Updated mesh children count: ", updatedMesh.children.length);
+        updatedMesh.children.forEach((child, index) => {
+            console.log(`Child ${index}:`, child);
+        });
+
         while (mesh.children.length > 0) {
             console.log("Removing children from mesh...");
             const child = mesh.children.pop();
@@ -156,15 +164,9 @@ class InitialState {
             child.material.dispose();
         }
         
-        // Create a new group with the updated text
-        let updatedMesh = this.createTextMesh(newText, 2024, 0, 0, color);
-
-        console.log("Updated mesh: ", updatedMesh);
-        // Re-add the newly created letters as children of the original group
-        updatedMesh.children.forEach(child => {
-            console.log("Adding child to mesh...");
-            mesh.add(child);
-        });
+        for (let i = 0; i < updatedMesh.children.length; i++) {
+            mesh.add(updatedMesh.children.pop());
+        }
 
         console.log("Mesh after update: ", mesh);
     }
