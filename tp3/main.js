@@ -12,7 +12,6 @@ async function main() {
     const contents = new MyContents(app, gameStateManager);
     app.setContents(contents);
 
-
     const gui = new MyGuiInterface(app);
     gui.setContents(contents);
     gui.init();

@@ -209,11 +209,11 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor || 'green');
+          this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor);
           this.playerBalloon.scale.set(10, 10, 10);
           this.app.scene.add(this.playerBalloon);
 
-          this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor || 'pink');
+          this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor);
           this.opponentBalloon.scale.set(10, 10, 10);
           this.app.scene.add(this.opponentBalloon);
 
@@ -221,9 +221,31 @@ class MyReader {
 
      }
 
+     pause() {
+          this.mixerPause = true;
+          this.clock.stop();
+          this.pauseTime = this.clock.getElapsedTime();
+     }
+
+     resume() {
+          this.mixerPause = false;
+          const resumeTime = this.clock.getElapsedTime();
+          this.timeOffset = resumeTime - this.pauseTime;
+          this.clock.start();
+     }
+
      update() {
 
-          const delta = this.clock.getDelta();
+          let delta = this.clock.getDelta();
+
+          if (this.mixerPause) {
+               return;
+          }
+
+          if (this.timeOffset) {
+               delta -= this.timeOffset;
+               this.timeOffset = 0;
+          }
           
           this.playerMixer.update(delta);
           this.opponentMixer.update(delta);
