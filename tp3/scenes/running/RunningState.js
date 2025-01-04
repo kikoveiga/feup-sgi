@@ -25,6 +25,8 @@ class RunningState {
 
         this.keyStates = {};
         this.paused = false;
+        this.pauseTime = 0;
+        this.shaderElapsedTime = 0;
         
         window.addEventListener('keydown', (event) => {
             this.keyStates[event.code] = true;
@@ -49,6 +51,7 @@ class RunningState {
             this.myReader.resume();
             const resumeTime = this.app.clock.getElapsedTime();
             this.timeOffset = resumeTime - this.pauseTime;
+            this.shaderElapsedTime += this.timeOffset;
         }
     }
 
@@ -233,14 +236,13 @@ class RunningState {
         }
 
         this.myReader.playerBalloon.update(delta, this.windLayers);
-
         this.myReader.track.update(delta);
         
-        const elapsedTime = this.app.clock.getElapsedTime();
+        this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
-            // console.log("Shader:", shader);
+
             if (shader && shader.hasUniform("timeFactor")) {
-                shader.updateUniformsValue("timeFactor", elapsedTime);
+                shader.updateUniformsValue("timeFactor", this.shaderElapsedTime);
             }
         }            
 
