@@ -221,9 +221,31 @@ class MyReader {
 
      }
 
+     pause() {
+          this.mixerPause = true;
+          this.clock.stop();
+          this.pauseTime = this.clock.getElapsedTime();
+     }
+
+     resume() {
+          this.mixerPause = false;
+          const resumeTime = this.clock.getElapsedTime();
+          this.timeOffset = resumeTime - this.pauseTime;
+          this.clock.start();
+     }
+
      update() {
 
-          const delta = this.clock.getDelta();
+          let delta = this.clock.getDelta();
+
+          if (this.mixerPause) {
+               return;
+          }
+
+          if (this.timeOffset) {
+               delta -= this.timeOffset;
+               this.timeOffset = 0;
+          }
           
           this.playerMixer.update(delta);
           this.opponentMixer.update(delta);

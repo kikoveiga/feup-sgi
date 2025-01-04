@@ -17,10 +17,10 @@ class RunningState {
 
         this.windLayers = [
             { direction: new THREE.Vector3(0, 0, 0), speed: 0 },
-            { direction: new THREE.Vector3(0, 0, -1), speed: 5 },
-            { direction: new THREE.Vector3(0, 0, 1), speed: 5 },
-            { direction: new THREE.Vector3(1, 0, 0), speed: 5 },
-            { direction: new THREE.Vector3(-1, 0, 0), speed: 5 },
+            { direction: new THREE.Vector3(0, 0, -1), speed: 2 },
+            { direction: new THREE.Vector3(0, 0, 1), speed: 2 },
+            { direction: new THREE.Vector3(1, 0, 0), speed: 2 },
+            { direction: new THREE.Vector3(-1, 0, 0), speed: 2 },
         ];
 
         this.keyStates = {};
@@ -41,6 +41,15 @@ class RunningState {
 
     togglePause() {
         this.paused = !this.paused;
+
+        if (this.paused) {
+            this.myReader.pause();
+            this.pauseTime = this.app.clock.getElapsedTime();
+        } else {
+            this.myReader.resume();
+            const resumeTime = this.app.clock.getElapsedTime();
+            this.timeOffset = resumeTime - this.pauseTime;
+        }
     }
 
     init() {
@@ -209,6 +218,11 @@ class RunningState {
     update(delta) {
         if (!this.myReader || this.paused) {
             return;
+        }
+
+        if (this.timeOffset) {
+            delta -= this.timeOffset;
+            this.timeOffset = 0;
         }
 
         if (this.keyStates["KeyW"]) {
