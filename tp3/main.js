@@ -19,7 +19,7 @@ async function main() {
 
     app.setGui(gui);
 
-    gameStateManager.setState(GameStates.INITIAL);
+    gameStateManager.setState(GameStates.RUNNING);
 
     app.scene.traverse((object) => {
         if (object === null) {
