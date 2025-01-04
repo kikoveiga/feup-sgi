@@ -146,27 +146,27 @@ class MyReader {
      }
 
      setMixerTime() {
-          if (this.playerMixer) this.playerMixer.setTime(this.mixerTime)
-          if (this.opponentMixer) this.opponentMixer.setTime(this.mixerTime)
+          if (this.playerMixer) this.playerMixer.setTime(this.mixerTime);
+          if (this.opponentMixer) this.opponentMixer.setTime(this.mixerTime);
      }
   
      debugKeyFrames() {
-          let spline = new THREE.CatmullRomCurve3([...this.keyPoints])
+          let spline = new THREE.CatmullRomCurve3([...this.keyPoints]);
   
           for (let i = 0; i < this.keyPoints.length; i++) {
-              const geometry = new THREE.SphereGeometry(1, 32, 32)
-              const material = new THREE.MeshBasicMaterial({ color: 0x0000ff })
-              const sphere = new THREE.Mesh(geometry, material)
+              const geometry = new THREE.SphereGeometry(1, 32, 32);
+              const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+              const sphere = new THREE.Mesh(geometry, material);
               sphere.scale.set(3, 3, 3);
-              sphere.position.set(... this.keyPoints[i])
+              sphere.position.set(... this.keyPoints[i]);
   
-              this.app.scene.add(sphere)
+              this.app.scene.add(sphere);
           }
   
-          const tubeGeometry = new THREE.TubeGeometry(spline, 100, 0.05, 10, false)
-          const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-          const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial)
-          this.app.scene.add(tubeMesh)
+          const tubeGeometry = new THREE.TubeGeometry(spline, 100, 0.05, 10, false);
+          const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+          const tubeMesh = new THREE.Mesh(tubeGeometry, tubeMaterial);
+          this.app.scene.add(tubeMesh);
      }
 
      checkAnimationStateIsPause() {
@@ -184,17 +184,17 @@ class MyReader {
           const processMixerActions = (mixer) => {
                const actions = mixer._actions;
                for (let i = 0; i < actions.length; i++) {
-                    const track = actions[i]._clip.tracks[0]
+                    const track = actions[i]._clip.tracks[0];
 
                     if (track.name === '.quaternion' && this.enableAnimationRotation === false) {
-                         actions[i].stop()
+                         actions[i].stop();
                     }
                     else if (track.name === '.position' && this.enableAnimationPosition === false) {
-                         actions[i].stop()
+                         actions[i].stop();
                     }
                     else {
                          if (!actions[i].isRunning())
-                              actions[i].play()
+                              actions[i].play();
                     }
                }
           }
@@ -222,7 +222,9 @@ class MyReader {
      }
 
      update() {
+
           const delta = this.clock.getDelta();
+          
           this.playerMixer.update(delta);
           this.opponentMixer.update(delta);
 
