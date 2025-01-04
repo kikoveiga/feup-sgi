@@ -81,23 +81,31 @@ class InitialState {
     }
 
     handleBalloonSelection(clickedObject, color) {
-    
+        this.colorHex = null;
+
+        if(color === 'pink') {
+            this.colorHex = 0xffb5c2;
+        } else if(color === 'blue') {
+            this.colorHex = 0x87cfff;
+        } else if(color === 'orange') {
+            this.colorHex = 0xff8000;
+        } else if(color === 'green') {
+            this.colorHex = 0x00cc00;
+        }
+
         if (clickedObject === 'playerBalloon') {
-            console.log(this.playerBalloon)
             this.playerBalloonString = color;
-            this.updateTextMesh(this.playerBalloon, color, 0xffa500);
-
-        } else if (clickedObject === 'opponentBalloon') {
+            this.updateTextMesh(this.playerBalloon, color, this.colorHex);
+        } 
+        else if (clickedObject === 'opponentBalloon') {
             this.opponentBalloonString = color;
-            this.updateTextMesh(this.opponentBalloon, color, 0xff69b4);
-            
-        } else if (clickedObject === 'playButton') {
-
+            this.updateTextMesh(this.opponentBalloon, color, this.colorHex);
+        } 
+        else if (clickedObject === 'playButton') {
             if (this.playerBalloonString === "Not chosen" || this.opponentBalloonString === "Not chosen") {
                 console.warn('Please select both balloons before starting the game.');
                 return;
             }
-
             this.gameStateManager.setState(GameStates.RUNNING, this.playerBalloonString, this.opponentBalloonString);
         }
     }

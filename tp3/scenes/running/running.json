@@ -258,7 +258,8 @@
                         "finishLine",
                         "outdoor",
                         "floor",
-                        "mountains"
+                        "mountains",
+                        "parking"
                     ],
                     "directionalLight": {
                         "type": "directionalLight",
@@ -286,6 +287,59 @@
                         "shadowleft": -35,
                         "shadowtop": 35,
                         "shadowbottom": -35
+                    }
+                }
+            },
+            "parking": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "nodesList":[
+                        "plane1",
+                        "plane2",
+                        "wall1",
+                        "wall2",
+                        "wall3",
+                        "wall4"
+                    ]
+                }
+            },
+            "plane1": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 0.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 0.0, "y": 50.0, "z": 0.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 20, "y": 20 }
                     }
                 }
             },
