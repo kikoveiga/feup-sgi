@@ -9,8 +9,20 @@ class GameStateManager {
     constructor() {
         this.state = null;
         this.callbacks = [];
-        this.playerBalloonColor = null;
-        this.oponentBalloonColor = null;
+
+        this.player = {
+            name: "Player",
+            balloonColor: "blue",
+            time: "N/A",
+        }
+
+        this.opponent = {
+            name: "Opponent",
+            balloonColor: "pink",
+            time: "N/A",
+        }
+
+        this.winner = null;
     }
 
     getState() {
@@ -26,11 +38,11 @@ class GameStateManager {
         this.state = newState;
 
         if (newState === GameStates.RUNNING && playerBalloonColor) {
-            this.playerBalloonColor = playerBalloonColor;
+            this.player.balloonColor = playerBalloonColor;
         }
 
         if (newState === GameStates.RUNNING && opponentBalloonColor) {
-            this.opponentBalloonColor = opponentBalloonColor;
+            this.opponent.balloonColor = opponentBalloonColor;
         }
 
         this.callbacks.forEach(callback => callback(newState));

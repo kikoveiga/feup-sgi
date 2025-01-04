@@ -1,25 +1,46 @@
 import * as THREE from 'three';
 import { MyBalloon } from '../../objects/MyBalloon.js';
 import { MyFirework } from '../../objects/MyFirework.js';
-import { MyReader } from '../../objects/MyReader.js';
+import { PickingManager } from '../../PickingManager.js';
+import { GameStates } from '../../GameStateManager.js';
 
 class FinalState {
-    constructor(app, gameStateManager) {
+    constructor(app, gameStateManager, interactableObjects) {
         this.app = app;
         this.gameStateManager = gameStateManager;
+        this.interactableObjects = interactableObjects;
+
+        this.pickingManager = null;
 
         this.fireworks = [];
     }
 
     init() {
-        this.winnerColor = "pink"; // TROCAR PARA A COR DO VENCEDOR
-        this.loserColor = "blue"; // TROCAR PARA A COR DO PERDEDOR
-        this.winner = "joaoalvesss" // TROCAR PARA O NOME DO VENCEDOR
-        this.loser = "kikoveiga" // TROCAR PARA O NOME DO PERDEDOR
+        this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer, this.handleButtonSelection.bind(this));
+        this.interactableObjects.forEach(obj => { this.pickingManager.addInteractableObject(obj); });
+
         this.buildFinalMenu(this.winnerColor, this.loserColor, this.winner, this.loser);
     }
 
-    buildFinalMenu(winnerColor, loserColor, winnerName, loserName, winnerTime) {
+    handleButtonSelection(clickedObject) {
+        console.log("Clicked object: ", clickedObject);
+        if (clickedObject === "rematchButton") this.gameStateManager.setState(GameStates.RUNNING);
+        else this.gameStateManager.setState(GameStates.INITIAL);
+    }
+
+    buildFinalMenu() {
+
+        let winnerData;
+        let loserData;
+
+        if (!this.gameStateManager.winner || this.gameStateManager.winner === this.gameStateManager.player) {
+            winnerData = this.gameStateManager.player;
+            loserData = this.gameStateManager.opponent;
+        } else {
+            winnerData = this.gameStateManager.opponent;
+            loserData = this.gameStateManager.player;
+        }
+
         console.log("Building final menu...");
         this.menuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
         this.menuMesh.scale.set(-1.8, 1.8, 1.8);
@@ -37,11 +58,11 @@ class FinalState {
         this.loserTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.loserTextMesh);
 
-        this.winnerNameMesh = this.createTextMesh(winnerName, -31, 10033.5, 0.1, 0x111111);
+        this.winnerNameMesh = this.createTextMesh(winnerData.name, -31, 10033.5, 0.1, 0x111111);
         this.winnerNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerNameMesh);
 
-        this.loserNameMesh = this.createTextMesh(loserName, 20, 10033.5, 0.1, 0x111111);
+        this.loserNameMesh = this.createTextMesh(loserData.name, 20, 10033.5, 0.1, 0x111111);
         this.loserNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.loserNameMesh);
 
@@ -49,17 +70,17 @@ class FinalState {
         this.winnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerTimeMesh);
 
-        this.winnerMesh = this.createTextMesh(" " + winnerTime + " ", -3.5, 10026, 0.1, 0x111111);
+        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 10026, 0.1, 0x111111);
         this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerMesh);
 
-        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerColor);
+        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
         this.winnerBalloon.position.set(-25, 9987.5, 0);
         this.app.scene.add(this.winnerBalloon);
 
-        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserColor);
+        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
         this.loserBalloon.position.set(25, 9987.5, 0);

@@ -5,10 +5,9 @@ import { MyObstacle } from '../../objects/MyObstacle.js';
 import { MyPowerUp } from '../../objects/MyPowerUp.js';
 
 class RunningState {
-    constructor(app, gameStateManager, interactableObjects) {
+    constructor(app, gameStateManager) {
         this.app = app;
         this.gameStateManager = gameStateManager;
-        this.interactableObjects = interactableObjects;
 
         this.myReader = null;
         this.track = null;
@@ -50,7 +49,7 @@ class RunningState {
 
         this.buildOutdoorDisplay();
 
-        this.myReader = new MyReader(this.app, this.gameStateManager.playerBalloonColor, this.gameStateManager.opponentBalloonColor);
+        this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor);
         this.powerups = this.myReader.getPowerUps();
         this.obstacles = this.myReader.getObstacles();
 
