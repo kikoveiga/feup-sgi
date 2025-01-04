@@ -11,6 +11,9 @@ class MyReader {
 
           this.route = new MyRoute(this.app);
 
+          this.playerBalloon = null;
+          this.opponentBalloon = null;
+
           this.keyPoints = this.route.getRoutePoints();
 
           this.buildTrack();
@@ -20,7 +23,6 @@ class MyReader {
           this.mixerPause = false;
           this.enableAnimationRotation = true;
           this.enableAnimationPosition = true;
-          this.initBalloonAnimation();
 
           this.raceFisnished = true;
 
@@ -37,7 +39,16 @@ class MyReader {
      }
      
      /*********************** ANIMATION ZONE ***********************/
-     initBalloonAnimation() {
+     initBalloonsAnimation() {
+
+          this.playerMixer = new THREE.AnimationMixer(this.playerBalloon);
+          this.createBalloonAnimation(this.playerMixer);
+
+          this.opponentMixer = new THREE.AnimationMixer(this.opponentBalloon);
+          this.createBalloonAnimation(this.opponentMixer);
+     }
+
+     createBalloonAnimation(mixer) {
           // this.debugKeyFrames()
 
           const positionKF = new THREE.VectorKeyframeTrack('.position', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
@@ -113,7 +124,6 @@ class MyReader {
               new THREE.Quaternion().setFromAxisAngle(yAxis, Math.PI * 2.5)       // Point 30
           ];
           
-
           const quaternionComponents = [];
           rotations.forEach(q => {
               quaternionComponents.push(q.x, q.y, q.z, q.w);
@@ -125,20 +135,19 @@ class MyReader {
               quaternionComponents
           );
           
-          const positionClip = new THREE.AnimationClip('positionAnimation', 30, [positionKF])
-          const rotationClip = new THREE.AnimationClip('rotationAnimation', 30, [quaternionKF])
-  
-          this.mixer = new THREE.AnimationMixer(this.balloon)
-  
-          const positionAction = this.mixer.clipAction(positionClip)
-          const rotationAction = this.mixer.clipAction(rotationClip)
+          const positionClip = new THREE.AnimationClip('positionAnimation', 30, [positionKF]);
+          const rotationClip = new THREE.AnimationClip('rotationAnimation', 30, [quaternionKF]);
+    
+          const positionAction = mixer.clipAction(positionClip);
+          const rotationAction = mixer.clipAction(rotationClip);
 
-          positionAction.play()
-          rotationAction.play()
+          positionAction.play();
+          rotationAction.play();
      }
 
      setMixerTime() {
-          this.mixer.setTime(this.mixerTime)
+          if (this.playerMixer) this.playerMixer.setTime(this.mixerTime)
+          if (this.opponentMixer) this.opponentMixer.setTime(this.mixerTime)
      }
   
      debugKeyFrames() {
@@ -161,28 +170,37 @@ class MyReader {
      }
 
      checkAnimationStateIsPause() {
-          if (this.mixerPause)
-               this.mixer.timeScale = 0
-          else
-               this.mixer.timeScale = 1
+          if (this.mixerPause) {
+               this.playerMixer.timeScale = 0;
+               this.opponentMixer.timeScale = 0;
+          } 
+          else {
+               this.playerMixer.timeScale = 1;
+               this.opponentMixer.timeScale = 1;
+          }
      }
 
      checkTracksEnabled() {
-          const actions = this.mixer._actions
-          for (let i = 0; i < actions.length; i++) {
-               const track = actions[i]._clip.tracks[0]
+          const processMixerActions = (mixer) => {
+               const actions = mixer._actions;
+               for (let i = 0; i < actions.length; i++) {
+                    const track = actions[i]._clip.tracks[0]
 
-               if (track.name === '.quaternion' && this.enableAnimationRotation === false) {
-                    actions[i].stop()
-               }
-               else if (track.name === '.position' && this.enableAnimationPosition === false) {
-                    actions[i].stop()
-               }
-               else {
-                    if (!actions[i].isRunning())
-                         actions[i].play()
+                    if (track.name === '.quaternion' && this.enableAnimationRotation === false) {
+                         actions[i].stop()
+                    }
+                    else if (track.name === '.position' && this.enableAnimationPosition === false) {
+                         actions[i].stop()
+                    }
+                    else {
+                         if (!actions[i].isRunning())
+                              actions[i].play()
+                    }
                }
           }
+
+          if (this.playerMixer) processMixerActions(this.playerMixer);
+          if (this.opponentMixer) processMixerActions(this.opponentMixer);
      }
 
      buildTrack() {
@@ -191,17 +209,25 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.balloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor || 'green');
-          this.balloon.scale.set(10, 10, 10);
-          this.app.scene.add(this.balloon);
+          this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor || 'green');
+          this.playerBalloon.scale.set(10, 10, 10);
+          this.app.scene.add(this.playerBalloon);
+
+          this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor || 'pink');
+          this.opponentBalloon.scale.set(10, 10, 10);
+          this.app.scene.add(this.opponentBalloon);
+
+          this.initBalloonsAnimation();
+
      }
 
      update() {
-          const delta = this.clock.getDelta()
-          this.mixer.update(delta)
+          const delta = this.clock.getDelta();
+          this.playerMixer.update(delta);
+          this.opponentMixer.update(delta);
 
-          this.checkAnimationStateIsPause()
-          this.checkTracksEnabled()
+          this.checkAnimationStateIsPause();
+          this.checkTracksEnabled();
      }
 }
 
