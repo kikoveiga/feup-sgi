@@ -101,6 +101,10 @@ class PickingManager {
 
                 this.selectionCallback(clickedObject.name, this.selectedColorButton.name.replace('Button', ''));
             }
+
+            else {
+                this.selectionCallback(clickedObject.name);
+            }
         } 
     }
 
