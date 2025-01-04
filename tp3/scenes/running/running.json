@@ -325,11 +325,11 @@
                     },
                     {
                     "type": "rotate",
-                    "amount": { "x": 0.0, "y": 0.0, "z": 0.0 }
+                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": 50.0, "z": 0.0 }
+                    "amount": { "x": 100.0, "y": 1, "z": -350.0 }
                     }
                 ],
                 "materialref": {
@@ -339,8 +339,124 @@
                     "rectangle": {
                         "type": "rectangle",
                         "xy1": { "x": 0, "y": 0 },
-                        "xy2": { "x": 20, "y": 20 }
+                        "xy2": { "x": 350, "y": 140 }
                     }
+                }
+            },
+            "plane2": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 225.0, "y": 1, "z": -180.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "rectangle": {
+                        "type": "rectangle",
+                        "xy1": { "x": 0, "y": 0 },
+                        "xy2": { "x": 100, "y": 200 }
+                    }
+                }
+            },
+            "wall1": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 100.0, "y": 1, "z": -420.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 350.0, "y": 5.0, "z": 30.0 }
+                    }  
+                }
+            },
+            "wall2": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 225.0, "y": 1, "z": -80.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 100.0, "y": 5.0, "z": 30.0 }
+                    }  
+                }
+            },
+            "wall3": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 275.0, "y": 1, "z": -250.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 5.0, "y": 340.0, "z": 30.0 }
+                    }  
                 }
             },
             "mountains": {
