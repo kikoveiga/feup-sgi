@@ -165,7 +165,7 @@ class InitialState {
             child.material.dispose();
         }
 
-        let updatedMesh = this.createTextMesh(newText, 2024, 0, 0, color);
+        let updatedMesh = this.createTextMesh(newText, 0, 0, 0, color);
         
         while (updatedMesh.children.length > 0) {
             mesh.add(updatedMesh.children.pop());
