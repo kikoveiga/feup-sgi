@@ -37,7 +37,6 @@ class MyBalloon extends MyObject {
           this.altitude = 0; 
           this.windLayer = 0; 
           this.speed = 0;
-       
      }
 
      updateAltitude(delta, direction) {
@@ -126,7 +125,7 @@ class MyBalloon extends MyObject {
           }
           else if(this.color === 'green') {
                this.mat = this.greenApp;
-          }     
+          } else console.error('Invalid color for balloon');     
 
           const bodyGroup = new THREE.Group();
           // Sphere

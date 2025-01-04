@@ -81,10 +81,9 @@ class InitialState {
     }
 
     handleBalloonSelection(clickedObject, color) {
-
-        console.log("Clicked object: ", clickedObject);
     
         if (clickedObject === 'playerBalloon') {
+            console.log(this.playerBalloon)
             this.playerBalloonString = color;
             this.updateTextMesh(this.playerBalloon, color, 0xffa500);
 
@@ -101,24 +100,10 @@ class InitialState {
         }
     }
 
-    updatePlayerBalloonText(color) {
-        if (this.playerSelected) {
-            this.updateTextMesh(this.playerSelected, color, 0xffa500); // Update playerSelected text
-        }
-        this.playerBalloonColor = color; // Update internal state
-    }
-
-    updateOpponentBalloonText(color) {
-        if (this.playerSelected2) {
-            this.updateTextMesh(this.playerSelected2, color, 0xff69b4); // Update playerSelected2 text
-        }
-        this.opponentBalloonColor = color; // Update internal state
-    }
-
     createTextMesh(text, x, y, z, color) {
         const texture = new THREE.TextureLoader().load("./images/font.png");
         
-        const meshes = [];
+        const group = new THREE.Group();
         let offset = 0;
         
         for (let i = 0; i < text.length; i++) {
@@ -134,49 +119,54 @@ class InitialState {
             const cols = 16;
             const rows = 16;
             
-            const u = (charCode % (cols * rows)) % cols * (1 / cols);
-            const v = Math.floor((charCode % (cols * rows)) / cols) * (1 / rows);
-    
-            const mesh = new THREE.Mesh(geometry, material);
-            const originalUV = geometry.getAttribute('uv').clone();
-
-            originalUV.set([
-                u,         1 - v - 1/rows,
-                u + 1/cols,1 - v - 1/rows,
-                u,         1 - v,
-                u + 1/cols,1 - v
-            ]);
-            geometry.setAttribute('uv', originalUV);
+            const u = (charCode % cols) * (1 / cols);
+            const v = Math.floor((charCode / cols)) * (1 / rows);
             
+            const uvAttribute = geometry.attributes.uv;
+
+            uvAttribute.array.set([
+                u,            1 - v - 1 / rows,
+                u + 1 / cols, 1 - v - 1 / rows,
+                u,            1 - v,
+                u + 1 / cols, 1 - v
+            ]);
+
+            geometry.setAttribute('uv', uvAttribute);
+
+            const mesh = new THREE.Mesh(geometry, material);
             mesh.position.x = offset;
+            mesh.name = text[i];
             offset += 0.65; // looks good
 
-            meshes.push(mesh);
+            group.add(mesh);
         }
 
-        const group = new THREE.Group();
-        meshes.forEach(mesh => group.add(mesh));
         group.position.set(x, y, z);
         group.rotation.x = -Math.PI;
         group.rotation.y = -Math.PI;
         return group;
     }
 
-    updateTextMesh(mesh, nexText, color) {
+    updateTextMesh(mesh, newText, color) {
 
         while (mesh.children.length > 0) {
-            const child = mesh.children[0]; // Always take the first child
-            mesh.remove(child);
-        
+            console.log("Removing children from mesh...");
+            const child = mesh.children.pop();
             child.geometry.dispose();
             child.material.dispose();
         }
         
         // Create a new group with the updated text
-        const updatedMesh = this.createTextMesh(nexText, 0, 0, 0, color);
+        let updatedMesh = this.createTextMesh(newText, 2024, 0, 0, color);
 
+        console.log("Updated mesh: ", updatedMesh);
         // Re-add the newly created letters as children of the original group
-        updatedMesh.children.forEach(child => mesh.add(child));
+        updatedMesh.children.forEach(child => {
+            console.log("Adding child to mesh...");
+            mesh.add(child);
+        });
+
+        console.log("Mesh after update: ", mesh);
     }
 
     update(delta) {

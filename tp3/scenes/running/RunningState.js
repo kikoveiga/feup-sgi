@@ -15,6 +15,33 @@ class RunningState {
         this.powerups = [];
         this.obstacles = [];
         this.shaders = [];
+
+        this.windLayers = [
+            { direction: new THREE.Vector3(0, 0, 0), speed: 0 },
+            { direction: new THREE.Vector3(0, 0, -1), speed: 5 },
+            { direction: new THREE.Vector3(0, 0, 1), speed: 5 },
+            { direction: new THREE.Vector3(1, 0, 0), speed: 5 },
+            { direction: new THREE.Vector3(-1, 0, 0), speed: 5 },
+        ];
+
+        this.keyStates = {};
+        this.paused = false;
+        
+        window.addEventListener('keydown', (event) => {
+            this.keyStates[event.code] = true;
+
+            if (event.code === 'Space') {
+                this.togglePause();
+            }
+        });
+
+        window.addEventListener('keyup', (event) => {
+            this.keyStates[event.code] = false;
+        });
+    }
+
+    togglePause() {
+        this.paused = !this.paused;
     }
 
     init() {
@@ -126,17 +153,26 @@ class RunningState {
     }
 
     update(delta) {
-        if (!this.myReader) {
+        if (!this.myReader || this.paused) {
             return;
         }
 
+        if (this.keyStates["KeyW"]) {
+            this.myReader.playerBalloon.updateAltitude(delta, 1);
+        }
+        if (this.keyStates["KeyS"]) {
+            this.myReader.playerBalloon.updateAltitude(delta, -1);
+        }
+
+        this.myReader.playerBalloon.update(delta, this.windLayers);
+
         this.myReader.track.update(delta);
         
-        let t = this.app.clock.getElapsedTime();
+        const elapsedTime = this.app.clock.getElapsedTime();
         for (const shader of this.shaders) {
             // console.log("Shader:", shader);
             if (shader && shader.hasUniform("timeFactor")) {
-                shader.updateUniformsValue("timeFactor", t);
+                shader.updateUniformsValue("timeFactor", elapsedTime);
             }
         }            
 
