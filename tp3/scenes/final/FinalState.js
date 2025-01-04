@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyBalloon } from '../../objects/MyBalloon.js';
 import { MyFirework } from '../../objects/MyFirework.js';
+import { MyReader } from '../../objects/MyReader.js';
 
 class FinalState {
     constructor(app, gameStateManager) {
@@ -19,6 +20,7 @@ class FinalState {
     }
 
     buildFinalMenu(winnerColor, loserColor, winnerName, loserName, winnerTime) {
+        console.log("Building final menu...");
         this.menuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
         this.menuMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.menuMesh);
@@ -64,7 +66,54 @@ class FinalState {
         this.app.scene.add(this.loserBalloon);
     }
 
-    update(delta) {
+    createTextMesh(text, x, y, z, color) {
+        const texture = new THREE.TextureLoader().load("./images/font.png");
+        
+        const meshes = [];
+        let offset = 0;
+        
+        for (let i = 0; i < text.length; i++) {
+            const geometry = new THREE.PlaneGeometry(1, 1);
+            const material = new THREE.MeshBasicMaterial({
+                map: texture,
+                side: THREE.DoubleSide,
+                transparent: true,
+                color: color
+            });
+
+            const charCode = text.charCodeAt(i) % 256;
+            const cols = 16;
+            const rows = 16;
+            
+            const u = (charCode % (cols * rows)) % cols * (1 / cols);
+            const v = Math.floor((charCode % (cols * rows)) / cols) * (1 / rows);
+    
+            const mesh = new THREE.Mesh(geometry, material);
+            const originalUV = geometry.getAttribute('uv').clone();
+
+            originalUV.set([
+                u,         1 - v - 1/rows,
+                u + 1/cols,1 - v - 1/rows,
+                u,         1 - v,
+                u + 1/cols,1 - v
+            ]);
+            geometry.setAttribute('uv', originalUV);
+            
+            mesh.position.x = offset;
+            offset += 0.65; // looks good
+
+            meshes.push(mesh);
+        }
+
+        const group = new THREE.Group();
+        meshes.forEach(mesh => group.add(mesh));
+        group.position.set(x, y, z);
+        group.rotation.x = -Math.PI;
+        group.rotation.y = -Math.PI;
+        return group;
+    }
+
+    update() {
         if (Math.random() < 0.025) {
             const randomScale = THREE.MathUtils.randFloat(0.8, 1.5);
             this.fireworks.push(new MyFirework(this.app, this, randomScale));

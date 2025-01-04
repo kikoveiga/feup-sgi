@@ -61,7 +61,6 @@ class MyContents {
             case GameStates.FINAL:
                 this.state = new FinalState(this.app, this.gameStateManager);
                 this.state.init();
-                
                 break;
             
             default:
