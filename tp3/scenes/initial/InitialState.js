@@ -90,7 +90,9 @@ class InitialState {
         } else if (clickedObject === 'opponentBalloon') {
             this.opponentBalloonString = color;
             this.updateTextMesh(this.opponentBalloon, color, 0xff69b4);
+            
         } else if (clickedObject === 'playButton') {
+
             if (this.playerBalloonString === "Not chosen" || this.opponentBalloonString === "Not chosen") {
                 console.warn('Please select both balloons before starting the game.');
                 return;

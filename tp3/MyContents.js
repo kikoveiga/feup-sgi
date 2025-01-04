@@ -54,12 +54,12 @@ class MyContents {
                 break;
 
             case GameStates.RUNNING:
-                this.state = new RunningState(this.app, this.gameStateManager, this.meshes);
+                this.state = new RunningState(this.app, this.gameStateManager);
                 this.state.init();
                 break;
 
             case GameStates.FINAL:
-                this.state = new FinalState(this.app, this.gameStateManager);
+                this.state = new FinalState(this.app, this.gameStateManager, this.meshes);
                 this.state.init();
                 break;
             
