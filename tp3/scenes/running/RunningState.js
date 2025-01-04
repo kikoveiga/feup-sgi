@@ -25,6 +25,8 @@ class RunningState {
 
         this.keyStates = {};
         this.paused = false;
+        this.pauseTime = 0;
+        this.shaderElapsedTime = 0;
         
         window.addEventListener('keydown', (event) => {
             this.keyStates[event.code] = true;
@@ -49,6 +51,7 @@ class RunningState {
             this.myReader.resume();
             const resumeTime = this.app.clock.getElapsedTime();
             this.timeOffset = resumeTime - this.pauseTime;
+            this.shaderElapsedTime += this.timeOffset;
         }
     }
 
@@ -95,6 +98,10 @@ class RunningState {
         this.elapsedTimeMesh.scale.set(12, 12, 12);
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
 
+        this.elapsedTime = this.createTextMesh("0", 230, 175, 70, 0xffffff);
+        this.elapsedTime.scale.set(12, 12, 12);
+        this.elapsedTime.rotation.y = 120 * Math.PI / 180;
+
         this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);
         this.lapsNumberMesh.scale.set(12, 12, 12);
         this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
@@ -112,6 +119,7 @@ class RunningState {
         this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
 
         this.app.scene.add(this.elapsedTimeMesh);
+        this.app.scene.add(this.elapsedTime);
         this.app.scene.add(this.lapsNumberMesh);
         this.app.scene.add(this.avaiableVouchersMesh);
         this.app.scene.add(this.gameStatusMesh);
@@ -225,6 +233,11 @@ class RunningState {
             this.timeOffset = 0;
         }
 
+        console.log("Updating running state...");
+
+        const elapsedTimeText = this.app.clock.getElapsedTime().toFixed(0);
+        this.updateTextMesh(this.elapsedTimeMesh, "Elapsed time: " + elapsedTimeText, 0xffffff);
+
         if (this.keyStates["KeyW"]) {
             this.myReader.playerBalloon.updateAltitude(delta, 1);
         }
@@ -233,14 +246,13 @@ class RunningState {
         }
 
         this.myReader.playerBalloon.update(delta, this.windLayers);
-
         this.myReader.track.update(delta);
         
-        const elapsedTime = this.app.clock.getElapsedTime();
+        this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
-            // console.log("Shader:", shader);
+
             if (shader && shader.hasUniform("timeFactor")) {
-                shader.updateUniformsValue("timeFactor", elapsedTime);
+                shader.updateUniformsValue("timeFactor", this.shaderElapsedTime);
             }
         }            
 
@@ -250,7 +262,7 @@ class RunningState {
     createTextMesh(text, x, y, z, color) {
         const texture = new THREE.TextureLoader().load("./images/font.png");
         
-        const meshes = [];
+        const group = new THREE.Group();
         let offset = 0;
         
         for (let i = 0; i < text.length; i++) {
@@ -266,32 +278,53 @@ class RunningState {
             const cols = 16;
             const rows = 16;
             
-            const u = (charCode % (cols * rows)) % cols * (1 / cols);
-            const v = Math.floor((charCode % (cols * rows)) / cols) * (1 / rows);
-    
-            const mesh = new THREE.Mesh(geometry, material);
-            const originalUV = geometry.getAttribute('uv').clone();
-
-            originalUV.set([
-                u,         1 - v - 1/rows,
-                u + 1/cols,1 - v - 1/rows,
-                u,         1 - v,
-                u + 1/cols,1 - v
-            ]);
-            geometry.setAttribute('uv', originalUV);
+            const u = (charCode % cols) * (1 / cols);
+            const v = Math.floor((charCode / cols)) * (1 / rows);
             
+            const uvAttribute = geometry.attributes.uv;
+
+            uvAttribute.array.set([
+                u,            1 - v - 1 / rows,
+                u + 1 / cols, 1 - v - 1 / rows,
+                u,            1 - v,
+                u + 1 / cols, 1 - v
+            ]);
+
+            geometry.setAttribute('uv', uvAttribute);
+
+            const mesh = new THREE.Mesh(geometry, material);
             mesh.position.x = offset;
+            mesh.name = text[i];
             offset += 0.65; // looks good
 
-            meshes.push(mesh);
+            group.add(mesh);
         }
 
-        const group = new THREE.Group();
-        meshes.forEach(mesh => group.add(mesh));
         group.position.set(x, y, z);
         group.rotation.x = -Math.PI;
         group.rotation.y = -Math.PI;
         return group;
+        }
+
+    updateTextMesh(mesh, newText, color) {
+
+        if (mesh.lastText === newText) {
+            return;
+        }
+
+        mesh.lastText = newText;
+
+        while (mesh.children.length > 0) {
+            const child = mesh.children.pop();
+            if (child.geometry) child.geometry.dispose();
+            if (child.material) child.material.dispose();
+        }
+
+        const updatedMesh = this.createTextMesh(newText, 0, 0, 0, color);        
+        while (updatedMesh.children.length > 0) {
+            const child = updatedMesh.children.pop();
+            mesh.add(child);
+        }
     }
 }
 
