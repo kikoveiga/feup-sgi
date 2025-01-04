@@ -40,10 +40,15 @@ class MyBalloon extends MyObject {
      }
 
      updateAltitude(delta, direction) {
+
+          const altitudeStep = 2;
+
           if (direction === 1 && this.windLayer < 4) this.windLayer++;
           else if (direction === -1 && this.windLayer > 0) this.windLayer--;
 
-          this.altitude = this.windLayer * 10;
+          const targetAltitude = this.windLayer * altitudeStep;
+
+          this.altitude += (targetAltitude - this.altitude) * 0.1;
           this.group.position.y = this.altitude;
      }
 
