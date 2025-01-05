@@ -17,15 +17,13 @@ class MyApp  {
         // camera related attributes
         this.activeCamera = null;
         this.activeCameraName = null;
-        this.lastCameraName = null;
+        this.lastActiveCameraName = null;
         this.cameras = {};
-        this.frustumSize = 20;
 
         // other attributes
         this.renderer = null;
         this.controls = null;
         this.gui = null;
-        this.axis = null;
         this.contents = null;
 
         this.clock = new THREE.Clock();
@@ -44,10 +42,9 @@ class MyApp  {
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
-        this.setActiveCamera('TemporaryCamera'); 
 
         // Create a renderer with Antialiasing
-        this.renderer = new THREE.WebGLRenderer({antialias:true});
+        this.renderer = new THREE.WebGLRenderer({ antialias:true });
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setClearColor("#000000");
         this.renderer.shadowMap.enabled = true;
@@ -56,8 +53,15 @@ class MyApp  {
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-        // Append Renderer to DOM
-        document.getElementById("canvas").appendChild( this.renderer.domElement );
+        const canvasContainer = document.getElementById('canvas');
+        if (!canvasContainer) {
+            console.error('Canvas container not found.');
+            return;
+        }
+
+        canvasContainer.appendChild(this.renderer.domElement);
+
+        this.setActiveCamera('DefaultCamera');
 
         this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
         this.controls.enableZoom = true;
@@ -67,27 +71,23 @@ class MyApp  {
         window.addEventListener('resize', this.onResize.bind(this), false );
     }
 
-    /**
-     * initializes all the cameras
-     */
     initCameras() {
         const aspect = window.innerWidth / window.innerHeight;
-        this.activeCamera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-        this.activeCamera.position.set(10, 10, 3);
-        this.activeCameraName = 'TemporaryCamera';
-    
-        this.cameras['TemporaryCamera'] = this.activeCamera;
+
+        const defaultCamera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+        defaultCamera.position.set(10, 10, 3);    
+        this.cameras['DefaultCamera'] = defaultCamera;
+
+        this.activeCamera = defaultCamera;
+        this.activeCameraName = 'DefaultCamera';
     }
     
-
-    /**
-     * sets the active camera by name
-     * @param {String} cameraName 
-     */
     setActiveCamera(cameraName) {
         if (this.cameras[cameraName]) {
+            this.lastActiveCameraName = this.activeCameraName;
             this.activeCameraName = cameraName;
             this.activeCamera = this.cameras[this.activeCameraName];
+
         } else {
             console.error(`Camera "${cameraName}" not found.`);
             const cameraNames = Object.keys(this.cameras);
@@ -99,55 +99,34 @@ class MyApp  {
                 this.activeCamera = null;
             }
         }
-    }
-      
 
-    /**
-     * updates the active camera if required
-     * this function is called in the render loop
-     * when the active camera name changes
-     * it updates the active camera and the controls
-     */
-    updateCameraIfRequired() {
-        if (this.lastCameraName !== this.activeCameraName) {
-            this.lastCameraName = this.activeCameraName;
-            this.activeCamera = this.cameras[this.activeCameraName];
-    
-            if (!this.activeCamera) {
-                console.error(`Camera "${this.activeCameraName}" not found.`);
-                return;
-            }
-    
-            document.getElementById("camera").innerHTML = this.activeCameraName;
-    
-            this.onResize();
-    
-            if (this.controls) {
-                this.controls.dispose();
-            }
-    
+        if (this.activeCamera) {
+            this.activeCamera.aspect = window.innerWidth / window.innerHeight;
+            this.activeCamera.updateProjectionMatrix();
+        }
+
+        this.updateControls();
+    }
+
+    updateControls() {
+        if (this.controls) this.controls.dispose();
+
+        if (this.activeCameraName !== "FirstPersonCamera") {
+        
             this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
             this.controls.enableZoom = true;
-    
-            if (this.activeCamera.userData && this.activeCamera.userData.target) {
-                this.controls.target.copy(this.activeCamera.userData.target);
-            } 
-            else {
-                this.controls.target.set(0, 0, 0);
-            }
-    
+            this.controls.target.set(0, 0, 0);
             this.controls.update();
         }
     }
     
-    /**
-     * the window resize handler
-     */
     onResize() {
-        if (this.activeCamera !== undefined && this.activeCamera !== null) {
-            this.activeCamera.aspect = window.innerWidth / window.innerHeight;
-            this.activeCamera.updateProjectionMatrix();
-            this.renderer.setSize( window.innerWidth, window.innerHeight );
+        if (this.activeCamera && this.renderer) {
+            if (this.activeCamera.isPerspectiveCamera) {
+                this.activeCamera.aspect = window.innerWidth / window.innerHeight;
+                this.activeCamera.updateProjectionMatrix();
+            }
+            this.renderer.setSize(window.innerWidth, window.innerHeight);
         }
     }
     /**
@@ -170,7 +149,6 @@ class MyApp  {
     */
     render() {
         this.stats.begin();
-        this.updateCameraIfRequired();
 
         const delta = this.clock.getDelta();
 
@@ -179,21 +157,16 @@ class MyApp  {
             this.activeScene.render();
         }
 
-        if (this.activeCamera !== undefined && this.activeCamera !== null) {
-            this.contents.update(delta);
-        }
+        if (this.contents) this.contents.update(delta);
+        
 
-        // required if controls.enableDamping or controls.autoRotate are set to true
-        this.controls.update();
+        if (this.controls instanceof OrbitControls) this.controls.update();
+        
 
-        // render the scene
-        this.renderer.render(this.scene, this.activeCamera);
+        if (this.activeCamera) this.renderer.render(this.scene, this.activeCamera);
 
-        // subsequent async calls to the render loop
-        requestAnimationFrame(this.render.bind(this));
-
-        this.lastCameraName = this.activeCameraName;
         this.stats.end();
+        requestAnimationFrame(this.render.bind(this));
     }
 }
 

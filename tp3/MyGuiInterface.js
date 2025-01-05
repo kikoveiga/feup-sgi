@@ -13,23 +13,24 @@ class MyGuiInterface {
         this.contents = null;
     }
 
-    /**
-     * Set the contents object
-     * @param {MyContents} contents the contents objects 
-     */
-    setContents(contents) {
-        this.contents = contents;
-    }
-
-    /**
-     * Initialize the gui interface
-     */
     init() {
         this.cameraFolder = this.datgui.addFolder("Camera");
 
         this.updateCameraOptions();
-        // this.addWireframeToggle();
+        this.addWireframeToggle();
         this.updateAnimations();
+    }
+
+    hide() {
+        this.datgui.hide();
+    }
+
+    show() {
+        this.datgui.show();
+    }
+
+    setContents(contents) {
+        this.contents = contents;
     }
     
     updateAnimations() {
@@ -66,13 +67,12 @@ class MyGuiInterface {
                 }
             });
     }
-    /**
-     * Adds camera selection options to the GUI
-     */
+
     updateCameraOptions() {
         if (this.cameraDropdown) {
             this.cameraDropdown.destroy();
         }
+
         const cameraNames = Object.keys(this.app.cameras);
         this.cameraDropdown = this.cameraFolder
             .add(this.app, 'activeCameraName', cameraNames)

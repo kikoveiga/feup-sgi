@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { MyReader } from '../../objects/MyReader.js';
 import { MyShader } from '../../objects/MyShader.js';
 import { MyObstacle } from '../../objects/MyObstacle.js';
@@ -10,23 +11,54 @@ class RunningState {
         this.gameStateManager = gameStateManager;
 
         this.myReader = null;
-        this.track = null;
-        this.powerups = [];
+        this.powerUps = [];
         this.obstacles = [];
         this.shaders = [];
-
-        this.windLayers = [
-            { direction: new THREE.Vector3(0, 0, 0), speed: 0 },
-            { direction: new THREE.Vector3(0, 0, -1), speed: 2 },
-            { direction: new THREE.Vector3(0, 0, 1), speed: 2 },
-            { direction: new THREE.Vector3(1, 0, 0), speed: 2 },
-            { direction: new THREE.Vector3(-1, 0, 0), speed: 2 },
-        ];
 
         this.keyStates = {};
         this.paused = false;
         this.pauseTime = 0;
         this.shaderElapsedTime = 0;
+
+        this.useFirstPerson = false;
+    }
+
+    init() {
+
+        if (this.app.clock) this.app.clock.start();
+        else this.app.clock = new THREE.Clock();
+
+        this.buildOutdoorDisplay();
+
+        this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor);
+        this.powerUps = this.myReader.getPowerUps();
+        this.obstacles = this.myReader.getObstacles();
+
+        const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
+        const powerUpTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
+        const depthTexture = new THREE.TextureLoader().load('./images/depth.jpg'); 
+        const colorTexture = new THREE.TextureLoader().load('./images/color.jpg');
+
+        this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.app.cameras['FirstPersonCamera'] = this.firstPersonCamera;
+
+        this.pointerControls = new PointerLockControls(this.firstPersonCamera, document.body);
+
+        window.addEventListener('click', () => {
+            if (this.useFirstPerson && !this.pointerControls.isLocked) {    
+                this.pointerControls.lock(); 
+            }
+        });
+
+        this.pointerControls.addEventListener('lock', () => {
+            const balloonPosition = this.myReader.playerBalloon.group.position;
+            // this.firstPersonCamera.position.set(balloonPosition.x, balloonPosition.y + 5, balloonPosition.z);
+            this.app.gui.hide();
+        });
+
+        this.pointerControls.addEventListener('unlock', () => {
+            this.exitFirstPerson();
+        });
         
         window.addEventListener('keydown', (event) => {
             this.keyStates[event.code] = true;
@@ -34,11 +66,61 @@ class RunningState {
             if (event.code === 'Space') {
                 this.togglePause();
             }
+
+            if (event.code === 'KeyC') {
+                this.toggleCamera();
+            }
+
+            if (event.code === 'Escape' && this.useFirstPerson) {
+                this.exitFirstPerson();
+            }
         });
 
         window.addEventListener('keyup', (event) => {
             this.keyStates[event.code] = false;
         });
+
+        this.shaders = [
+            new MyShader(this.app, "Pulse shader for obstacle", "Description 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                    timeFactor: {type: 'f', value: 0.8 },
+                    uSampler: {type: 'sampler2D', value: obstacleTexture }
+            }),
+
+            new MyShader(this.app, "Pulse shader for powerUp", "Description 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
+                timeFactor: {type: 'f', value: 0.8 },
+                uSampler: {type: 'sampler2D', value: powerUpTexture }
+            }),
+
+            new MyShader(this.app, "Bas-relief", "Bas-relief effect", "./shaders/basRelief.vert", "./shaders/basRelief.frag", {
+                  uSampler1: { type: 'sampler2D', value: colorTexture }, 
+                  uSampler2: { type: 'sampler2D', value: depthTexture }, 
+                  scaleFactor: { type: 'f', value: 2.5 }
+                }
+            )
+              
+        ];
+    
+        this.waitForShaders();
+    }
+
+    exitFirstPerson() {
+        this.useFirstPerson = false;
+        this.pointerControls.unlock();
+        this.app.setActiveCamera(this.app.lastActiveCameraName);
+        this.app.gui.show();
+    }
+
+    toggleCamera() {
+        this.useFirstPerson = !this.useFirstPerson;
+
+        if (this.useFirstPerson) {
+        
+            this.app.setActiveCamera('FirstPersonCamera');
+            this.pointerControls.lock();
+        }
+
+        else this.pointerControls.unlock();
+        
     }
 
     togglePause() {
@@ -55,44 +137,6 @@ class RunningState {
             this.shaderElapsedTime += this.timeOffset;
             this.updateTextMesh(this.ultimalinha, "running", 0xffffff);
         }
-    }
-
-    init() {
-
-        console.log("Building running state...");
-
-        this.buildOutdoorDisplay();
-
-        this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor);
-        this.powerups = this.myReader.getPowerUps();
-        this.obstacles = this.myReader.getObstacles();
-
-        const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
-        const powerupTexture = new THREE.TextureLoader().load('./images/powerup.jpg');
-        const depthTexture = new THREE.TextureLoader().load('./images/depth.jpg'); 
-        const colorTexture = new THREE.TextureLoader().load('./images/color.jpg');
-
-        this.shaders = [
-            new MyShader(this.app, "Pulse shader for obstacle", "Description 1", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                    timeFactor: {type: 'f', value: 0.8 },
-                    uSampler: {type: 'sampler2D', value: obstacleTexture }
-            }),
-
-            new MyShader(this.app, "Pulse shader for powerup", "Description 2", "./shaders/pulse.vert", "./shaders/pulse.frag", {
-                timeFactor: {type: 'f', value: 0.8 },
-                uSampler: {type: 'sampler2D', value: powerupTexture }
-            }),
-
-            new MyShader(this.app, "Basrelief", "Bas-relief effect", "./shaders/basrelief.vert", "./shaders/basrelief.frag", {
-                  uSampler1: { type: 'sampler2D', value: colorTexture }, 
-                  uSampler2: { type: 'sampler2D', value: depthTexture }, 
-                  scaleFactor: { type: 'f', value: 2.5 }
-                }
-            )
-              
-        ];
-    
-        this.waitForShaders();
     }
 
     buildOutdoorDisplay() { // 200 140 -> 400 170. scale 3.2 -> 4.0
@@ -218,11 +262,11 @@ class RunningState {
             }
         }
     
-        for (const powerup of this.powerups) {
-            if (powerup instanceof MyPowerUp) {
-                this.setCurrentShader(this.shaders[1], powerup.powerup);
+        for (const powerUp of this.powerUps) {
+            if (powerUp instanceof MyPowerUp) {
+                this.setCurrentShader(this.shaders[1], powerUp.powerUp);
             } else {
-                console.error("Invalid powerup object");
+                console.error("Invalid powerUp object");
             }
         }
 
@@ -254,7 +298,11 @@ class RunningState {
             this.timeOffset = 0;
         }
 
-        console.log("Updating running state...");
+        if (this.useFirstPerson) {
+            const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
+            balloonWorldPosition.y += 50;
+            this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.1);
+        }
 
         const elapsedTimeText = this.app.clock.getElapsedTime().toFixed(0);
         this.updateTextMesh(this.elapsedTime, elapsedTimeText, 0xffffff);
@@ -266,7 +314,7 @@ class RunningState {
             this.myReader.playerBalloon.updateAltitude(delta, -1);
         }
 
-        this.myReader.playerBalloon.update(delta, this.windLayers);
+        this.myReader.playerBalloon.update(delta);
         this.myReader.track.update(delta);
         
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
