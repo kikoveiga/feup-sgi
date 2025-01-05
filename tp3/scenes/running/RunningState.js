@@ -19,8 +19,10 @@ class RunningState {
         this.paused = false;
         this.pauseTime = 0;
         this.shaderElapsedTime = 0;
+        this.playerVoucher = 0;
 
         this.useFirstPerson = false;
+        this.collisionCooldowns = new Map();
     }
 
     init() {
@@ -321,10 +323,39 @@ class RunningState {
         this.myReader.playerBalloon.update(delta);
         this.myReader.track.update(delta);
 
+        const currentTime = this.app.clock.getElapsedTime();
+
+        // Obstacles
+        for (const obstacle of this.obstacles) {
+            if (this.isOnCooldown(obstacle, currentTime)) continue;
+    
+            if (this.checkCollision(this.myReader.playerBalloon, obstacle, 30, 15)) {
+                console.log("Collision with obstacle: ", obstacle.name);
+    
+                // Handle collision logic here (e.g., reduce health, apply penalty, etc.)
+                
+                // Add obstacle to cooldown
+                this.setCooldown(obstacle, currentTime, 3.5); // 2 seconds
+            }
+        }
+    
+        // Power-ups
+        for (const powerUp of this.powerUps) {
+            if (this.isOnCooldown(powerUp, currentTime)) continue;
+    
+            if (this.checkCollision(this.myReader.playerBalloon, powerUp, 30, 15)) {
+                console.log("Collision with powerUp: ", powerUp.name);
+    
+                this.playerVoucher += 1;
+                this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+    
+                // Add power-up to cooldown
+                this.setCooldown(powerUp, currentTime, 3.5);
+            }
+        }
+
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
-
         this.updateTextMesh(this.terceiralinha, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
-
 
         this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
@@ -404,6 +435,41 @@ class RunningState {
             mesh.add(child);
         }
     }
+
+    checkCollision(balloon, otherObject, balloonRadius = 2.0, otherRadius = 1.0) {
+        const balloonPos = balloon.group.getWorldPosition(new THREE.Vector3());
+    
+        let mesh = null;
+        if (otherObject.obstacle) {
+            mesh = otherObject.obstacle;
+        } 
+        else if (otherObject.powerUp) {
+            mesh = otherObject.powerUp;
+        } 
+        else {
+            return false;
+        }
+        const objectPos = mesh.getWorldPosition(new THREE.Vector3());
+    
+        const distance = balloonPos.distanceTo(objectPos);
+    
+        return distance <= (balloonRadius + otherRadius);
+    }
+
+    isOnCooldown(object, currentTime) {
+        const lastCollisionTime = this.collisionCooldowns.get(object);
+        return lastCollisionTime && currentTime - lastCollisionTime < 3.5; 
+    }
+    
+    setCooldown(object, currentTime, cooldownDuration) {
+        this.collisionCooldowns.set(object, currentTime);
+        
+        setTimeout(() => {
+            this.collisionCooldowns.delete(object);
+        }, cooldownDuration * 1000);
+    }
+    
+    
 }
 
 export { RunningState };

@@ -43,6 +43,7 @@ class MyBalloon extends MyObject {
                { direction: new THREE.Vector3(-1, 0, 0), speed: 40 },
                { direction: new THREE.Vector3(1, 0, 0), speed: 40 },
           ];
+
      }
 
      updateAltitude(delta, direction) {

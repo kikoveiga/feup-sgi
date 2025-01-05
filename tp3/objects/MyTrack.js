@@ -117,14 +117,14 @@ class MyTrack extends MyObject {
           this.obstacles = [];
 
           const obstaclePositions = [
-              new THREE.Vector3(-2.7 * this.multiplier, 1.8, -0.5 * this.multiplier),  
-              new THREE.Vector3(-2.5 * this.multiplier, 1.8, -4.8 * this.multiplier),   
-              new THREE.Vector3(1 * this.multiplier, 1.8, 4.65 * this.multiplier),   
-              new THREE.Vector3(-5 * this.multiplier, 1.8, -5.1 * this.multiplier)     
+              new THREE.Vector3(-2.7 * this.multiplier, 2.0, -0.5 * this.multiplier),  
+              new THREE.Vector3(-2.5 * this.multiplier, 2.0, -4.8 * this.multiplier),   
+              new THREE.Vector3(1 * this.multiplier, 2.0, 4.65 * this.multiplier),   
+              new THREE.Vector3(-5 * this.multiplier, 2.0, -5.1 * this.multiplier)     
           ];
 
           obstaclePositions.forEach((pos, index) => {
-              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 1, 0xffffff);
+              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 1.5, 0xffffff);
               obstacle.scale.set(1, 3, 1);
               obstacle.position.y = -3.6;
               this.obstacles.push(obstacle);
@@ -136,9 +136,9 @@ class MyTrack extends MyObject {
           this.powerUps = [];
   
           const powerUpPositions = [
-              new THREE.Vector3(-5.5 * this.multiplier, 2.0, -3.0 * this.multiplier), 
-              new THREE.Vector3(-4.5 * this.multiplier, 1.0, 2.2 * this.multiplier),
-              new THREE.Vector3(2.3 * this.multiplier, 3.0, 3.0 * this.multiplier), 
+              new THREE.Vector3(-5.5 * this.multiplier, 4.0, -3.0 * this.multiplier), 
+              new THREE.Vector3(-4.5 * this.multiplier, 3.0, 2.2 * this.multiplier),
+              new THREE.Vector3(2.3 * this.multiplier, 2.0, 3.0 * this.multiplier), 
           ];
   
           powerUpPositions.forEach((pos, index) => {
@@ -150,7 +150,6 @@ class MyTrack extends MyObject {
 
      initializeRoute() {
           this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 10);
-          // this.myRoute.createRoute();
           this.myRoute.scale.set(0.11, 0.1, 0.1);
           this.myRoute.position.set(0, 1.2, 0);
           this.myRoute.rotation.y = Math.PI;

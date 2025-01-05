@@ -58,7 +58,19 @@
             },
             "feupTex": {
                 "filepath": "scenes/textures/feup_logo.jpg"
-            }    
+            },
+            "blueTex": {
+                "filepath": "scenes/textures/blue.jpg"
+            },
+            "orangeTex": {
+                "filepath": "scenes/textures/orange.jpg"
+            },
+            "greenTex": {
+                "filepath": "scenes/textures/green.jpg"
+            },
+            "pinkTex": {
+                "filepath": "scenes/textures/pink.jpg"
+            }
         },
         "materials": {
             "feupApp": {
@@ -129,9 +141,12 @@
                     "g": 0.1,
                     "b": 0.0
                 },
-                "shininess": 20,
+                "shininess": 0,
                 "transparent": false,
                 "opacity": 1.0,
+                "textureref": "orangeTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
                 "twosided": true,
                 "shading": false,
                 "wireframe": false
@@ -152,9 +167,12 @@
                     "g": 0.2,
                     "b": 0.3
                 },
-                "shininess": 15,
+                "shininess": 0,
                 "transparent": false,
                 "opacity": 1.0,
+                "textureref": "blueTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
                 "twosided": true,
                 "shading": false,
                 "wireframe": false
@@ -175,9 +193,12 @@
                     "g": 0.2,
                     "b": 0.2
                 },
-                "shininess": 20,
+                "shininess": 0,
                 "transparent": false,
                 "opacity": 1.0,
+                "textureref": "pinkTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
                 "twosided": true,
                 "shading": false,
                 "wireframe": false
@@ -198,9 +219,12 @@
                     "g": 0.4,
                     "b": 0.3
                 },
-                "shininess": 25,
+                "shininess": 0,
                 "transparent": false,
                 "opacity": 1.0,
+                "textureref": "greenTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
                 "twosided": true,
                 "shading": false,
                 "wireframe": false
