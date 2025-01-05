@@ -174,7 +174,7 @@ class MyContents {
     }
 
     addCameras() {
-        this.app.cameras = this.parser.cameras; 
+        this.app.cameras = this.parser.cameras;
         this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
         this.app.gui.updateCameraOptions(); 
     }
@@ -208,6 +208,22 @@ class MyContents {
             });
         }
     }
+
+    toggleWireframe(enableWireframe) {
+        this.app.scene.traverse(node => {
+            if (node.isMesh && node.material) {
+                if (Array.isArray(node.material)) {
+                    node.material.forEach(material => {
+                        material.wireframe = enableWireframe;
+                        material.needsUpdate = true;
+                    });
+                } else {
+                    node.material.wireframe = enableWireframe;
+                    node.material.needsUpdate = true;
+                }
+            }
+        });
+    }    
 }
 
 export { MyContents };
