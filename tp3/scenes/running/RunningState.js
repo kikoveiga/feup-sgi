@@ -41,7 +41,7 @@ class RunningState {
 
         this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
-        this.yOffset = 52;
+        this.yOffset = 55;
         balloonWorldPosition.y += this.yOffset;
         this.firstPersonCamera.position.set(balloonWorldPosition.x, balloonWorldPosition.y, balloonWorldPosition.z);
         this.app.cameras['FirstPersonCamera'] = this.firstPersonCamera;
@@ -164,9 +164,9 @@ class RunningState {
         this.layerMesh.scale.set(15, 15, 15);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.terceiralinha = this.createTextMesh("0", 340, 175, 235, 0xffffff);
-        this.terceiralinha.scale.set(15, 15, 15);
-        this.terceiralinha.rotation.y = 120 * Math.PI / 180;
+        this.layer = this.createTextMesh("0", 340, 175, 235, 0xffffff);
+        this.layer.scale.set(15, 15, 15);
+        this.layer.rotation.y = 120 * Math.PI / 180;
 
         this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 430, 155, 80, 0xffffff);
         this.avaiableVouchersMesh.scale.set(15, 15, 15);
@@ -192,7 +192,7 @@ class RunningState {
         this.app.scene.add(this.layerMesh);
         this.app.scene.add(this.segundalinha);
         this.app.scene.add(this.ultimalinha);
-        this.app.scene.add(this.terceiralinha);
+        this.app.scene.add(this.layer);
         this.app.scene.add(this.quartalinha);
 
 
@@ -323,7 +323,7 @@ class RunningState {
 
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
 
-        this.updateTextMesh(this.terceiralinha, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
+        this.updateTextMesh(this.layer, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
 
 
         this.shaderElapsedTime += delta;

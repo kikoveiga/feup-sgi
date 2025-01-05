@@ -12,12 +12,38 @@ class InitialState {
         this.playerBalloonColor = "Not chosen";
         this.opponentBalloonColor = "Not chosen";
         this.playerNameString = "Not chosen";
+
+        this.isTypingName = false;
     }
 
     init() {
         this.buildMainMenu();
-        this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer, this.handleBalloonSelection.bind(this));
+        this.pickingManager = new PickingManager(this.app.scene, this.app.activeCamera, this.app.renderer, this.handleSelection.bind(this));
         this.interactableObjects.forEach(obj => { this.pickingManager.addInteractableObject(obj); });
+
+        window.addEventListener('keydown', (event) => {
+            if (this.isTypingName) {
+
+                if (event.key === 'Backspace') {
+                    this.playerNameString = this.playerNameString.slice(0, -1);
+                } 
+                
+                else if (event.key === 'Enter') {
+                    this.isTypingName = false;
+
+                    if (this.playerNameString.trim() === "") {
+                        this.playerNameString = "Not chosen";
+                    }
+                }
+                
+                else if (event.key.length === 1) {
+                    this.playerNameString += event.key;
+                }
+
+                this.updateTextMesh(this.playerName, this.playerNameString, 0xb0b0b0);
+            }
+        });
+
     }
 
     buildMainMenu() {
@@ -73,13 +99,15 @@ class InitialState {
         this.app.scene.add(this.playerNameMesh);
 
         this.playerName = this.createTextMesh(this.playerNameString, -18.5, -9.9, 2, 0xb0b0b0); 
+        this.playerName.name = 'playerName';
         this.playerName.scale.set(1.8, 1.8, 1.8);
         this.playerName.rotation.x = - Math.PI / 2;
         this.playerName.rotation.z = - Math.PI / 2;
+        this.interactableObjects.push(this.playerName);
         this.app.scene.add(this.playerName);
     }
 
-    handleBalloonSelection(clickedObject, color) {
+    handleSelection(clickedObject, color) {
         this.colorHex = null;
 
         if(color === 'pink') {
@@ -96,16 +124,25 @@ class InitialState {
             this.playerBalloonColor = color;
             this.updateTextMesh(this.playerBalloon, color, this.colorHex);
         } 
+
         else if (clickedObject === 'opponentBalloon') {
             this.opponentBalloonColor = color;
             this.updateTextMesh(this.opponentBalloon, color, this.colorHex);
-        } 
+        }
+
         else if (clickedObject === 'playButton') {
-            if (this.playerBalloonColor === "Not chosen" || this.opponentBalloonColor === "Not chosen") {
-                console.warn('Please select both balloons before starting the game.');
+            if (this.playerBalloonColor === "Not chosen" || this.opponentBalloonColor === "Not chosen" || this.playerNameString === "Not chosen") {
+                console.warn('Please select both balloons and a player name before starting the game.');
             }
 
             else this.gameStateManager.startGame(this.playerBalloonColor, this.opponentBalloonColor);
+        }
+
+        else if (clickedObject === 'playerName') {
+            console.log('Typing player name...');
+            this.isTypingName = true;
+            this.playerNameString = "";
+            this.updateTextMesh(this.playerName, this.playerNameString, 0xb0b0b0);
         }
     }
 
