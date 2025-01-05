@@ -11,37 +11,39 @@ class MyTrack extends MyObject {
 
           //Curve related attributes
           this.segments = 100;
-          this.width = 1;
+          this.width = 2.0;
           this.textureRepeat = 1;
           this.showWireframe = false;
           this.showMesh = true;
           this.showLine = false;
           this.closedCurve = true;
 
+          this.multiplier = 2.0;
+
           this.path = new THREE.CatmullRomCurve3([
-               // vertical
-               new THREE.Vector3(-2, 0, 5),
-               new THREE.Vector3(-2, 0, 3),
-               new THREE.Vector3(-2, 0, 1),
-               new THREE.Vector3(-2, 0, -1),
-               new THREE.Vector3(-2, 0, -3),
-               new THREE.Vector3(-2, 0.1, -5),
-           
-               // bottom
-               new THREE.Vector3(4.5, 0, -5),
-               new THREE.Vector3(6, 0, -4),
-               new THREE.Vector3(5.75, 0, -2.5),
-               new THREE.Vector3(5, 0, -1.5),
-               new THREE.Vector3(1, 0.8, 0),
-           
-               // top
-               new THREE.Vector3(4.5, -0.1, 1.5),
-               new THREE.Vector3(5.5, 0, 3),
-               new THREE.Vector3(4, 0, 5),
-               new THREE.Vector3(0.5, 0, 5),
-           
-               // connect
-               new THREE.Vector3(-2.85, 0.5, 5),
+              // vertical
+              new THREE.Vector3(-2 * this.multiplier, 0, 5 * this.multiplier),
+              new THREE.Vector3(-2 * this.multiplier, 0, 3 * this.multiplier),
+              new THREE.Vector3(-2 * this.multiplier, 0, 1 * this.multiplier),
+              new THREE.Vector3(-2 * this.multiplier, 0, -1 * this.multiplier),
+              new THREE.Vector3(-2 * this.multiplier, 0, -3 * this.multiplier),
+              new THREE.Vector3(-2 * this.multiplier, 0.1, -5 * this.multiplier),
+          
+              // bottom
+              new THREE.Vector3(4.5 * this.multiplier, 0, -5 * this.multiplier),
+              new THREE.Vector3(6 * this.multiplier, 0, -4 * this.multiplier),
+              new THREE.Vector3(5.75 * this.multiplier, 0, -2.5 * this.multiplier),
+              new THREE.Vector3(5 * this.multiplier, 0, -1.5 * this.multiplier),
+              new THREE.Vector3(1 * this.multiplier, 0.8, 0 * this.multiplier),
+          
+              // top
+              new THREE.Vector3(4.5 * this.multiplier, -0.1, 1.5 * this.multiplier),
+              new THREE.Vector3(5.5 * this.multiplier, 0, 3 * this.multiplier),
+              new THREE.Vector3(4 * this.multiplier, 0, 5 * this.multiplier),
+              new THREE.Vector3(0.5 * this.multiplier, 0, 5 * this.multiplier),
+          
+              // connect
+              new THREE.Vector3(-2.85 * this.multiplier, 0.5, 5 * this.multiplier),
           ]);
            
 
@@ -115,14 +117,14 @@ class MyTrack extends MyObject {
           this.obstacles = [];
 
           const obstaclePositions = [
-              new THREE.Vector3(-2.7, 1.5, -0.5),  
-              new THREE.Vector3(-2.5, 1.5, -4.8),   
-              new THREE.Vector3(1, 1.5, 4.65),   
-              new THREE.Vector3(-5, 1.5, -5.1)     
+              new THREE.Vector3(-2.7 * this.multiplier, 1.8, -0.5 * this.multiplier),  
+              new THREE.Vector3(-2.5 * this.multiplier, 1.8, -4.8 * this.multiplier),   
+              new THREE.Vector3(1 * this.multiplier, 1.8, 4.65 * this.multiplier),   
+              new THREE.Vector3(-5 * this.multiplier, 1.8, -5.1 * this.multiplier)     
           ];
 
           obstaclePositions.forEach((pos, index) => {
-              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 0.5, 0xffffff);
+              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 1, 0xffffff);
               obstacle.scale.set(1, 3, 1);
               obstacle.position.y = -3.6;
               this.obstacles.push(obstacle);
@@ -134,13 +136,13 @@ class MyTrack extends MyObject {
           this.powerUps = [];
   
           const powerUpPositions = [
-              new THREE.Vector3(-5.5, 1.0, -3.0), 
-              new THREE.Vector3(-4.5, 1.0, 2.2),
-              new THREE.Vector3(2.3, 1.0, 3.0), 
+              new THREE.Vector3(-5.5 * this.multiplier, 2.0, -3.0 * this.multiplier), 
+              new THREE.Vector3(-4.5 * this.multiplier, 1.0, 2.2 * this.multiplier),
+              new THREE.Vector3(2.3 * this.multiplier, 3.0, 3.0 * this.multiplier), 
           ];
   
           powerUpPositions.forEach((pos, index) => {
-              const powerUp = new MyPowerUp(this.app, `PowerUp_${index}`, pos, 0.35, 0xffffff);
+              const powerUp = new MyPowerUp(this.app, `PowerUp_${index}`, pos, 0.6, 0xffffff);
               this.powerUps.push(powerUp);
               this.add(powerUp); 
           });
@@ -148,6 +150,8 @@ class MyTrack extends MyObject {
 
      initializeRoute() {
           this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 10);
+          // this.myRoute.createRoute();
+          this.myRoute.scale.set(0.11, 0.1, 0.1);
           this.myRoute.position.set(0, 1.2, 0);
           this.myRoute.rotation.y = Math.PI;
           this.myRoute.rotation.x = Math.PI;

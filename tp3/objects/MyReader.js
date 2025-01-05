@@ -194,7 +194,7 @@ class MyReader {
 
      buildTrack() {
           this.track = new MyTrack(this.app);
-          this.track.position.set(35, 5, 0);   
+          this.track.position.set(100, 5, 0);   
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 

@@ -7,7 +7,7 @@ class MyObstacle extends MyObject {
           this.type = "Group";
     
           const obstacleTexture = new THREE.TextureLoader().load('./images/obstacle.jpg');
-          const geometry = new THREE.BoxGeometry(size, size, size);
+          const geometry = new THREE.BoxGeometry(size * 0.8, size, size * 0.8);
           const material = new THREE.MeshStandardMaterial({
                map: obstacleTexture,
                color: color,

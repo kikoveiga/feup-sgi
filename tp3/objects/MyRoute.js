@@ -6,38 +6,40 @@ class MyRoute extends MyObject {
           super(app, name);
           this.type = "Group";
 
+          this.multiplier = 2.0;
+
           this.route = [
-               new THREE.Vector3(100, 0, -35), 
-               new THREE.Vector3(100, 0, 87.5), 
-               new THREE.Vector3(93, 0, 131.25), 
-               new THREE.Vector3(96, 0, 164.5), 
-               new THREE.Vector3(65, 0, 190), 
-               new THREE.Vector3(12.5, 0, 175), 
-               new THREE.Vector3(-68, 0, 168),
-               new THREE.Vector3(-92.5, 0, 161),
-               new THREE.Vector3(-117, 0, 148.75),
-               new THREE.Vector3(-127.5, 0, 129.5),
-               new THREE.Vector3(-134.5, 0, 108.5),
-               new THREE.Vector3(-124, 0, 80.5),
-               new THREE.Vector3(-92.5, 0, 52.5),
-               new THREE.Vector3(-40, 0, 17.5),
-               new THREE.Vector3(-22.5, 0, 0),
-               new THREE.Vector3(-22.5, 0, -21),
-               new THREE.Vector3(-40, 0, -35),
-               new THREE.Vector3(-64.5, 0, -42),
-               new THREE.Vector3(-106.5, 0, -52.5),
-               new THREE.Vector3(-131, 0, -66.5),
-               new THREE.Vector3(-152, 0, -80.5),
-               new THREE.Vector3(-162.5, 0, -99.75),
-               new THREE.Vector3(-159, 0, -117.25),
-               new THREE.Vector3(-148.5, 0, -133),
-               new THREE.Vector3(-127.5, 0, -157.5),
-               new THREE.Vector3(-99.5, 0, -182),
-               new THREE.Vector3(-22.5, 0, -196),
-               new THREE.Vector3(30, 0, -185.5),
-               new THREE.Vector3(75.5, 0, -168),
-               new THREE.Vector3(100, 0, -122.5),
-               new THREE.Vector3(100, 0, -35),                
+               new THREE.Vector3(100 * this.multiplier, 0, -35 * this.multiplier), // 1
+               new THREE.Vector3(110 * this.multiplier, 0, 87.5 * this.multiplier), // 2
+               new THREE.Vector3(120 * this.multiplier, 0, 135 * this.multiplier), // 3
+               new THREE.Vector3(96 * this.multiplier, 0, 180 * this.multiplier), //4
+               new THREE.Vector3(65 * this.multiplier, 0, 190 * this.multiplier), // 5
+               new THREE.Vector3(12.5 * this.multiplier, 0, 175 * this.multiplier), // 6
+               new THREE.Vector3(-68 * this.multiplier, 0, 168 * this.multiplier), // 7
+               new THREE.Vector3(-92.5 * this.multiplier, 0, 161 * this.multiplier), // 8
+               new THREE.Vector3(-117 * this.multiplier, 0, 148.75 * this.multiplier), // 9
+               new THREE.Vector3(-127.5 * this.multiplier, 0, 129.5 * this.multiplier), // 10
+               new THREE.Vector3(-134.5 * this.multiplier, 0, 108.5 * this.multiplier), // 11
+               new THREE.Vector3(-124 * this.multiplier, 0, 80.5 * this.multiplier), // 12
+               new THREE.Vector3(-92.5 * this.multiplier, 0, 52.5 * this.multiplier), // 13
+               new THREE.Vector3(-40 * this.multiplier, 0, 25 * this.multiplier), // 14
+               new THREE.Vector3(-15 * this.multiplier, 0, 5 * this.multiplier), // 15
+               new THREE.Vector3(-22.5 * this.multiplier, 0, -21 * this.multiplier), // 16
+               new THREE.Vector3(-40 * this.multiplier, 0, -35 * this.multiplier), // 17
+               new THREE.Vector3(-64.5 * this.multiplier, 0, -42 * this.multiplier), // 18
+               new THREE.Vector3(-106.5 * this.multiplier, 0, -52.5 * this.multiplier), // 19
+               new THREE.Vector3(-131 * this.multiplier, 0, -66.5 * this.multiplier), // 20
+               new THREE.Vector3(-152 * this.multiplier, 0, -80.5 * this.multiplier), // 21
+               new THREE.Vector3(-162.5 * this.multiplier, 0, -99.75 * this.multiplier), // 22
+               new THREE.Vector3(-159 * this.multiplier, 0, -117.25 * this.multiplier), // 23
+               new THREE.Vector3(-148.5 * this.multiplier, 0, -130 * this.multiplier), // 24
+               new THREE.Vector3(-127.5 * this.multiplier, 0, -145 * this.multiplier), // 25
+               new THREE.Vector3(-99.5 * this.multiplier, 0, -165 * this.multiplier), // 26
+               new THREE.Vector3(-22.5 * this.multiplier, 0, -195 * this.multiplier), // 27
+               new THREE.Vector3(30 * this.multiplier, 0, -185.5 * this.multiplier), // 28
+               new THREE.Vector3(75.5 * this.multiplier, 0, -168 * this.multiplier), // 29
+               new THREE.Vector3(100 * this.multiplier, 0, -122.5 * this.multiplier), // 30
+               new THREE.Vector3(100 * this.multiplier, 0, -35 * this.multiplier), // 31       
           ];
 
           const texture = new THREE.TextureLoader().load("./images/tourus.jpg");
@@ -53,7 +55,7 @@ class MyRoute extends MyObject {
 
     createRoute() {
           this.route.forEach((pt, i) => {
-               const geometry = new THREE.SphereGeometry( 0.15, 32, 16 ); 
+               const geometry = new THREE.SphereGeometry( 15, 32, 16 ); 
                const torus = new THREE.Mesh(geometry, this.ringMaterial);
                torus.position.copy(pt);
                this.add(torus);
