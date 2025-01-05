@@ -10,6 +10,7 @@ class MyShader {
           this.vert_url = vert_url;
           this.frag_url = frag_url;
           this.uniformValues = uniformValues
+          
           this.material = null
           this.ready = false
           this.read(vert_url, true)
@@ -31,24 +32,18 @@ class MyShader {
 
      read(theUrl, isVertex) {
           let xmlhttp = null
-          if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-               xmlhttp=new XMLHttpRequest();
-          }
-          else {// code for IE6, IE5
-               xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-          }
+          if (window.XMLHttpRequest) xmlhttp=new XMLHttpRequest(); // code for IE7+, Firefox, Chrome, Opera, Safari
+          
+          else xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); // code for IE6, IE5
+          
           let obj = this
           xmlhttp.onreadystatechange=function() {
                if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                     
-                    if (isVertex) { 
-                         // console.log("loaded vs " + theUrl)  
-                         obj.vertexShader = xmlhttp.responseText 
-                    }
-                    else { 
-                         // console.log("loaded fs " + theUrl)  
-                         obj.fragmentShader = xmlhttp.responseText
-                    }
+                    if (isVertex) obj.vertexShader = xmlhttp.responseText 
+                    
+                    else obj.fragmentShader = xmlhttp.responseText
+                    
                     obj.buildShader.bind(obj)()
                }
           }
@@ -57,7 +52,7 @@ class MyShader {
      }
 
      buildShader() {
-          // are both resources loaded? 
+
           if (this.vertexShader !== undefined && this.fragmentShader !== undefined) {
                // build the shader material
                this.material = new THREE.ShaderMaterial({
@@ -66,8 +61,7 @@ class MyShader {
                     vertexShader: this.vertexShader,
                     fragmentShader: this.fragmentShader,
                }) 
-               // report built!
-               // console.log("built shader from " + this.vert_url + ", " + this.frag_url)  
+
                this.ready = true
           }
      }

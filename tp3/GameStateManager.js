@@ -24,6 +24,7 @@ class GameStateManager {
         }
 
         this.laps = 1;
+        this.startPoint = "A";
 
         this.winner = null;
     }
@@ -32,10 +33,11 @@ class GameStateManager {
         return this.state;
     }
 
-    startGame(playerBalloonColor, opponentBalloonColor, laps) {
+    startGame(playerBalloonColor, opponentBalloonColor, laps, startPoint) {
         this.player.balloonColor = playerBalloonColor;
         this.opponent.balloonColor = opponentBalloonColor;
         this.laps = laps;
+        this.startPoint = startPoint;
 
         switch (opponentBalloonColor) {
             case 'pink':

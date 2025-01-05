@@ -1,11 +1,9 @@
 import * as THREE from 'three';
 
 class PickingManager {
-    constructor(scene, camera, renderer, selectionCallback) {
+    constructor(camera, selectionCallback) {
 
-        this.scene = scene;
         this.camera = camera;
-        this.renderer = renderer;
         this.selectionCallback = selectionCallback;
 
         this.raycaster = new THREE.Raycaster();
@@ -77,7 +75,7 @@ class PickingManager {
         if (intersects.length > 0) {
             const clickedObject = intersects[0].object;
 
-            if (clickedObject.name === 'playButton' || clickedObject.name === 'playerName' || clickedObject.name === 'selectLaps') {
+            if (clickedObject.name === 'playButton' || clickedObject.name === 'playerName' || clickedObject.name === 'selectLaps' || clickedObject.name === 'selectStartPoint') {
                 this.selectionCallback(clickedObject.name);
             }
 

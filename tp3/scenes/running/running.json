@@ -439,8 +439,8 @@
             }
         },
         "cameras": {
-            "initial": "Scene1",
-            "Scene1": {
+            "initial": "Running",
+            "Running": {
                 "type": "perspective",
                 "angle": 50,
                 "near": 0.1,

@@ -283,8 +283,8 @@
             }
         },
         "cameras": {
-            "initial": "Scene",
-            "Scene": {
+            "initial": "Initial",
+            "Initial": {
                 "type": "perspective",
                 "angle": 65,
                 "near": 0.1,
