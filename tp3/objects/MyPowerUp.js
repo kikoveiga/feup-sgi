@@ -20,11 +20,11 @@ class MyPowerUp extends MyObject {
                metalness: 0.1,
           });
 
-          this.powerup = new THREE.Mesh(geometry, material);
-          this.powerup.position.copy(position);
-          this.powerup.castShadow = true;
-          this.powerup.receiveShadow = true;
-          this.add(this.powerup);
+          this.powerUp = new THREE.Mesh(geometry, material);
+          this.powerUp.position.copy(position);
+          this.powerUp.castShadow = true;
+          this.powerUp.receiveShadow = true;
+          this.add(this.powerUp);
      }
 }
 

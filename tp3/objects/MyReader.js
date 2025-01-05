@@ -39,10 +39,7 @@ class MyReader {
      }
      
      /*********************** ANIMATION ZONE ***********************/
-     initBalloonsAnimation() {
-
-          this.playerMixer = new THREE.AnimationMixer(this.playerBalloon);
-          this.createBalloonAnimation(this.playerMixer);
+     initBalloonAnimation() {
 
           this.opponentMixer = new THREE.AnimationMixer(this.opponentBalloon);
           this.createBalloonAnimation(this.opponentMixer);
@@ -146,7 +143,6 @@ class MyReader {
      }
 
      setMixerTime() {
-          if (this.playerMixer) this.playerMixer.setTime(this.mixerTime);
           if (this.opponentMixer) this.opponentMixer.setTime(this.mixerTime);
      }
   
@@ -170,14 +166,8 @@ class MyReader {
      }
 
      checkAnimationStateIsPause() {
-          if (this.mixerPause) {
-               this.playerMixer.timeScale = 0;
-               this.opponentMixer.timeScale = 0;
-          } 
-          else {
-               this.playerMixer.timeScale = 1;
-               this.opponentMixer.timeScale = 1;
-          }
+          if (this.mixerPause) this.opponentMixer.timeScale = 0;
+          else this.opponentMixer.timeScale = 1;
      }
 
      checkTracksEnabled() {
@@ -199,7 +189,6 @@ class MyReader {
                }
           }
 
-          if (this.playerMixer) processMixerActions(this.playerMixer);
           if (this.opponentMixer) processMixerActions(this.opponentMixer);
      }
 
@@ -211,14 +200,14 @@ class MyReader {
 
           this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor);
           this.playerBalloon.scale.set(10, 10, 10);
+          this.playerBalloon.group.position.set(10, 0, 0);
           this.app.scene.add(this.playerBalloon);
 
           this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor);
           this.opponentBalloon.scale.set(10, 10, 10);
           this.app.scene.add(this.opponentBalloon);
 
-          this.initBalloonsAnimation();
-
+          this.initBalloonAnimation();
      }
 
      pause() {
@@ -247,7 +236,6 @@ class MyReader {
                this.timeOffset = 0;
           }
           
-          this.playerMixer.update(delta);
           this.opponentMixer.update(delta);
 
           this.checkAnimationStateIsPause();

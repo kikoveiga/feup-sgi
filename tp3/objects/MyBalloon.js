@@ -18,7 +18,7 @@ class MyBalloon extends MyObject {
 
           // Basket
           this.basket = this.createBalloonBasket();
-          this.basket.position.set(0, -1.5, 0); 
+          this.basket.position.set(0, 4.5, 0); 
           this.group.add(this.basket);
 
           this.ropes = this.createRopes();
@@ -30,35 +30,42 @@ class MyBalloon extends MyObject {
           // this.shadow.position.set(0, -3, 0);
           // this.group.add(this.shadow);
 
-          // Initial Position
-          this.group.position.set(0, 0, 0);
-
           // Movement properties
           this.altitude = 0; 
           this.windLayer = 0; 
           this.speed = 0;
+
+          this.windLayers = [
+               { direction: new THREE.Vector3(0, 0, 0), speed: 0 },
+               { direction: new THREE.Vector3(0, 0, -1), speed: 2 },
+               { direction: new THREE.Vector3(0, 0, 1), speed: 2 },
+               { direction: new THREE.Vector3(1, 0, 0), speed: 2 },
+               { direction: new THREE.Vector3(-1, 0, 0), speed: 2 },
+          ];
      }
 
      updateAltitude(delta, direction) {
 
-          const altitudeStep = 2;
+          const altitudeStep = 3;
 
           if (direction === 1 && this.windLayer < 4) this.windLayer++;
           else if (direction === -1 && this.windLayer > 0) this.windLayer--;
-
+          
           const targetAltitude = this.windLayer * altitudeStep;
 
-          this.altitude += (targetAltitude - this.altitude) * 0.1;
+          this.altitude += (targetAltitude - this.altitude) * 0.01;
           this.group.position.y = this.altitude;
      }
 
      applyWindMovement(delta, windDirection, windSpeed) {
           const movement = windDirection.clone().multiplyScalar(windSpeed * delta);
-          this.group.position.add(movement);
+
+          const targetPosition = this.group.position.clone().add(movement);
+          this.group.position.lerp(targetPosition, 0.1);
      }
 
-     update(delta, windLayers) {
-          const currentWind = windLayers[this.windLayer];
+     update(delta) {
+          const currentWind = this.windLayers[this.windLayer];
           this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
      }
 
@@ -167,7 +174,6 @@ class MyBalloon extends MyObject {
 
      createBalloonBasket() {
           const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8); 
-          geometry.translate(0, 6, 0);
           geometry.receiveShadow = true;
           geometry.castShadow = true;
           return new THREE.Mesh(geometry, this.crateApp);

@@ -93,7 +93,6 @@ class MyContents {
         this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
         this.app.gui.updateCameraOptions(); 
     }
-    
 
     addLights() {
         if (this.parser.lights) {
