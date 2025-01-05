@@ -43,7 +43,7 @@ class RunningState {
 
         this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
-        this.yOffset = 52;
+        this.yOffset = 55;
         balloonWorldPosition.y += this.yOffset;
         this.firstPersonCamera.position.set(balloonWorldPosition.x, balloonWorldPosition.y, balloonWorldPosition.z);
         this.app.cameras['FirstPersonCamera'] = this.firstPersonCamera;
@@ -57,8 +57,6 @@ class RunningState {
         });
 
         this.pointerControls.addEventListener('lock', () => {
-            const balloonPosition = this.myReader.playerBalloon.group.position;
-            // this.firstPersonCamera.position.set(balloonPosition.x, balloonPosition.y + 5, balloonPosition.z);
             this.app.gui.hide();
         });
 
@@ -141,36 +139,36 @@ class RunningState {
             const resumeTime = this.app.clock.getElapsedTime();
             this.timeOffset = resumeTime - this.pauseTime;
             this.shaderElapsedTime += this.timeOffset;
-            this.updateTextMesh(this.ultimalinha, "running", 0xffffff);
+            this.updateTextMesh(this.ultimalinha, "running", 0x008000);
         }
     }
 
     buildOutdoorDisplay() { // 200 140 -> 400 170. scale 3.2 -> 4.0
-        this.elapsedTimeMesh = this.createTextMesh("Elapsed time: ", 430, 215, 80, 0xffffff);
+        this.elapsedTimeMesh = this.createTextMesh("Time: ", 430, 215, 80, 0xffffff);
         this.elapsedTimeMesh.scale.set(15, 15, 15);
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.elapsedTime = this.createTextMesh("0", 360, 215, 200, 0xffffff);
+        this.elapsedTime = this.createTextMesh("0", 355, 215, 212, 0xffffff);
         this.elapsedTime.scale.set(15, 15, 15);
         this.elapsedTime.rotation.y = 120 * Math.PI / 180;
 
-        this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 430, 195, 80, 0xffffff);
+        this.lapsNumberMesh = this.createTextMesh("Lap: ", 430, 195, 80, 0xffffff);
         this.lapsNumberMesh.scale.set(15, 15, 15);
         this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.segundalinha = this.createTextMesh("0", 350, 195, 210, 0xffffff);
+        this.segundalinha = this.createTextMesh(`1/${this.gameStateManager.laps}`, 350, 195, 217.5, 0xffffff);
         this.segundalinha.scale.set(15, 15, 15);
         this.segundalinha.rotation.y = 120 * Math.PI / 180;
 
-        this.layerMesh = this.createTextMesh("Current Air Layer: ", 430, 175, 80, 0xffffff);
+        this.layerMesh = this.createTextMesh("Air Layer: ", 430, 175, 80, 0xffffff);
         this.layerMesh.scale.set(15, 15, 15);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.terceiralinha = this.createTextMesh("0", 340, 175, 235, 0xffffff);
-        this.terceiralinha.scale.set(15, 15, 15);
-        this.terceiralinha.rotation.y = 120 * Math.PI / 180;
+        this.layer = this.createTextMesh("0", 340, 175, 235, 0xffffff);
+        this.layer.scale.set(15, 15, 15);
+        this.layer.rotation.y = 120 * Math.PI / 180;
 
-        this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 430, 155, 80, 0xffffff);
+        this.avaiableVouchersMesh = this.createTextMesh("Vouchers: ", 430, 155, 80, 0xffffff);
         this.avaiableVouchersMesh.scale.set(15, 15, 15);
         this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
 
@@ -178,11 +176,11 @@ class RunningState {
         this.quartalinha.scale.set(15, 15, 15);
         this.quartalinha.rotation.y = 120 * Math.PI / 180;
 
-        this.gameStatusMesh = this.createTextMesh("Game Status: ", 430, 135, 80, 0xffffff);
+        this.gameStatusMesh = this.createTextMesh("Status: ", 430, 135, 80, 0xffffff);
         this.gameStatusMesh.scale.set(15, 15, 15);;
         this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0xffffff);
+        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0x008000);
         this.ultimalinha.scale.set(15, 15, 15);
         this.ultimalinha.rotation.y = 120 * Math.PI / 180;
 
@@ -194,7 +192,7 @@ class RunningState {
         this.app.scene.add(this.layerMesh);
         this.app.scene.add(this.segundalinha);
         this.app.scene.add(this.ultimalinha);
-        this.app.scene.add(this.terceiralinha);
+        this.app.scene.add(this.layer);
         this.app.scene.add(this.quartalinha);
 
 
@@ -310,7 +308,12 @@ class RunningState {
             this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.5);
         }
 
-        const elapsedTimeText = this.app.clock.getElapsedTime().toFixed(0);
+        const elapsedTimeInSeconds = Math.floor(this.app.clock.getElapsedTime());
+        const minutes = Math.floor(elapsedTimeInSeconds / 60);
+        const seconds = elapsedTimeInSeconds % 60;
+        
+        const elapsedTimeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
         this.updateTextMesh(this.elapsedTime, elapsedTimeText, 0xffffff);
 
         if (this.keyStates["KeyW"]) {
@@ -325,6 +328,20 @@ class RunningState {
 
         const currentTime = this.app.clock.getElapsedTime();
 
+        // Balloons
+        if (!this.isOnCooldown(this.myReader.opponentBalloon, currentTime)) {
+            const collisionDetected = this.checkCollision(this.myReader.playerBalloon, this.myReader.opponentBalloon, 30, 30);
+
+            if (collisionDetected) {
+                console.log("Collision with opponent balloon!");
+
+                // Handle the collision logic (e.g., bounce effect, penalty, etc.)
+                // this.handleOpponentCollision();
+
+                this.setCooldown(this.myReader.opponentBalloon, currentTime, 3.5);
+            }
+        }
+        
         // Obstacles
         for (const obstacle of this.obstacles) {
             if (this.isOnCooldown(obstacle, currentTime)) continue;
@@ -353,7 +370,8 @@ class RunningState {
         }
 
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
-        this.updateTextMesh(this.terceiralinha, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
+        
+        this.updateTextMesh(this.layer, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
 
         this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
