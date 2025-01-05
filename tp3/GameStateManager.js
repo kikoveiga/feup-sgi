@@ -23,6 +23,8 @@ class GameStateManager {
             smoothFactor: 5,
         }
 
+        this.laps = 1;
+
         this.winner = null;
     }
 
@@ -30,9 +32,10 @@ class GameStateManager {
         return this.state;
     }
 
-    startGame(playerBalloonColor, opponentBalloonColor) {
+    startGame(playerBalloonColor, opponentBalloonColor, laps) {
         this.player.balloonColor = playerBalloonColor;
         this.opponent.balloonColor = opponentBalloonColor;
+        this.laps = laps;
 
         switch (opponentBalloonColor) {
             case 'pink':

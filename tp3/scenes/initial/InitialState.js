@@ -14,6 +14,8 @@ class InitialState {
         this.playerNameString = "Not chosen";
 
         this.isTypingName = false;
+
+        this.laps = 1;
     }
 
     init() {
@@ -53,12 +55,12 @@ class InitialState {
         this.topMesh1.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh1);
     
-        this.topMesh2 = this.createTextMesh("Player balloon: ", 24.7, 2, -21.5, 0x87ceeb); 
+        this.topMesh2 = this.createTextMesh("Player Balloon: ", 24.7, 2, -21.5, 0xb0b0b0); 
         this.topMesh2.scale.set(1.8, 1.8, 1.8);
         this.topMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh2);
     
-        this.topMesh3 = this.createTextMesh("Opponent balloon: ", 24.7, 0, -21.5, 0xff69b4);
+        this.topMesh3 = this.createTextMesh("Opponent Balloon: ", 24.7, 0, -21.5, 0xb0b0b0);
         this.topMesh3.scale.set(1.8, 1.8, 1.8);
         this.topMesh3.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh3);
@@ -81,6 +83,18 @@ class InitialState {
         this.opponentBalloon.rotation.y = Math.PI / 2;
         this.app.scene.add(this.opponentBalloon);
         this.interactableObjects.push(this.opponentBalloon);
+
+        this.lapsMesh = this.createTextMesh("Laps:", 24.7, -2, -21.5, 0xb0b0b0);
+        this.lapsMesh.scale.set(1.8, 1.8, 1.8);
+        this.lapsMesh.rotation.y = Math.PI / 2;
+        this.app.scene.add(this.lapsMesh);
+
+        this.selectLaps = this.createTextMesh("1", 24.7, -2, 6, 0xb0b0b0);
+        this.selectLaps.name = 'laps';
+        this.selectLaps.scale.set(1.8, 1.8, 1.8);
+        this.selectLaps.rotation.y = Math.PI / 2;
+        this.app.scene.add(this.selectLaps);
+        this.interactableObjects.push(this.selectLaps);
     
         this.gameMesh = this.createTextMesh("Game made by:", 24.7, -4, -6.5, 0xffffe0); 
         this.gameMesh.scale.set(1.5, 1.5, 1.5);
@@ -130,12 +144,17 @@ class InitialState {
             this.updateTextMesh(this.opponentBalloon, color, this.colorHex);
         }
 
+        else if (clickedObject === 'laps') {
+            this.laps = (this.laps % 3) + 1;
+            this.updateTextMesh(this.selectLaps, this.laps.toString(), 0xb0b0b0);
+        }
+
         else if (clickedObject === 'playButton') {
             if (this.playerBalloonColor === "Not chosen" || this.opponentBalloonColor === "Not chosen" || this.playerNameString === "Not chosen") {
                 console.warn('Please select both balloons and a player name before starting the game.');
             }
 
-            else this.gameStateManager.startGame(this.playerBalloonColor, this.opponentBalloonColor);
+            else this.gameStateManager.startGame(this.playerBalloonColor, this.opponentBalloonColor, this.laps);
         }
 
         else if (clickedObject === 'playerName') {
