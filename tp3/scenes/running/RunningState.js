@@ -93,30 +93,46 @@ class RunningState {
         this.waitForShaders();
     }
 
-    buildOutdoorDisplay() {
-        this.elapsedTimeMesh = this.createTextMesh("Elapsed time: ", 230, 175, 70, 0xffffff);
-        this.elapsedTimeMesh.scale.set(12, 12, 12);
+    buildOutdoorDisplay() { // 200 140 -> 400 170. scale 3.2 -> 4.0
+        this.elapsedTimeMesh = this.createTextMesh("Elapsed time: ", 430, 215, 80, 0xffffff);
+        this.elapsedTimeMesh.scale.set(15, 15, 15);
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.elapsedTime = this.createTextMesh("0", 230, 175, 70, 0xffffff);
-        this.elapsedTime.scale.set(12, 12, 12);
+        this.elapsedTime = this.createTextMesh("0", 360, 215, 200, 0xffffff); // pos primeira linha
+        this.elapsedTime.scale.set(15, 15, 15);
         this.elapsedTime.rotation.y = 120 * Math.PI / 180;
 
-        this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 230, 155, 70, 0xffffff);
-        this.lapsNumberMesh.scale.set(12, 12, 12);
+        this.lapsNumberMesh = this.createTextMesh("Completed Laps: ", 430, 195, 80, 0xffffff);
+        this.lapsNumberMesh.scale.set(15, 15, 15);
         this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.layerMesh = this.createTextMesh("Current Air Layer: ", 230, 135, 70, 0xffffff);
-        this.layerMesh.scale.set(12, 12, 12);
+        this.segundalinha = this.createTextMesh("0", 350, 195, 210, 0xffffff); // pos segunda linha
+        this.segundalinha.scale.set(15, 15, 15);
+        this.segundalinha.rotation.y = 120 * Math.PI / 180;
+
+        this.layerMesh = this.createTextMesh("Current Air Layer: ", 430, 175, 80, 0xffffff);
+        this.layerMesh.scale.set(15, 15, 15);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 230, 115, 70, 0xffffff);
-        this.avaiableVouchersMesh.scale.set(12, 12, 12);
+        this.terceiralinha = this.createTextMesh("0", 340, 175, 235, 0xffffff); // pos terceira linha
+        this.terceiralinha.scale.set(15, 15, 15);
+        this.terceiralinha.rotation.y = 120 * Math.PI / 180;
+
+        this.avaiableVouchersMesh = this.createTextMesh("Avaiable Vouchers: ", 430, 155, 80, 0xffffff);
+        this.avaiableVouchersMesh.scale.set(15, 15, 15);
         this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.gameStatusMesh = this.createTextMesh("Game Status: ", 230, 95, 70, 0xffffff);
-        this.gameStatusMesh.scale.set(12, 12, 12);
+        this.quartalinha = this.createTextMesh("0", 340, 155, 235, 0xffffff); // pos quarta linha
+        this.quartalinha.scale.set(15, 15, 15);
+        this.quartalinha.rotation.y = 120 * Math.PI / 180;
+
+        this.gameStatusMesh = this.createTextMesh("Game Status: ", 430, 135, 80, 0xffffff);
+        this.gameStatusMesh.scale.set(15, 15, 15);;
         this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
+
+        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0xffffff); // pos ultima linha
+        this.ultimalinha.scale.set(15, 15, 15);
+        this.ultimalinha.rotation.y = 120 * Math.PI / 180;
 
         this.app.scene.add(this.elapsedTimeMesh);
         this.app.scene.add(this.elapsedTime);
@@ -124,6 +140,10 @@ class RunningState {
         this.app.scene.add(this.avaiableVouchersMesh);
         this.app.scene.add(this.gameStatusMesh);
         this.app.scene.add(this.layerMesh);
+        this.app.scene.add(this.segundalinha);
+        this.app.scene.add(this.ultimalinha);
+        this.app.scene.add(this.terceiralinha);
+        this.app.scene.add(this.quartalinha);
 
 
         this.group = new THREE.Group();
@@ -174,8 +194,8 @@ class RunningState {
         this.group.add(cylinder1);
         this.group.add(cylinder2);
         this.group.add(this.outdoorDisplay);
-        this.group.scale.set(2.7, 2.7, 2.7);
-        this.group.position.set(-180, 0, 210);
+        this.group.scale.set(3.2, 3.2, 3.2);
+        this.group.position.set(-300, 0, 0);
         this.group.rotation.y = - 30 * Math.PI / 180;
         this.app.scene.add(this.group);
     }

@@ -62,11 +62,219 @@
             "mountainTex": {
                 "filepath": "scenes/textures/mountain2.jpg"
             },
+            "wallTex": {
+                "filepath": "scenes/textures/wall.jpg"
+            },
+            "gravelTex": {
+                "filepath": "scenes/textures/gravel.jpg"
+            },
             "mountainBump": {
                 "filepath": "scenes/textures/rockbump.jpg"
+            },
+            "ropeTex": {
+                "filepath": "scenes/textures/rope.jpg"
+            },
+            "crateTex": {
+                "filepath": "scenes/textures/crate.jpg"
             }
         },
         "materials": {
+            "crateApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "crateTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "ropeApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "ropeTex",
+                "texlength_s": 0.2,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "orangeApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 0.5,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.05,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.1,
+                    "b": 0.0
+                },
+                "shininess": 20,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "blueApp": {
+                "color": {
+                    "r": 0.53,
+                    "g": 0.81,
+                    "b": 0.92
+                },
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.2
+                },
+                "specular": {
+                    "r": 0.2,
+                    "g": 0.2,
+                    "b": 0.3
+                },
+                "shininess": 15,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "pinkApp": {
+                "color": {
+                    "r": 1.0,
+                    "g": 0.71,
+                    "b": 0.76
+                },
+                "emissive": {
+                    "r": 0.2,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "specular": {
+                    "r": 0.3,
+                    "g": 0.2,
+                    "b": 0.2
+                },
+                "shininess": 20,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "greenApp": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.8,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.2,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.3,
+                    "g": 0.4,
+                    "b": 0.3
+                },
+                "shininess": 25,
+                "transparent": false,
+                "opacity": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "gravelApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "gravelTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
+            "wallApp": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "wallTex",
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
+                "twosided": true,
+                "shading": false,
+                "wireframe": false
+            },
             "mountainApp": {
                 "color": {
                     "r": 0.6,
@@ -297,20 +505,28 @@
                 "transforms": [      
                     {
                     "type": "scale",
-                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    "amount": { "x": 0.7, "y": 1.0, "z": 0.7 }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": { "x": 0.0, "y": 180.0, "z": 0.0 }
+                        },
+                    {
+                    "type": "translate",
+                    "amount": { "x": 50, "y": 1.5, "z": -450 }
                     }
+                    
                 ],
-                "materialref": {
-                    "materialId": "xadrezApp"
-                },
                 "children": {
                     "nodesList":[
                         "plane1",
-                        "plane2",
                         "wall1",
-                        "wall2",
                         "wall3",
-                        "wall4"
+                        "wall4",
+                        "orangeballoon",
+                        "greenballoon",
+                        "blueballoon",
+                        "pinkballoon"
                     ]
                 }
             },
@@ -333,42 +549,13 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "xadrezApp"
+                    "materialId": "gravelApp"
                 },
                 "children": {
                     "rectangle": {
                         "type": "rectangle",
                         "xy1": { "x": 0, "y": 0 },
                         "xy2": { "x": 350, "y": 140 }
-                    }
-                }
-            },
-            "plane2": {
-                "type": "node",
-                "castshadows": true,
-                "receiveshadows": true,
-                "transforms": [      
-                    {
-                    "type": "scale",
-                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
-                    },
-                    {
-                    "type": "rotate",
-                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
-                    },
-                    {
-                    "type": "translate",
-                    "amount": { "x": 225.0, "y": 1, "z": -180.0 }
-                    }
-                ],
-                "materialref": {
-                    "materialId": "xadrezApp"
-                },
-                "children": {
-                    "rectangle": {
-                        "type": "rectangle",
-                        "xy1": { "x": 0, "y": 0 },
-                        "xy2": { "x": 100, "y": 200 }
                     }
                 }
             },
@@ -391,42 +578,13 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "xadrezApp"
+                    "materialId": "wallApp"
                 },
                 "children": {
                     "box": {
                         "type": "box",
                         "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
                         "xyz2": { "x": 350.0, "y": 5.0, "z": 30.0 }
-                    }  
-                }
-            },
-            "wall2": {
-                "type": "node",
-                "castshadows": true,
-                "receiveshadows": true,
-                "transforms": [      
-                    {
-                    "type": "scale",
-                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
-                    },
-                    {
-                    "type": "rotate",
-                    "amount": { "x": 90.0, "y": 0.0, "z": 0.0 }
-                    },
-                    {
-                    "type": "translate",
-                    "amount": { "x": 225.0, "y": 1, "z": -80.0 }
-                    }
-                ],
-                "materialref": {
-                    "materialId": "xadrezApp"
-                },
-                "children": {
-                    "box": {
-                        "type": "box",
-                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
-                        "xyz2": { "x": 100.0, "y": 5.0, "z": 30.0 }
                     }  
                 }
             },
@@ -445,17 +603,46 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 275.0, "y": 1, "z": -250.0 }
+                    "amount": { "x": 275.0, "y": 1, "z": -350.0 }
                     }
                 ],
                 "materialref": {
-                    "materialId": "xadrezApp"
+                    "materialId": "wallApp"
                 },
                 "children": {
                     "box": {
                         "type": "box",
                         "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
-                        "xyz2": { "x": 5.0, "y": 340.0, "z": 30.0 }
+                        "xyz2": { "x": 5.0, "y": 140.0, "z": 30.0 }
+                    }  
+                }
+            },
+            "wall4": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                    "type": "scale",
+                    "amount": { "x": 1.0, "y": 1.0, "z": 1.0 }
+                    },
+                    {
+                    "type": "rotate",
+                    "amount": { "x": 0.0, "y": 0.0, "z": 0.0 }
+                    },
+                    {
+                    "type": "translate",
+                    "amount": { "x": -75.0, "y": 1, "z": -350.0 }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "wallApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 5.0, "y": 30.0, "z": 140.0 }
                     }  
                 }
             },
@@ -503,7 +690,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 750.0, "y": -390.0, "z": 0.0 }
+                    "amount": { "x": 900.0, "y": -390.0, "z": 0.0 }
                     }
                 ],
                 "children": {
@@ -536,7 +723,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 300.0, "y": 300.0, "z": 300.0 }
+                    "amount": { "x": 360.0, "y": 360.0, "z": 360.0 }
                     },
                     {
                     "type": "rotate",
@@ -544,7 +731,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": -600.0, "y": -390.0, "z": -200.0 }
+                    "amount": { "x": -790.0, "y": -390.0, "z": -240.0 }
                     }
                 ],
                 "children": {
@@ -577,7 +764,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 320.0, "y": 320.0, "z": 320.0 }
+                    "amount": { "x": 384.0, "y": 384.0, "z": 384.0 }
                     },
                     {
                     "type": "rotate",
@@ -585,7 +772,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 400.0, "y": -390.0, "z": 600.0 }
+                    "amount": { "x": 528.0, "y": -440.0, "z": 720.0 }
                     }
                 ],
                 "children": {
@@ -618,7 +805,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 280.0, "y": 280.0, "z": 340.0 }
+                    "amount": { "x": 336.0, "y": 336.0, "z": 408.0 }
                     },
                     {
                     "type": "rotate",
@@ -626,7 +813,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": -400.0, "y": -390.0, "z": -670.0 }
+                    "amount": { "x": -590.0, "y": -490.0, "z": -630.0 }
                     }
                 ],
                 "children": {
@@ -659,7 +846,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 360.0, "y": 360.0, "z": 360.0 }
+                    "amount": { "x": 432.0, "y": 432.0, "z": 432.0 }
                     },
                     {
                     "type": "rotate",
@@ -667,7 +854,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": -700.0, "y": -390.0, "z": 0.0 }
+                    "amount": { "x": -930.0, "y": -490.0, "z": 0.0 }
                     }
                 ],
                 "children": {
@@ -700,7 +887,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 400.0, "y": 400.0, "z": 400.0 }
+                    "amount": { "x": 480.0, "y": 480.0, "z": 480.0 }
                     },
                     {
                     "type": "rotate",
@@ -708,7 +895,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 700.0, "y": -390.0, "z": 700.0 }
+                    "amount": { "x": 840.0, "y": -540.0, "z": 840.0 }
                     }
                 ],
                 "children": {
@@ -741,7 +928,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 400.0, "y": 400.0, "z": 400.0 }
+                    "amount": { "x": 480.0, "y": 480.0, "z": 480.0 }
                     },
                     {
                     "type": "rotate",
@@ -749,7 +936,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": -700.0, "y": -390.0, "z": 700.0 }
+                    "amount": { "x": -930.0, "y": -490.0, "z": 930.0 }
                     }
                 ],
                 "children": {
@@ -782,7 +969,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 400.0, "y": 380.0, "z": 380.0 }
+                    "amount": { "x": 480.0, "y": 456.0, "z": 456.0 }
                     },
                     {
                     "type": "rotate",
@@ -790,7 +977,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 650.0, "y": -420.0, "z": -600.0 }
+                    "amount": { "x": 780.0, "y": -500.0, "z": -720.0 }
                     }
                 ],
                 "children": {
@@ -823,7 +1010,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 380.0, "y": 380.0, "z": 380.0 }
+                    "amount": { "x": 456.0, "y": 456.0, "z": 456.0 }
                     },
                     {
                     "type": "rotate",
@@ -831,7 +1018,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": -500.0, "y": -390.0, "z": 600.0 }
+                    "amount": { "x": -700.0, "y": -500.0, "z": 720.0 }
                     }
                 ],
                 "children": {
@@ -864,7 +1051,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 380.0, "y": 380.0, "z": 500.0 }
+                    "amount": { "x": 456.0, "y": 456.0, "z": 600.0 }
                     },
                     {
                     "type": "rotate",
@@ -872,7 +1059,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": -550.0, "z": 800.0 }
+                    "amount": { "x": 0.0, "y": -700.0, "z": 1010.0 }
                     }
                 ],
                 "children": {
@@ -905,7 +1092,7 @@
                 "transforms": [
                     {
                     "type": "scale",
-                    "amount": { "x": 380.0, "y": 380.0, "z": 400.0 }
+                    "amount": { "x": 456.0, "y": 456.0, "z": 480.0 }
                     },
                     {
                     "type": "rotate",
@@ -913,7 +1100,7 @@
                     },
                     {
                     "type": "translate",
-                    "amount": { "x": 0.0, "y": -550.0, "z": -800.0 }
+                    "amount": { "x": 0.0, "y": -550.0, "z": -960.0 }
                     }
                 ],
                 "children": {
@@ -986,9 +1173,9 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 3.2,
-                            "y": 3.2,
-                            "z": 3.2
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
                         }
                     },         
                     {
@@ -1002,9 +1189,9 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 200.0,
+                            "x": 400.0,
                             "y": 0.0,
-                            "z": 140.0
+                            "z": 170.0
                         }
                     }
                 ],
@@ -1162,7 +1349,7 @@
                         "type": "translate",
                         "amount": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 20.0,
                             "z": 0.0
                         }
                     }
@@ -1183,29 +1370,6 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 6.0,
-                            "y": 3.5,
-                            "z": 0.0
-                        }
-                    }
-                ],
-                "materialref": {
-                    "materialId": "xadrezApp"
-                },
-                "children": {
-                    "box": {
-                        "type": "box",
-                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
-                        "xyz2": { "x": 1.7, "y": 7.0, "z": 1.7 }
-                    }
-                }
-            },
-            "box2": {
-                "type": "node",
-                "transforms": [            
-                    {
-                        "type": "translate",
-                        "amount": {
                             "x": 15.0,
                             "y": 3.5,
                             "z": 0.0
@@ -1219,7 +1383,484 @@
                     "box": {
                         "type": "box",
                         "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
-                        "xyz2": { "x": 1.7, "y": 7.0, "z": 1.7 }
+                        "xyz2": { "x": 3.5, "y": 20.0, "z": 3.5 }
+                    }
+                }
+            },
+            "box2": {
+                "type": "node",
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 33.0,
+                            "y": 3.5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "xadrezApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 3.5, "y": 20.0, "z": 3.5 }
+                    }
+                }
+            },
+            "pinkballoon": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 15,
+                            "y": 11,
+                            "z": 15
+                        }
+                    },          
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 45.0,
+                            "y": -50.0,
+                            "z": -320.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "pinkApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "balloonTop",
+                        "balloonChest",
+                        "balloonRopes"
+                    ]
+                }
+            },
+            "blueballoon": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 15,
+                            "y": 11,
+                            "z": 15
+                        }
+                    },         
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -35.0,
+                            "y": -50.0,
+                            "z": -300.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "blueApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "balloonTop",
+                        "balloonChest",
+                        "balloonRopes"
+                    ]
+                }
+            },
+            "greenballoon": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 15,
+                            "y": 11,
+                            "z": 15
+                        }
+                    },         
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 220.0,
+                            "y": -50.0,
+                            "z": -320.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "greenApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "balloonTop",
+                        "balloonChest",
+                        "balloonRopes"
+                    ]
+                }
+            },
+            "orangeballoon": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 15,
+                            "y": 11,
+                            "z": 15
+                        }
+                    },          
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 130.0,
+                            "y": -50.0,
+                            "z": -350.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "orangeApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "balloonTop",
+                        "balloonChest",
+                        "balloonRopes"
+                    ]
+                }
+            },
+            "balloonRopes": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "ropeApp"
+                },
+                "children": {
+                    "nodesList": [
+                        "rope1",
+                        "rope2",
+                        "rope3",
+                        "rope4"
+                    ]
+                }
+            },
+            "rope1": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [       
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 5.0,
+                            "y": 0.0,
+                            "z": 5.0
+                        }
+                    },   
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.35,
+                            "y": 1.2,
+                            "z": 0.4
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "top": 0.05,
+                        "base": 0.05,
+                        "height": 1.8,
+                        "slices": 6,
+                        "stacks": 1,
+                        "capsclose": true
+                    }   
+                }
+            },
+            "rope2": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [       
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -5.0,
+                            "y": 0.0,
+                            "z": 5.0
+                        }
+                    },   
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -0.35,
+                            "y": 1.2,
+                            "z": -0.4
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "top": 0.05,
+                        "base": 0.05,
+                        "height": 1.8,
+                        "slices": 6,
+                        "stacks": 1,
+                        "capsclose": true
+                    }   
+                }
+            },
+            "rope3": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [       
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -5.0,
+                            "y": 0.0,
+                            "z": -5.0
+                        }
+                    },   
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.35,
+                            "y": 1.2,
+                            "z": -0.4
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "top": 0.05,
+                        "base": 0.05,
+                        "height": 1.8,
+                        "slices": 6,
+                        "stacks": 1,
+                        "capsclose": true
+                    }   
+                }
+            },
+            "rope4": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [       
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 5.0,
+                            "y": 0.0,
+                            "z": -5.0
+                        }
+                    },   
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.35,
+                            "y": 1.2,
+                            "z": 0.4
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "top": 0.05,
+                        "base": 0.05,
+                        "height": 1.8,
+                        "slices": 6,
+                        "stacks": 1,
+                        "capsclose": true
+                    }   
+                }
+            },
+            "balloonChest": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [            
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "crateApp"
+                },
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": { "x": 0.0, "y": 0.0, "z": 0.0 },
+                        "xyz2": { "x": 0.8, "y": 0.8, "z": 0.8 }
+                    } 
+                }
+            },
+            "balloonTop": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.1,
+                            "y": 1.0,
+                            "z": 1.1
+                        }
+                    },         
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": -0.5,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "balloonSphere",
+                        "balloonCone",
+                        "balloonCylinder"
+                    ]
+                }
+            },
+            "balloonSphere": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.5
+                        }
+                    },         
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 270.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 9.84,
+                            "z": 0.0
+                        }
+                    }
+                ],
+
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1.8,
+                        "slices": 16,
+                        "stacks": 16,
+                        "thetastart": 0,
+                        "thetalength": 180,
+                        "phistart": 0,
+                        "philength": 180
+                    }
+                }
+            },
+            "balloonCylinder": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [      
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 9.0,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "top": 1.8,
+                        "base": 1.0,
+                        "height": 1.7,
+                        "radialSegments": 32,
+                        "heightSegments": 1,
+                        "capsclose": true
+                    }   
+                }
+            },
+            "balloonCone": {
+                "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
+                "transforms": [               
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 180.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0.0,
+                            "y": 7.3,
+                            "z": 0.0
+                        }
+                    }
+                ],
+                "children": {
+                    "cone": {
+                        "type": "cone",
+                        "radius": 1.0,
+                        "height": 1.7,
+                        "slices": 32,
+                        "stacks": 32,
+                        "thetastart": 0,
+                        "thetalength": 360,
+                        "openended": true
                     }
                 }
             }
