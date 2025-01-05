@@ -247,7 +247,7 @@ class RunningState {
         this.group.add(cylinder2);
         this.group.add(this.outdoorDisplay);
         this.group.scale.set(3.2, 3.2, 3.2);
-        this.group.position.set(-300, 0, 0);
+        this.group.position.set(-370, 0, 0);
         this.group.rotation.y = - 30 * Math.PI / 180;
         this.app.scene.add(this.group);
     }
@@ -334,8 +334,8 @@ class RunningState {
     
                 // Handle collision logic here (e.g., reduce health, apply penalty, etc.)
                 
-                // Add obstacle to cooldown
-                this.setCooldown(obstacle, currentTime, 3.5); // 2 seconds
+
+                this.setCooldown(obstacle, currentTime, 3.5); 
             }
         }
     
@@ -348,8 +348,6 @@ class RunningState {
     
                 this.playerVoucher += 1;
                 this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
-    
-                // Add power-up to cooldown
                 this.setCooldown(powerUp, currentTime, 3.5);
             }
         }

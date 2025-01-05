@@ -11,7 +11,7 @@ class MyTrack extends MyObject {
 
           //Curve related attributes
           this.segments = 100;
-          this.width = 2.0;
+          this.width = 2.7;
           this.textureRepeat = 1;
           this.showWireframe = false;
           this.showMesh = true;
@@ -117,10 +117,10 @@ class MyTrack extends MyObject {
           this.obstacles = [];
 
           const obstaclePositions = [
-              new THREE.Vector3(-2.7 * this.multiplier, 2.0, -0.5 * this.multiplier),  
-              new THREE.Vector3(-2.5 * this.multiplier, 2.0, -4.8 * this.multiplier),   
-              new THREE.Vector3(1 * this.multiplier, 2.0, 4.65 * this.multiplier),   
-              new THREE.Vector3(-5 * this.multiplier, 2.0, -5.1 * this.multiplier)     
+              new THREE.Vector3(-2.7 * this.multiplier, 2.0, -0.25 * this.multiplier),  
+              new THREE.Vector3(-2.5 * this.multiplier, 2.0, -4.6 * this.multiplier),   
+              new THREE.Vector3(1 * this.multiplier, 2.0, 4.3 * this.multiplier),   
+              new THREE.Vector3(-5 * this.multiplier, 2.0, -5.55 * this.multiplier)     
           ];
 
           obstaclePositions.forEach((pos, index) => {

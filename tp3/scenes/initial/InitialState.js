@@ -37,7 +37,7 @@ class InitialState {
         this.topMesh3.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh3);
     
-        this.topMesh4 = this.createTextMesh("Play HotRace!", 24, 7.5, -7.5, 0x32cd32);
+        this.topMesh4 = this.createTextMesh("Play HotRace!", 24, 7.5, -7.5, 0xffff00);
         this.topMesh4.scale.set(2, 2, 2);
         this.topMesh4.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh4);

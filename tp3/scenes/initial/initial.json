@@ -38,12 +38,12 @@
                     "b": 0.0
                 },
                 "intensity": 0.0,
-                "front": "scenes/textures/sides2.jpg",
-                "back": "scenes/textures/sides2.jpg",
-                "up": "scenes/textures/sides2.jpg",
+                "front": "scenes/textures/sky2.jpg",
+                "back": "scenes/textures/sky2.jpg",
+                "up": "scenes/textures/sky2.jpg",
                 "down": "scenes/textures/floor.jpg",
-                "left": "scenes/textures/sides2.jpg",
-                "right": "scenes/textures/sides2.jpg"
+                "left": "scenes/textures/sky2.jpg",
+                "right": "scenes/textures/sky2.jpg"
             }
         },
         "textures": {
@@ -54,7 +54,7 @@
                 "filepath": "scenes/textures/crate.jpg"
             },
             "skyTex": {
-                "filepath": "scenes/textures/sides2.jpg"
+                "filepath": "scenes/textures/sky.jpg"
             },
             "feupTex": {
                 "filepath": "scenes/textures/feup_logo.jpg"
@@ -101,9 +101,9 @@
             },
             "skyApp": {
                 "color": {
-                    "r": 0.7,
-                    "g": 0.8,
-                    "b": 1.0
+                    "r": 0.65,
+                    "g": 0.65,
+                    "b": 0.9
                 },
                 "emissive": {
                     "r": 0.1,
@@ -119,8 +119,8 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "skyTex",
-                "texlength_s": 3.0,
-                "texlength_t": 2.0,
+                "texlength_s": 1.0,
+                "texlength_t": 1.0,
                 "twosided": true,
                 "shading": true,
                 "wireframe": false

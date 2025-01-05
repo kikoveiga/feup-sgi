@@ -31,7 +31,7 @@ class MyContents {
         console.log("Initializing contents for scene: " + newState);
 
         if (this.axis === null) {
-            this.axis = new MyAxis(this.app);
+            // this.axis = new MyAxis(this.app);
             this.app.scene.add(this.axis);
         }
 
