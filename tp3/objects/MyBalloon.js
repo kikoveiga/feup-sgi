@@ -27,7 +27,8 @@ class MyBalloon extends MyObject {
 
           // Shadow/Mark
           // this.shadow = this.createShadow();
-          // this.shadow.position.set(0, -3, 0);
+          // this.shadow.position.set(0, 0, 0);
+          // this.shadow.scale.set(1.5, 1.5, 1.5);
           // this.group.add(this.shadow);
 
           // Movement properties
@@ -37,10 +38,10 @@ class MyBalloon extends MyObject {
 
           this.windLayers = [
                { direction: new THREE.Vector3(0, 0, 0), speed: 0 },
-               { direction: new THREE.Vector3(0, 0, -1), speed: 2 },
-               { direction: new THREE.Vector3(0, 0, 1), speed: 2 },
-               { direction: new THREE.Vector3(1, 0, 0), speed: 2 },
-               { direction: new THREE.Vector3(-1, 0, 0), speed: 2 },
+               { direction: new THREE.Vector3(0, 0, 1), speed: 40 },
+               { direction: new THREE.Vector3(0, 0, -1), speed: 40 },
+               { direction: new THREE.Vector3(-1, 0, 0), speed: 40 },
+               { direction: new THREE.Vector3(1, 0, 0), speed: 40 },
           ];
      }
 
@@ -162,7 +163,7 @@ class MyBalloon extends MyObject {
           bodyGroup.add(sphereMesh);
   
           // Cylinder
-          const cylinderGeometry = new THREE.CylinderGeometry(1.0, 1.8, 1.7, 32, 1, false);
+          const cylinderGeometry = new THREE.CylinderGeometry(1.0, 1.8, 1.7, 32, 1, true);
           const cylinderMesh = new THREE.Mesh(cylinderGeometry, this.mat);
           cylinderMesh.rotation.x = THREE.MathUtils.degToRad(180);
           cylinderMesh.position.set(0, 8.5, 0);
@@ -171,13 +172,21 @@ class MyBalloon extends MyObject {
           bodyGroup.add(cylinderMesh);
   
           // Cone
-          const coneGeometry = new THREE.ConeGeometry(1.0, 1.7, 32);
-          const coneMesh = new THREE.Mesh(coneGeometry, this.mat);
-          coneMesh.rotation.x = THREE.MathUtils.degToRad(180);
-          coneMesh.position.set(0, 6.8, 0);
+          const cylinderGeometry2 = new THREE.CylinderGeometry(1.0, 0.35, 1.0, 32, 1, true);
+          const coneMesh = new THREE.Mesh(cylinderGeometry2, this.mat);
+          coneMesh.rotation.x = THREE.MathUtils.degToRad(0);
+          coneMesh.position.set(0, 7.15, 0);
           coneMesh.castShadow = true;
           coneMesh.receiveShadow = true;
           bodyGroup.add(coneMesh);
+
+          const sphereGeometry2 = new THREE.SphereGeometry(0.35, 16, 16, 0, Math.PI);
+          const sphereMesh2 = new THREE.Mesh(sphereGeometry2, this.mat);
+          sphereMesh2.rotation.x = THREE.MathUtils.degToRad(90);
+          sphereMesh2.position.set(0, 6.7, 0);
+          sphereMesh2.castShadow = true;
+          sphereMesh2.receiveShadow = true;
+          bodyGroup.add(sphereMesh2);
 
           bodyGroup.scale.set(1.1, 1.0, 1.1);
           return bodyGroup;

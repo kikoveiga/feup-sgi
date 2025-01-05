@@ -18,8 +18,9 @@ class GameStateManager {
 
         this.opponent = {
             name: "Opponent",
-            balloonColor: "pink",
+            balloonColor: "orange",
             time: "N/A",
+            smoothFactor: 5,
         }
 
         this.winner = null;
@@ -43,6 +44,20 @@ class GameStateManager {
 
         if (newState === GameStates.RUNNING && opponentBalloonColor) {
             this.opponent.balloonColor = opponentBalloonColor;
+            switch (opponentBalloonColor) {
+                case 'pink':
+                    this.opponent.smoothFactor = 2;
+                    break;
+                case 'blue':
+                    this.opponent.smoothFactor = 3;
+                    break;
+                case 'orange':
+                    this.opponent.smoothFactor = 5;
+                    break;
+                case 'green':
+                    this.opponent.smoothFactor = 4;
+                    break;
+            }
         }
 
         this.callbacks.forEach(callback => callback(newState));
