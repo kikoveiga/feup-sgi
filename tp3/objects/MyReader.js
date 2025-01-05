@@ -200,7 +200,7 @@ class MyReader {
 
           this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor);
           this.playerBalloon.scale.set(10, 10, 10);
-          this.playerBalloon.group.position.set(10, 0, 0);
+          this.playerBalloon.group.position.set(20, 0, 0);
           this.app.scene.add(this.playerBalloon);
 
           this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor);
