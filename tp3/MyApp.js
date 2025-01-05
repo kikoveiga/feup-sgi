@@ -53,19 +53,14 @@ class MyApp  {
         // Configure renderer size
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
-        const canvasContainer = document.getElementById('canvas');
-        if (!canvasContainer) {
-            console.error('Canvas container not found.');
-            return;
-        }
+        document.getElementById("canvas").appendChild(this.renderer.domElement);
 
-        canvasContainer.appendChild(this.renderer.domElement);
-
-        this.setActiveCamera('DefaultCamera');
 
         this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
         this.controls.enableZoom = true;
         this.controls.update();
+
+        this.setActiveCamera('DefaultCamera');
 
         // manage window resizes
         window.addEventListener('resize', this.onResize.bind(this), false );
@@ -115,7 +110,13 @@ class MyApp  {
         
             this.controls = new OrbitControls(this.activeCamera, this.renderer.domElement);
             this.controls.enableZoom = true;
-            this.controls.target.set(0, 0, 0);
+
+            if (this.activeCameraName.userData && this.activeCameraName.userData.target) {
+                this.controls.target.copy(this.activeCameraName.userData.target);
+            }
+
+            else this.controls.target.set(0, 0, 0);
+
             this.controls.update();
         }
     }
@@ -129,17 +130,15 @@ class MyApp  {
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         }
     }
-    /**
-     * 
-     * @param {MyContents} contents the contents object 
-     */
+
+    restartScene() {
+        this.scene = new THREE.Scene();
+    }
+    
     setContents(contents) {
         this.contents = contents;
     }
 
-    /**
-     * @param {MyGuiInterface} contents the gui interface object
-     */
     setGui(gui) {   
         this.gui = gui;
     }

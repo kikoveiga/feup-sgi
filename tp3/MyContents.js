@@ -71,54 +71,15 @@ class MyContents {
     cleanUp() {
         console.log("Cleaning up MyContents...");
 
-        this.objects.forEach(obj => {
-            if (obj) {
-                this.app.scene.remove(obj);
-
-                obj.traverse(child => {
-                    if (child.isMesh) {
-                        if (child.geometry) child.geometry.dispose();
-                        if (child.material) {
-                            if (Array.isArray(child.material)) {
-                                child.material.forEach(mat => { mat.dispose(); });
-                            } else child.material.dispose();
-                        }
-                    }
-                });
-            }
-        }); 
-
         this.objects = [];
-
-        this.lights.forEach(light => {
-            if (light) {
-                this.app.scene.remove(light);
-                if (light.dispose) light.dispose();
-            }
-        });
         this.lights = [];
 
-        this.meshes.forEach(mesh => {
-            if (mesh) {
-                this.app.scene.remove(mesh);
-
-                if (mesh.geometry) mesh.geometry.dispose();
-                if (mesh.material) {
-                    if (Array.isArray(mesh.material)) {
-                        mesh.material.forEach(mat => { mat.dispose(); });
-                    } else mesh.material.dispose();
-                }
-            }
-        });
         this.meshes = [];
-
-        if (this.axis) {
-            this.app.scene.remove(this.axis);
-            this.axis = null;
-        }
 
         this.parser = null;
         this.reader = null;
+
+        this.app.restartScene();
     }
 
     update(delta) {
@@ -176,6 +137,9 @@ class MyContents {
     addCameras() {
         this.app.cameras = this.parser.cameras;
         this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
+        console.log("Active Camera Position:", this.app.activeCamera.position);
+        console.log("Active camera target:", this.app.activeCamera.userData.target);
+
         this.app.gui.updateCameraOptions(); 
     }
     

@@ -30,35 +30,50 @@ class GameStateManager {
         return this.state;
     }
 
-    setState(newState, playerBalloonColor = null, opponentBalloonColor = null) {
+    startGame(playerBalloonColor, opponentBalloonColor) {
+        this.player.balloonColor = playerBalloonColor;
+        this.opponent.balloonColor = opponentBalloonColor;
+
+        switch (opponentBalloonColor) {
+            case 'pink':
+                this.opponent.smoothFactor = 2;
+                break;
+            case 'blue':
+               this.opponent.smoothFactor = 3;
+                break;
+            case 'orange':
+                this.opponent.smoothFactor = 5;
+                break;
+            case 'green':
+                this.opponent.smoothFactor = 4;
+                break;
+        }
+
+        this.setState(GameStates.RUNNING);
+    }
+
+    restartGame() {
+        this.setState(GameStates.RUNNING);
+    }
+
+    endGame(winner, playerTime, opponentTime) {
+        this.winner = winner;
+        this.player.time = playerTime;
+        this.opponent.time = opponentTime;
+        this.setState(GameStates.FINAL);
+    }
+
+    startMainMenu() {
+        this.setState(GameStates.INITIAL);
+    }
+
+    setState(newState) {
+
         if (this.state === newState) {
             return;
         }
 
-        console.log(`State changed from ${this.state} to ${newState}`);
         this.state = newState;
-
-        if (newState === GameStates.RUNNING && playerBalloonColor) {
-            this.player.balloonColor = playerBalloonColor;
-        }
-
-        if (newState === GameStates.RUNNING && opponentBalloonColor) {
-            this.opponent.balloonColor = opponentBalloonColor;
-            switch (opponentBalloonColor) {
-                case 'pink':
-                    this.opponent.smoothFactor = 2;
-                    break;
-                case 'blue':
-                    this.opponent.smoothFactor = 3;
-                    break;
-                case 'orange':
-                    this.opponent.smoothFactor = 5;
-                    break;
-                case 'green':
-                    this.opponent.smoothFactor = 4;
-                    break;
-            }
-        }
 
         this.callbacks.forEach(callback => callback(newState));
     }
