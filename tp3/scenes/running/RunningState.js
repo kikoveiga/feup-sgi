@@ -23,6 +23,12 @@ class RunningState {
 
         this.useFirstPerson = false;
         this.collisionCooldowns = new Map();
+
+        this.penaltyTime = 2; 
+        this.penaltyActive = false;
+        this.penaltyEndTime = 0; 
+
+        this.freezePosition = new THREE.Vector3();
     }
 
     init() {
@@ -107,6 +113,36 @@ class RunningState {
         this.waitForShaders();
     }
 
+    applyPenalty(currentTime) {
+        console.log(`Applying penalty for ${this.penaltyTime} seconds.`);
+        this.penaltyActive = true;
+        this.penaltyEndTime = currentTime + this.penaltyTime;
+        this.freezePosition.copy(this.myReader.playerBalloon.group.position);
+    }
+
+    checkIfBalloonOutOfTrack() {
+        // If you have a shadow object:
+        const shadowPos = new THREE.Vector3();
+        if (this.myReader.playerBalloon.shadow) {
+            this.myReader.playerBalloon.shadow.getWorldPosition(shadowPos);
+        } else {
+            // fallback: use balloon position
+            this.myReader.playerBalloon.group.getWorldPosition(shadowPos);
+        }
+    
+        // Distance from (0, 0) in XZ plane
+        const dx = shadowPos.x;
+        const dz = shadowPos.z;
+        const distanceFromCenter = Math.sqrt(dx * dx + dz * dz);
+    
+        // Track radius (approx.)
+        const trackOuterRadius = this.myReader.track.width * this.myReader.track.scale.x;
+    
+        // If the balloon shadow goes beyond some fraction of the tube radius
+        return distanceFromCenter > trackOuterRadius;
+    }
+    
+    
     exitFirstPerson() {
         this.useFirstPerson = false;
         this.pointerControls.unlock();
@@ -143,7 +179,7 @@ class RunningState {
         }
     }
 
-    buildOutdoorDisplay() { // 200 140 -> 400 170. scale 3.2 -> 4.0
+    buildOutdoorDisplay() { 
         this.elapsedTimeMesh = this.createTextMesh("Time: ", 430, 215, 80, 0xffffff);
         this.elapsedTimeMesh.scale.set(15, 15, 15);
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
@@ -316,53 +352,92 @@ class RunningState {
         
         this.updateTextMesh(this.elapsedTime, elapsedTimeText, 0xffffff);
 
-        if (this.keyStates["KeyW"]) {
-            this.myReader.playerBalloon.updateAltitude(delta, 1);
+        const currentTime = this.app.clock.getElapsedTime();
+
+        if (this.penaltyActive) {
+            if (currentTime < this.penaltyEndTime) {
+                this.myReader.playerBalloon.group.position.copy(this.freezePosition);
+            } 
+            else {
+                this.penaltyActive = false;
+                console.log("Penalty expired; balloon can move again.");
+            }
         }
-        if (this.keyStates["KeyS"]) {
-            this.myReader.playerBalloon.updateAltitude(delta, -1);
+        else {
+            if (this.keyStates["KeyW"]) {
+                this.myReader.playerBalloon.updateAltitude(delta, 1);
+            }
+            if (this.keyStates["KeyS"]) {
+                this.myReader.playerBalloon.updateAltitude(delta, -1);
+            }
         }
 
-        this.myReader.playerBalloon.update(delta);
+        const sceneCollidables = [
+            this.myReader.track.mesh,
+            // or this.myReader.track.curve, or this.myReader.track's entire group
+            // also obstacles, ground plane, etc.
+        ];
+        
+        this.myReader.playerBalloon.update(delta, sceneCollidables);
         this.myReader.track.update(delta);
 
-        const currentTime = this.app.clock.getElapsedTime();
+        // if (!this.penaltyActive) {
+        //     if (this.checkIfBalloonOutOfTrack()) {
+        //         console.log("Balloon shadow is off the track!");
+        //         if (this.playerVoucher > 0) {
+        //             this.playerVoucher--;
+        //             this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+        //             console.log("Used a voucher; no off-track penalty applied.");
+        //         } else {
+        //             this.applyPenalty(currentTime);
+        //         }
+        //     }
+        // }
 
         // Balloons
         if (!this.isOnCooldown(this.myReader.opponentBalloon, currentTime)) {
-            const collisionDetected = this.checkCollision(this.myReader.playerBalloon, this.myReader.opponentBalloon, 30, 30);
-
+            const collisionDetected = this.checkCollision(this.myReader.playerBalloon, this.myReader.opponentBalloon, 35, 35);
             if (collisionDetected) {
                 console.log("Collision with opponent balloon!");
 
-                // Handle the collision logic (e.g., bounce effect, penalty, etc.)
-                // this.handleOpponentCollision();
+                if (this.playerVoucher > 0) {
+                    this.playerVoucher--;
+                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    console.log("Used a voucher; no penalty applied.");
+                } 
+                else {
+                    this.applyPenalty(currentTime);
+                }
 
-                this.setCooldown(this.myReader.opponentBalloon, currentTime, 3.5);
+                this.setCooldown(this.myReader.opponentBalloon, currentTime, this.penaltyTime + 4.5);
             }
         }
-        
+
         // Obstacles
         for (const obstacle of this.obstacles) {
             if (this.isOnCooldown(obstacle, currentTime)) continue;
-    
+
             if (this.checkCollision(this.myReader.playerBalloon, obstacle, 30, 15)) {
                 console.log("Collision with obstacle: ", obstacle.name);
-    
-                // Handle collision logic here (e.g., reduce health, apply penalty, etc.)
-                
 
-                this.setCooldown(obstacle, currentTime, 3.5); 
+                if (this.playerVoucher > 0) {
+                    this.playerVoucher--;
+                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    console.log("Used a voucher; no penalty applied.");
+                } 
+                else {
+                    this.applyPenalty(currentTime);
+                }
+                this.setCooldown(obstacle, currentTime, this.penaltyTime + 4.5); 
             }
         }
-    
+
         // Power-ups
         for (const powerUp of this.powerUps) {
             if (this.isOnCooldown(powerUp, currentTime)) continue;
     
             if (this.checkCollision(this.myReader.playerBalloon, powerUp, 30, 15)) {
                 console.log("Collision with powerUp: ", powerUp.name);
-    
                 this.playerVoucher += 1;
                 this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
                 this.setCooldown(powerUp, currentTime, 3.5);

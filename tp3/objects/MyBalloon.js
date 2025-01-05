@@ -10,6 +10,7 @@ class MyBalloon extends MyObject {
           this.add(this.group);
 
           this.createTextures();
+          this.raycaster = new THREE.Raycaster();
 
           // Balloon Body
           this.body = this.createBalloonBody();
@@ -25,11 +26,10 @@ class MyBalloon extends MyObject {
           this.ropes.position.set(0, 4.5, 0);
           this.group.add(this.ropes);
 
-          // Shadow/Mark
-          // this.shadow = this.createShadow();
-          // this.shadow.position.set(0, 0, 0);
-          // this.shadow.scale.set(1.5, 1.5, 1.5);
-          // this.group.add(this.shadow);
+          // Shadow
+          this.shadow = this.createShadow();
+          this.shadow.position.set(0, 0, 0); 
+          this.group.add(this.shadow);
 
           // Movement properties
           this.altitude = 0; 
@@ -70,10 +70,40 @@ class MyBalloon extends MyObject {
           this.group.position.lerp(targetPosition, 0.1);
      }
 
-     update(delta) {
+     update(delta, sceneObjects) {
+          // 1) existing wind logic
           const currentWind = this.windLayers[this.windLayer];
           this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
+
+          // 2) Raycast logic for shadow
+          //    i. Get balloon world position
+          const balloonWorldPos = new THREE.Vector3();
+          this.group.getWorldPosition(balloonWorldPos);
+
+          //    ii. Set the raycaster
+          this.raycaster.set(balloonWorldPos, new THREE.Vector3(0, -1, 0)); 
+          // Cast downward
+
+          //    iii. Intersect with scene objects
+          // sceneObjects should be an array of any Meshes in the scene you want the shadow to project on.
+          const intersects = this.raycaster.intersectObjects(sceneObjects, true);
+
+          //    iv. If we hit something, place the shadow
+          if (intersects.length > 0) {
+               const firstHit = intersects[0];
+               // position the shadow at the hit point
+               this.shadow.position.set(
+                    balloonWorldPos.x,
+                    firstHit.point.y + 0.01, // offset a bit to avoid z-fighting
+                    balloonWorldPos.z
+               );
+               this.shadow.visible = true;
+          } else {
+               // If no intersection, optionally hide or place at fallback
+               this.shadow.visible = false;
+          }
      }
+
 
      createTextures() {
           const orangeTexture = new THREE.TextureLoader().load("./images/orange.jpg");
@@ -241,16 +271,21 @@ class MyBalloon extends MyObject {
      }
 
      createShadow() {
-          const geometry = new THREE.CircleGeometry(1, 32); 
+          const geometry = new THREE.CircleGeometry(1.0, 32); 
           const material = new THREE.MeshBasicMaterial({
-               color: 0x000000,
-               transparent: true,
-               opacity: 0.5,
+              color: 0x000000,
+              opacity: 0.5,
+              transparent: true,
+              side: THREE.DoubleSide
           });
-          const shadow = new THREE.Mesh(geometry, material);
-          shadow.rotation.x = -Math.PI / 2; 
-          return shadow;
+
+          const shadowMesh = new THREE.Mesh(geometry, material);
+          shadowMesh.rotation.x = -Math.PI / 2; 
+          shadowMesh.scale.set(0.5, 0.5, 0.5);
+          shadowMesh.visible = true; 
+          return shadowMesh;
      }
+      
 }
 
 MyBalloon.prototype.isGroup = true;

@@ -18,7 +18,7 @@ async function main() {
 
     app.setGui(gui);
 
-    gameStateManager.setState(GameStates.FINAL);
+    gameStateManager.setState(GameStates.RUNNING);
 
     // main animation loop - calls every 50-60 ms.
     app.render();
