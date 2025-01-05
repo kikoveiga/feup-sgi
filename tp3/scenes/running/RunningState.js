@@ -30,7 +30,7 @@ class RunningState {
 
         this.buildOutdoorDisplay();
 
-        this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor);
+        this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor, this.gameStateManager.opponent.smoothFactor);
         this.powerUps = this.myReader.getPowerUps();
         this.obstacles = this.myReader.getObstacles();
 
@@ -39,7 +39,7 @@ class RunningState {
         const depthTexture = new THREE.TextureLoader().load('./images/depth.jpg'); 
         const colorTexture = new THREE.TextureLoader().load('./images/color.jpg');
 
-        this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
         const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
         this.yOffset = 52;
         balloonWorldPosition.y += this.yOffset;

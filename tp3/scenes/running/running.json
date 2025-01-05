@@ -418,38 +418,18 @@
             "initial": "Scene1",
             "Scene1": {
                 "type": "perspective",
-                "angle": 60,
+                "angle": 50,
                 "near": 0.1,
                 "far": 10000,
                 "location": {
-                    "x": -300,
-                    "y": 200,
-                    "z": -300
+                    "x": 150,
+                    "y": 550,
+                    "z": -800
                 },
                 "target": {
-                    "x": 40,
-                    "y": 0,
-                    "z": 40
-                },
-                "left": -10,
-                "right": 10,
-                "bottom": -10,
-                "top": 10
-            },
-            "Top": {
-                "type": "perspective",
-                "angle": 60,
-                "near": 0.1,
-                "far": 10000,
-                "location": {
-                    "x": -500,
-                    "y": 500,
-                    "z": -500
-                },
-                "target": {
-                    "x": 40,
-                    "y": 0,
-                    "z": 40
+                    "x": 0,
+                    "y": 40,
+                    "z": 0
                 },
                 "left": -10,
                 "right": 10,

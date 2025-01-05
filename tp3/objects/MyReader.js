@@ -4,13 +4,13 @@ import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
 
 class MyReader {
-     constructor(app, playerBalloonColor = null, opponentBalloonColor = null) {
+     constructor(app, playerBalloonColor = null, opponentBalloonColor = null, opponentSmoothFactor = 5) {
           this.app = app;
           this.playerBalloonColor = playerBalloonColor;
           this.opponentBalloonColor = opponentBalloonColor;
-
+          this.opponentSmoothFactor = opponentSmoothFactor;
           this.route = new MyRoute(this.app);
-
+          
           this.playerBalloon = null;
           this.opponentBalloon = null;
 
@@ -200,7 +200,7 @@ class MyReader {
 
           this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor);
           this.playerBalloon.scale.set(10, 10, 10);
-          this.playerBalloon.group.position.set(20, 0, 0);
+          this.playerBalloon.group.position.set(27, 0, 0);
           this.app.scene.add(this.playerBalloon);
 
           this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor);
@@ -225,7 +225,7 @@ class MyReader {
 
      update() {
 
-          let delta = this.clock.getDelta();
+          let delta = this.clock.getDelta() / this.opponentSmoothFactor;
 
           if (this.mixerPause) {
                return;
