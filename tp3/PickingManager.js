@@ -77,7 +77,7 @@ class PickingManager {
         if (intersects.length > 0) {
             const clickedObject = intersects[0].object;
 
-            if (clickedObject.name === 'playButton' || clickedObject.name === 'playerName') {
+            if (clickedObject.name === 'playButton' || clickedObject.name === 'playerName' || clickedObject.name === 'selectLaps') {
                 this.selectionCallback(clickedObject.name);
             }
 
