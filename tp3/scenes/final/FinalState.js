@@ -39,48 +39,48 @@ class FinalState extends State {
             loserData = this.gameStateManager.player;
         }
 
-        this.menuMesh = this.createTextMesh("Return to Main Menu!", -7.5, 15, 2, 0x111111);
+        this.menuMesh = this.createTextMesh("Return to Main Menu!", -10, -5, 2, 0x111111);
         this.menuMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.menuMesh, true);
 
-        this.rematchMesh = this.createTextMesh("Rematch!", -3, 10, 2, 0x111111);
+        this.rematchMesh = this.createTextMesh("Rematch!", -3, -10, 2, 0x111111);
         this.rematchMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.rematchMesh, true);
 
-        this.winnerTextMesh = this.createTextMesh("WINNER", -28, 36, 0.1, 0x111111);
+        this.winnerTextMesh = this.createTextMesh("WINNER", -28, 16, 0.1, 0x111111);
         this.winnerTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerTextMesh);
 
-        this.loserTextMesh = this.createTextMesh("LOSER", 23, 36, 0.1, 0x111111);
+        this.loserTextMesh = this.createTextMesh("LOSER", 23, 16, 0.1, 0x111111);
         this.loserTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.loserTextMesh);
 
-        this.winnerNameMesh = this.createTextMesh(winnerData.name, -31, 33.5, 0.1, 0x111111);
+        this.winnerNameMesh = this.createTextMesh(winnerData.name, -31, 13.5, 0.1, 0x111111);
         this.winnerNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerNameMesh);
 
-        this.loserNameMesh = this.createTextMesh(loserData.name, 20, 33.5, 0.1, 0x111111);
+        this.loserNameMesh = this.createTextMesh(loserData.name, 20, 13.5, 0.1, 0x111111);
         this.loserNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.loserNameMesh);
 
-        this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 28, 0.1, 0x111111);
+        this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 8, 0.1, 0x111111);
         this.winnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerTimeMesh);
 
-        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 26, 0.1, 0x111111);
+        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 6, 0.1, 0x111111);
         this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerMesh);
 
         this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
-        this.winnerBalloon.position.set(-25, -12.5, 0);
+        this.winnerBalloon.position.set(-25, -32.5, 0);
         this.addObject(this.winnerBalloon);
 
         this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
-        this.loserBalloon.position.set(25, -12.5, 0);
+        this.loserBalloon.position.set(25, -32.5, 0);
         this.addObject(this.loserBalloon);
     }
 
