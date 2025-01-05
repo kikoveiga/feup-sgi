@@ -1,12 +1,7 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-/**
-    This class customizes the gui interface for the app
-*/
 class MyGuiInterface {
-    /**
-     * @param {MyApp} app The application object 
-     */
+    
     constructor(app) {
         this.app = app;
         this.datgui = new GUI();
@@ -18,7 +13,6 @@ class MyGuiInterface {
 
         this.updateCameraOptions();
         this.addWireframeToggle();
-        this.updateAnimations();
     }
 
     hide() {
@@ -33,29 +27,6 @@ class MyGuiInterface {
         this.contents = contents;
     }
     
-    updateAnimations() {
-        const animationFolder = this.datgui.addFolder('Animation');
-        
-        if (this.contents.myReader) {
-            animationFolder
-                .add(this.contents.myReader, 'mixerPause', true)
-                .name("Pause");
-            
-            animationFolder
-                .add(this.contents.myReader, 'enableAnimationPosition', true)
-                .name("Pos. Track");
-            
-            animationFolder
-                .add(this.contents.myReader, 'mixerTime', 0, 30)
-                .name("Track Time")
-                .onChange(() => {
-                    this.contents.myReader.setMixerTime();
-                });
-            
-            animationFolder.open();
-        }
-    }
-
     addWireframeToggle() {
         const settings = { wireframe: false };
     
@@ -83,6 +54,10 @@ class MyGuiInterface {
     }
 
     updateObjects() {
+
+        if (this.objectsFolder) {
+            this.objectsFolder.destroy();
+        }
 
         this.objectsFolder = this.datgui.addFolder('Objects');
 
@@ -140,12 +115,8 @@ class MyGuiInterface {
         }
 
         this.objectsFolder.close();
-        // console.log(this.contents);
     }
 
-    /**
-     * Adds light selection options to the GUI
-     */
     updateLights() {
 
     }

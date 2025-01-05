@@ -28,11 +28,9 @@ class MyContents {
 
         if (this.state) this.cleanUp();
 
-        console.log("Initializing contents for scene: " + newState);
-
         if (this.axis === null) {
             // this.axis = new MyAxis(this.app);
-            this.app.scene.add(this.axis);
+            // this.app.scene.add(this.axis);
         }
 
         this.parser = new MyYASFParser(this.app.scene);
@@ -69,7 +67,6 @@ class MyContents {
     }
 
     cleanUp() {
-        console.log("Cleaning up MyContents...");
 
         this.objects = [];
         this.lights = [];
@@ -137,8 +134,6 @@ class MyContents {
     addCameras() {
         this.app.cameras = this.parser.cameras;
         this.app.setActiveCamera(this.parser.initialCameraName || Object.keys(this.app.cameras)[0]);
-        console.log("Active Camera Position:", this.app.activeCamera.position);
-        console.log("Active camera target:", this.app.activeCamera.userData.target);
 
         this.app.gui.updateCameraOptions(); 
     }
@@ -161,6 +156,8 @@ class MyContents {
             if (root) {
                 this.app.scene.add(root);
                 this.objects.push(root);
+
+                this.app.gui.updateObjects();
             }  
         }
 

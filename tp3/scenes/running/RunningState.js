@@ -4,11 +4,11 @@ import { MyReader } from '../../objects/MyReader.js';
 import { MyShader } from '../../objects/MyShader.js';
 import { MyObstacle } from '../../objects/MyObstacle.js';
 import { MyPowerUp } from '../../objects/MyPowerUp.js';
+import { State } from '../State.js';
 
-class RunningState {
+class RunningState extends State {
     constructor(app, gameStateManager) {
-        this.app = app;
-        this.gameStateManager = gameStateManager;
+        super(app, gameStateManager);
 
         this.myReader = null;
         this.powerUps = [];
@@ -184,16 +184,16 @@ class RunningState {
         this.ultimalinha.scale.set(15, 15, 15);
         this.ultimalinha.rotation.y = 120 * Math.PI / 180;
 
-        this.app.scene.add(this.elapsedTimeMesh);
-        this.app.scene.add(this.elapsedTime);
-        this.app.scene.add(this.lapsNumberMesh);
-        this.app.scene.add(this.avaiableVouchersMesh);
-        this.app.scene.add(this.gameStatusMesh);
-        this.app.scene.add(this.layerMesh);
-        this.app.scene.add(this.segundalinha);
-        this.app.scene.add(this.ultimalinha);
-        this.app.scene.add(this.layer);
-        this.app.scene.add(this.quartalinha);
+        this.addObject(this.elapsedTimeMesh);
+        this.addObject(this.elapsedTime);
+        this.addObject(this.lapsNumberMesh);
+        this.addObject(this.avaiableVouchersMesh);
+        this.addObject(this.gameStatusMesh);
+        this.addObject(this.layerMesh);
+        this.addObject(this.segundalinha);
+        this.addObject(this.ultimalinha);
+        this.addObject(this.layer);
+        this.addObject(this.quartalinha);
 
 
         this.group = new THREE.Group();
@@ -247,7 +247,7 @@ class RunningState {
         this.group.scale.set(3.2, 3.2, 3.2);
         this.group.position.set(-370, 0, 0);
         this.group.rotation.y = - 30 * Math.PI / 180;
-        this.app.scene.add(this.group);
+        this.addObject(this.group);
     }
 
     waitForShaders() {
@@ -370,8 +370,23 @@ class RunningState {
         }
 
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
-        
-        this.updateTextMesh(this.layer, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
+        let windLayer = this.myReader.playerBalloon.windLayer.toString();
+
+        switch (windLayer) {
+            case '1':
+                windLayer += "N^";
+                break;
+            case '2':
+                windLayer += "Sv";
+                break;
+            case '3':
+                windLayer += "E>";
+                break;          
+            case '4':
+                windLayer += "W<";
+                break;
+        }
+        this.updateTextMesh(this.layer, windLayer, 0xffffff);
 
         this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
@@ -382,74 +397,6 @@ class RunningState {
         }            
 
         this.myReader.update();
-    }
-
-    createTextMesh(text, x, y, z, color) {
-        const texture = new THREE.TextureLoader().load("./images/font.png");
-        
-        const group = new THREE.Group();
-        let offset = 0;
-        
-        for (let i = 0; i < text.length; i++) {
-            const geometry = new THREE.PlaneGeometry(1, 1);
-            const material = new THREE.MeshBasicMaterial({
-                map: texture,
-                side: THREE.DoubleSide,
-                transparent: true,
-                color: color
-            });
-
-            const charCode = text.charCodeAt(i) % 256;
-            const cols = 16;
-            const rows = 16;
-            
-            const u = (charCode % cols) * (1 / cols);
-            const v = Math.floor((charCode / cols)) * (1 / rows);
-            
-            const uvAttribute = geometry.attributes.uv;
-
-            uvAttribute.array.set([
-                u,            1 - v - 1 / rows,
-                u + 1 / cols, 1 - v - 1 / rows,
-                u,            1 - v,
-                u + 1 / cols, 1 - v
-            ]);
-
-            geometry.setAttribute('uv', uvAttribute);
-
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = offset;
-            mesh.name = text[i];
-            offset += 0.65; // looks good
-
-            group.add(mesh);
-        }
-
-        group.position.set(x, y, z);
-        group.rotation.x = -Math.PI;
-        group.rotation.y = -Math.PI;
-        return group;
-        }
-
-    updateTextMesh(mesh, newText, color) {
-
-        if (mesh.lastText === newText) {
-            return;
-        }
-
-        mesh.lastText = newText;
-
-        while (mesh.children.length > 0) {
-            const child = mesh.children.pop();
-            if (child.geometry) child.geometry.dispose();
-            if (child.material) child.material.dispose();
-        }
-
-        const updatedMesh = this.createTextMesh(newText, 0, 0, 0, color);        
-        while (updatedMesh.children.length > 0) {
-            const child = updatedMesh.children.pop();
-            mesh.add(child);
-        }
     }
 
     checkCollision(balloon, otherObject, balloonRadius = 2.0, otherRadius = 1.0) {
