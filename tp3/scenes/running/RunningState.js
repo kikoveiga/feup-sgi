@@ -144,7 +144,7 @@ class RunningState {
         this.elapsedTimeMesh.scale.set(15, 15, 15);
         this.elapsedTimeMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.elapsedTime = this.createTextMesh("0", 360, 215, 200, 0xffffff); // pos primeira linha
+        this.elapsedTime = this.createTextMesh("0", 360, 215, 200, 0xffffff);
         this.elapsedTime.scale.set(15, 15, 15);
         this.elapsedTime.rotation.y = 120 * Math.PI / 180;
 
@@ -152,7 +152,7 @@ class RunningState {
         this.lapsNumberMesh.scale.set(15, 15, 15);
         this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.segundalinha = this.createTextMesh("0", 350, 195, 210, 0xffffff); // pos segunda linha
+        this.segundalinha = this.createTextMesh("0", 350, 195, 210, 0xffffff);
         this.segundalinha.scale.set(15, 15, 15);
         this.segundalinha.rotation.y = 120 * Math.PI / 180;
 
@@ -160,7 +160,7 @@ class RunningState {
         this.layerMesh.scale.set(15, 15, 15);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.terceiralinha = this.createTextMesh("0", 340, 175, 235, 0xffffff); // pos terceira linha
+        this.terceiralinha = this.createTextMesh("0", 340, 175, 235, 0xffffff);
         this.terceiralinha.scale.set(15, 15, 15);
         this.terceiralinha.rotation.y = 120 * Math.PI / 180;
 
@@ -168,7 +168,7 @@ class RunningState {
         this.avaiableVouchersMesh.scale.set(15, 15, 15);
         this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.quartalinha = this.createTextMesh("0", 340, 155, 235, 0xffffff); // pos quarta linha
+        this.quartalinha = this.createTextMesh("0", 340, 155, 235, 0xffffff);
         this.quartalinha.scale.set(15, 15, 15);
         this.quartalinha.rotation.y = 120 * Math.PI / 180;
 
@@ -176,7 +176,7 @@ class RunningState {
         this.gameStatusMesh.scale.set(15, 15, 15);;
         this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0xffffff); // pos ultima linha
+        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0xffffff);
         this.ultimalinha.scale.set(15, 15, 15);
         this.ultimalinha.rotation.y = 120 * Math.PI / 180;
 
@@ -300,7 +300,7 @@ class RunningState {
 
         if (this.useFirstPerson) {
             const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
-            balloonWorldPosition.y += 50;
+            balloonWorldPosition.y += 54;
             this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.1);
         }
 
@@ -316,7 +316,7 @@ class RunningState {
 
         this.myReader.playerBalloon.update(delta);
         this.myReader.track.update(delta);
-        
+
         // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
 
         this.updateTextMesh(this.terceiralinha, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);

@@ -47,13 +47,17 @@ class MyBalloon extends MyObject {
      updateAltitude(delta, direction) {
 
           const altitudeStep = 3;
+          const smoothFactor = 2;
 
-          if (direction === 1 && this.windLayer < 4) this.windLayer++;
-          else if (direction === -1 && this.windLayer > 0) this.windLayer--;
-          
-          const targetAltitude = this.windLayer * altitudeStep;
+          this.altitude += direction * altitudeStep * delta * smoothFactor;
 
-          this.altitude += (targetAltitude - this.altitude) * 0.01;
+          this.altitude = THREE.MathUtils.clamp(this.altitude, 0, altitudeStep * this.windLayers.length);
+
+          const nextLayer = Math.floor(this.altitude / altitudeStep);
+          if (nextLayer !== this.windLayer) {
+               this.windLayer = THREE.MathUtils.clamp(nextLayer, 0, this.windLayers.length - 1);
+          }
+
           this.group.position.y = this.altitude;
      }
 
