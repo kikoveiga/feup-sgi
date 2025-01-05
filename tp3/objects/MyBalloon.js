@@ -63,15 +63,19 @@ class MyBalloon extends MyObject {
      }
 
      createTextures() {
+          const orangeTexture = new THREE.TextureLoader().load("./images/orange.jpg");
           this.orangeApp = new THREE.MeshStandardMaterial({
+               map: orangeTexture,
                color: 0xff8000, 
                emissive: 0x1a0d00, 
                transparent: false,
                opacity: 1.0,
                side: THREE.DoubleSide,
           });
-           
+
+          const blueTexture = new THREE.TextureLoader().load("./images/blue.jpg");
           this.blueApp = new THREE.MeshStandardMaterial({
+               map: blueTexture,
                color: 0x87cfff, 
                emissive: 0x1a1a33,
                transparent: false,
@@ -79,7 +83,9 @@ class MyBalloon extends MyObject {
                side: THREE.DoubleSide,
           });
            
+          const pinkTexture = new THREE.TextureLoader().load("./images/pink.jpg");
           this.pinkApp = new THREE.MeshStandardMaterial({
+               map: pinkTexture,
                color: 0xffb5c2, 
                emissive: 0x331a1a,
                transparent: false,
@@ -87,7 +93,9 @@ class MyBalloon extends MyObject {
                side: THREE.DoubleSide,
           });
            
+          const greenTexture = new THREE.TextureLoader().load("./images/green.jpg");
           this.greenApp = new THREE.MeshStandardMaterial({
+               map: greenTexture,
                color: 0x00cc00, 
                emissive: 0x003300, 
                transparent: false,
@@ -136,7 +144,6 @@ class MyBalloon extends MyObject {
           // Sphere
           const sphereGeometry = new THREE.SphereGeometry(1.8, 16, 16, 0, Math.PI);
           const sphereMesh = new THREE.Mesh(sphereGeometry, this.mat);
-          sphereMesh.scale.set(1.0, 1.0, 1.5);
           sphereMesh.rotation.x = THREE.MathUtils.degToRad(270);
           sphereMesh.position.set(0, 9.34, 0);
           sphereMesh.castShadow = true;

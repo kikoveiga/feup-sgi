@@ -47,11 +47,13 @@ class RunningState {
         if (this.paused) {
             this.myReader.pause();
             this.pauseTime = this.app.clock.getElapsedTime();
+            this.updateTextMesh(this.ultimalinha, "paused", 0xff0000);
         } else {
             this.myReader.resume();
             const resumeTime = this.app.clock.getElapsedTime();
             this.timeOffset = resumeTime - this.pauseTime;
             this.shaderElapsedTime += this.timeOffset;
+            this.updateTextMesh(this.ultimalinha, "running", 0xffffff);
         }
     }
 
@@ -236,7 +238,6 @@ class RunningState {
         if (selectedObject instanceof THREE.Mesh) {
             selectedObject.material = shader.material;
             selectedObject.material.needsUpdate = true;
-            // console.log("Shader set to object");
         } else {
             console.error("Selected object is not a valid THREE.Mesh");
         }
@@ -256,7 +257,7 @@ class RunningState {
         console.log("Updating running state...");
 
         const elapsedTimeText = this.app.clock.getElapsedTime().toFixed(0);
-        this.updateTextMesh(this.elapsedTimeMesh, "Elapsed time: " + elapsedTimeText, 0xffffff);
+        this.updateTextMesh(this.elapsedTime, elapsedTimeText, 0xffffff);
 
         if (this.keyStates["KeyW"]) {
             this.myReader.playerBalloon.updateAltitude(delta, 1);
@@ -268,6 +269,11 @@ class RunningState {
         this.myReader.playerBalloon.update(delta, this.windLayers);
         this.myReader.track.update(delta);
         
+        // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
+
+        this.updateTextMesh(this.terceiralinha, this.myReader.playerBalloon.windLayer.toString(), 0xffffff);
+
+
         this.shaderElapsedTime += delta;
         for (const shader of this.shaders) {
 
