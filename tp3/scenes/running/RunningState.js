@@ -40,6 +40,10 @@ class RunningState {
         const colorTexture = new THREE.TextureLoader().load('./images/color.jpg');
 
         this.firstPersonCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
+        this.yOffset = 52;
+        balloonWorldPosition.y += this.yOffset;
+        this.firstPersonCamera.position.set(balloonWorldPosition.x, balloonWorldPosition.y, balloonWorldPosition.z);
         this.app.cameras['FirstPersonCamera'] = this.firstPersonCamera;
 
         this.pointerControls = new PointerLockControls(this.firstPersonCamera, document.body);
@@ -300,8 +304,8 @@ class RunningState {
 
         if (this.useFirstPerson) {
             const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
-            balloonWorldPosition.y += 54;
-            this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.1);
+            balloonWorldPosition.y += this.yOffset;
+            this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.5);
         }
 
         const elapsedTimeText = this.app.clock.getElapsedTime().toFixed(0);
