@@ -77,8 +77,8 @@ class PickingManager {
         if (intersects.length > 0) {
             const clickedObject = intersects[0].object;
 
-            if (clickedObject.name === 'playButton') {
-                this.selectionCallback("playButton");
+            if (clickedObject.name === 'playButton' || clickedObject.name === 'playerName') {
+                this.selectionCallback(clickedObject.name);
             }
 
             else if (['orangeButton', 'greenButton', 'blueButton', 'pinkButton'].includes(clickedObject.name)) {
