@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { MyBalloon } from '../../objects/MyBalloon.js';
 import { MyFirework } from '../../objects/MyFirework.js';
 import { PickingManager } from '../../PickingManager.js';
-import { GameStates } from '../../GameStateManager.js';
 
 class FinalState {
     constructor(app, gameStateManager, interactableObjects) {
@@ -24,8 +23,8 @@ class FinalState {
 
     handleButtonSelection(clickedObject) {
         console.log("Clicked object: ", clickedObject);
-        if (clickedObject === "rematchButton") this.gameStateManager.setState(GameStates.RUNNING);
-        else this.gameStateManager.setState(GameStates.INITIAL);
+        if (clickedObject === "rematchButton") this.gameStateManager.restartGame();
+        else this.gameStateManager.startMainMenu();
     }
 
     buildFinalMenu() {
@@ -42,48 +41,48 @@ class FinalState {
         }
 
         console.log("Building final menu...");
-        this.menuMesh = this.createTextMesh("Return to Menu!", -7.5, 10015, 2, 0x111111);
+        this.menuMesh = this.createTextMesh("Return to Main Menu!", -7.5, 15, 2, 0x111111);
         this.menuMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.menuMesh);
 
-        this.rematchMesh = this.createTextMesh("Rematch!", -3, 10010, 2, 0x111111);
+        this.rematchMesh = this.createTextMesh("Rematch!", -3, 10, 2, 0x111111);
         this.rematchMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.rematchMesh);
 
-        this.winnerTextMesh = this.createTextMesh("WINNER", -28, 10036, 0.1, 0x111111);
+        this.winnerTextMesh = this.createTextMesh("WINNER", -28, 36, 0.1, 0x111111);
         this.winnerTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerTextMesh);
 
-        this.loserTextMesh = this.createTextMesh("LOSER", 23, 10036, 0.1, 0x111111);
+        this.loserTextMesh = this.createTextMesh("LOSER", 23, 36, 0.1, 0x111111);
         this.loserTextMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.loserTextMesh);
 
-        this.winnerNameMesh = this.createTextMesh(winnerData.name, -31, 10033.5, 0.1, 0x111111);
+        this.winnerNameMesh = this.createTextMesh(winnerData.name, -31, 33.5, 0.1, 0x111111);
         this.winnerNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerNameMesh);
 
-        this.loserNameMesh = this.createTextMesh(loserData.name, 20, 10033.5, 0.1, 0x111111);
+        this.loserNameMesh = this.createTextMesh(loserData.name, 20, 33.5, 0.1, 0x111111);
         this.loserNameMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.loserNameMesh);
 
-        this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 10028, 0.1, 0x111111);
+        this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 28, 0.1, 0x111111);
         this.winnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerTimeMesh);
 
-        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 10026, 0.1, 0x111111);
+        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 26, 0.1, 0x111111);
         this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.app.scene.add(this.winnerMesh);
 
         this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
-        this.winnerBalloon.position.set(-25, 9987.5, 0);
+        this.winnerBalloon.position.set(-25, -12.5, 0);
         this.app.scene.add(this.winnerBalloon);
 
         this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
-        this.loserBalloon.position.set(25, 9987.5, 0);
+        this.loserBalloon.position.set(25, -12.5, 0);
         this.app.scene.add(this.loserBalloon);
     }
 

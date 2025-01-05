@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { PickingManager } from '../../PickingManager.js';
-import { GameStates } from '../../GameStateManager.js';
 
 class InitialState {
     constructor(app, gameStateManager, interactableObjects) {
@@ -10,8 +9,8 @@ class InitialState {
 
         this.pickingManager = null;
 
-        this.playerBalloonString = "Not chosen";
-        this.opponentBalloonString = "Not chosen";
+        this.playerBalloonColor = "Not chosen";
+        this.opponentBalloonColor = "Not chosen";
         this.playerNameString = "Not chosen";
     }
 
@@ -23,57 +22,57 @@ class InitialState {
 
     buildMainMenu() {
         console.log("Building main menu...");
-        this.topMesh1 = this.createTextMesh("Select your Balloon!", 2024.7, 14.5, 1987.5, 0xffa500); 
+        this.topMesh1 = this.createTextMesh("Select your Balloon!", 24.7, 4.5, -12.5, 0xffa500); 
         this.topMesh1.scale.set(1.8, 1.8, 1.8);
         this.topMesh1.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh1);
     
-        this.topMesh2 = this.createTextMesh("Player balloon: ", 2024.7, 12, 1978.5, 0x87ceeb); 
+        this.topMesh2 = this.createTextMesh("Player balloon: ", 24.7, 2, -21.5, 0x87ceeb); 
         this.topMesh2.scale.set(1.8, 1.8, 1.8);
         this.topMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh2);
     
-        this.topMesh3 = this.createTextMesh("Opponent balloon: ", 2024.7, 10, 1978.5, 0xff69b4);
+        this.topMesh3 = this.createTextMesh("Opponent balloon: ", 24.7, 0, -21.5, 0xff69b4);
         this.topMesh3.scale.set(1.8, 1.8, 1.8);
         this.topMesh3.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh3);
     
-        this.topMesh4 = this.createTextMesh("Play HotRace!", 2024, 17.5, 1992.5, 0x32cd32);
+        this.topMesh4 = this.createTextMesh("Play HotRace!", 24, 7.5, -7.5, 0x32cd32);
         this.topMesh4.scale.set(2, 2, 2);
         this.topMesh4.rotation.y = Math.PI / 2;
         this.app.scene.add(this.topMesh4);
     
-        this.playerBalloon = this.createTextMesh(this.playerBalloonString, 2024.7, 12, 2006, 0xb0b0b0);
+        this.playerBalloon = this.createTextMesh(this.playerBalloonColor, 24.7, 2, 6, 0xb0b0b0);
         this.playerBalloon.name = 'playerBalloon';
         this.playerBalloon.scale.set(1.8, 1.8, 1.8);
         this.playerBalloon.rotation.y = Math.PI / 2;
         this.app.scene.add(this.playerBalloon);
         this.interactableObjects.push(this.playerBalloon);
     
-        this.opponentBalloon = this.createTextMesh(this.opponentBalloonString, 2024.7, 10, 2006, 0xb0b0b0); 
+        this.opponentBalloon = this.createTextMesh(this.opponentBalloonColor, 24.7, 0, 6, 0xb0b0b0); 
         this.opponentBalloon.name = 'opponentBalloon';
         this.opponentBalloon.scale.set(1.8, 1.8, 1.8);
         this.opponentBalloon.rotation.y = Math.PI / 2;
         this.app.scene.add(this.opponentBalloon);
         this.interactableObjects.push(this.opponentBalloon);
     
-        this.gameMesh = this.createTextMesh("Game made by:", 2024.7, 6, 1993.5, 0xffffe0); 
+        this.gameMesh = this.createTextMesh("Game made by:", 24.7, -4, -6.5, 0xffffe0); 
         this.gameMesh.scale.set(1.5, 1.5, 1.5);
         this.gameMesh.rotation.y = Math.PI / 2;
         this.app.scene.add(this.gameMesh);
     
-        this.gameMesh2 = this.createTextMesh("João Alves & Francisco Veiga", 2024.7, 4, 1986, 0xffffe0); 
+        this.gameMesh2 = this.createTextMesh("João Alves & José Francisco Veiga", 24.7, -6, -14, 0xffffe0); 
         this.gameMesh2.scale.set(1.5, 1.5, 1.5);
         this.gameMesh2.rotation.y = Math.PI / 2;
         this.app.scene.add(this.gameMesh2);
 
-        this.playerNameMesh = this.createTextMesh("Player Name: ", 1981.5, 0.1, 1988, 0x000000); 
+        this.playerNameMesh = this.createTextMesh("Player Name: ", -18.5, -9.9, -12, 0x000000); 
         this.playerNameMesh.scale.set(1.8, 1.8, 1.8);
         this.playerNameMesh.rotation.x = - Math.PI / 2;
         this.playerNameMesh.rotation.z = - Math.PI / 2;
         this.app.scene.add(this.playerNameMesh);
 
-        this.playerName = this.createTextMesh(this.playerNameString, 1981.5, 0.1, 2002, 0xb0b0b0); 
+        this.playerName = this.createTextMesh(this.playerNameString, -18.5, -9.9, 2, 0xb0b0b0); 
         this.playerName.scale.set(1.8, 1.8, 1.8);
         this.playerName.rotation.x = - Math.PI / 2;
         this.playerName.rotation.z = - Math.PI / 2;
@@ -94,19 +93,19 @@ class InitialState {
         }
 
         if (clickedObject === 'playerBalloon') {
-            this.playerBalloonString = color;
+            this.playerBalloonColor = color;
             this.updateTextMesh(this.playerBalloon, color, this.colorHex);
         } 
         else if (clickedObject === 'opponentBalloon') {
-            this.opponentBalloonString = color;
+            this.opponentBalloonColor = color;
             this.updateTextMesh(this.opponentBalloon, color, this.colorHex);
         } 
         else if (clickedObject === 'playButton') {
-            if (this.playerBalloonString === "Not chosen" || this.opponentBalloonString === "Not chosen") {
+            if (this.playerBalloonColor === "Not chosen" || this.opponentBalloonColor === "Not chosen") {
                 console.warn('Please select both balloons before starting the game.');
-                return;
             }
-            this.gameStateManager.setState(GameStates.RUNNING, this.playerBalloonString, this.opponentBalloonString);
+
+            else this.gameStateManager.startGame(this.playerBalloonColor, this.opponentBalloonColor);
         }
     }
 

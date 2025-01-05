@@ -18,15 +18,7 @@ async function main() {
 
     app.setGui(gui);
 
-    gameStateManager.setState(GameStates.RUNNING);
-
-    app.scene.traverse((object) => {
-        if (object === null) {
-            console.error("Found a null object in the scene!");
-        } else if (object.visible === null) {
-            console.error("Found an object with null 'visible' property:", object);
-        }
-    });
+    gameStateManager.setState(GameStates.FINAL);
 
     // main animation loop - calls every 50-60 ms.
     app.render();

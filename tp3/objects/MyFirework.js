@@ -56,7 +56,7 @@ class MyFirework {
         let colors = [color.r, color.g, color.b];
     
         const x = THREE.MathUtils.randFloat(-25, 25) * this.scale;
-        const y = THREE.MathUtils.randFloat(10530, 10570); 
+        const y = THREE.MathUtils.randFloat(30, 50); 
         const z = THREE.MathUtils.randFloat(-15, 0) * this.scale;
     
         this.dest.push(x, y, z);
