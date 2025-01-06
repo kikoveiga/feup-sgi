@@ -131,6 +131,12 @@ Below are some screenshots of the main implemented features:
     - To change the name click on "Not Choosen" in the bottom of the screen and then type the name.
     - Then just click "Play Hot Race!" to start the game.
 
+2. **Bot Difficulties**
+    - The opponent colors resamble different difficulties being:
+        - Orange: Very-Easy
+        - Green: Easy
+        - Blue: Normal
+        - Pink: Hard
 ---
 
 ## Issues/Problems
