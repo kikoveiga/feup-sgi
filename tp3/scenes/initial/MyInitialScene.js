@@ -1,7 +1,7 @@
 import { PickingManager } from '../../PickingManager.js';
-import { State } from '../State.js';
+import { MyScene } from '../MyScene.js';
 
-class InitialState extends State {
+class MyInitialScene extends MyScene {
     constructor(app, gameStateManager, interactableObjects) {
         super(app, gameStateManager);
         this.interactableObjects = interactableObjects;
@@ -122,18 +122,20 @@ class InitialState extends State {
         this.addObject(this.playerName, true);
     }
 
-    handleSelection(clickedObject, color) {
-        this.colorHex = null;
+    getColorHex(color) {
+        const colorMap = {
+            pink : 0xffb5c2,
+            blue : 0x87cfff,
+            orange : 0xff8000,
+            green : 0x00cc00
+        };
 
-        if(color === 'pink') {
-            this.colorHex = 0xffb5c2;
-        } else if(color === 'blue') {
-            this.colorHex = 0x87cfff;
-        } else if(color === 'orange') {
-            this.colorHex = 0xff8000;
-        } else if(color === 'green') {
-            this.colorHex = 0x00cc00;
-        }
+        return colorMap[color] || 0xb0b0b0;
+    }
+
+    handleSelection(clickedObject, color) {
+        
+        this.colorHex = this.getColorHex(color);
 
         if (clickedObject === 'playerBalloon') {
             this.playerBalloonColor = color;
@@ -172,4 +174,4 @@ class InitialState extends State {
     }
 }
 
-export { InitialState };
+export { MyInitialScene };

@@ -4,7 +4,7 @@ import { MyRoute } from "./MyRoute.js";
 import { MyTrack } from "./MyTrack.js";
 
 class MyReader {
-     constructor(app, playerBalloonColor = null, opponentBalloonColor = null, opponentSmoothFactor = 5) {
+     constructor(app, playerBalloonColor, opponentBalloonColor, opponentSmoothFactor) {
           this.app = app;
           this.playerBalloonColor = playerBalloonColor;
           this.opponentBalloonColor = opponentBalloonColor;
@@ -236,7 +236,6 @@ class MyReader {
      }
 
      update() {
-
 
           if (this.mixerPause) {
                return;

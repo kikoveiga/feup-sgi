@@ -1,8 +1,15 @@
-const GameStates = {
+const GameStates = Object.freeze({
     INITIAL: "initial",
     RUNNING: "running",
     PAUSED: "paused",
     FINAL: "final"
+});
+
+const balloonSmoothFactors = {
+    pink: 2,
+    blue: 3,
+    green: 4,
+    orange: 5,
 };
 
 class GameStateManager {
@@ -40,20 +47,7 @@ class GameStateManager {
         this.laps = laps;
         this.startPoint = startPoint;
 
-        switch (opponentBalloonColor) {
-            case 'pink':
-                this.opponent.smoothFactor = 2;
-                break;
-            case 'blue':
-               this.opponent.smoothFactor = 3;
-                break;
-            case 'orange':
-                this.opponent.smoothFactor = 5;
-                break;
-            case 'green':
-                this.opponent.smoothFactor = 4;
-                break;
-        }
+        this.opponent.smoothFactor = balloonSmoothFactors[opponentBalloonColor];
 
         this.setState(GameStates.RUNNING);
     }
@@ -74,8 +68,6 @@ class GameStateManager {
     }
 
     setState(newState) {
-
-        // console.log(GameStates);
 
         if (!Object.values(GameStates).includes(newState)) {
             console.error('Invalid GameState: ' + newState);
