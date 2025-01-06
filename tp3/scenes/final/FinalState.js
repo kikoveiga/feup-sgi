@@ -71,13 +71,13 @@ class FinalState extends State {
         this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerMesh);
 
-        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor);
+        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor, false);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
         this.winnerBalloon.position.set(-25, -32.5, 0);
         this.addObject(this.winnerBalloon);
 
-        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor);
+        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor, false);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
         this.loserBalloon.position.set(25, -32.5, 0);

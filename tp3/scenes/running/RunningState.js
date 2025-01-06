@@ -21,6 +21,7 @@ class RunningState extends State {
         this.shaderElapsedTime = 0;
         this.playerVoucher = 0;
 
+
         this.useFirstPerson = false;
         this.collisionCooldowns = new Map();
 
@@ -39,6 +40,7 @@ class RunningState extends State {
         this.buildOutdoorDisplay();
 
         this.myReader = new MyReader(this.app, this.gameStateManager.player.balloonColor, this.gameStateManager.opponent.balloonColor, this.gameStateManager.opponent.smoothFactor);
+        this.route = this.myReader.getTrack();
         this.powerUps = this.myReader.getPowerUps();
         this.obstacles = this.myReader.getObstacles();
 
@@ -120,28 +122,50 @@ class RunningState extends State {
         this.freezePosition.copy(this.myReader.playerBalloon.group.position);
     }
 
+    findApproxClosestPointOnCurve(curve, targetPos, steps = 100) {
+        let closestDist = Infinity;
+        let closestPoint = new THREE.Vector3();
+        
+        for (let i = 0; i <= steps; i++) {
+            const t = i / steps;         // param in [0..1]
+            const sample = curve.getPoint(t); 
+            const dist = sample.distanceTo(targetPos);
+            if (dist < closestDist) {
+                closestDist = dist;
+                closestPoint.copy(sample);
+            }
+        }
+    
+        return { point: closestPoint, distance: closestDist };
+    }
+
     checkIfBalloonOutOfTrack() {
-        // If you have a shadow object:
         const shadowPos = new THREE.Vector3();
         if (this.myReader.playerBalloon.shadow) {
-            this.myReader.playerBalloon.shadow.getWorldPosition(shadowPos);
+            this.myReader.playerBalloon.group.getWorldPosition(shadowPos);
         } else {
-            // fallback: use balloon position
             this.myReader.playerBalloon.group.getWorldPosition(shadowPos);
         }
     
-        // Distance from (0, 0) in XZ plane
-        const dx = shadowPos.x;
-        const dz = shadowPos.z;
-        const distanceFromCenter = Math.sqrt(dx * dx + dz * dz);
+        // Approximate closest point on the track curve
+        const { point: closestPoint, distance } = this.findApproxClosestPointOnCurve(
+            this.route.path,  // Make sure `this.route.path` is a CatmullRomCurve3
+            shadowPos,
+            1000               // More steps => better approximation
+        );
     
-        // Track radius (approx.)
-        const trackOuterRadius = this.myReader.track.width * this.myReader.track.scale.x;
+        console.log(`Distance to closest point: ${distance}`);
     
-        // If the balloon shadow goes beyond some fraction of the tube radius
-        return distanceFromCenter > trackOuterRadius;
-    }
-    
+        // Check threshold
+        const threshold = 250;
+        if (distance >= threshold) {
+            console.log(`Penalty applied. Balloon is out of track by ${distance - threshold}`);
+            this.applyPenalty(this.app.clock.getElapsedTime());
+            this.myReader.playerBalloon.group.position.copy(closestPoint);
+            return true;
+        }
+        return false;
+    }    
     
     exitFirstPerson() {
         this.useFirstPerson = false;
@@ -200,7 +224,7 @@ class RunningState extends State {
         this.layerMesh.scale.set(15, 15, 15);
         this.layerMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.layer = this.createTextMesh("0", 340, 175, 235, 0xffffff);
+        this.layer = this.createTextMesh("0", 350, 175, 217.5, 0xffffff);
         this.layer.scale.set(15, 15, 15);
         this.layer.rotation.y = 120 * Math.PI / 180;
 
@@ -338,6 +362,13 @@ class RunningState extends State {
             this.timeOffset = 0;
         }
 
+        if (this.myReader && this.myReader.playerBalloon) {
+            const balloonLOD = this.myReader.playerBalloon.lod;
+            if (balloonLOD) {
+                balloonLOD.update(this.app.cameras[this.app.activeCameraName]);
+            }
+        }
+
         if (this.useFirstPerson) {
             const balloonWorldPosition = this.myReader.playerBalloon.group.getWorldPosition(new THREE.Vector3());
             balloonWorldPosition.y += this.yOffset;
@@ -372,13 +403,8 @@ class RunningState extends State {
             }
         }
 
-        const sceneCollidables = [
-            this.myReader.track.mesh,
-            // or this.myReader.track.curve, or this.myReader.track's entire group
-            // also obstacles, ground plane, etc.
-        ];
         
-        this.myReader.playerBalloon.update(delta, sceneCollidables);
+        this.myReader.playerBalloon.update(delta);
         this.myReader.track.update(delta);
 
         // if (!this.penaltyActive) {
@@ -444,7 +470,6 @@ class RunningState extends State {
             }
         }
 
-        // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
         let windLayer = this.myReader.playerBalloon.windLayer.toString();
 
         switch (windLayer) {

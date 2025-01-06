@@ -37,6 +37,10 @@ class MyReader {
      getObstacles() {
           return this.obstacles;
      }
+
+     getRoute() {
+          return this.route;
+     }
      
      /*********************** ANIMATION ZONE ***********************/
      initBalloonAnimation() {
@@ -198,12 +202,12 @@ class MyReader {
           this.track.scale.set(35, 35, 35);
           this.app.scene.add(this.track);
 
-          this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor);
+          this.playerBalloon = new MyBalloon(this.app, 'Balloon', this.playerBalloonColor, true);
           this.playerBalloon.scale.set(10, 10, 10);
           this.playerBalloon.group.position.set(27, 0, 0);
           this.app.scene.add(this.playerBalloon);
 
-          this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor);
+          this.opponentBalloon = new MyBalloon(this.app, 'Balloon', this.opponentBalloonColor, false);
           this.opponentBalloon.scale.set(10, 10, 10);
           this.app.scene.add(this.opponentBalloon);
 
@@ -221,6 +225,10 @@ class MyReader {
           const resumeTime = this.clock.getElapsedTime();
           this.timeOffset = resumeTime - this.pauseTime;
           this.clock.start();
+     }
+
+     getTrack() {
+          return this.track;
      }
 
      update() {
