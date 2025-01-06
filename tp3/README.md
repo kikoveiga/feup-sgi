@@ -77,14 +77,59 @@ This project, **Hot Race!**, is a balloon race game, implemented as a 3D graphic
     - Techniques were used to keep the timer and balloons' positions consistent after resuming the game.
 
 11. **Shaders**:
+    - A simple shader of the bas-relief was implemented into one of the outdoors in order to kind "show" the mountains around the scenario.
+    - A pulse shader was implement in powerups and obstacles with them having a growth in size and a small rotation to give a better efect. 
 
 12. **Collisions and off-track detecion**:
----
+    - The collisions implemented were between: balloon-balloon, balloon-obstacle, balloon-powerup and balloon-track.
+    - All the collisions have a timeout in order to the balloon dont colide with the same object more than once at each interaction.
+    - Each object has a different size invisible object around itself in order to make the collisions decision easier.
+    - The offtrack collisions is based on the distance of the route defined of the track to its closest point to the balloon, considering only the x and z axis.
+
+13. **General Imrpovements**
+    - General improvements have been implemented in the main.js, MyApp and MyContents, enhancing the project's efficiency, readability, and scalability.
+
+
 
 ## Screenshots
 
 Below are some screenshots of the main implemented features:
 
+### Initial Menu
+![Initial Menu](screenshots/initialMenu.png)
+
+### Final Menu
+![Initial Menu](screenshots/finalMenu.png)
+
+### Game
+![Game 1](screenshots/game.png)
+![Game 2](screenshots/game2.png)
+
+### Outdoors
+![Outdoor 1](screenshots/outdoor1.png)
+![Outdoor 2](screenshots/outdoor2.png)
+
+
+### PowerUp & Obstacle
+![PowerUp](screenshots/powerup.png)
+![Obstacle](screenshots/obstacles.png)
+
+### Balloons & LODS
+![Balloon](screenshots/balloon.png)
+![LODS](screenshots/lods.png)
+
+### First Person
+![FP](screenshots/firstperson.png)
+
+
+---
+## How to use Initial Menu
+
+1. **Select Balloons**
+    - Click on the Balloon or button with respective color to select the balloon and then click on "Not Choosen" option of which player you want to select the balloon.
+    - To choose the number of laps or route click on its value on the wall to change the number/letter.
+    - To change the name click on "Not Choosen" in the bottom of the screen and then type the name.
+    - Then just click "Play Hot Race!" to start the game.
 
 ---
 
