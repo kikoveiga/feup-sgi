@@ -75,7 +75,7 @@ class GameStateManager {
 
     setState(newState) {
 
-        console.log(GameStates);
+        // console.log(GameStates);
 
         if (!Object.values(GameStates).includes(newState)) {
             console.error('Invalid GameState: ' + newState);

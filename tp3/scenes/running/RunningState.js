@@ -34,8 +34,11 @@ class RunningState extends State {
         this.penaltyTime = 2; 
         this.penaltyActive = false;
         this.penaltyEndTime = 0; 
+        this.gameStartTime = 0; 
 
         this.freezePosition = new THREE.Vector3();
+        this.penaltyCooldown = false;
+        this.penaltyCooldownEndTime = 0;
     }
 
     setFinishLine(finishLine) {
@@ -46,6 +49,8 @@ class RunningState extends State {
 
         if (this.app.clock) this.app.clock.start();
         else this.app.clock = new THREE.Clock();
+
+        this.gameStartTime = this.app.clock.getElapsedTime();
 
         this.buildOutdoorDisplay();
 
@@ -116,7 +121,7 @@ class RunningState extends State {
             new MyShader(this.app, "Bas-relief", "Bas-relief effect", "./shaders/basRelief.vert", "./shaders/basRelief.frag", {
                   uSampler1: { type: 'sampler2D', value: colorTexture }, 
                   uSampler2: { type: 'sampler2D', value: depthTexture }, 
-                  scaleFactor: { type: 'f', value: 2.5 }
+                  scaleFactor: { type: 'f', value: 10 }
                 }
             )
               
@@ -151,19 +156,29 @@ class RunningState extends State {
     findApproxClosestPointOnCurve(curve, targetPos, steps = 100) {
         let closestDist = Infinity;
         let closestPoint = new THREE.Vector3();
-        
+    
+        // Debug group for visualization
+        const debugGroup = new THREE.Group();
+    
         for (let i = 0; i <= steps; i++) {
-            const t = i / steps;         // param in [0..1]
+            const t = i / steps;
             const sample = curve.getPoint(t); 
-            const dist = sample.distanceTo(targetPos);
-            if (dist < closestDist) {
-                closestDist = dist;
+    
+            const dx = sample.x - targetPos.x;
+            const dz = sample.z - targetPos.z;
+            const dist2D = Math.sqrt(dx * dx + dz * dz);
+    
+            if (dist2D < closestDist) {
+                closestDist = dist2D;
                 closestPoint.copy(sample);
             }
         }
     
+        this.app.scene.add(debugGroup);
         return { point: closestPoint, distance: closestDist };
     }
+    
+    
 
     checkIfBalloonOutOfTrack() {
         const shadowPos = new THREE.Vector3();
@@ -173,25 +188,28 @@ class RunningState extends State {
             this.myReader.playerBalloon.group.getWorldPosition(shadowPos);
         }
     
-        // Approximate closest point on the track curve
+        const scaledCurve = this.scaleCurve(this.route.path, new THREE.Vector3(35, 1, 35));
+        const mirroredCurve = this.mirrorCurve(scaledCurve, 'x'); 
+        const offset = new THREE.Vector3(100, 0, 0); 
+        const transformedCurve = this.translateCurve(mirroredCurve, offset); 
+    
         const { point: closestPoint, distance } = this.findApproxClosestPointOnCurve(
-            this.route.path,  // Make sure `this.route.path` is a CatmullRomCurve3
+            transformedCurve,
             shadowPos,
-            1000               // More steps => better approximation
+            1000 
         );
     
-        console.log(`Distance to closest point: ${distance}`);
-    
-        // Check threshold
-        const threshold = 250;
+        const threshold = 90;
         if (distance >= threshold) {
-            console.log(`Penalty applied. Balloon is out of track by ${distance - threshold}`);
-            this.applyPenalty(this.app.clock.getElapsedTime());
-            this.myReader.playerBalloon.group.position.copy(closestPoint);
+            const parent = this.myReader.playerBalloon.group.parent;
+            const localPoint = parent.worldToLocal(closestPoint.clone());
+            this.myReader.playerBalloon.group.position.copy(localPoint);
+    
             return true;
         }
+
         return false;
-    }    
+    }
     
     exitFirstPerson() {
         this.useFirstPerson = false;
@@ -456,18 +474,29 @@ class RunningState extends State {
         this.myReader.playerBalloon.update(delta);
         this.myReader.track.update(delta);
 
-        // if (!this.penaltyActive) {
-        //     if (this.checkIfBalloonOutOfTrack()) {
-        //         console.log("Balloon shadow is off the track!");
-        //         if (this.playerVoucher > 0) {
-        //             this.playerVoucher--;
-        //             this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
-        //             console.log("Used a voucher; no off-track penalty applied.");
-        //         } else {
-        //             this.applyPenalty(currentTime);
-        //         }
-        //     }
-        // }
+        // Off-track penalty
+        if (this.penaltyCooldown && currentTime > this.penaltyCooldownEndTime) {
+            this.penaltyCooldown = false;
+        }
+
+        if (!this.penaltyActive && !this.penaltyCooldown) {
+            const isOffTrack = this.checkIfBalloonOutOfTrack();
+            if (isOffTrack) {
+                console.log("Balloon shadow is off the track!");
+                
+                if (this.playerVoucher > 0) {
+                    this.playerVoucher--;
+                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    console.log("Used a voucher; NO penalty. But balloon repositioned on track.");
+                } 
+                else {
+                    this.applyPenalty(currentTime);
+                    this.penaltyCooldown = true;
+                    this.penaltyCooldownEndTime = currentTime + this.penaltyTime + 4.5;
+                }
+            }
+        }
+
 
         // Balloons
         if (!this.isOnCooldown(this.myReader.opponentBalloon, currentTime)) {
@@ -545,7 +574,14 @@ class RunningState extends State {
             }
         }
 
-        this.checkFinishLineCross();
+        if (!this.finishLineCheckEnabled && (currentTime - this.gameStartTime) >= 15) {
+            this.finishLineCheckEnabled = true;
+            console.log("Finish line checking is now enabled.");
+        }
+
+        if (this.finishLineCheckEnabled) {
+            this.checkFinishLineCross();
+    }
 
         this.myReader.update();
     }
@@ -582,6 +618,38 @@ class RunningState extends State {
             this.collisionCooldowns.delete(object);
         }, cooldownDuration * 1000);
     }
+    
+    scaleCurve(curve, scaleFactor) {
+        const scaledPoints = curve.points.map(point => {
+            return new THREE.Vector3(
+                point.x * scaleFactor.x,
+                point.y * scaleFactor.y,
+                point.z * scaleFactor.z
+            );
+        });
+        return new THREE.CatmullRomCurve3(scaledPoints);
+    }
+    
+    mirrorCurve(curve, axis) {
+        const mirroredPoints = curve.points.map(point => {
+            const mirroredPoint = point.clone();
+            mirroredPoint[axis] *= -1; // Flip the specified axis
+            return mirroredPoint;
+        });
+        return new THREE.CatmullRomCurve3(mirroredPoints);
+    }
+
+    translateCurve(curve, offset) {
+        const translatedPoints = curve.points.map(point => {
+            return new THREE.Vector3(
+                point.x + offset.x,
+                point.y + offset.y,
+                point.z + offset.z
+            );
+        });
+        return new THREE.CatmullRomCurve3(translatedPoints);
+    }
+    
     
     
 }
