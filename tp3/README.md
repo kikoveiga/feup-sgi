@@ -77,6 +77,8 @@ This project, **Hot Race!**, is a balloon race game, implemented as a 3D graphic
     - Techniques were used to keep the timer and balloons' positions consistent after resuming the game.
 
 11. **Shaders**:
+
+12. **Collisions and off-track detecion**:
 ---
 
 ## Screenshots
