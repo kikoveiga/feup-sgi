@@ -33,8 +33,9 @@ class GameStateManager {
         return this.state;
     }
 
-    startGame(playerBalloonColor, opponentBalloonColor, laps, startPoint) {
+    startGame(playerBalloonColor, playerName, opponentBalloonColor, laps, startPoint) {
         this.player.balloonColor = playerBalloonColor;
+        this.player.name = playerName;
         this.opponent.balloonColor = opponentBalloonColor;
         this.laps = laps;
         this.startPoint = startPoint;
@@ -61,10 +62,10 @@ class GameStateManager {
         this.setState(GameStates.RUNNING);
     }
 
-    endGame(winner, playerTime, opponentTime) {
+    endGame(winner, winnerTime) {
         this.winner = winner;
-        this.player.time = playerTime;
-        this.opponent.time = opponentTime;
+        this.winner.time = winnerTime;
+
         this.setState(GameStates.FINAL);
     }
 
@@ -73,6 +74,13 @@ class GameStateManager {
     }
 
     setState(newState) {
+
+        console.log(GameStates);
+
+        if (!Object.values(GameStates).includes(newState)) {
+            console.error('Invalid GameState: ' + newState);
+            return;
+        }
 
         if (this.state === newState) {
             return;
