@@ -121,7 +121,7 @@ class RunningState extends State {
             new MyShader(this.app, "Bas-relief", "Bas-relief effect", "./shaders/basRelief.vert", "./shaders/basRelief.frag", {
                   uSampler1: { type: 'sampler2D', value: colorTexture }, 
                   uSampler2: { type: 'sampler2D', value: depthTexture }, 
-                  scaleFactor: { type: 'f', value: 10 }
+                  scaleFactor: { type: 'f', value: 2.5 }
                 }
             )
               

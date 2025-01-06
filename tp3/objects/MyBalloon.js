@@ -12,7 +12,7 @@ class MyBalloon extends MyObject {
           this.createTextures();
           this.raycaster = new THREE.Raycaster();
 
-          this.distance = 1000;
+          this.distance = 1200;
 
           this.lod = new THREE.LOD();
           const highBody = this.createBalloonBodyHigh(); 
