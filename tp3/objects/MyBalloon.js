@@ -95,16 +95,14 @@ class MyBalloon extends MyObject {
           this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
 
           if (this.shadow) {
-               const balloonWorldPos = new THREE.Vector3();
-               this.group.getWorldPosition(balloonWorldPos);
+               const scaleFactor = THREE.MathUtils.clamp(5 / (this.position.y * 0.5 + 1), 0.2, 2);
           
-               this.shadow.position.set(balloonWorldPos.x, 5, balloonWorldPos.z);
+               this.shadow.position.set(this.position.x, 1.5, this.position.z);
+               this.shadow.scale.set(scaleFactor, scaleFactor, scaleFactor);
                this.shadow.visible = true; 
           }
      }
         
-
-
      createTextures() {
           const orangeTexture = new THREE.TextureLoader().load("./images/orange.jpg");
           this.orangeApp = new THREE.MeshStandardMaterial({
