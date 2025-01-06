@@ -54,9 +54,9 @@ This project, **Hot Race!**, is a balloon race game, implemented as a 3D graphic
 7. **MyRunningScene**:
     - The gameplay starts here, showcasing all the requested features:
       - An outdoor display which starts counting the time right from the beginning. It also shows the current lap, air layer, and available vouchers. The status, either "Running" or "Paused", is also displayed;
-    - Another outdoor display with a 3D mountain using a bas-relief shader. Around the track, there is a skybox and mountains all around, implemented with NURBS surfaces;
-    - A balloons' park;
-    - A MyReader object, which instantiates the objects necessary for the race, including the 2 balloons, the track, the opponent balloon's route, the obstacles and power-ups. The opponent's balloon follows along the route automatically, and the obstacles and power-ups are animated using shaders.
+      - Another outdoor display with a 3D mountain using a bas-relief shader. Around the track, there is a skybox and mountains all around, implemented with NURBS surfaces;
+      - A balloons' park;
+      - A MyReader object, which instantiates the objects necessary for the race, including the 2 balloons, the track, the opponent balloon's route, the obstacles and power-ups. The opponent's balloon follows along the route automatically, and the obstacles and power-ups are animated using shaders.
 
 8. **MyFinalScene**:
     - A Final Menu scene is displayed, showing:
