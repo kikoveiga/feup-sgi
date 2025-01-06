@@ -64,6 +64,7 @@ class MyBalloon extends MyObject {
      }
 
      applyWindMovement(delta, windDirection, windSpeed) {
+          if (this.paused) return;
           const movement = windDirection.clone().multiplyScalar(windSpeed * delta);
 
           const targetPosition = this.group.position.clone().add(movement);
@@ -71,6 +72,8 @@ class MyBalloon extends MyObject {
      }
 
      update(delta) {
+          if (this.paused) return;
+          
           const currentWind = this.windLayers[this.windLayer];
           this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
      }
@@ -250,6 +253,18 @@ class MyBalloon extends MyObject {
           const shadow = new THREE.Mesh(geometry, material);
           shadow.rotation.x = -Math.PI / 2; 
           return shadow;
+     }
+
+     pause() {
+          this.pausedPosition = this.group.position.clone();
+          this.pausedAltitute = this.altitude;
+          this.paused = true;
+     }
+
+     resume() {
+          if (this.pausedPosition) this.group.position.copy(this.pausedPosition);
+          if (this.pausedAltitute) this.altitude = this.pausedAltitute;
+          this.paused = false;
      }
 }
 

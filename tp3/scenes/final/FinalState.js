@@ -66,18 +66,23 @@ class FinalState extends State {
         this.winnerTimeMesh = this.createTextMesh("WINNER'S TIME", -6.5, 8, 0.1, 0x111111);
         this.winnerTimeMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerTimeMesh);
+        
+        const minutes = Math.floor(winnerData.time / 60);
+        const seconds = winnerData.time % 60;
+        
+        const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-        this.winnerMesh = this.createTextMesh(" " + winnerData.time + " ", -3.5, 6, 0.1, 0x111111);
+        this.winnerMesh = this.createTextMesh(" " + timeText + " ", -3.5, 6, 0.1, 0x111111);
         this.winnerMesh.scale.set(-1.8, 1.8, 1.8);
         this.addObject(this.winnerMesh);
 
-        this.winnerBalloon = new MyBalloon(this.app, 'Balloon', winnerData.balloonColor);
+        this.winnerBalloon = new MyBalloon(this.app, 'WinnerBalloon', winnerData.balloonColor);
         this.winnerBalloon.scale.set(3.5, 3.5, 3.5);
         this.winnerBalloon.rotation.y = 20 * Math.PI / 180;
         this.winnerBalloon.position.set(-25, -32.5, 0);
         this.addObject(this.winnerBalloon);
 
-        this.loserBalloon = new MyBalloon(this.app, 'Balloon', loserData.balloonColor);
+        this.loserBalloon = new MyBalloon(this.app, 'LoserBalloon', loserData.balloonColor);
         this.loserBalloon.scale.set(3.5, 3.5, 3.5);
         this.loserBalloon.rotation.y = -20 * Math.PI / 180;
         this.loserBalloon.position.set(25, -32.5, 0);

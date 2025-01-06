@@ -16,13 +16,24 @@ class RunningState extends State {
         this.shaders = [];
 
         this.keyStates = {};
-        this.paused = false;
-        this.pauseTime = 0;
-        this.shaderElapsedTime = 0;
         this.playerVoucher = 0;
+
+        this.totalElapsedTime = 0;
+        this.paused = false;
+        this.timeOffset = 0;
+        this.shaderElapsedTime = 0;
+        
+        this.currentPlayerLap = 1;
+        this.currentOpponentLap = 1;
+        this.lapCooldown = 5;
+        this.lastLapTime = 0;
 
         this.useFirstPerson = false;
         this.collisionCooldowns = new Map();
+    }
+
+    setFinishLine(finishLine) {
+        this.finishLine = finishLine;
     }
 
     init() {
@@ -105,6 +116,22 @@ class RunningState extends State {
         ];
     
         this.waitForShaders();
+
+        const box1Position = new THREE.Vector3();
+        const box2Position = new THREE.Vector3();
+
+        this.finishLine.children[0].getWorldPosition(box1Position);
+        this.finishLine.children[1].getWorldPosition(box2Position);
+
+        const finishLineCenter = box1Position.clone().add(box2Position).multiplyScalar(0.5);
+
+        const finishLineSize = new THREE.Vector3(
+            Math.abs(box1Position.x - box2Position.x),
+            Math.abs(1000),
+            Math.abs(box1Position.z - box2Position.z)
+        );
+
+        this.finishLineBoundingBox = new THREE.Box3().setFromCenterAndSize(finishLineCenter, finishLineSize);
     }
 
     exitFirstPerson() {
@@ -131,13 +158,13 @@ class RunningState extends State {
         this.paused = !this.paused;
 
         if (this.paused) {
+            this.totalElapsedTime += this.app.clock.getElapsedTime();
+            this.app.clock.stop();
             this.myReader.pause();
-            this.pauseTime = this.app.clock.getElapsedTime();
             this.updateTextMesh(this.ultimalinha, "paused", 0xff0000);
         } else {
+            this.app.clock.start();
             this.myReader.resume();
-            const resumeTime = this.app.clock.getElapsedTime();
-            this.timeOffset = resumeTime - this.pauseTime;
             this.shaderElapsedTime += this.timeOffset;
             this.updateTextMesh(this.ultimalinha, "running", 0x008000);
         }
@@ -279,8 +306,8 @@ class RunningState extends State {
     
     setCurrentShader(shader, selectedObject) {
         if (shader === null || shader === undefined) {
-            console.error("shader is null or undefined")
-            return
+            console.error("shader is null or undefined");
+            return;
         }
 
         if (selectedObject instanceof THREE.Mesh) {
@@ -289,7 +316,31 @@ class RunningState extends State {
         } else {
             console.error("Selected object is not a valid THREE.Mesh");
         }
+    }
+
+    checkFinishLineCross() {
+        const playerBalloonBoundingBox = new THREE.Box3().setFromObject(this.myReader.playerBalloon.group);
+        const opponentBalloonBoundingBox = new THREE.Box3().setFromObject(this.myReader.opponentBalloon.group);
+        const currentTime = this.app.clock.getElapsedTime();
+
+        if (this.finishLineBoundingBox && this.finishLineBoundingBox.intersectsBox(playerBalloonBoundingBox) && currentTime - this.lastLapTime > this.lapCooldown) {
+            this.lastLapTime = currentTime;
+            this.currentPlayerLap++;
+        } 
+        else if (this.finishLineBoundingBox && this.finishLineBoundingBox.intersectsBox(opponentBalloonBoundingBox) && currentTime - this.lastLapTime > this.lapCooldown) {
+            this.lastLapTime = currentTime;
+            this.currentOpponentLap++;
+        } 
+
+        if (this.currentPlayerLap > this.gameStateManager.laps) {
+            this.gameStateManager.endGame(this.gameStateManager.player, (this.totalElapsedTime + this.app.clock.getElapsedTime()).toFixed());
+        }
         
+        else if (this.currentOpponentLap > this.gameStateManager.laps) {
+            this.gameStateManager.endGame(this.gameStateManager.opponent, (this.totalElapsedTime + this.app.clock.getElapsedTime()).toFixed());
+        }
+
+        else this.updateTextMesh(this.segundalinha, `${Math.max(this.currentPlayerLap, this.currentOpponentLap)}/${this.gameStateManager.laps}`, 0xffffff);
     }
 
     update(delta) {
@@ -308,10 +359,9 @@ class RunningState extends State {
             this.firstPersonCamera.position.lerp(balloonWorldPosition, 0.5);
         }
 
-        const elapsedTimeInSeconds = Math.floor(this.app.clock.getElapsedTime());
+        const elapsedTimeInSeconds = Math.floor(this.totalElapsedTime + this.app.clock.getElapsedTime());
         const minutes = Math.floor(elapsedTimeInSeconds / 60);
         const seconds = elapsedTimeInSeconds % 60;
-        
         const elapsedTimeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         
         this.updateTextMesh(this.elapsedTime, elapsedTimeText, 0xffffff);
@@ -369,7 +419,6 @@ class RunningState extends State {
             }
         }
 
-        // this.updateTextMesh(this.segundalinha, this.myReader.track.lapsCompleted, 0xffffff);
         let windLayer = this.myReader.playerBalloon.windLayer.toString();
 
         switch (windLayer) {
@@ -394,7 +443,9 @@ class RunningState extends State {
             if (shader && shader.hasUniform("timeFactor")) {
                 shader.updateUniformsValue("timeFactor", this.shaderElapsedTime);
             }
-        }            
+        }
+
+        this.checkFinishLineCross();
 
         this.myReader.update();
     }

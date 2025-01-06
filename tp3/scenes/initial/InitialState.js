@@ -160,7 +160,7 @@ class InitialState extends State {
                 console.warn('Please select both balloons and a player name before starting the game.');
             }
 
-            else this.gameStateManager.startGame(this.playerBalloonColor, this.opponentBalloonColor, this.laps);
+            else this.gameStateManager.startGame(this.playerBalloonColor, this.playerNameString, this.opponentBalloonColor, this.laps, this.startPoint);
         }
 
         else if (clickedObject === 'playerName') {
