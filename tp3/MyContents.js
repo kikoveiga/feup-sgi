@@ -53,6 +53,7 @@ class MyContents {
 
             case GameStates.RUNNING:
                 this.state = new RunningState(this.app, this.gameStateManager);
+                this.state.setFinishLine(this.objects[0].children[0]);
                 this.state.init();
                 break;
 
@@ -64,6 +65,9 @@ class MyContents {
             default:
                 console.error("Invalid scene type: " + state);
         }
+
+        this.state.objects.forEach(object => { this.objects.push(object); });
+        this.app.gui.updateObjects();
     }
 
     cleanUp() {
@@ -156,8 +160,6 @@ class MyContents {
             if (root) {
                 this.app.scene.add(root);
                 this.objects.push(root);
-
-                this.app.gui.updateObjects();
             }  
         }
 

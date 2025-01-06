@@ -215,6 +215,7 @@ class MyReader {
      }
 
      pause() {
+          this.playerBalloon.pause();
           this.mixerPause = true;
           this.clock.stop();
           this.pauseTime = this.clock.getElapsedTime();
@@ -222,9 +223,12 @@ class MyReader {
 
      resume() {
           this.mixerPause = false;
+
           const resumeTime = this.clock.getElapsedTime();
           this.timeOffset = resumeTime - this.pauseTime;
+
           this.clock.start();
+          this.playerBalloon.resume();
      }
 
      getTrack() {
@@ -233,11 +237,12 @@ class MyReader {
 
      update() {
 
-          let delta = this.clock.getDelta() / this.opponentSmoothFactor;
 
           if (this.mixerPause) {
                return;
           }
+
+          let delta = this.clock.getDelta() / this.opponentSmoothFactor;
 
           if (this.timeOffset) {
                delta -= this.timeOffset;
@@ -245,6 +250,7 @@ class MyReader {
           }
           
           this.opponentMixer.update(delta);
+          this.playerBalloon.update(delta);
 
           this.checkAnimationStateIsPause();
           this.checkTracksEnabled();
