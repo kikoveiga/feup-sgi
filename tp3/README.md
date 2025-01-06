@@ -150,3 +150,6 @@ During the development of the project, the following issues were encountered:
 2. **Pausing the game**:
     - Problem: When pausing the game and then resuming it, the balloons would have a sudden jump in their positions, and the timer would go back to 0.
     - Solution: When pausing the game, we saved the total time passed by summing the app.clock.getElapsedTime(), and only then app.clock.stop(). To have smooth transitions when resuming the game, balloon.group.position.lerp() was used to interpolate the balloon's position. A time offset was also added to the delta time of the update functions in order to keep the balloons' positions consistent after resuming the game.
+
+3. **Shadow Bug**
+    - The shadow exists but isnt being project correctly to the surface. We needed to use raycast to make it work properly.
