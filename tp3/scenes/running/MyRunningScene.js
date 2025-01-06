@@ -237,11 +237,11 @@ class MyRunningScene extends MyScene {
             this.totalElapsedTime += this.app.clock.getElapsedTime();
             this.app.clock.stop();
             this.myReader.pause();
-            this.updateTextMesh(this.ultimalinha, "paused", 0xff0000);
+            this.updateTextMesh(this.gameStatus, "paused", 0xff0000);
         } else {
             this.app.clock.start();
             this.myReader.resume();
-            this.updateTextMesh(this.ultimalinha, "running", 0x008000);
+            this.updateTextMesh(this.gameStatus, "running", 0x008000);
         }
     }
 
@@ -258,9 +258,9 @@ class MyRunningScene extends MyScene {
         this.lapsNumberMesh.scale.set(15, 15, 15);
         this.lapsNumberMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.segundalinha = this.createTextMesh(`1/${this.gameStateManager.laps}`, 350, 195, 217.5, 0xffffff);
-        this.segundalinha.scale.set(15, 15, 15);
-        this.segundalinha.rotation.y = 120 * Math.PI / 180;
+        this.lapsNumber = this.createTextMesh(`1/${this.gameStateManager.laps}`, 350, 195, 217.5, 0xffffff);
+        this.lapsNumber.scale.set(15, 15, 15);
+        this.lapsNumber.rotation.y = 120 * Math.PI / 180;
 
         this.layerMesh = this.createTextMesh("Air Layer: ", 430, 175, 80, 0xffffff);
         this.layerMesh.scale.set(15, 15, 15);
@@ -270,32 +270,32 @@ class MyRunningScene extends MyScene {
         this.layer.scale.set(15, 15, 15);
         this.layer.rotation.y = 120 * Math.PI / 180;
 
-        this.avaiableVouchersMesh = this.createTextMesh("Vouchers: ", 430, 155, 80, 0xffffff);
-        this.avaiableVouchersMesh.scale.set(15, 15, 15);
-        this.avaiableVouchersMesh.rotation.y = 120 * Math.PI / 180;
+        this.vouchersMesh = this.createTextMesh("Vouchers: ", 430, 155, 80, 0xffffff);
+        this.vouchersMesh.scale.set(15, 15, 15);
+        this.vouchersMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.quartalinha = this.createTextMesh("0", 340, 155, 235, 0xffffff);
-        this.quartalinha.scale.set(15, 15, 15);
-        this.quartalinha.rotation.y = 120 * Math.PI / 180;
+        this.vouchers = this.createTextMesh("0", 340, 155, 235, 0xffffff);
+        this.vouchers.scale.set(15, 15, 15);
+        this.vouchers.rotation.y = 120 * Math.PI / 180;
 
         this.gameStatusMesh = this.createTextMesh("Status: ", 430, 135, 80, 0xffffff);
         this.gameStatusMesh.scale.set(15, 15, 15);;
         this.gameStatusMesh.rotation.y = 120 * Math.PI / 180;
 
-        this.ultimalinha = this.createTextMesh("running", 370, 135, 185, 0x008000);
-        this.ultimalinha.scale.set(15, 15, 15);
-        this.ultimalinha.rotation.y = 120 * Math.PI / 180;
+        this.gameStatus = this.createTextMesh("running", 370, 135, 185, 0x008000);
+        this.gameStatus.scale.set(15, 15, 15);
+        this.gameStatus.rotation.y = 120 * Math.PI / 180;
 
         this.addObject(this.elapsedTimeMesh);
         this.addObject(this.elapsedTime);
         this.addObject(this.lapsNumberMesh);
-        this.addObject(this.avaiableVouchersMesh);
-        this.addObject(this.gameStatusMesh);
+        this.addObject(this.lapsNumber);
         this.addObject(this.layerMesh);
-        this.addObject(this.segundalinha);
-        this.addObject(this.ultimalinha);
         this.addObject(this.layer);
-        this.addObject(this.quartalinha);
+        this.addObject(this.vouchersMesh);
+        this.addObject(this.vouchers);
+        this.addObject(this.gameStatusMesh);
+        this.addObject(this.gameStatus);
 
 
         this.group = new THREE.Group();
@@ -415,7 +415,7 @@ class MyRunningScene extends MyScene {
             this.gameStateManager.endGame(this.gameStateManager.opponent, (this.totalElapsedTime + this.app.clock.getElapsedTime()).toFixed());
         }
 
-        else this.updateTextMesh(this.segundalinha, `${Math.max(this.currentPlayerLap, this.currentOpponentLap)}/${this.gameStateManager.laps}`, 0xffffff);
+        else this.updateTextMesh(this.lapsNumber, `${Math.max(this.currentPlayerLap, this.currentOpponentLap)}/${this.gameStateManager.laps}`, 0xffffff);
     }
 
     update(delta) {
@@ -479,7 +479,7 @@ class MyRunningScene extends MyScene {
                 
                 if (this.playerVoucher > 0) {
                     this.playerVoucher--;
-                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    this.updateTextMesh(this.vouchers, this.playerVoucher.toString(), 0xffffff);
                     console.log("Used a voucher; NO penalty. But balloon repositioned on track.");
                 } 
                 else {
@@ -499,7 +499,7 @@ class MyRunningScene extends MyScene {
 
                 if (this.playerVoucher > 0) {
                     this.playerVoucher--;
-                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    this.updateTextMesh(this.vouchers, this.playerVoucher.toString(), 0xffffff);
                     console.log("Used a voucher; no penalty applied.");
                 } 
                 else {
@@ -519,7 +519,7 @@ class MyRunningScene extends MyScene {
 
                 if (this.playerVoucher > 0) {
                     this.playerVoucher--;
-                    this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                    this.updateTextMesh(this.vouchers, this.playerVoucher.toString(), 0xffffff);
                     console.log("Used a voucher; no penalty applied.");
                 } 
                 else {
@@ -536,7 +536,7 @@ class MyRunningScene extends MyScene {
             if (this.checkCollision(this.myReader.playerBalloon, powerUp, 30, 15)) {
                 console.log("Collision with powerUp: ", powerUp.name);
                 this.playerVoucher += 1;
-                this.updateTextMesh(this.quartalinha, this.playerVoucher.toString(), 0xffffff);
+                this.updateTextMesh(this.vouchers, this.playerVoucher.toString(), 0xffffff);
                 this.setCooldown(powerUp, currentTime, 3.5);
             }
         }
