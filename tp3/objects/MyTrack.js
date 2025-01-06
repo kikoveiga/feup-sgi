@@ -54,6 +54,10 @@ class MyTrack extends MyObject {
           this.initializeRoute();
      }
 
+     getPath() {
+          return this.path;
+     }
+     
      createCurveMaterialsTextures() {
           const texture = new THREE.TextureLoader().load("./images/road.jpg");
           texture.wrapS = THREE.RepeatWrapping;
@@ -91,6 +95,8 @@ class MyTrack extends MyObject {
                this.closedCurve
           );
           this.mesh = new THREE.Mesh(geometry, this.material);
+          this.mesh.castShadow = false; 
+          this.mesh.receiveShadow = true; 
           this.wireframe = new THREE.Mesh(geometry, this.wireframeMaterial);
 
           let points = this.path.getPoints(this.segments);
@@ -124,11 +130,15 @@ class MyTrack extends MyObject {
           ];
 
           obstaclePositions.forEach((pos, index) => {
-              const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 1.5, 0xffffff);
-              obstacle.scale.set(1, 3, 1);
-              obstacle.position.y = -3.6;
-              this.obstacles.push(obstacle);
-              this.add(obstacle);
+               const obstacle = new MyObstacle(this.app, `Obstacle_${index}`, pos, 1.5, 0xffffff);
+               obstacle.scale.set(1, 3, 1);
+               obstacle.position.y = -3.6;
+
+               obstacle.castShadow = true;  
+               obstacle.receiveShadow = true; 
+
+               this.obstacles.push(obstacle);
+               this.add(obstacle);
           });
      }
 
@@ -149,7 +159,7 @@ class MyTrack extends MyObject {
      }
 
      initializeRoute() {
-          this.myRoute = new MyRoute(this.app, "RouteRings", this.path, 10);
+          this.myRoute = new MyRoute(this.app, "RouteRings");
           this.myRoute.scale.set(0.11, 0.1, 0.1);
           this.myRoute.position.set(0, 1.2, 0);
           this.myRoute.rotation.y = Math.PI;
@@ -165,9 +175,8 @@ class MyTrack extends MyObject {
           return this.obstacles;
      }
      
-     update(delta) {
+     update(delta){
      }
-      
 }
 
 MyTrack.prototype.isGroup = true;

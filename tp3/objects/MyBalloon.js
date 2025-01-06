@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MyObject } from './MyObject.js';
 
 class MyBalloon extends MyObject {
-     constructor(app, name = 'balloon', color = 'orange') {
+     constructor(app, name = 'balloon', color = 'orange', isPlayer = false) {
           super(app, name);
           this.type = 'Group';
           this.group = new THREE.Group();
@@ -10,26 +10,43 @@ class MyBalloon extends MyObject {
           this.add(this.group);
 
           this.createTextures();
+          this.raycaster = new THREE.Raycaster();
 
-          // Balloon Body
-          this.body = this.createBalloonBody();
-          this.body.position.set(0, -0.5, 0);
-          this.group.add(this.body);
+          this.distance = 1000;
 
-          // Basket
-          this.basket = this.createBalloonBasket();
-          this.basket.position.set(0, 4.5, 0); 
-          this.group.add(this.basket);
+          this.lod = new THREE.LOD();
+          const highBody = this.createBalloonBodyHigh(); 
+          const lowBody  = this.createBalloonBodyLow(); 
+          this.lod.addLevel(highBody, 0);     
+          this.lod.addLevel(lowBody, this.distance); 
+          this.lod.position.set(0, -0.5, 0);
+          this.group.add(this.lod);
 
-          this.ropes = this.createRopes();
-          this.ropes.position.set(0, 4.5, 0);
-          this.group.add(this.ropes);
+          // Basket LOD
+          this.basketLod = new THREE.LOD();
+          const highBasket = this.createBalloonBasketHigh();
+          const lowBasket = this.createBalloonBasketLow();
+          this.basketLod.addLevel(highBasket, 0);
+          this.basketLod.addLevel(lowBasket, this.distance);
+          this.basketLod.position.set(0, 4.5, 0);
+          this.group.add(this.basketLod);
 
-          // Shadow/Mark
-          // this.shadow = this.createShadow();
-          // this.shadow.position.set(0, 0, 0);
-          // this.shadow.scale.set(1.5, 1.5, 1.5);
-          // this.group.add(this.shadow);
+          // Ropes LOD
+          this.ropesLod = new THREE.LOD();
+          const highRopes = this.createRopesHigh();
+          const lowRopes = this.createRopesLow();
+          this.ropesLod.addLevel(highRopes, 0);
+          this.ropesLod.addLevel(lowRopes, this.distance);
+          this.ropesLod.position.set(0, 4.5, 0);
+          this.group.add(this.ropesLod);
+
+          // Shadow
+          if(isPlayer){
+               this.shadow = this.createShadow();
+               this.shadow.position.set(0, 1.5, 0); 
+               this.group.add(this.shadow);
+               // console.log(this.shadow);
+          }
 
           // Movement properties
           this.altitude = 0; 
@@ -76,7 +93,17 @@ class MyBalloon extends MyObject {
           
           const currentWind = this.windLayers[this.windLayer];
           this.applyWindMovement(delta, currentWind.direction, currentWind.speed);
+
+          if (this.shadow) {
+               const balloonWorldPos = new THREE.Vector3();
+               this.group.getWorldPosition(balloonWorldPos);
+          
+               this.shadow.position.set(balloonWorldPos.x, 5, balloonWorldPos.z);
+               this.shadow.visible = true; 
+          }
      }
+        
+
 
      createTextures() {
           const orangeTexture = new THREE.TextureLoader().load("./images/orange.jpg");
@@ -140,7 +167,7 @@ class MyBalloon extends MyObject {
           });
      }
 
-     createBalloonBody() {
+     createBalloonBodyHigh() {
 
           this.mat = null;
           if(this.color === 'orange') {
@@ -196,63 +223,87 @@ class MyBalloon extends MyObject {
           return bodyGroup;
      }
 
-     createBalloonBasket() {
+     createBalloonBodyLow() {
+          const geometry = new THREE.SphereGeometry(2.2, 32, 32); 
+          const bodyMesh = new THREE.Mesh(geometry, this.mat);
+      
+          bodyMesh.rotation.x = THREE.MathUtils.degToRad(270);
+          bodyMesh.position.set(0, 9, 0);
+          bodyMesh.castShadow = true;
+          bodyMesh.receiveShadow = true;
+      
+          const group = new THREE.Group();
+          group.add(bodyMesh);
+          return group;
+     }
+
+     createBalloonBasketHigh() {
           const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8); 
           geometry.receiveShadow = true;
           geometry.castShadow = true;
           return new THREE.Mesh(geometry, this.crateApp);
      }
+      
+     createBalloonBasketLow() {
+          const geometry = new THREE.BoxGeometry(0.7, 0.7, 0.7); 
+          return new THREE.Mesh(geometry, this.crateApp);
+     }
+      
 
-     createRopes() {
+     createRopesHigh() {
           const ropes = new THREE.Group();
-          const ropeGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1.8, 6, 1);
-          const rope1 = new THREE.Mesh(ropeGeometry, this.ropeApp);
-          const rope2 = new THREE.Mesh(ropeGeometry, this.ropeApp);
-          const rope3 = new THREE.Mesh(ropeGeometry, this.ropeApp);
-          const rope4 = new THREE.Mesh(ropeGeometry, this.ropeApp);
-
-          rope1.rotation.x = THREE.MathUtils.degToRad(5);
-          rope1.rotation.z = THREE.MathUtils.degToRad(5);
-          rope1.position.set(-0.35, 1.2, 0.4);
-
-          rope2.rotation.x = THREE.MathUtils.degToRad(-5);
-          rope2.rotation.z = THREE.MathUtils.degToRad(5);
-          rope2.position.set(-0.35, 1.2, -0.4);
-
-          rope3.rotation.x = THREE.MathUtils.degToRad(-5);
-          rope3.rotation.z = THREE.MathUtils.degToRad(-5);
-          rope3.position.set(0.35, 1.2, -0.4);
-
-          rope4.rotation.x = THREE.MathUtils.degToRad(5);
-          rope4.rotation.z = THREE.MathUtils.degToRad(-5);
-          rope4.position.set(0.35, 1.2, 0.4);
-
-          rope1.receiveShadow = true;
-          rope1.castShadow = true;
-          rope2.receiveShadow = true;
-          rope2.castShadow = true;
-          rope3.receiveShadow = true;
-          rope3.castShadow = true;
-          rope4.receiveShadow = true;
-          rope4.castShadow = true;
-
-          ropes.add(rope1);
-          ropes.add(rope2);
-          ropes.add(rope3);
-          ropes.add(rope4);
+          const ropeGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1.8, 6, 1); 
+      
+          const createRope = (x, y, z, rotX, rotZ) => {
+              const rope = new THREE.Mesh(ropeGeometry, this.ropeApp);
+              rope.rotation.x = THREE.MathUtils.degToRad(rotX);
+              rope.rotation.z = THREE.MathUtils.degToRad(rotZ);
+              rope.position.set(x, y, z);
+              rope.receiveShadow = true;
+              rope.castShadow = true;
+              return rope;
+          };
+      
+          ropes.add(createRope(-0.35, 1.2, 0.4, 5, 5));
+          ropes.add(createRope(-0.35, 1.2, -0.4, -5, 5));
+          ropes.add(createRope(0.35, 1.2, -0.4, -5, -5));
+          ropes.add(createRope(0.35, 1.2, 0.4, 5, -5));
           return ropes;
      }
+      
+     createRopesLow() {
+          const ropes = new THREE.Group();
+          const ropeGeometry = new THREE.CylinderGeometry(0.04, 0.04, 1.6, 4, 1);
+      
+          const createRope = (x, y, z) => {
+              const rope = new THREE.Mesh(ropeGeometry, this.ropeApp);
+              rope.position.set(x, y, z);
+              return rope;
+          };
+          
+          ropes.add(createRope(-0.3, 1.2, 0.3));
+          ropes.add(createRope(-0.3, 1.2, -0.3));
+          ropes.add(createRope(0.3, 1.2, -0.3));
+          ropes.add(createRope(0.3, 1.2, 0.3));
+          return ropes;
+     }
+      
 
      createShadow() {
-          const geometry = new THREE.CircleGeometry(1, 32); 
+
+          const geometry = new THREE.CircleGeometry(1.0, 32); 
           const material = new THREE.MeshBasicMaterial({
-               color: 0x000000,
-               transparent: true,
-               opacity: 0.5,
+              color: 0x000000,
+              opacity: 0.5,
+              transparent: true,
+              side: THREE.DoubleSide
           });
-          const shadow = new THREE.Mesh(geometry, material);
-          shadow.rotation.x = -Math.PI / 2; 
-          return shadow;
+
+          const shadowMesh = new THREE.Mesh(geometry, material);
+          shadowMesh.rotation.x = -Math.PI / 2; 
+          shadowMesh.scale.set(1.5, 1.5, 1.5);
+          shadowMesh.visible = true; 
+          return shadowMesh;
      }
 
      pause() {
