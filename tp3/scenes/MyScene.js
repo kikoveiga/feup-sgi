@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-class State {
+class MyScene {
     constructor(app, gameStateManager) {
         this.app = app;
         this.gameStateManager = gameStateManager;
@@ -89,4 +89,4 @@ class State {
     }
 }
 
-export { State };
+export { MyScene };

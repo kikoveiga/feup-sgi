@@ -2,17 +2,17 @@ import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { MyYASFParser } from './parser/MyYASFParser.js';
 import { GameStates } from './GameStateManager.js';
-import { InitialState } from './scenes/initial/InitialState.js';
-import { RunningState } from './scenes/running/RunningState.js';
-import { FinalState } from './scenes/final/FinalState.js';
+import { MyInitialScene } from './scenes/initial/MyInitialScene.js';
+import { MyRunningScene } from './scenes/running/MyRunningScene.js';
+import { MyFinalScene } from './scenes/final/MyFinalScene.js';
 
 class MyContents {
     constructor(app, gameStateManager) {
         this.app = app;
         this.gameStateManager = gameStateManager;
 
-        this.state = null;
-        this.gameStateManager.onStateChange(this.switchState.bind(this));
+        this.myScene = null;
+        this.gameStateManager.onStateChange(this.switchMyScene.bind(this));
 
         this.parser = null;
         this.reader = null;
@@ -24,16 +24,16 @@ class MyContents {
         this.meshes = [];
     }
 
-    async switchState(newState) {
+    async switchMyScene(newState) {
 
-        if (this.state) this.cleanUp();
+        if (this.myScene) this.cleanUp();
 
         if (this.axis === null) {
             // this.axis = new MyAxis(this.app);
             // this.app.scene.add(this.axis);
         }
 
-        this.parser = new MyYASFParser(this.app.scene);
+        this.parser = new MyYASFParser();
         
         await new Promise((resolve, reject) => {
             this.reader = new MyFileReader(async (data) => {
@@ -47,26 +47,26 @@ class MyContents {
 
         switch (newState) {
             case GameStates.INITIAL:
-                this.state = new InitialState(this.app, this.gameStateManager, this.meshes);
-                this.state.init();
+                this.myScene = new MyInitialScene(this.app, this.gameStateManager, this.meshes);
+                this.myScene.init();
                 break;
 
             case GameStates.RUNNING:
-                this.state = new RunningState(this.app, this.gameStateManager);
-                this.state.setFinishLine(this.objects[0].children[0]);
-                this.state.init();
+                this.myScene = new MyRunningScene(this.app, this.gameStateManager);
+                this.myScene.setFinishLine(this.objects[0].children[0]);
+                this.myScene.init();
                 break;
 
             case GameStates.FINAL:
-                this.state = new FinalState(this.app, this.gameStateManager, this.meshes);
-                this.state.init();
+                this.myScene = new MyFinalScene(this.app, this.gameStateManager, this.meshes);
+                this.myScene.init();
                 break;
             
             default:
-                console.error("Invalid scene type: " + state);
+                console.error("Invalid game state: ", newState);
         }
 
-        this.state.objects.forEach(object => { this.objects.push(object); });
+        this.myScene.objects.forEach(object => { this.objects.push(object); });
         this.app.gui.updateObjects();
     }
 
@@ -84,8 +84,8 @@ class MyContents {
     }
 
     update(delta) {
-        if (this.state) {
-            this.state.update(delta);
+        if (this.myScene) {
+            this.myScene.update(delta);
         }
     }
 
