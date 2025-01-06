@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { MyBalloon } from '../../objects/MyBalloon.js';
 import { MyFirework } from '../../objects/MyFirework.js';
 import { PickingManager } from '../../PickingManager.js';
-import { State } from '../State.js';
+import { MyScene } from '../MyScene.js';
 
-class FinalState extends State {
+class MyFinalScene extends MyScene {
     constructor(app, gameStateManager, interactableObjects) {
         super(app, gameStateManager);
         this.interactableObjects = interactableObjects;
@@ -105,4 +105,4 @@ class FinalState extends State {
     }
 }
 
-export { FinalState };
+export { MyFinalScene };

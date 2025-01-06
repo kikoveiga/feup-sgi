@@ -4,9 +4,9 @@ import { MyReader } from '../../objects/MyReader.js';
 import { MyShader } from '../../objects/MyShader.js';
 import { MyObstacle } from '../../objects/MyObstacle.js';
 import { MyPowerUp } from '../../objects/MyPowerUp.js';
-import { State } from '../State.js';
+import { MyScene } from '../MyScene.js';
 
-class RunningState extends State {
+class MyRunningScene extends MyScene {
     constructor(app, gameStateManager) {
         super(app, gameStateManager);
 
@@ -20,7 +20,6 @@ class RunningState extends State {
 
         this.totalElapsedTime = 0;
         this.paused = false;
-        this.timeOffset = 0;
         this.shaderElapsedTime = 0;
         
         this.currentPlayerLap = 1;
@@ -242,7 +241,6 @@ class RunningState extends State {
         } else {
             this.app.clock.start();
             this.myReader.resume();
-            this.shaderElapsedTime += this.timeOffset;
             this.updateTextMesh(this.ultimalinha, "running", 0x008000);
         }
     }
@@ -423,11 +421,6 @@ class RunningState extends State {
     update(delta) {
         if (!this.myReader || this.paused) {
             return;
-        }
-
-        if (this.timeOffset) {
-            delta -= this.timeOffset;
-            this.timeOffset = 0;
         }
 
         if (this.myReader && this.myReader.playerBalloon) {
@@ -650,8 +643,6 @@ class RunningState extends State {
         return new THREE.CatmullRomCurve3(translatedPoints);
     }
     
-    
-    
 }
 
-export { RunningState };
+export { MyRunningScene };

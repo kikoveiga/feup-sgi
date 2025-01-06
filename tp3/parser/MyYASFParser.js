@@ -3,7 +3,7 @@ import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 
 class MyYASFParser {
 
-    constructor(scene) {
+    constructor() {
 
         this.data = {};
 
@@ -16,7 +16,6 @@ class MyYASFParser {
         this.initialCameraName = null;
         this.lights = [];
         this.nurbsBuilder = new MyNurbsBuilder();
-        this.scene = scene;
 
         this.meshes = [];
     }
@@ -654,11 +653,6 @@ class MyYASFParser {
 
                 if (lightData.target) {
                     light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
-                    this.scene.add(light.target); 
-                }
-
-                if (light.castShadow) {
-                    const helper = new THREE.CameraHelper(light.shadow.camera);
                 }
 
                 if (light.castShadow) {
@@ -681,7 +675,6 @@ class MyYASFParser {
                 
                 if (light.castShadow) {
                     const helper = new THREE.CameraHelper(light.shadow.camera);
-                    // this.scene.add(helper); 
                 }
 
                 if (light.castShadow) {
@@ -708,16 +701,7 @@ class MyYASFParser {
                     light.position.set(lightData.position.x, lightData.position.y, lightData.position.z);
                     light.target.position.set(lightData.target.x, lightData.target.y, lightData.target.z);
                     light.castShadow = inheritedCastShadow || lightData.castshadow;
-                
-                    if ('penumbra' in lightData) {
-                        light.penumbra = lightData.penumbra;
-                    }
                     
-                    if (light.castShadow) {
-                        const helper = new THREE.CameraHelper(light.shadow.camera);
-                        // this.scene.add(helper); 
-                    }
-
                     if (light.castShadow) {
                         light.shadow.camera.near = lightData.shadownear || 1;
                         light.shadow.camera.far = lightData.shadowfar || 500.0;
@@ -727,7 +711,6 @@ class MyYASFParser {
                 
                     break;
                 
-    
             default:
                 console.error(`Unknown light type: ${lightData.type}`);
                 return null;
