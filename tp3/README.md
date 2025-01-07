@@ -118,10 +118,6 @@ Below are some screenshots of the main implemented features:
 ![Balloon](screenshots/balloon.png)
 ![LODS](screenshots/lods.png)
 
-### First Person
-![FP](screenshots/firstperson.png)
-
-
 ---
 ## How to use Initial Menu
 
